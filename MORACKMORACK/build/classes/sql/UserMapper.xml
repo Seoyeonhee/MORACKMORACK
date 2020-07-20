@@ -18,12 +18,10 @@
 		<result property="profileImg" 				column="image_file" 					jdbcType="VARCHAR" />
 		<result property="address" 				column="address" 					jdbcType="VARCHAR" />
 		<result property="gender" 			column="gender" 		jdbcType="CHAR" />
-		<result property="category" 			column="category" 		jdbcType="VARCHAR" />
 		<result property="userStateList" 				column="user_state" 					jdbcType="CHAR" />
 		<result property="naverId" 			column="naver_id" 		jdbcType="VARCHAR" />
 		<result property="kakaoId" 			column="kakao_id" 		jdbcType="VARCHAR" />
 		<result property="googleId" 			column="google_id" 		jdbcType="VARCHAR" />
-		<result property="meetList" 			column="meet_list" 		jdbcType="VARCHAR" />
 		<result property="meetCount" 			column="join_meet_count" 		jdbcType="NUMERIC" />
 		<result property="role" 			column="role" 		jdbcType="VARCHAR" />
 		
@@ -33,10 +31,10 @@
 	<!-- SQL : INSERT -->
 	<insert 	id="addUser"		parameterType="user" >
 	 	INSERT
-		INTO users( user_id , password, user_name , email, phone_number , birthday, nick_name, img_file, address, gender, category, user_state, naver_id, kakao_id, google_id, meet_list, join_meet_count, role) 
+		INTO users( user_id , password, user_name , email, phone_number , birthday, nick_name, img_file, address, gender, user_state, naver_id, kakao_id, google_id, join_meet_count, role) 
 		VALUES	 (	#{userId}, #{password}, #{userName}, #{email}, #{phoneNumber}, #{birthday}, 
-					#{nickName}, NULL, #{address}, #{gender}, NULL, '0', 
-					NULL, NULL, NULL, NULL, 0, 'user')
+					#{nickName}, NULL, #{address}, #{gender}, '0', 
+					NULL, NULL, NULL, 0, 'user')
 	 </insert>
 	 
 	 <select id="idCheck" resultType="int">
@@ -59,7 +57,7 @@
 	 <!-- SQL : SELECT ONE -->
 	 <select 	id="getUser"	parameterType="string"	resultMap="userSelectMap">
 		SELECT
-		user_id , user_name , nick_name , email, phone_number , gender , birthday , category , address , meet_list		
+		user_id , user_name , nick_name , email, phone_number , gender , birthday , address		
 		FROM users 
 		WHERE user_id = #{value}
 	 </select>
@@ -73,7 +71,6 @@
 	   		nick_name		= #{nickName} ,
 	   		email			= #{email} , 
 			phone_number	= #{phoneNumber} ,
-			category		= #{category} ,
 			address 		= #{address}
 			
 	   	</set>
