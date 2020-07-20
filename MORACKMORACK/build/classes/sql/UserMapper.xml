@@ -39,9 +39,46 @@
 					NULL, NULL, NULL, NULL, 0, 'user')
 	 </insert>
 	 
-	 <select id="getUser" parameterType="String" resultMap="userSelectMap">
-	 SELECT * FROM user WHERE user_id = #{userId}
+	 <select id="idCheck" resultType="int">
+			SELECT count(*) FROM users
+			WHERE user_id = #{userId}
+	</select>
+	
+	<select id="nickNameCheck" resultType="int">
+			SELECT count(*) FROM users
+			WHERE nick_name = #{nickName}
+	</select>
+	
+	<select id="passwordCheck" resultType="int">
+			SELECT count(*) FROM users
+			WHERE user_id = #{userId}
+			AND	password = #{password} 
+	</select>
+	 
+	 
+	 <!-- SQL : SELECT ONE -->
+	 <select 	id="getUser"	parameterType="string"	resultMap="userSelectMap">
+		SELECT
+		user_id , user_name , nick_name , email, phone_number , gender , birthday , category , address , meet_list		
+		FROM users 
+		WHERE user_id = #{value}
 	 </select>
+	 
+	 <!-- SQL : UPDATE -->
+	 <update	id="updateUser"	parameterType="user" >
+	   	UPDATE users
+	   	<set>
+	   		image_file		= #{profileImg} ,
+	   		user_name 		= #{userName} ,
+	   		nick_name		= #{nickName} ,
+	   		email			= #{email} , 
+			phone_number	= #{phoneNumber} ,
+			category		= #{category} ,
+			address 		= #{address}
+			
+	   	</set>
+	   	WHERE user_id = #{userId}
+	 </update>
 	 
 
 </mapper>
