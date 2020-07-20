@@ -284,7 +284,7 @@ public class MeetController {
 	}
 	
 	public void delMyMeet(String userId, String meetId) {
-		
+		System.out.println("/meet/delMyMeet : POST");
 	}
 	
 	public void addWishMeet(String userId, String meetId) {
