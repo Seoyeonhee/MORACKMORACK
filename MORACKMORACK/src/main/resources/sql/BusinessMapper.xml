@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="BusinessMapper">
+ 	
+ 	
+	<resultMap id="businessSelectMap" type="business">
+		<result property="businessId" 					column="business_id" 					jdbcType="VARCHAR"/>
+		<result property="businessPass" 				column="business_pass" 					jdbcType="VARCHAR"/>
+		<result property="businessName" 				column="business_name" 					jdbcType="VARCHAR"/>
+		<result property="businessLoc" 					column="business_loc" 					jdbcType="VARCHAR"/>
+		<result property="categoryNo" 					column="category_no" 					jdbcType="INTEGER"/>
+		<result property="businessPhone" 				column="business_phone" 				jdbcType="VARCHAR"/>
+		<result property="businessImg" 					column="business_img" 					jdbcType="VARCHAR"/>
+		<result property="businessNum" 					column="business_num" 					jdbcType="VARCHAR"/>
+		<result property="businessOwner" 				column="business_owner" 				jdbcType="VARCHAR"/>
+		<result property="regDate" 						column="reg_date" 						jdbcType="DATE"/>
+		<result property="bank" 						column="bank" 							jdbcType="VARCHAR"/>
+		<result property="depositAccNum" 				column="deposit_acc_num" 				jdbcType="VARCHAR"/>
+		<result property="businessStar" 				column="business_star" 					jdbcType="VARCHAR"/>
+		<result property="businessStartTime"	 		column="business_start_time" 			jdbcType="DATE"/>
+		<result property="businessEndTime" 				column="business_end_time" 				jdbcType="DATE"/>
+		
+		<result property="reserveAbleStartTime" 		column="reserve_able_start_time" 		jdbcType="DATE"/>
+		<result property="reserveAbleEndTime" 			column="reserve_able_end_time" 			jdbcType="DATE"/>
+		
+		<result property="businessMenu" 				column="business_menu" 					jdbcType="VARCHAR"/>
+		<result property="businessMenuFee" 				column="business_menu_fee" 				jdbcType="INTEGER"/>
+		<result property="businessMenuImg" 				column="business_menu_img" 				jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<resultMap id="MenuSelectMap" type="menu">
+		<result property="businessMenu" 				column="business_menu" 					jdbcType="VARCHAR"/>
+		<result property="businessMenuFee" 				column="business_menu_fee" 				jdbcType="INTEGER"/>
+		<result property="businessMenuImg" 				column="business_menu_img" 				jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<!-- SQL : MENU_INSERT -->
+	<insert 	id="addBusinessMenu"		parameterType="menu" >
+	 	INSERT
+		INTO menu( menu_no, business_id, business_menu, business_menu_fee, business_menu_img ) 
+		VALUES	 (	seq_menu_menu_no.nextval, #{businessId}, #{businessMenu}, #{businessMenuFee}, #{businessMenuImg:VARCHAR} )
+	 </insert>
+	 
+	 
+</mapper>

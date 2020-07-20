@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE configuration
+ 		 PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+ 		"http://mybatis.org/dtd/mybatis-3-config.dtd">
+  						
+
+<configuration>
+	<settings>
+		<setting name="callSettersOnNulls" value="false"/>
+	</settings>	
+	
+	<typeAliases>
+		<typeAlias alias="user" type="com.morackmorack.mvc.service.domain.User"/>
+		<typeAlias alias="meet" type="com.morackmorack.mvc.service.domain.Meet"/>
+		<typeAlias alias="meetMem" type="com.morackmorack.mvc.service.domain.MeetMem"/>
+		<typeAlias alias="business" type="com.morackmorack.mvc.service.domain.Business"/>
+		<typeAlias alias="menu" type="com.morackmorack.mvc.service.domain.Menu"/>
+		<typeAlias alias="reserveAble" type="com.morackmorack.mvc.service.domain.ReserveAble"/>
+		<typeAlias alias="friend" type="com.morackmorack.mvc.service.domain.Friend"/>
+		<typeAlias alias="community" type="com.morackmorack.mvc.service.domain.Community"/>
+		<typeAlias alias="offMeet" type="com.morackmorack.mvc.service.domain.OffMeet"/>
+		<typeAlias alias="meetmemoffmeet" type="com.morackmorack.mvc.service.domain.Meetmemoffmeet"/>
+		<typeAlias alias="pay" type="com.morackmorack.mvc.service.domain.Pay"/>
+		<typeAlias alias="comments" type="com.morackmorack.mvc.service.domain.Comments"/>
+		<typeAlias alias="search" type="com.morackmorack.mvc.common.Search"/>	
+	</typeAliases>
+
+	<mappers>
+		<mapper resource="sql/UserMapper.xml"/> 
+		 <mapper resource="sql/MeetMapper.xml"/> 
+		 <mapper resource="sql/BusinessMapper.xml"/> 
+		 <mapper resource="sql/FriendMapper.xml"/> 
+		 <mapper resource="sql/CommunityMapper.xml"/> 
+		 <mapper resource="sql/OffMeetMapper.xml"/> 
+	</mappers>
+
+</configuration>

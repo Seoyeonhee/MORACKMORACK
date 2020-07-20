@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="offmeetMapper">
+
+	<resultMap type="offmeet" id="offmeetSelectMap">
+		<result property="offNo" 				column="OFF_NO" 		jdbcType="INTEGER"/>
+  		<result property="user.userId" 	column="USER_ID" 		jdbcType="VARCHAR"/>
+  		<result property="meet.meetId" 		column="MEET_ID"		jdbcType="INTEGER"/>
+  		<result property="offName"		column="OFF_NAME" jdbcType="VARCHAR"/>
+  		<result property="offLoc" 		column="OFF_LOC" 	jdbcType="VARCHAR"/>
+  		<result property="offMax" 		column="OFF_MAX" jdbcType="INTEGER"/>
+  		<result property="offMem" 			column="OFF_MEM" 		jdbcType="INTEGER"/>
+  		<result property="amount" 			column="AMOUNT" 	jdbcType="INTEGER"/>
+  		<result property="offDate" 			column="OFF_DATE" 	jdbcType="DATE"/>
+  		<result property="offTime" 			column="OFF_TIME" 		jdbcType="DATE"/>  		 
+  	</resultMap>
+  	
+	<resultMap type="pay" id="paySelectMap">
+		<result property="payNo" 				column="OFF_NO" 		jdbcType="INTEGER"/>
+  		<result property="user.userId" 	column="USER_ID" 		jdbcType="VARCHAR"/>
+  		<result property="meet.meetId" 		column="MEET_ID"		jdbcType="INTEGER"/>
+  		<result property="offmeet.offNo" 		column="OFF_NO"		jdbcType="INTEGER"/>
+		<result property="business.businessNo" 		column="BUSINESS_NO"		jdbcType="VARCHAR"/>	
+  		<result property="reservememnum"		column="RESERVE_MEM_NUM" jdbcType="INTEGER"/>
+  		<result property="reservestarttime" 		column="RESERVE_START_TIME" 	jdbcType="VARCHAR"/>
+  		<result property="reserveendtime" 		column="RESERVE_END_TIME" jdbcType="VARCHAR"/>
+  		<result property="reserverdate" 			column="RESERVE_DATE" 		jdbcType="DATE"/>
+  		<result property="totalamount" 			column="TOTAL_AMOUNT" 	jdbcType="INTEGER"/>
+  		<result property="paydate" 			column="PAY_DATE" 	jdbcType="DATE"/>
+  		<result property="paymethod" 			column="PAY_METHOD" 		jdbcType="CHAR"/>  		 
+  	</resultMap>
+   	
+   	
+   	<resultMap type= "meetmemoffmeet" id="meetmemoffmeetSelectMap">
+   	<result property="meetMemOffmeetNO" column="MEETMEM_OFFMEET_NO"  jdbcType="INTEGER"/>
+   	<result property="meetmem.memId"   column ="MEM_ID"         jdbcType="INTEGER"/>
+    <result property="offmeet.offNo"	column="OFF_NO" 		jdbcType="INTEGER"/>
+		
+	</resultMap>
+   	
+	<select id="getOff" parameterType="int" resultMap="offmeetSelectMap">
+  		SELECT 
+		o.user_id, u.name, u.gender, u.nick_name, o.meet_id, o.off_name, o.off_loc, o.off_max, o.off_mem, o.amount, o.off_date, o.off_time
+		FROM o.offmeet, u.users 
+		WHERE
+		u.user_id(+) = o.user_id
+		o.off_no = #{offNo}
+  	</select>
+  	
+	<insert id="addOff" parameterType="offmeet">
+		INSERT 
+		INTO offmeet(off_no, user_id, meet_id, off_name, off_loc, off_max, off_mem, amount, off_date, off_time)
+		VALUES (
+					seq_offmeet_off_no.NEXTVAL,
+					#{user.userId:CHAR},
+					#{meet.meetId:INTEGER},
+					#{offName:VARCHAR},
+					#{offLoc:VARCHAR},
+					#{offMax:INTEGER},
+					#{offMem:INTEGER},
+					#{amount:INTEGER},
+					#{offDate:DATE} 
+					#{offTime:VARCHAR}
+					)
+	</insert>
+	
+  	<update	id="updateOff"	parameterType="int" >
+	   	UPDATE offmeet
+	   	<set>
+			off_name  =	 #{receiverName:VARCHAR},
+			off_loc = 	#{offLoc:VARCHAR},
+	   	</set>
+	   	WHERE off_no = #{offNo}
+	 </update>
+
+
+	<update id ="updateOffMem" parameterType="pay">
+	UPDATE offmeet
+	<set>
+	off_mem = off_mem +1
+	</set>
+	WHERE off_no = #{offmeet.offNo}
+	</update>
+	 
+		  
+	 <insert id="addOffPay" parameterType ="pay">
+	 	INSERT 
+		INTO pay(pay_no, pay_flag, user_id, meet_no, off_no, total_amount, pay_date, pay_method){
+		VALUES (
+					seq_pay_pay_no.NEXTVAL,
+					'0',
+					#{user.userId:VARCHAR},
+					#{meet.meetId:INTEGER},
+					#{offMeet.offNo:INTEGER},
+					#{totalAmount:INTEGER},
+					SYSDATE,
+					#{payMethod:CHAR},
+					
+					)
+	</insert>
+	 
+	 
+	 <select id="getOffPay" parameterType="String" resultMap="paySelectMap">
+  		SELECT 
+		p.pay_no , p.pay_date, p.user_id, p.pay_flag, p.total_amount, m.bank, m.accNum
+		FROM pay p , offmeet o , meet m
+		WHERE p.pay_flag = '0' 
+			AND	p.pay_no = ${payNo}
+			AND o.off_no(+)=p.off_no
+			AND m.meet_id(+)=p.meet_no
+  	</select>
+  	
+  	
+	 
+	  <insert id="addBusinessPay" parameterType ="pay">
+	 	INSERT 
+		INTO pay(pay_no, pay_flag, user_id, meet_no, off_no, business_id, total_amount, pay_date, pay_method, reserve_date, reserve_start_time, reserve_end_time, reserve_mem_num){
+		VALUES (
+					seq_pay_pay_no.NEXTVAL,
+					'1',
+					#{user.userId:VARCHAR},
+					#{meet.meetId:INTEGER},
+					#{offMeet.offNo:INTEGER},
+				    #{business.businessNo:VARCHAR},
+					#{totalAmount:INTEGER},
+					SYSDATE,
+					#{payMethod:CHAR},
+					#{reserveDate:DATE},
+					#{reserveStartTime:VARCHAR},
+					#{reserveEndTime:VARCHAR},
+					#{reserveMemNum:INTEGER}
+					)
+	</insert>
+	
+	 
+	 <select id="getBusinessPay" parameterType="String" resultMap="paySelectMap">
+  		SELECT 
+		p.pay_no, p.pay_date, p.pay_flag, p.user_id , p.total_amount, p.reserve_start_time, p.reserve_end_time p.reserve_mem_num, o.off_Mem, b.business_name
+		FROM pay p , meet m , business b, offmeet o
+		WHERE p.pay_flag = '1' 
+		AND p.pay_no = ${payNo} 
+	    AND b.business_no(+)= p.business_no
+	    AND m.meet_id(+) = p.meet_no
+	    AND o.off_no(+) = p.off_no
+  	</select>
+  	
+  			 	
+</mapper>
+
+
+
+
+

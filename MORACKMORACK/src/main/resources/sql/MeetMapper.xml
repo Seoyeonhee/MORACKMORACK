@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+		
+<mapper namespace = "MeetMapper">
+
+	<resultMap id="meetSelectMap" type="meet">
+		<result property="meetId" column="meet_id" jdbcType="VARCHAR"/>
+		<result property="leaderId" column="leader_id" jdbcType="VARCHAR"/>
+		<result property="meetName" column="meet_name" jdbcType="VARCHAR"/>
+		<result property="meetLoc" column="meet_loc" jdbcType="VARCHAR"/>
+		<result property="maxNum" column="max_num" jdbcType="INTEGER"/>
+		<result property="memNum" column="mem_num" jdbcType="INTEGER"/>
+		<result property="meetImg" column="meet_img" jdbcType="VARCHAR"/>
+		<result property="sIntro" column="s_intro" jdbcType="VARCHAR"/>
+		<result property="lIntro" column="l_intro" jdbcType="VARCHAR"/>
+		<result property="regDate" column="reg_date" jdbcType="DATE"/>
+		<result property="meetStar" column="meet_star" jdbcType="INTEGER"/>
+		<result property="bank" column="bank" jdbcType="VARCHAR"/>
+		<result property="accNum" column="accNum" jdbcType="INTEGER"/>
+		<result property="category" column="category" jdbcType="INTEGER"/>
+		<result property="meetAppr" column="meet_appr" jdbcType="CHAR"/>
+		<result property="meetType" column="meet_type" jdbcType="CHAR"/>
+	</resultMap>
+	
+	<resultMap id="meetMemSelectMap" type="meetMem">
+		<result property="user.userId" column="user_id" jdbcType="VARCHAR"/>
+		<result property="meet.meetId" column="meet_id" jdbcType="VARCHAR"/>
+		<result property="joinCode" column="join_code" jdbcType="CHAR"/>
+		<result property="meetRole" column="meet_role" jdbcType="CHAR"/>
+		<result property="joinReqDate" column="join_req_date" jdbcType="DATE"/>
+		<result property="joinDate" column="join_date" jdbcType="DATE"/>
+		<result property="intro" column="intro" jdbcType="VARCHAR"/>
+		<result property="notifyCount" column="notify_count" jdbcType="INTEGER"/>
+	</resultMap>
+	
+	<insert id="addMeet" parameterType="meet">
+	INSERT INTO meet (meet_id, leader_id, meet_name, meet_loc, max_num, mem_num, meet_img, s_intro, l_intro, reg_date, meet_star, bank, accNum, category, meet_appr, meet_type)
+	VALUES(#{meetId}, #{leaderId}, #{meetName}, #{meetLoc:VARCHAR}, #{maxNum}, 0, #{meetImg:VARCHAR}, #{sIntro:VARCHAR}, #{lIntro:VARCHAR}, SYSDATE, 0, #{bank:VARCHAR}, #{accNum}, #{category}, #{meetAppr}, #{meetType})
+	</insert>
+	
+	<select id="getMeet" parameterType="String" resultMap="meetSelectMap">
+	SELECT meet_id, leader_id, meet_name, meet_loc, max_num, mem_num, meet_img, s_intro, l_intro, reg_date, meet_star, bank, accNum, category, meet_appr, meet_type 
+	FROM meet 
+	WHERE meet_id = #{meetId}
+	</select>
+	
+	<insert id="addHash" parameterType="String">
+	INSERT INTO hashtag (hash_no, hash_name) 
+	VALUES (seq_hashtag_hash_no.nextval, #{hashtag})
+	</insert>
+	
+	<select id="getHash" parameterType="String" resultType="String">
+	SELECT hash_no 
+	FROM hashtag 
+	WHERE hash_name = #{hashtag}
+	</select>
+	
+	<insert id="addMeet_Hash" parameterType="map">
+	INSERT INTO meet_hashtag (meet_hash_no, meet_id, hash_no) 
+	VALUES (seq_meet_hashtag_meet_hash_no.nextval, #{meetId}, #{hashNo})
+	</insert>
+	
+	<insert id="addMeetMem" parameterType="meetMem">
+	<if test ="meet_role == 0">
+	INSERT INTO meetmem(mem_no, user_id, meet_id, join_code, meet_role, join_req_date, join_date, intro, notify_count)
+	VALUES (seq_meetmem_mem_no.nextval, #{userId}, #{meetId}, #{joinCode}, #{joinCode}, sysdate, sysdate, #{intro:VARCHAR}, 0)
+	</if>
+	<if test ="meet_role == 2">
+	INSERT INTO meetmem(mem_no, user_id, meet_id, join_code, meet_role, join_req_date, join_date, intro, notify_count)
+	VALUES (seq_meetmem_mem_no.nextval, #{userId}, #{meetId}, #{joinCode}, #{joinCode}, sysdate, "", #{intro:VARCHAR}, 0)
+	</if>
+	</insert>
+	
+	<select id="listMeetMem" parameterType="String" resultMap="meetMemSelectMap">
+	SELECT mem_no, user_id, meet_id, join_code, meet_role, join_req_date, join_date, intro, notify_count
+	FROM meetmem
+	WHERE meet_id = #{meetId} and join_code = '1'
+	ORDER BY meet_role, join_date
+	</select>
+	
+	<select id="listJoinMeetUser" parameterType="String" resultMap="meetMemSelectMap">
+	SELECT mem_no, user_id, meet_id, join_code, meet_role, join_req_date, join_date, intro, notify_count
+	FROM meetmem
+	WHERE meet_id = #{meetId} and join_code = '0'
+	ORDER BY join_req_date
+	</select>
+	
+	<update id="okJoinMeetUser" parameterType="map">
+	UPDATE meetmem SET join_code ='1'
+	WHERE user_id = #{userId} and meet_id = #{meetId}
+	</update>
+	
+	<delete id="refuseJoinMeetUser" parameterType="map">
+	DELETE FROM meetmem 
+	WHERE user_id = #{userId} and meet_id = #{meetId}
+	</delete>
+
+</mapper>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="FriendMapper">
+ 	
+ 	
+	<resultMap id="friendSelectMap" type="friend">
+		<result property="friendNo" 			column="friend_no" 			jdbcType="INTEGER"/>
+		<result property="reqFriend.userId" 				column="req_friend_id" 					jdbcType="VARCHAR" />
+		<result property="recvFriend.userId" 			column="recv_friend_id" 		jdbcType="VARCHAR" />
+		<result property="friendCode" 				column="friend_code" 					jdbcType="CHAR" />
+		<result property="reqFriendDate" 		column="req_friend_date" 			jdbcType="DATE" />
+		<result property="friendDate"			column="friend_date"			jdbcType="DATE"/>
+	</resultMap>
+	
+	<!-- SQL : INSERT -->
+	<insert 	id="reqFriend"		parameterType="friend" >
+	 	INSERT
+	 	INTO	friend(		friend_no
+	 					,	req_friend_id
+	 					,	recv_friend_id
+	 					,	friend_code
+	 					,	req_friend_date
+	 					,	friend_date
+	 					) VALUES (	seq_friend_friend_no.nextval
+	 							  ,	#{friend.userId:VARCHAR2}
+	 							  ,	#{friend.userId:VARCHAR2}
+	 							  ,	'0'
+	 							  ,	sysdate
+	 							  ,	null
+	 							  )
+	 					
+	</insert>
+	
+	<select id="listRecvFriend" parameterType="map" resultMap="friendSelectMap">
+		SELECT *
+		FROM friend
+		WHERE recv_friend_id=#{recvFriendId:VARCHAR2}
+	</select>
+	
+	<select id="getRecvFriend" parameterType="int" resultMap="friendSelectMap">
+		SELECT *
+		FROM Friend
+		WHERE friend_no=#{friendNo}
+	</select>
+	
+</mapper>

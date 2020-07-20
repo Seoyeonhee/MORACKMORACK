@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="UserMapper">
+ 	
+ 	
+	<resultMap id="userSelectMap" type="user">
+		<result property="userId" 			column="user_id" 			jdbcType="VARCHAR"/>
+		<result property="password" 	column="password" 		jdbcType="VARCHAR" />
+		<result property="userName"	column="user_name" 		jdbcType="VARCHAR" />
+		<result property="email" 			column="email" 				jdbcType="VARCHAR"  />
+		<result property="phoneNumber" 			column="phone_number" 		jdbcType="VARCHAR" />
+		<result property="birthday" 			column="birthday" 		jdbcType="DATE" />
+		<result property="nickName" 			column="nick_name" 		jdbcType="VARCHAR" />
+		<result property="profileImg" 				column="image_file" 					jdbcType="VARCHAR" />
+		<result property="address" 				column="address" 					jdbcType="VARCHAR" />
+		<result property="gender" 			column="gender" 		jdbcType="CHAR" />
+		<result property="category" 			column="category" 		jdbcType="VARCHAR" />
+		<result property="userStateList" 				column="user_state" 					jdbcType="CHAR" />
+		<result property="naverId" 			column="naver_id" 		jdbcType="VARCHAR" />
+		<result property="kakaoId" 			column="kakao_id" 		jdbcType="VARCHAR" />
+		<result property="googleId" 			column="google_id" 		jdbcType="VARCHAR" />
+		<result property="meetList" 			column="meet_list" 		jdbcType="VARCHAR" />
+		<result property="meetCount" 			column="join_meet_count" 		jdbcType="NUMERIC" />
+		<result property="role" 			column="role" 		jdbcType="VARCHAR" />
+		
+		
+	</resultMap>
+	
+	<!-- SQL : INSERT -->
+	<insert 	id="addUser"		parameterType="user" >
+	 	INSERT
+		INTO users( user_id , password, user_name , email, phone_number , birthday, nick_name, img_file, address, gender, category, user_state, naver_id, kakao_id, google_id, meet_list, join_meet_count, role) 
+		VALUES	 (	#{userId}, #{password}, #{userName}, #{email}, #{phoneNumber}, #{birthday}, 
+					#{nickName}, NULL, #{address}, #{gender}, NULL, '0', 
+					NULL, NULL, NULL, NULL, 0, 'user')
+	 </insert>
+	 
+	 <select id="getUser" parameterType="String" resultMap="userSelectMap">
+	 SELECT * FROM user WHERE user_id = #{userId}
+	 </select>
+	 
+
+</mapper>
