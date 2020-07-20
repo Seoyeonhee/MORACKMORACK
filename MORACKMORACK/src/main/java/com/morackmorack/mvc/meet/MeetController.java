@@ -283,11 +283,18 @@ public class MeetController {
 		return mav;		
 	}
 	
+	@RequestMapping(value="delMyMeet", method=RequestMethod.GET)
 	public void delMyMeet(String userId, String meetId) {
-		System.out.println("/meet/delMyMeet : POST");
+		System.out.println("/meet/delMyMeet : GET");
 	}
 	
-	public void addWishMeet(String userId, String meetId) {
+	@RequestMapping(value="addWishMeet/{meetId}", method=RequestMethod.GET)
+	public void addWishMeet(HttpServletRequest request, @PathVariable("meetId") String meetId) {
+		System.out.println("/meet/addWishMeet :GET");	
+		
+		HttpSession session=request.getSession(true);	
+		User user = (User)session.getAttribute("user");	
+		
 		
 	}
 	
