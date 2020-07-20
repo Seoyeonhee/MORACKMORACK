@@ -199,9 +199,9 @@
 		      	<strong class="text-danger">입력후 중복체크 필수</strong>
 		      </span>
 		    </div>
-		    <!-- <div class="col-sm-3">
+		    <div class="col-sm-3">
 		      <button type="button" id ="check" class="btn btn-info">중복체크</button>
-		    </div> -->
+		    </div>
 		  </div>
 		  
 		  <div class="form-group">
@@ -217,9 +217,9 @@
 				<input type="tel" class="form-control" id="phoneNumber" name="phoneNumber" placeholder="000-0000-0000"
 					pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}" required>		  	
 		  </div>
-		  <!-- <div class="col-sm-3">
+		  <div class="col-sm-3">
 		      <button type="button" id ="check" class="btn btn-info">인증</button>
-		    </div> -->
+		    </div>
 		 </div>
 		 
 		 <div class="form-group">
@@ -273,9 +273,9 @@
 		    <div class="col-sm-4">
 		      <input type="text" class="form-control" id="addr" name="addr" placeholder="주소">
 		    </div>
-		   <!--  <div class="col-sm-3">
+		    <div class="col-sm-3">
 		      <button type="button" id ="check" class="btn btn-info">주소검색</button>
-		    </div> -->
+		    </div>
 		  </div>
 		  
 		  <div class="form-group">
