@@ -38,8 +38,8 @@
 	
 	<insert id="addOffReview"		parameterType="community" >
 		INSERT
-		INTO community( post_no , user_id , community_name , meet_id , off_no , title , content , reg_date , mod_date rvstar) 
-		VALUES	 ( seq_coummunity_post_no.NEXTVAL , #{user.userId:VARCHAR} , '2' , #{meet.meetId:INTEGER} , 
+		INTO community( post_no , user_id , community_name , meet_id , off_no , title , content , reg_date , mod_date, rvstar) 
+		VALUES	 ( seq_community_post_no.NEXTVAL , #{user.userId:VARCHAR} , '2' , #{meet.meetId:INTEGER} , 
 							#{offMeet.offNo:INTEGER} , #{title:VARCHAR} ,  #{content:VARCHAR}, SYSDATE, NULL, #{rvStar:INTEGER} )
 	</insert>
 	
@@ -71,11 +71,79 @@
 										FROM community c,  offMeet o, users u
 										WHERE c.off_no = o.off_no 
 										AND c.user_id = u.user_id 
-										AND c.off_no = #{offno}
+										AND c.off_no = #{offNo}
 										ORDER BY reg_date DESC  ) inner_table
   						WHERE ROWNUM <![CDATA[<=]]> #{search.currentPage}*#{search.pageSize} )
   		WHERE row_seq BETWEEN (#{search.currentPage}-1)*#{search.pageSize}+1
   		AND #{search.currentPage}*#{search.pageSize}
 	</select>
+	
+	
+	<select id="getOffReviewListCount" parameterType="int" resultType="int">
+		SELECT COUNT(*) FROM (
+			SELECT
+				c.post_no, p.user_id, u.nick_name, u.image_file, o.off_name, c.title, c.content, c.rvstar, c.reg_date
+			FROM community c,  offMeet o, users u
+			WHERE
+			WHERE c.off_no = o.off_no 
+			AND c.user_id = u.user_id 
+			AND c.off_no = #{offNo}
+		) countTable
+	</select>	 
+	
+	<insert id="addBusinessReview"		parameterType="community" >
+		INSERT
+		INTO community( post_no , user_id , community_name , meet_id , business_no, title , content , reg_date , mod_date, rvstar) 
+		VALUES	 ( seq_community_post_no.NEXTVAL , #{user.userId:VARCHAR} , '3' , #{meet.meetId:INTEGER} , 
+				  #{business.businessNo:VARCHAR} #{title:VARCHAR} ,  #{content:VARCHAR}, SYSDATE, NULL, #{rvStar:INTEGER} )
+	</insert>
+	
+	<update id="updateBusinessReview" parameterType="community" >
+		UPDATE community
+		<set>
+		title = #{title}, 
+		content = #{content} , 
+	    modDate = sysdate
+		</set>
+		WHERE community_name = '3' and post_no = #{postNo} 
+	</update>
+	
+<!-- 	<select id="getBusinessReview" parameterType="INT" resultMap="communitySelectMap"> -->
+<!-- 	SELECT *  -->
+<!-- 	FROM community  -->
+<!-- 	WHERE board_type = '3' AND post_no = #{postNo} -->
+<!-- 	</select> -->
+	
+	<delete id="deleteBusinessReview" parameterType="community" >
+	DELETE FROM community 
+	WHERE post_no = #{postNo}
+	</delete>
+
+	<select id="getBusinessReviewList" parameterType="map" resultMap="communitySelectMap">
+  		SELECT *
+  		FROM ( SELECT inner_table.*, ROWNUM AS row_seq
+  						FROM ( SELECT  c.post_no, p.user_id, u.nick_name, u.image_file, B.Business_name, c.title, c.content, c.rvstar, c.reg_date
+										FROM community c,  business b, users u
+										WHERE c.business_no = B.business_no 
+										AND c.user_id = u.user_id 
+										AND b.business_no = #{businessNo}
+										ORDER BY reg_date DESC  ) inner_table
+  						WHERE ROWNUM <![CDATA[<=]]> #{search.currentPage}*#{search.pageSize} )
+  		WHERE row_seq BETWEEN (#{search.currentPage}-1)*#{search.pageSize}+1
+  		AND #{search.currentPage}*#{search.pageSize}
+	</select>
+	
+	
+		<select id="getBusinessReviewCount" parameterType="int" resultType="int">
+		SELECT COUNT(*) FROM (
+			SELECT
+			c.post_no, p.user_id, u.nick_name, u.image_file, B.Business_name, c.title, c.content, c.rvstar, c.reg_date
+			FROM community c,  business b, users u
+			WHERE c.business_no = B.business_no 
+			AND c.user_id = u.user_id 
+		    AND b.business_no = #{businessNo}
+		) countTable
+	</select>	 
+	
 	
 </mapper>

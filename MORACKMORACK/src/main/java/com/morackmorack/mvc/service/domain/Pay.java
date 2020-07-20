@@ -8,18 +8,30 @@ public class Pay {
 	private char payFlag;
 	private User user;
 	private Meet meet;
-	private OffMeet offmeet;
+	private OffMeet offMeet;
 	private Business business;
 	private int totalAmount;
-	private Date payDate;
+	private String payDate;
 	private char payMethod;
 	private String reserveStartTime;
 	private String reserveEndTime;
-	private Date reserveDate;
-	
+	private String reserveDate;
+	private int reserveMemNum;
 
-	public Pay() {
+
 	
+	public Pay() {
+		
+	}
+	
+	
+	public int getReserveMemNum() {
+		return reserveMemNum;
+	}
+
+
+	public void setReserveMemNum(int reserveMemNum) {
+		this.reserveMemNum = reserveMemNum;
 	}
 
 
@@ -63,16 +75,6 @@ public class Pay {
 	}
 
 
-	public OffMeet getOffmeet() {
-		return offmeet;
-	}
-
-
-	public void setOffmeet(OffMeet offmeet) {
-		this.offmeet = offmeet;
-	}
-
-
 	public Business getBusiness() {
 		return business;
 	}
@@ -93,13 +95,13 @@ public class Pay {
 	}
 
 
-	public Date getPayDate() {
+	public String getPayDate() {
 		return payDate;
 	}
 
 
-	public void setPayDate(Date payDate) {
-		this.payDate = payDate;
+	public void setPayDate(String string) {
+		this.payDate = string;
 	}
 
 
@@ -133,22 +135,34 @@ public class Pay {
 	}
 
 
-	public Date getReserveDate() {
+	public String getReserveDate() {
 		return reserveDate;
 	}
 
 
-	public void setReserveDate(Date reserveDate) {
+	public void setReserveDate(String reserveDate) {
 		this.reserveDate = reserveDate;
+	}
+
+
+	public OffMeet getOffMeet() {
+		return offMeet;
+	}
+
+
+	public void setOffMeet(OffMeet offMeet) {
+		this.offMeet = offMeet;
 	}
 
 
 	@Override
 	public String toString() {
-		return "Pay [payNo=" + payNo + ", payFlag=" + payFlag + ", user=" + user + ", meet=" + meet + ", offmeet="
-				+ offmeet + ", totalAmount=" + totalAmount + ", payDate=" + payDate + ", payMethod=" + payMethod
-				+ ", reserveStartTime=" + reserveStartTime + ", reserveEndTime=" + reserveEndTime + ", reserveDate="
-				+ reserveDate + "]";
+		return "Pay [payNo=" + payNo + ", payFlag=" + payFlag + ", user=" + user + ", meet=" + meet + ", offMeet="
+				+ offMeet + ", business=" + business + ", totalAmount=" + totalAmount + ", payDate=" + payDate
+				+ ", payMethod=" + payMethod + ", reserveStartTime=" + reserveStartTime + ", reserveEndTime="
+				+ reserveEndTime + ", reserveDate=" + reserveDate + ", reserveMemNum=" + reserveMemNum + "]";
 	}
+
+
 
 }
