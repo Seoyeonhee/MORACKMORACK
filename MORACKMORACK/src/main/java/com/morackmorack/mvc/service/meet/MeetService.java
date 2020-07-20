@@ -36,7 +36,7 @@ public interface MeetService {
 	
 	public void provideLeader(String userId, String meetId);
 	
-	public List<Meet> listMyMeet(String userId);
+	public List<MeetMem> listMyMeet(String userId);
 	
 	public void addWishMeet(String userId, String meetId);
 	

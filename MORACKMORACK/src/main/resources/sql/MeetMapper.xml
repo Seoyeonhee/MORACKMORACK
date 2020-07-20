@@ -75,7 +75,7 @@
 	</insert>
 	
 	<select id="listMeetMem" parameterType="String" resultMap="meetMemSelectMap">
-	SELECT mem_no, user_id, meet_id, join_code, meet_role, join_req_date, join_date, intro, notify_count
+	SELECT user_id, meet_id, join_code, meet_role, join_req_date, join_date, intro, notify_count
 	FROM meetmem
 	WHERE meet_id = #{meetId} and join_code = '1'
 	ORDER BY meet_role, join_date
@@ -97,5 +97,12 @@
 	DELETE FROM meetmem 
 	WHERE user_id = #{userId} and meet_id = #{meetId}
 	</delete>
+	
+	<select id="listMyMeet" parameterType="String" resultMap="meetMemSelectMap">
+	SELECT user_id, meet_id, join_code, meet_role, join_req_date, join_date, intro, notify_count
+	FROM meetmem
+	WHERE user_id = #{userId} and join_code = '1'
+	ORDER BY join_date
+	</select>
 
 </mapper>

@@ -21,6 +21,6 @@
 <body>
 <a href="/meet/getMeet/meet01">모임 상세 조회</a>
 <a href="/meet/addMeet">모임 생성</a>
-
+<a href="/meet/listMyMeet">모임 목록 조회</a>
 </body>
 </html>

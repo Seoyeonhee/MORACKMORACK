@@ -73,7 +73,7 @@ public class MeetServiceImpl implements MeetService{
 		meetDao.provideLeader(userId, meetId);
 	}
 	
-	public List<Meet> listMyMeet(String userId){
+	public List<MeetMem> listMyMeet(String userId){
 		return meetDao.listMyMeet(userId);
 	}
 	

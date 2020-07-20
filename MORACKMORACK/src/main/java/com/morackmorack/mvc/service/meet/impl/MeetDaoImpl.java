@@ -99,9 +99,13 @@ public class MeetDaoImpl implements MeetDao {
 		
 	}
 	
-	public List<Meet> listMyMeet(String userId){
-		return null;
-		
+	public List<MeetMem> listMyMeet(String userId){
+		List<MeetMem> listMyMeet = sqlSession.selectList("MeetMapper.listMyMeet", userId);	
+		for(int i=0; i<listMyMeet.size(); i++) {
+			listMyMeet.get(i).setUser((User)sqlSession.selectOne("UserMapper.getUser", listMyMeet.get(i).getUser().getUserId()));
+			listMyMeet.get(i).setMeet((Meet)sqlSession.selectOne("MeetMapper.getMeet", listMyMeet.get(i).getMeet().getMeetId()));
+		}		
+			return listMyMeet;
 	}
 	
 	public void addWishMeet(String userId, String meetId){

@@ -134,7 +134,7 @@ public class MeetController {
 	}
 		  
 	
-	@RequestMapping(value="getMeet/{meetId}", method=RequestMethod.POST)
+	@RequestMapping(value="getMeet/{meetId}", method=RequestMethod.GET)
 	public ModelAndView getMeet(@PathVariable("meetId") String meetId) {
 		System.out.println("/meet/getMeet");
 		
@@ -167,6 +167,35 @@ public class MeetController {
 		}
 	}
 	
+	@RequestMapping(value="checkJoinMeet", method=RequestMethod.POST)
+	public ModelAndView checkJoinMeet(HttpServletRequest request, @RequestParam("meetId") String meetId) {
+		System.out.println("/meet/checkJoinMeet : POST");
+		
+		//User user = userService.getUser(userId);	
+		//int joinMeetCount = user.getJoinMeetCount();
+		
+		HttpSession session=request.getSession(true);	
+		User user = (User)session.getAttribute("user");
+		String userId = user.getUserId();
+		
+		Meet meet = meetService.getMeet(meetId);
+		
+		ModelAndView mav = new ModelAndView();
+		String joinMessage = null;
+		
+		if(meet.getMaxNum() == meet.getMemNum()) {
+			return mav.addObject(joinMessage, "모임 인원 초과");
+		}else if(meet.getMeetType() == '1') {
+			if(user.getMeetCount() >= 5) {
+				return mav.addObject(joinMessage, "가입 가능한 모임 개수 초과");
+			}else {
+				if(meet.getMeetA)
+			}
+		}
+		
+		return null;
+	}
+	
 	@RequestMapping(value="joinMeet", method=RequestMethod.POST)
 	public ModelAndView joinMeet(HttpServletRequest request) {
 		System.out.println("/meet/joinMeet : POST");	
@@ -176,7 +205,8 @@ public class MeetController {
 		String userId = "user06"; ////
 		
 		
-		String meetId = (String) request.getAttribute("meetId");
+		
+		
 			
 		return null;
 	
@@ -196,9 +226,9 @@ public class MeetController {
 		return mav;	
 	}
 	
-	@RequestMapping(value="manJoinMeetUser/{userId}", method=RequestMethod.GET)
-	public ModelAndView manJoinMeetUser(@RequestParam("joinFlag") boolean joinFlag, @RequestParam("meetId") String meetId, @PathVariable("userId") String userId) {
-		System.out.println("/meet/manJoinMeetUser : POST");	
+	@RequestMapping(value="mangJoinMeetUser/{userId}", method=RequestMethod.GET)
+	public ModelAndView mangJoinMeetUser(@RequestParam("joinFlag") boolean joinFlag, @RequestParam("meetId") String meetId, @PathVariable("userId") String userId) {
+		System.out.println("/meet/mangJoinMeetUser : POST");	
 		
 		if(joinFlag == true) {
 			meetService.okJoinMeetUser(userId, meetId);
@@ -230,9 +260,27 @@ public class MeetController {
 		
 	}
 	
-	public List<Meet> listMyMeet(){
-		return null;
+	@RequestMapping(value="listMyMeet", method=RequestMethod.GET)
+	public ModelAndView listMyMeet(HttpServletRequest request){
+		System.out.println("/meet/listMyMeet : GET");	
 		
+		/*
+		 * HttpSession session=request.getSession(true); User user =
+		 * (User)session.getAttribute("user"); String userId = null;
+		 */
+		/*
+		 * if(session == null) { userId = "user01"; }else { userId = user.getUserId(); }
+		 */
+		
+		String userId = "user01";
+		
+		List<MeetMem> listMyMeet = meetService.listMyMeet(userId);
+		System.out.println(">>>>>>>>>>>>>>>>>>>>"+listMyMeet);
+		ModelAndView mav = new ModelAndView();
+		mav.addObject(listMyMeet);
+		mav.setViewName("redirect:/meet/listMyMeet.jsp");
+		
+		return mav;		
 	}
 	
 	public void delMyMeet(String userId, String meetId) {
