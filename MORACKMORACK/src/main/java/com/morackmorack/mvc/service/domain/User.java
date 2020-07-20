@@ -6,18 +6,75 @@ import java.util.List;
 public class User {
 	private String userId;
 	private String password;
-	private String name;
+	private String userName;
     private String email;
     private String phoneNumber;
-    private int age;
-    private String nickName;
     private Date birthday;
-    private List<String> category;
-    private String address;
+    private String nickName;
     private String profileImg;
+    private String address;
+    private char gender;
     private List<String> userStateList;
-    private List<String> meetList;
+    private String naverId;
+    private String kakaoId;
+    private String googleId;
     private int meetCount;
+    private String role;
+    public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public char getGender() {
+		return gender;
+	}
+
+	public void setGender(char gender) {
+		this.gender = gender;
+	}
+
+	public String getNaverId() {
+		return naverId;
+	}
+
+	public void setNaverId(String naverId) {
+		this.naverId = naverId;
+	}
+
+	public String getKakaoId() {
+		return kakaoId;
+	}
+
+	public void setKakaoId(String kakaoId) {
+		this.kakaoId = kakaoId;
+	}
+
+	public String getGoogleId() {
+		return googleId;
+	}
+
+	public void setGoogleId(String googleId) {
+		this.googleId = googleId;
+	}
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+
+	public void setUserStateList(List<String> userStateList) {
+		this.userStateList = userStateList;
+	}
+
+	private List<String> category;
+    private List<String> meetList;
+    
    
     public User(){
     }
@@ -39,11 +96,11 @@ public class User {
     }
    
     public String getName() {
-        return name;
+        return userName;
     }
    
     public void setName(String name) {
-        this.name = name;
+        this.userName = name;
     }
    
     public String getEmail() {
@@ -60,14 +117,6 @@ public class User {
 
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
-	}
-
-	public int getAge() {
-		return age;
-	}
-
-	public void setAge(int age) {
-		this.age = age;
 	}
 
 	public String getNickName() {
@@ -133,14 +182,15 @@ public class User {
 	public void setMeetCount(int meetCount) {
 		this.meetCount = meetCount;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "User : [userId] "+userId+" [password] "+password+" [name] "+name+" [email] "+email
-				+" [phoneNumber] "+phoneNumber+" [age] "+age+" [nickName] "+nickName
-				+" [birthday] "+birthday+" [category] "+category+" [address] "+address
-				+" [profileImg] "+profileImg+" [userStateList] "+userStateList+" [meetList] "+meetList
-				+" [meetCount] "+meetCount;
+		return "User [userId=" + userId + ", password=" + password + ", userName=" + userName + ", email=" + email
+				+ ", phoneNumber=" + phoneNumber + ", birthday=" + birthday + ", nickName=" + nickName + ", profileImg="
+				+ profileImg + ", address=" + address + ", gender=" + gender + ", userStateList=" + userStateList
+				+ ", naverId=" + naverId + ", kakaoId=" + kakaoId + ", googleId=" + googleId + ", meetCount="
+				+ meetCount + ", role=" + role + ", category=" + category + ", meetList=" + meetList + "]";
 	}
-   
+	
+	
 }
