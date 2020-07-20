@@ -110,7 +110,7 @@
 	
 	$('#check').click(function(){
 			$.ajax({
-				url: "${pageContext.request.contextPath}/idCheck",
+				url: "/user/idCheck",
 				type: "GET",
 				data:{"userId":$('#userId').val()},
 				success: function(data){
