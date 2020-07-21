@@ -1,7 +1,13 @@
 package com.morackmorack.mvc.service.domain;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
+
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 
 public class MeetMem {
 	private int memNo;
@@ -15,6 +21,7 @@ public class MeetMem {
 	private int notifyCount;
 	private Map<String, String> blackList;
 	
+<<<<<<< HEAD
 	public int getMemNo() {
 		return memNo;
 	}
@@ -22,6 +29,17 @@ public class MeetMem {
 		this.memNo = memNo;
 	}
 	public User getUser() {
+=======
+	  @ManyToMany
+	  @JoinTable(name="meetmem_offmeet",
+	  joinColumns = @JoinColumn(name="mem_no" , referencedColumnName= "memNo"),
+	   inverseJoinColumns = @JoinColumn(name = "off_no", referencedColumnName = "offNo")
+	  )
+		private List<OffMeet> offMeet = new ArrayList<OffMeet>();
+	  
+	  
+	  public User getUser() {
+>>>>>>> refs/remotes/origin/master
 		return user;
 	}
 	public void setUser(User user) {
@@ -75,11 +93,31 @@ public class MeetMem {
 	public void setBlackList(Map<String, String> blackList) {
 		this.blackList = blackList;
 	}
+<<<<<<< HEAD
 	
+=======
+
+	public int getMemNo() {
+		return memNo;
+	}
+	public void setMemNo(int memNo) {
+		this.memNo = memNo;
+	}
+	public List<OffMeet> getOffMeet() {
+		return offMeet;
+	}
+	public void setOffMeet(List<OffMeet> offMeet) {
+		this.offMeet = offMeet;
+	}
+>>>>>>> refs/remotes/origin/master
 	@Override
 	public String toString() {
 		return "MeetMem [memNo=" + memNo + ", user=" + user + ", meet=" + meet + ", joinCode=" + joinCode
 				+ ", meetRole=" + meetRole + ", joinReqDate=" + joinReqDate + ", joinDate=" + joinDate + ", intro="
+<<<<<<< HEAD
 				+ intro + ", notifyCount=" + notifyCount + ", blackList=" + blackList + "]";
+=======
+				+ intro + ", notifyCount=" + notifyCount + ", blackList=" + blackList + ", offMeet=" + offMeet + "]";
+>>>>>>> refs/remotes/origin/master
 	}
 }

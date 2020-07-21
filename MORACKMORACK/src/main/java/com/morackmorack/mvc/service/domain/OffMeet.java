@@ -25,26 +25,28 @@ public class OffMeet {
 	private Meet meet;
 	private String offName;
 	private String offLoc;
-	private String offMax;
+	private int offMax;
 	private int offMem;
 	private int amount;
-	private Date offDate;
-	private Date offTime;
+	private String offDate;
+	private String offTime;
 	
 	@ManyToMany(mappedBy = "offMeet")
 	private List<MeetMem> meetMem = new ArrayList<MeetMem>();
 	
+	
+	public List<MeetMem> getMeetMem() {
+		return meetMem;
+	}
+
+	public void setMeetMem(List<MeetMem> meetMem) {
+		this.meetMem = meetMem;
+	}
+
 	public OffMeet() {
 		
 	}
 
-	public List<MeetMem> getMeetMem() {
-		return meetMem;
-	}
-	
-	public void setMeetMem(List<MeetMem> meetMem) {
-		this.meetMem = meetMem;
-	}
 	public int getOffNo() {
 		return offNo;
 	}
@@ -75,11 +77,11 @@ public class OffMeet {
 	public void setOffLoc(String offLoc) {
 		this.offLoc = offLoc;
 	}
-	public String getOffMax() {
+	public int getOffMax() {
 		return offMax;
 	}
-	public void setOffMax(String offMax) {
-		this.offMax = offMax;
+	public void setOffMax(int i) {
+		this.offMax = i;
 	}
 	public int getOffMem() {
 		return offMem;
@@ -93,17 +95,17 @@ public class OffMeet {
 	public void setAmount(int amount) {
 		this.amount = amount;
 	}
-	public Date getOffDate() {
+	public String getOffDate() {
 		return offDate;
 	}
-	public void setOffDate(Date offDate) {
+	public void setOffDate(String offDate) {
 		this.offDate = offDate;
 	}
-	public Date getOffTime() {
+	public String getOffTime() {
 		return offTime;
 	}
-	public void setOffTime(Date offTime) {
-		this.offTime = offTime;
+	public void setOffTime(String string) {
+		this.offTime = string;
 	}
 
 	@Override

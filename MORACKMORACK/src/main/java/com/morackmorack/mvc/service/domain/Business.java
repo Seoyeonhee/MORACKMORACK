@@ -169,6 +169,15 @@ public class Business implements Serializable {
 		this.menu = menu;
 	}
 
-	
+	@Override
+	public String toString() {
+		return "Business [businessId=" + businessId + ", businessPass=" + businessPass + ", businessName="
+				+ businessName + ", businessLoc=" + businessLoc + ", categoryNo=" + categoryNo + ", businessPhone="
+				+ businessPhone + ", businessImg=" + businessImg + ", businessNum=" + businessNum + ", businessOwner="
+				+ businessOwner + ", regDate=" + regDate + ", bank=" + bank + ", depositAcNum=" + depositAcNum
+				+ ", business_star=" + business_star + ", businessStartTime=" + businessStartTime + ", businessEndTime="
+				+ businessEndTime + ", reserveAble=" + reserveAble + ", menu=" + menu + "]";
+	}
+
 
 }
