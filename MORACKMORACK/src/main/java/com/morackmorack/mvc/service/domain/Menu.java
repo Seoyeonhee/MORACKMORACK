@@ -6,6 +6,7 @@ import java.util.List;
 public class Menu implements Serializable {
 
 	/// Field
+	private int menuNo;
 	private String businessId;
 	private String businessMenu;
 	private int businessMenuFee;
@@ -31,6 +32,12 @@ public class Menu implements Serializable {
 	public String getBusinessId() {
 		return businessId;
 	}
+	public int getMenuNo() {
+		return menuNo;
+	}
+	public void setMenuNo(int menuNo) {
+		this.menuNo = menuNo;
+	}
 	public void setBusinessId(String businessId) {
 		this.businessId = businessId;
 	}
@@ -51,6 +58,13 @@ public class Menu implements Serializable {
 	}
 	public void setBusinessMenuImg(String businessMenuImg) {
 		this.businessMenuImg = businessMenuImg;
+	}
+	
+	
+	@Override
+	public String toString() {
+		return "Menu [menuNo=" + menuNo + ", businessId=" + businessId + ", businessMenu=" + businessMenu
+				+ ", businessMenuFee=" + businessMenuFee + ", businessMenuImg=" + businessMenuImg + "]";
 	}
 	
 	
