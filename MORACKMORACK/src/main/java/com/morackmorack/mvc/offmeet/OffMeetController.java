@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.morackmorack.mvc.service.domain.User;
+import com.morackmorack.mvc.service.domain.Meet;
 import com.morackmorack.mvc.service.domain.OffMeet;
 import com.morackmorack.mvc.service.domain.Pay;
 import com.morackmorack.mvc.service.offmeet.OffMeetService;
@@ -23,7 +25,7 @@ import com.morackmorack.mvc.service.offmeet.OffMeetService;
 public class OffMeetController {
 
 @Autowired
-@Qualifier("offmeetServiceImpl")
+@Qualifier("offMeetServiceImpl")
 private OffMeetService offMeetService;
 public OffMeetController() {
 		
@@ -36,16 +38,25 @@ public String addOffView() throws Exception {
 	System.out.println("/offmeet/addOff :GET");
 	
 	
-	return "redirect:/offmeet/addOff.jsp";
+	return "redirect:/offMeet/addOff.jsp";
 }
 
 
 
 @RequestMapping (value ="addOff", method = RequestMethod.POST)
-public String addOff (@ModelAttribute ("offmeet") OffMeet offmeet) throws Exception {
+public String addOff (@ModelAttribute ("offMeet") OffMeet offMeet, HttpSession session , Model model) throws Exception {
 	
-	offMeetService.addOff(offmeet);
-	
+	System.out.println("offMeet : "+offMeet);
+//	offMeet.setUser((User)session.getAttribute("user"));
+	User user = new User();
+	user.setUserId("user01");
+	offMeet.setUser(user);
+	offMeet.setOffMem(1);
+	Meet meet = new Meet();
+	meet.setMeetId("meet01");
+	offMeet.setMeet(meet);
+	offMeetService.addOff(offMeet);
+	model.addAttribute("offMeet",offMeet);
 	return "forward:/offMeet/getInfoOff.jsp";
 }
 
@@ -66,7 +77,7 @@ public String updateOff (@RequestParam("offNo") OffMeet offMeet, Model model) th
 	
 	offMeetService.updateOff(offMeet);
 	model.addAttribute("offMeet", offMeet);
-	return "forward:/offmeet/getInfoOff.jsp";
+	return "forward:/offMeet/getInfoOff.jsp";
 }
 
 
@@ -98,7 +109,7 @@ public String addOffPay (@ModelAttribute("pay") Pay pay) throws Exception{
 	
 	offMeetService.addOffPay(pay);
 
-	return "forward:/offmeet/getReqOkOff.jsp";
+	return "forward:/offMeet/getReqOkOff.jsp";
 }
 
 @RequestMapping (value="addBusinessPay", method = RequestMethod.POST)
@@ -108,7 +119,7 @@ public String addBusinessPay (@ModelAttribute("pay") Pay pay) throws Exception{
 	
 	offMeetService.addBusinessPay(pay);
 
-	return "forward:/offmeet/getReqOkBusiness.jsp";
+	return "forward:/offMeet/getReqOkBusiness.jsp";
 }
 
 

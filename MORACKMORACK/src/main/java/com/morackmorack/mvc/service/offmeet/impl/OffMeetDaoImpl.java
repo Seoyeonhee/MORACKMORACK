@@ -29,7 +29,7 @@ public class OffMeetDaoImpl implements OffMeetDao{
 	}
 
 	public void addOff(OffMeet offMeet) throws Exception {
-		sqlSession.insert("OffMeetMapper.addOff", offMeet);
+		sqlSession.insert("OffMeetMapper.addOff", offMeet);	
 	}
 	
 	public void updateOff(OffMeet offMeet) throws Exception {

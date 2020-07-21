@@ -7,9 +7,9 @@ import com.morackmorack.mvc.service.domain.Pay;
 
 public interface OffMeetDao {
 	//오프라인 모임 생성
-	public void addOff(OffMeet offmeet) throws Exception;
+	public void addOff(OffMeet offMeet) throws Exception;
 	//오프라인 모임 수정
-	public void updateOff(OffMeet offmeet) throws Exception;
+	public void updateOff(OffMeet offMeet) throws Exception;
 	//오프라인 모임 상세 조회
 	public OffMeet getOff(int offNo) throws Exception;
     //오프라인 모임 결제

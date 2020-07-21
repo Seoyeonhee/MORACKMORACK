@@ -33,12 +33,12 @@ public class OffMeetServiceImpl implements OffMeetService{
 	}
 
 	///Method
-	public void addOff(OffMeet offmeet) throws Exception {
-		offMeetDao.addOff(offmeet);
+	public void addOff(OffMeet offMeet) throws Exception {
+		offMeetDao.addOff(offMeet);
 	}
 
-	public void updateOff(OffMeet offmeet) throws Exception {
-		offMeetDao.updateOff(offmeet);
+	public void updateOff(OffMeet offMeet) throws Exception {
+		offMeetDao.updateOff(offMeet);
 	}
 	
 	

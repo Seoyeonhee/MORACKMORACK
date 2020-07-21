@@ -8,9 +8,9 @@ import com.morackmorack.mvc.service.domain.Pay;
 
 public interface OffMeetService {
 	
-	public void addOff(OffMeet offmeet) throws Exception;
+	public void addOff(OffMeet offMeet) throws Exception;
 
-	public void updateOff(OffMeet offmeet) throws Exception;
+	public void updateOff(OffMeet offMeet) throws Exception;
 	
 	public OffMeet getOff(int offNo) throws Exception;
     
