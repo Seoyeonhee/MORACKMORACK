@@ -16,10 +16,10 @@
 <script type ="text/javascript">
 
 $(function(){
-	var checkMeetCount = ${checkMeetCount};
+	var checkMeetCount = "${checkMeetCount}";
 	
-	if(checkMeetCount == false){
-		alert("모임 생성 불가");
+	if(checkMeetCount != ""){
+	alert(checkMeetCount);
 	}
 })
 
@@ -27,8 +27,10 @@ $(function(){
 
 </head>
 <body>
-<a href="/meet/getMeet/meet01">모임 상세 조회</a><br/>
+
+
 <a href="/meet/addMeet">모임 생성</a><br/>
+<a href="/meet/getMeet/meet01">모임 상세 조회</a><br/>
 <a href="/meet/listMyMeet">내 모임 목록 조회</a><br/>
 <a href="/meet/listMeet">모든 모임 목록 조회</a><br/>
 </body>

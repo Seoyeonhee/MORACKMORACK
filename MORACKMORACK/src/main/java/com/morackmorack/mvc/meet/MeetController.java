@@ -1,5 +1,6 @@
 package com.morackmorack.mvc.meet;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -50,17 +51,17 @@ public class MeetController {
 		//HttpSession session = request.getSession(true);
 		//User user = (User) session.getAttribute("user");
 		
-		String userId = "user09";		
+		String userId = "user06";		
 		User user = userService.getUser(userId);
-		System.out.println(user);
+
 		Boolean checkMeetCount = meetService.checkJoinMeetCount(user.getMeetCount());
 
 		ModelAndView mav = new ModelAndView();
 		if(checkMeetCount == true) {
 		mav.setViewName("redirect:/meet/addMeet.jsp");
 		}else {
-			mav.addObject(checkMeetCount);
-			mav.setViewName("redirect:/meet/aaaMeet.jsp");
+			mav.addObject("checkMeetCount", "모임 가입 개수 초과로 생성 불가");
+			mav.setViewName("/meet/aaaMeet.jsp");
 		}
 		return mav;
 	}
@@ -76,10 +77,11 @@ public class MeetController {
 		String userId = user.getUserId(); ////
 
 		String uuid = (UUID.randomUUID().toString().replaceAll("-", "")).substring(0, 14);
-		Date date = new Date();
-		SimpleDateFormat simpleDate = new SimpleDateFormat("yyMMdd");
-		String meetId = uuid + simpleDate.format(date);
-
+		//Date date = new Date();
+		//SimpleDateFormat simpleDate = new SimpleDateFormat("yyMMdd");
+		//String meetId = uuid + simpleDate.format(date);
+		String meetId = uuid;
+		
 		meet.setMeetId(meetId);
 		meet.setLeaderId(userId);
 
@@ -156,13 +158,13 @@ public class MeetController {
 
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("meet", meet);
-		mav.setViewName("redirect:/meet/getMeet.jsp");
-
+		mav.setViewName("/meet/getMeet.jsp");
+		
 		return mav;
 	}
 
-	@RequestMapping(value = "delMeet/{meetId}", method = RequestMethod.GET)
-	public ModelAndView delMeet(HttpServletRequest request, @PathVariable("meetId") String meetId, @PathVariable("delNo") String delNo) {
+	@RequestMapping(value = "delMeet/{meetId}/{delNo}", method = RequestMethod.GET)
+	public ModelAndView delMeet(HttpServletRequest request, @PathVariable("meetId") String meetId, @PathVariable("delNo") int delNo) {
 		System.out.println("/meet/delMeet :GET");
 		
 		HttpSession session = request.getSession(true);
@@ -173,7 +175,7 @@ public class MeetController {
 		
 		Meet meet = meetService.getMeet(meetId);
 		
-		if(delNo.equals("삭제")) {
+		if(delNo==1) {
 			if(meet.getMemNum() == 0) {
 				meetService.delMeet(userId, meetId);
 			}else {
@@ -325,9 +327,11 @@ public class MeetController {
 		System.out.println("/meet/listMyMeet : GET");
 
 
-		 HttpSession session=request.getSession(true);
-		 User user = (User)session.getAttribute("user");
-		 String userId = user.getUserId();
+		// HttpSession session=request.getSession(true);
+		 //User user = (User)session.getAttribute("user");
+		 //String userId = user.getUserId();
+		 
+		 String userId = "user01";
 
 		List<MeetMem> listMyMeet = meetService.listMyMeet(userId);
 
@@ -393,5 +397,49 @@ public class MeetController {
 		mav.setViewName("/meet/listWishMeet");
 		
 		return mav;	
+	}
+	
+	@RequestMapping(value = "test", method = RequestMethod.GET)
+	public void test() throws Exception {
+	
+		
+		
+		for(int i=0; i<1000; i++) {
+			Random rand = new Random();
+			
+			User user = new User();
+			String birthday = "";
+			String phone = "010-";
+			
+			user.setUserId("user"+i);
+			user.setPassword(user.getUserId());
+			user.setUserName(user.getUserId());
+			user.setEmail(user.getUserId()+"@naver.com");
+			
+			for(int k=0; k<2; k++) {
+			for (int j = 0; j < 4; j++) {
+				String ran = Integer.toString(rand.nextInt(10));
+				phone += ran;
+			}
+			phone+="-";
+		}
+			user.setPhoneNumber(phone);
+			
+			for(int j=0; j<6; j++) {
+				String ran = Integer.toString(rand.nextInt(10));
+				birthday += ran;
+			}
+			SimpleDateFormat transFormat = new SimpleDateFormat("yyMMdd");
+			Date convBirthday = (Date) transFormat.parse(birthday);
+			user.setBirthday(convBirthday);
+			user.setAddress("서울시");
+			user.setGender('0');
+			
+			System.out.println(user);
+			userService.addUser(user);
+		}
+		
+		
+		
 	}
 }
