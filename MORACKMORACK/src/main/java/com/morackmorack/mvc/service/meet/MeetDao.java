@@ -5,6 +5,7 @@ import java.util.List;
 import com.morackmorack.mvc.service.domain.Meet;
 import com.morackmorack.mvc.service.domain.MeetMem;
 import com.morackmorack.mvc.service.domain.User;
+import com.morackmorack.mvc.service.domain.WishMeet;
 
 public interface MeetDao {
 	public void addMeet(Meet meet);
@@ -13,11 +14,11 @@ public interface MeetDao {
 	
 	public void updateMeet(String meetId);
 	
-	//public List<Meet> listMeet(String)
+	public List<Meet> listMeet();
 	
 	public void delMeet(String userId, String meetId);
 	
-	public void joinMeet(String userId, String meetId);
+	public void joinMeet(MeetMem meetMem);
 	
 	public void addMeetMem(MeetMem meetMem);
 	
@@ -39,7 +40,7 @@ public interface MeetDao {
 	
 	public void addWishMeet(String userId, String meetId);
 	
-	public List<Meet> listWishMeet(String userId, String meetId);
+	public List<WishMeet> listWishMeet(String userId);
 	
 	public void delWishMeet(String userId, String meetId);
 	

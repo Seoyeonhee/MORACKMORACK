@@ -13,6 +13,7 @@
 	<typeAliases>
 		<typeAlias alias="user" type="com.morackmorack.mvc.service.domain.User"/>
 		<typeAlias alias="meet" type="com.morackmorack.mvc.service.domain.Meet"/>
+		<typeAlias alias="wishMeet" type="com.morackmorack.mvc.service.domain.WishMeet"/>
 		<typeAlias alias="meetMem" type="com.morackmorack.mvc.service.domain.MeetMem"/>
 		<typeAlias alias="business" type="com.morackmorack.mvc.service.domain.Business"/>
 		<typeAlias alias="menu" type="com.morackmorack.mvc.service.domain.Menu"/>

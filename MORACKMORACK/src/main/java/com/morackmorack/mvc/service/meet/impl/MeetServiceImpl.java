@@ -2,13 +2,21 @@ package com.morackmorack.mvc.service.meet.impl;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.morackmorack.mvc.service.domain.Meet;
 import com.morackmorack.mvc.service.domain.MeetMem;
 import com.morackmorack.mvc.service.domain.User;
+import com.morackmorack.mvc.service.domain.WishMeet;
 import com.morackmorack.mvc.service.meet.MeetDao;
 import com.morackmorack.mvc.service.meet.MeetService;
 
@@ -31,14 +39,16 @@ public class MeetServiceImpl implements MeetService{
 		meetDao.updateMeet(meetId);
 	}
 	
-	//public List<Meet> listMeet(String)
+	public List<Meet> listMeet(){
+		return meetDao.listMeet();
+	}
 	
 	public void delMeet(String userId, String meetId){
 		meetDao.delMeet(userId, meetId);
 	}
 	
-	public void joinMeet(String userId, String meetId){
-		meetDao.joinMeet(userId, meetId);
+	public void joinMeet(MeetMem meetMem){
+		meetDao.joinMeet(meetMem);
 	}
 	
 	public void addMeetMem(MeetMem meetMem){
@@ -81,8 +91,8 @@ public class MeetServiceImpl implements MeetService{
 		meetDao.addWishMeet(userId, meetId);
 	}
 	
-	public List<Meet> listWishMeet(String userId, String meetId){
-		return meetDao.listWishMeet(userId, meetId);
+	public List<WishMeet> listWishMeet(String userId){
+		return meetDao.listWishMeet(userId);
 	}
 	
 	public void delWishMeet(String userId, String meetId){
@@ -99,6 +109,15 @@ public class MeetServiceImpl implements MeetService{
 	
 	public void addMeet_Hash(String meetId, String hashNo) {
 		meetDao.addMeet_Hash(meetId, hashNo);
+	}
+	
+	public Boolean checkJoinMeetCount(int joinMeetCount) {
+
+		if(joinMeetCount>=5) {
+			return false;
+		}else {
+			return true;
+		}
 	}
 	
 }

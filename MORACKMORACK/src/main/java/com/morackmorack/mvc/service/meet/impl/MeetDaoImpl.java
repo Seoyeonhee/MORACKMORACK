@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import com.morackmorack.mvc.service.domain.Meet;
 import com.morackmorack.mvc.service.domain.MeetMem;
 import com.morackmorack.mvc.service.domain.User;
+import com.morackmorack.mvc.service.domain.WishMeet;
 import com.morackmorack.mvc.service.meet.MeetDao;
 
 @Repository("meetDaoImpl")
@@ -38,18 +39,20 @@ public class MeetDaoImpl implements MeetDao {
 		
 	}
 	
-	//public List<Meet> listMeet(String)
+	public List<Meet> listMeet(){
+		return sqlSession.selectList("MeetMapper.listMeet");
+	}
 	
 	public void delMeet(String userId, String meetId){
 		
 	}
 	
-	public void joinMeet(String userId, String meetId){
-		
+	public void joinMeet(MeetMem meetMem){
+		sqlSession.insert("MeetMapper.joinMeet", meetMem);
 	}
 	
 	public void addMeetMem(MeetMem meetMem){		
-		sqlSession.insert("MeetMapper.addMeetMem", meetMem);
+		//sqlSession.insert("MeetMapper.addMeetMem", meetMem);
 	}
 	
 	public User getMeetMem(String meetId){
@@ -92,7 +95,11 @@ public class MeetDaoImpl implements MeetDao {
 	}
 	
 	public void provideStaff(String userId, String meetId){
+		Map map = new HashMap();
+		map.put("userId", userId);
+		map.put("meetId", meetId);
 		
+		sqlSession.update("MeetMapper.provideStaff", map);
 	}
 	
 	public void provideLeader(String userId, String meetId){
@@ -109,16 +116,27 @@ public class MeetDaoImpl implements MeetDao {
 	}
 	
 	public void addWishMeet(String userId, String meetId){
+		Map map = new HashMap();
+		map.put("userId", userId);
+		map.put("meetId", meetId);
 		
+		sqlSession.insert("MeetMapper.addWishMeet", map);
 	}
 	
-	public List<Meet> listWishMeet(String userId, String meetId){
-		return null;
+	public List<WishMeet> listWishMeet(String userId){
+		List<WishMeet> listWishMeet = sqlSession.selectList("MeetMapper.listWishMeet", userId);
 		
+		for(int i=0; i<listWishMeet.size(); i++) {
+			listWishMeet.get(i).setMeet(sqlSession.selectOne("MeetMapper.getMeet", listWishMeet.get(i).getMeet().getMeetId()));
+		}
+		return listWishMeet;
 	}
 	
 	public void delWishMeet(String userId, String meetId){
-		
+		Map map = new HashMap();
+		map.put("userId", userId);
+		map.put("meetId", meetId);
+		sqlSession.delete("MeetMapper.delWishMeet", map);
 	}
 	
 	public String getHash(String hashtag) {

@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.Map;
 
 public class MeetMem {
+	private int memNo;
 	private User user;
 	private  Meet meet;
 	private char joinCode;
@@ -14,6 +15,12 @@ public class MeetMem {
 	private int notifyCount;
 	private Map<String, String> blackList;
 	
+	public int getMemNo() {
+		return memNo;
+	}
+	public void setMemNo(int memNo) {
+		this.memNo = memNo;
+	}
 	public User getUser() {
 		return user;
 	}
@@ -68,11 +75,11 @@ public class MeetMem {
 	public void setBlackList(Map<String, String> blackList) {
 		this.blackList = blackList;
 	}
+	
 	@Override
 	public String toString() {
-		return "MeetMem [user=" + user + ", meet=" + meet + ", joinCode=" + joinCode + ", joinReqDate=" + joinReqDate
-				+ ", joinDate=" + joinDate + ", intro=" + intro + ", notifyCount=" + notifyCount + ", blackList="
-				+ blackList + "]";
+		return "MeetMem [memNo=" + memNo + ", user=" + user + ", meet=" + meet + ", joinCode=" + joinCode
+				+ ", meetRole=" + meetRole + ", joinReqDate=" + joinReqDate + ", joinDate=" + joinDate + ", intro="
+				+ intro + ", notifyCount=" + notifyCount + ", blackList=" + blackList + "]";
 	}
-	
 }
