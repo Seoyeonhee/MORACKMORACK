@@ -58,10 +58,10 @@ public class MeetController {
 
 		ModelAndView mav = new ModelAndView();
 		if(checkMeetCount == true) {
-		mav.setViewName("redirect:/meet/addMeet.jsp");
+		mav.setViewName("/meet/addMeet.jsp");
 		}else {
 			mav.addObject("checkMeetCount", "모임 가입 개수 초과로 생성 불가");
-			mav.setViewName("/meet/aaaMeet.jsp");
+			mav.setViewName("index.jsp");
 		}
 		return mav;
 	}
@@ -133,7 +133,7 @@ public class MeetController {
 		meetService.joinMeet(meetMem);
 
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("redirect:/getMeet.jsp");
+		mav.setViewName("/meet/getMeet.jsp");
 		return mav;
 	}
 
@@ -145,7 +145,7 @@ public class MeetController {
 
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("listMeet", listMeet);
-		mav.setViewName("redirect:/meet/listMeet.jsp");
+		mav.setViewName("/meet/listMeet.jsp");
 
 		return mav;
 	}
@@ -404,16 +404,17 @@ public class MeetController {
 	
 		
 		
-		for(int i=0; i<1000; i++) {
+		for(int i=0; i<1001; i++) {
 			Random rand = new Random();
 			
 			User user = new User();
 			String birthday = "";
-			String phone = "010-";
+			String phone = "010";
 			
 			user.setUserId("user"+i);
 			user.setPassword(user.getUserId());
 			user.setUserName(user.getUserId());
+			user.setNickName(user.getUserId());
 			user.setEmail(user.getUserId()+"@naver.com");
 			
 			for(int k=0; k<2; k++) {
@@ -421,7 +422,6 @@ public class MeetController {
 				String ran = Integer.toString(rand.nextInt(10));
 				phone += ran;
 			}
-			phone+="-";
 		}
 			user.setPhoneNumber(phone);
 			

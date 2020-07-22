@@ -333,6 +333,7 @@ CREATE TABLE pay(
 	reserve_end_time 		VARCHAR(20), 
 	reserve_date            VARCHAR(20), 
 	total_amount 			NUMBER(10),
+	pay_status				CHAR(1)					DEFAULT 0,
     pay_date				DATE,
 	pay_method 				CHAR(1),
 	PRIMARY KEY(pay_no)
@@ -340,15 +341,15 @@ CREATE TABLE pay(
 
 INSERT 
 INTO pay
-VALUES (seq_pay_pay_no.nextval,  'user01', 'meet01' , 10001, null, 20, to_date('14:00', 'HH24:MI'), to_date('15:00', 'HH24:MI'), to_date('2020/07/11', 'YYYY/MM/DD'), 400000, SYSDATE,  '0'); 
+VALUES (seq_pay_pay_no.nextval,  'user01', 'meet01' , 10001, null, 20, to_date('14:00', 'HH24:MI'), to_date('15:00', 'HH24:MI'), to_date('2020/07/11', 'YYYY/MM/DD'), 400000, '1',SYSDATE,  '0'); 
 
 INSERT 
 INTO pay
-VALUES (seq_pay_pay_no.nextval, 'user02', 'meet02' , 10001, 'bus01', 10, to_date('11:00', 'HH24:MI'), to_date('12:00', 'HH24:MI'), to_date('2020/07/14', 'YYYY/MM/DD'), 300000, SYSDATE,  '1'); 
+VALUES (seq_pay_pay_no.nextval, 'user02', 'meet02' , 10001, 'bus01', 10, to_date('11:00', 'HH24:MI'), to_date('12:00', 'HH24:MI'), to_date('2020/07/14', 'YYYY/MM/DD'), 300000, '1', SYSDATE,  '1'); 
 
 INSERT 
 INTO pay
-VALUES (seq_pay_pay_no.nextval, 'user02', 'meet03', 10002, 'bus01', 5, to_date('10:00', 'HH24:MI'), to_date('11:00', 'HH24:MI'), to_date('2020/07/16', 'YYYY/MM/DD'), 50000, SYSDATE,  '2'); 
+VALUES (seq_pay_pay_no.nextval, 'user02', 'meet03', 10002, 'bus01', 5, to_date('10:00', 'HH24:MI'), to_date('11:00', 'HH24:MI'), to_date('2020/07/16', 'YYYY/MM/DD'), 50000, '1' , SYSDATE,  '2'); 
 
 		
 

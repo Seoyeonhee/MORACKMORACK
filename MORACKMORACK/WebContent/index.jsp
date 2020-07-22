@@ -26,11 +26,9 @@
 </head>
 <body>
 
-<div class="navbar  navbar-warning">
         <div class="container">
-        	<jsp:include page="toolbar2.jsp" />
+        	<jsp:include page="toolbar.jsp" />
    		</div> 	
-</div>
 
 <div>	
 	<a href="/meet/test">È¸¿ø insert</a> <br/><br/>

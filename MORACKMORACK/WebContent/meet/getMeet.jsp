@@ -88,10 +88,8 @@ $(function (){
 </head>
 <body>
 
-<div class="navbar  navbar-warning">
-        <div class="container">
-        	<jsp:include page="/toolbar2.jsp" />
-   		</div>
+<div class="container">
+	<jsp:include page="/toolbar.jsp"/>
 </div>
 
 <div style="float:right">
