@@ -1,5 +1,8 @@
 package com.morackmorack.mvc.user;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,5 +55,21 @@ public class UserRestController {
 		}
 		
 		return dbUser;
+	}
+	
+	@RequestMapping( value="json/checkDuplication/{userId}", method=RequestMethod.GET)
+	public  Map checkDuplication( @PathVariable String userId) throws Exception{
+		
+		System.out.println("/user/checkDuplication : GET");
+		System.out.println(userId);
+		
+		boolean result=userService.checkDuplication(userId);
+		
+		Map<String, Object> sendMap = new HashMap<String, Object>();
+		
+		sendMap.put("result", new Boolean(result));
+		sendMap.put("userId", userId);
+		
+		return sendMap;
 	}
 }

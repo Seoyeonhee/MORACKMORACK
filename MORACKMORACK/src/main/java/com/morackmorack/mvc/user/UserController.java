@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.morackmorack.mvc.service.domain.User;
 import com.morackmorack.mvc.service.user.UserService;
@@ -43,38 +44,11 @@ public class UserController {
 	
 	@RequestMapping( value="addUser", method=RequestMethod.POST)
 	public String addUser( @ModelAttribute("user") User user ) throws Exception {
-		
+
 		System.out.println("/user/adduser : POST");
 		userService.addUser(user);
 		
 		return "redirect:/user/loginView.jsp";
-	}
-	
-	//produces는 ajax가 데이터 넘겨받을때 깨짐 방지
-	@RequestMapping(value = "idCheck", method = RequestMethod.GET, produces = "application/text; charset=utf8")
-	@ResponseBody
-	public String idCheck(HttpServletRequest request) throws Exception {
-		
-		String userId = request.getParameter("userId");
-		int result=userService.idCheck(userId);
-		return Integer.toString(result);
-	}
-	
-	@RequestMapping(value = "nickNameCheck", method = RequestMethod.GET, produces = "application/text; charset=utf8")
-	@ResponseBody
-	public String nickNameCheck(HttpServletRequest request) throws Exception {
-		
-		String nickName = request.getParameter("nickName");
-		int result=userService.nickNameCheck(nickName);
-		return Integer.toString(result);
-	}
-	
-	@RequestMapping(value = "passwordCheck", method = RequestMethod.POST, produces = "application/text; charset=utf8")
-	@ResponseBody
-	public int passwordCheck(User user) throws Exception {
-		
-		int result=userService.passwordCheck(user);
-		return result;
 	}
 	
 	
@@ -153,15 +127,44 @@ public class UserController {
 	}
 	
 	
-	@RequestMapping( value="delUser", method=RequestMethod.GET )
-	public String delUser(HttpSession session ) throws Exception{
+	@RequestMapping( value="checkDuplication", method=RequestMethod.POST )
+	public String checkDuplication( @RequestParam("userId") String userId , Model model ) throws Exception{
 		
-		System.out.println("/user/delUser : GET");
-		
-		return "redirect:/index.jsp";
+		System.out.println("/user/checkDuplication : POST");
+		//Business Logic
+		boolean result=userService.checkDuplication(userId);
+		// Model 과 View 연결
+		model.addAttribute("result", new Boolean(result));
+		model.addAttribute("userId", userId);
+
+		return "forward:/user/checkDuplication.jsp";
 	}
 	
-	//회원탈퇴 POST 부분 작성?
+	// 회원 탈퇴 get
+	@RequestMapping(value="/delUserView", method = RequestMethod.GET)
+	public String memberDeleteView() throws Exception{
+		return "user/delUserView";
+	}
+		
+	// 회원 탈퇴 post
+	@RequestMapping(value="/delUser", method = RequestMethod.POST)
+	public String delUser(User user, HttpSession session, RedirectAttributes rttr) throws Exception{
+			
+		// 세션에 있는 member를 가져와 member변수에 넣어줍니다.
+		User user1 = (User) session.getAttribute("user1");
+		// 세션에있는 비밀번호
+		String sessionPassword = user1.getPassword();
+		// vo로 들어오는 비밀번호
+		String userPassword = user.getPassword();
+			
+		if(!(sessionPassword.equals(userPassword))) {
+			rttr.addFlashAttribute("msg", false);
+			return "redirect:/user/delUserView";
+		}
+		userService.delUser(user);
+		session.invalidate();
+		return "redirect:/";
+	}
 	
 	
 }
