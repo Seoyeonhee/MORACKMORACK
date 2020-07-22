@@ -14,7 +14,7 @@ public class Meet {
 	private String meetLoc; 
 	private String sIntro;
 	private String lIntro;
-	//private List<String> lImg;
+	private List<String> lImg;
 	private List<String> hashtag;
 	private int meetType;
 	private boolean meetAppr;
@@ -86,6 +86,12 @@ public class Meet {
 	}
 	public void setlIntro(String lIntro) {
 		this.lIntro = lIntro;
+	}
+	public List<String> getlImg() {
+		return lImg;
+	}
+	public void setlImg(List<String> lImg) {
+		this.lImg = lImg;
 	}
 	public List<String> getHashtag() {
 		return hashtag;

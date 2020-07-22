@@ -2,9 +2,13 @@ package com.morackmorack.mvc.service.meet;
 
 import java.util.List;
 
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
 import com.morackmorack.mvc.service.domain.Meet;
 import com.morackmorack.mvc.service.domain.MeetMem;
 import com.morackmorack.mvc.service.domain.User;
+import com.morackmorack.mvc.service.domain.WishMeet;
 
 public interface MeetService {
 
@@ -14,11 +18,11 @@ public interface MeetService {
 	
 	public void updateMeet(String meetId);
 	
-	//public List<Meet> listMeet(String)
+	public List<Meet> listMeet();
 	
 	public void delMeet(String userId, String meetId);
 	
-	public void joinMeet(String userId, String meetId);
+	public void joinMeet(MeetMem meetMem);
 	
 	public void addMeetMem(MeetMem meetMem);
 	
@@ -36,11 +40,11 @@ public interface MeetService {
 	
 	public void provideLeader(String userId, String meetId);
 	
-	public List<Meet> listMyMeet(String userId);
+	public List<MeetMem> listMyMeet(String userId);
 	
 	public void addWishMeet(String userId, String meetId);
 	
-	public List<Meet> listWishMeet(String userId, String meetId);
+	public List<WishMeet> listWishMeet(String userId);
 	
 	public void delWishMeet(String userId, String meetId);
 	
@@ -49,4 +53,6 @@ public interface MeetService {
 	public void addHash(String hashtag);
 	
 	public void addMeet_Hash(String meetId, String hashNo);
+	
+	public Boolean checkJoinMeetCount(int meetCount);
 }

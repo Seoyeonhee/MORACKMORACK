@@ -40,7 +40,7 @@
 	 <!-- SQL : SELECT ONE -->
 	 <select 	id="getUser"	parameterType="string"	resultMap="userSelectMap">
 		SELECT
-		*
+		user_id , user_name , nick_name , email, phone_number , gender , birthday , address		
 		FROM users 
 		WHERE user_id = #{value}
 	 </select>
@@ -60,14 +60,6 @@
 	   	</set>
 	   	WHERE user_id = #{userId}
 	 </update>
-	 
-	 
-	 <!-- 회원탈퇴 -->
-	<delete id="memberDelete">
-		DELETE FROM MP_MEMBER
-		WHERE USERID = #{userId}
-	  		AND USERPASS = #{userPass} 
-</delete>
 	 
 
 </mapper>
