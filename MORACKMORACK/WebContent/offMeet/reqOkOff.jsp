@@ -39,7 +39,7 @@
 $(function() {
 
 	$( "button.btn.btn-primary" ).on("click" , function() {
-		self.location =  "/offmeet/reqOff?offNo=10002"
+		self.location =  "/meet/getMeet?meetId=${meet.meetId}"
 		}); 
 	});
 </script>
@@ -49,23 +49,23 @@ $(function() {
 <div class="container">
 
 	<div class="page-header">
-	     <h3 class=" text-info">오프라인모임 정보</h3>
+	     <h3 class=" text-info">오프라인모임 참여 신청 완료</h3>
 	     
 	</div>
 	
 
 	
     <div class="row">
-	  	<div class="col-xs-4 col-md-2 "><strong>오프라인모임명</strong></div>
-		<div class="col-xs-8 col-md-4">${offMeet.offName}</div>
+	  	<div class="col-xs-4 col-md-2 "><strong>참여 신청자 명</strong></div>
+		<div class="col-xs-8 col-md-4">${user.name}</div>
 	</div>
 	
 	
  <hr/>
  	
  	<div class="row"> 
-	  	<div class="col-xs-4 col-md-2 "><strong>모임장소</strong></div> 
- 		<div class="col-xs-8 col-md-4">${offMeet.offLoc}</div> 
+	  	<div class="col-xs-4 col-md-2 "><strong>결제방법</strong></div> 
+ 		<div class="col-xs-8 col-md-4">${pay.payMethod == '0' ? "계좌이체" : pay.payMethod == '1' ? "카드결제" : "무통장입금" }</div> 
 	</div> 
 	
 	
@@ -73,51 +73,44 @@ $(function() {
  <hr/>	
 	
 	<div class="row"> 
- 		<div class="col-xs-4 col-md-2 "><strong>모임날짜</strong></div> 
- 		<div class="col-xs-8 col-md-4">${offMeet.offDate }</div> 
+ 		<div class="col-xs-4 col-md-2 "><strong>모임명</strong></div> 
+ 		<div class="col-xs-8 col-md-4">${meet.meetName }</div> 
  	</div> 
  
  <hr/>
 	
 	<div class="row"> 
-	  	<div class="col-xs-4 col-md-2 "><strong>모임시간</strong></div> 
-		<div class="col-xs-8 col-md-4">${offMeet.offTime }</div> 
+	  	<div class="col-xs-4 col-md-2 "><strong>입금은행</strong></div> 
+		<div class="col-xs-8 col-md-4">${meet.bank }</div> 
  	</div> 
 
 
   <hr/>
 
+    <div class="row"> 
+	  	<div class="col-xs-4 col-md-2 "><strong>입금가상계좌</strong></div> 
+		<div class="col-xs-8 col-md-4">${meet.accNum}</div> 
+ 	</div> 
+ 	
+ 	
+  <hr/>
+  
+  
+  
+  
     <div class="row"> 
 	  	<div class="col-xs-4 col-md-2 "><strong>참여비</strong></div> 
-		<div class="col-xs-8 col-md-4">${offMeet.amount}</div> 
- 	</div> 
- 	
- 	
-  <hr/>
-  
-  
-  
-  
-    <div class="row"> 
-	  	<div class="col-xs-4 col-md-2 "><strong>현재인원수</strong></div> 
-		<div class="col-xs-8 col-md-4">${offMeet.offMem}</div> 
+		<div class="col-xs-8 col-md-4">${pay.totalAmount}</div> 
  	</div> 
     
     
-  <hr/>
-    
-    <div class="row"> 
-	  	<div class="col-xs-4 col-md-2 "><strong>최대인원수</strong></div> 
-		<div class="col-xs-8 col-md-4">${offMeet.offMax}</div> 
- 	</div> 
-
 
 <br/>
 	
 <div class="row"> 
  		<div class="col-md-12 text-center"> 
  		 	  <div class="col-sm-offset-4  col-sm-4 text-center">
-		      <button type="button" class="btn btn-primary"  >참여 신청</button> 
+		      <button type="button" class="btn btn-primary"  >확인</button> 
  		</div> 
 	</div>
 </div>

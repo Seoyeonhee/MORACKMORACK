@@ -17,7 +17,9 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
 <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script> 
 
+<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=15b8f0fdd2c890d73266c3e68efbfdf6&libraries=services"></script> 
 
 
 <style>
@@ -111,10 +113,72 @@ $( function() {
  <label for="offDate" class="col-sm-offset-1 col-sm-3 control-label">모임장소</label>
 	<div class="col-sm-4">
 	   <input type="text" class="form-control" id="offLoc" name="offLoc">
+	   <input type="button" onclick="execDaumPostcode()" value="주소 검색">
+  <div id="map" style="width:300px;height:300px;margin-top:10px;display:none">
    </div>
   </div>
-  
+  <script>
+  var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+  mapOption = { 
+  		
+      center: new kakao.maps.LatLng(37.537187, 127.005476), // 지도의 중심좌표 level: 5 // 지도의 확대 레벨 }; //지도를 미리 생성 
+      level: 5 // 지도의 확대 레벨
+      };
+      
+  	var map = new kakao.maps.Map(mapContainer, mapOption); //주소-좌표 변환 객체를 생성 
   	
+  	var geocoder = new kakao.maps.services.Geocoder(); //마커를 미리 생성 
+  	
+  	var marker = new kakao.maps.Marker({ 
+  	  position: new kakao.maps.LatLng(37.537187, 127.005476)
+  	, map: map 
+  	});
+
+
+  function execDaumPostcode() { 
+
+  	new daum.Postcode({ 
+  		
+  		oncomplete: function(data) { 
+
+  		var fullAddr = data.address; 
+  		var extraAddr = ''; 
+  		if(data.addressType === 'R'){ 
+  			if(data.bname !== '')
+  			{ 
+  				extraAddr += data.bname;
+  			} 
+  			if(data.buildingName !== ''){
+  				extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName); 
+  				} 
+  				fullAddr += (extraAddr !== '' ? ' ('+ extraAddr +')' : ''); 
+  			    }
+  	
+
+  	document.getElementById("offLoc").value = fullAddr; 
+  	
+  	geocoder.addressSearch(data.address, function(results, status) { 
+  		
+  		if (status === kakao.maps.services.Status.OK) {
+  			
+  			var result = results[0];
+
+  			var coords = new kakao.maps.LatLng(result.y, result.x);
+
+  			mapContainer.style.display = "block"; 
+  			 
+  			  map.relayout();
+
+  			 map.setCenter(coords);
+  			 
+  			 marker.setPosition(coords)
+          }
+      });
+  }
+  }).open();
+  }
+  </script>
+  </div>  	
  <div class="form-group">
  <label for="offDate" class="col-sm-offset-1 col-sm-3 control-label">모임날짜</label>
 	<div class="col-sm-4">
@@ -139,7 +203,7 @@ $( function() {
 <div class="form-group">
  <label for="offFee" class="col-sm-offset-1 col-sm-3 control-label">참여비</label>
 	<div class="col-sm-4">
-	   <input type="text" class="form-control" id="offFee" name="offFee">
+	   <input type="text" class="form-control" id="amount" name="amount">
    </div>
   </div>
     	
