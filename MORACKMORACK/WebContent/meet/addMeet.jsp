@@ -6,7 +6,11 @@
 <meta charset="EUC-KR">
 <title>모임 생성</title>
 
-<script src="https://code.jquery.com/jquery-3.1.1.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 
 <script type ="text/javascript">
 
@@ -26,6 +30,13 @@ $(function (){
 </script>
 </head>
 <body>
+
+<div class="navbar  navbar-warning">
+        <div class="container">
+        	<jsp:include page="/toolbar2.jsp" />
+   		</div>
+</div>
+
 <form>
 모임 대표 이미지 선택
 <input type="file" id="meetImg" name="fileUpload"/> <br/><br/>

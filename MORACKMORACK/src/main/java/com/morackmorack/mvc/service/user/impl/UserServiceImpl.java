@@ -29,33 +29,32 @@ public class UserServiceImpl implements UserService{
 		userDao.addUser(user);
 	}
 
-	public int idCheck(String userId) throws Exception {
-		int result = userDao.idCheck(userId);
-		return result;
-	}
-
-	public int nickNameCheck(String nickName) throws Exception {
-		int result = userDao.nickNameCheck(nickName);
-		return result;
-	}
-	
-	public int passwordCheck(User user) throws Exception {
-		int result = userDao.passwordCheck(user);
-		return result;
-	}
-
-	@Override
 	public User getUser(String userId) throws Exception {
 		return userDao.getUser(userId);
 	}
 
-	@Override
 	public void updateUser(User user) throws Exception {
 		userDao.updateUser(user);
-		
+	}
+	
+	public boolean checkDuplication(String userId) throws Exception {
+		boolean result=true;
+		User user=userDao.getUser(userId);
+		if(user != null) {
+			result=false;
+		}
+		return result;
+	}
+	
+	public boolean checkDuplication2(String nickName) throws Exception {
+		boolean result=true;
+		User user=userDao.getUser(nickName);
+		if(user != null) {
+			result=false;
+		}
+		return result;
 	}
 
-	@Override
 	public void delUser(User user) throws Exception {
 		userDao.delUser(user);
 		

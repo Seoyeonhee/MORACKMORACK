@@ -26,6 +26,7 @@
 	</resultMap>
 	
 	<resultMap id="meetMemSelectMap" type="meetMem">
+		<result property="memNo" column="mem_no" jdbcType="INTEGER"/>
 		<result property="user.userId" column="user_id" jdbcType="VARCHAR"/>
 		<result property="meet.meetId" column="meet_id" jdbcType="VARCHAR"/>
 		<result property="joinCode" column="join_code" jdbcType="CHAR"/>
@@ -34,6 +35,12 @@
 		<result property="joinDate" column="join_date" jdbcType="DATE"/>
 		<result property="intro" column="intro" jdbcType="VARCHAR"/>
 		<result property="notifyCount" column="notify_count" jdbcType="INTEGER"/>
+	</resultMap>
+	
+	<resultMap id="wishMeetSelectMap" type="wishMeet">
+		<result property="meet.meetId" column="meet_id" jdbcType="VARCHAR"/>
+		<result property="userId" column="user_id" jdbcType="VARCHAR"/>
+		<result property="wishDate" column="wish_date" jdbcType="DATE"/>
 	</resultMap>
 	
 	<insert id="addMeet" parameterType="meet">
@@ -63,14 +70,14 @@
 	VALUES (seq_meet_hashtag_meet_hash_no.nextval, #{meetId}, #{hashNo})
 	</insert>
 	
-	<insert id="addMeetMem" parameterType="meetMem">
-	<if test ="meet_role == 0">
+	<insert id="joinMeet" parameterType="meetMem">
+	<if test ="join_code == 0">
 	INSERT INTO meetmem(mem_no, user_id, meet_id, join_code, meet_role, join_req_date, join_date, intro, notify_count)
-	VALUES (seq_meetmem_mem_no.nextval, #{userId}, #{meetId}, #{joinCode}, #{joinCode}, sysdate, sysdate, #{intro:VARCHAR}, 0)
+	VALUES (seq_meetmem_mem_no.nextval, #{userId}, #{meetId}, #{joinCode}, #{meetRole}, sysdate, #{join_date:Date}, #{intro:VARCHAR}, 0)
 	</if>
-	<if test ="meet_role == 2">
+	<if test ="join_code == 1">
 	INSERT INTO meetmem(mem_no, user_id, meet_id, join_code, meet_role, join_req_date, join_date, intro, notify_count)
-	VALUES (seq_meetmem_mem_no.nextval, #{userId}, #{meetId}, #{joinCode}, #{joinCode}, sysdate, "", #{intro:VARCHAR}, 0)
+	VALUES (seq_meetmem_mem_no.nextval, #{userId}, #{meetId}, #{joinCode}, #{meetRole}, sysdate, sysdate, #{intro:VARCHAR}, 0)
 	</if>
 	</insert>
 	
@@ -89,7 +96,8 @@
 	</select>
 	
 	<update id="okJoinMeetUser" parameterType="map">
-	UPDATE meetmem SET join_code ='1'
+	UPDATE meetmem 
+	SET join_code ='1'
 	WHERE user_id = #{userId} and meet_id = #{meetId}
 	</update>
 	
@@ -97,5 +105,48 @@
 	DELETE FROM meetmem 
 	WHERE user_id = #{userId} and meet_id = #{meetId}
 	</delete>
+	
+	<select id="listMyMeet" parameterType="String" resultMap="meetMemSelectMap">
+	SELECT user_id, meet_id, join_code, meet_role, join_req_date, join_date, intro, notify_count
+	FROM meetmem
+	WHERE user_id = #{userId} and join_code = '1'
+	ORDER BY join_date
+	</select>
+	
+	<select id="listMeet" resultMap="meetSelectMap">
+	SELECT meet_id, leader_id, meet_name, meet_loc, max_num, mem_num, meet_img, s_intro, l_intro, reg_date, meet_star, bank, accNum, category, meet_appr, meet_type
+	FROM meet
+	ORDER BY reg_date
+	</select>
+	
+	<insert id="addWishMeet" parameterType="map">
+	INSERT INTO wishmeet(wish_no, user_id, meet_id, wish_date)
+	VALUES (seq_wishmeet_wish_no.nextval, #{userId}, #{meetId}, sysdate)
+	</insert>
+	
+	<select id="listWishMeet" parameterType="String" resultMap="wishMeetSelectMap">
+	SELECT meet_id, wish_date 
+	FROM wishmeet
+	WHERE user_id = #{userId}
+	ORDER BY wish_date
+	</select>
+	
+	<delete id="delWishMeet" parameterType="map">
+	DELECT FROM wishmeet
+	WHERE user_id = #{userId} and meet_id = #{meetId}
+	</delete>
+	
+	<update id="provideStaff" parameterType="map">
+	UPDATE meetmem 
+	SET meet_role="1"
+	WHERE user_id = #{userId} and meet_id = #{meetId}
+	</update>
+	
+	<update id="provideLeader" parameterType="map">
+	UPDATE meet, meetmem
+	SET meet.meet_leader = #{userId} and meetMem.
+	WHERE meet.meet_id = #{meetId}
+	</update>
+	
 
 </mapper>
