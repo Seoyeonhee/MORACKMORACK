@@ -39,7 +39,7 @@ public class OffmeetServiceTest {
 		
 		OffMeet offMeet = new OffMeet();
 		User user = new User();
-		user.setUserId("user01");
+		user.setUserId("user02");
 		Meet meet = new Meet();
 		meet.setMeetId("meet01");
 		offMeet.setUser(user);
@@ -48,7 +48,7 @@ public class OffmeetServiceTest {
 		offMeet.setOffLoc("우리집");
 		offMeet.setOffMax(20);
         offMeet.setOffMem(1);
-		offMeet.setAmount(10000);
+		offMeet.setAmount(10003);
 		offMeet.setOffDate("2014-04-01");
 		offMeet.setOffTime("12시");
 		
@@ -84,20 +84,19 @@ public class OffmeetServiceTest {
 	
 
 	
-//@Test
+@Test
 public void addOffPay() throws Exception {	
 		Pay pay = new Pay();
 		User user = new User();
-		user.setUserId("user01");
+		user.setUserId("user02");
 		Meet meet = new Meet();
-		meet.setMeetId("meet01");
+		meet.setMeetId("meet02");
 		OffMeet offMeet = new OffMeet();
-		offMeet.setOffNo(10001);
+		offMeet.setOffNo(10002);
 		pay.setUser(user);
 		pay.setMeet(meet);
 		pay.setOffMeet(offMeet);
-		pay.setPayFlag('0');
-		pay.setPayMethod('0');
+		pay.setPayMethod(0);
 		pay.setTotalAmount(100000);
 		
 		offMeetService.addOffPay(pay);
@@ -134,7 +133,6 @@ public void addBusinessPay() throws Exception {
 		pay.setMeet(meet);
 		pay.setOffMeet(offMeet);
 		pay.setBusiness(business);
-		pay.setPayFlag('1');
 		pay.setPayMethod('0');
 		pay.setReserveMemNum(10);
 		pay.setReserveDate("2014-04-01");
@@ -146,7 +144,7 @@ public void addBusinessPay() throws Exception {
 		
 	}
 
-@Test
+//@Test
 public void testBusinessPay() throws Exception {
 	
 		Pay pay = new Pay();

@@ -5,14 +5,13 @@ import java.sql.Date;
 public class Pay {
 
 	private int payNo;
-	private char payFlag;
 	private User user;
 	private Meet meet;
 	private OffMeet offMeet;
 	private Business business;
 	private int totalAmount;
 	private String payDate;
-	private char payMethod;
+	private int payMethod;
 	private String reserveStartTime;
 	private String reserveEndTime;
 	private String reserveDate;
@@ -43,17 +42,6 @@ public class Pay {
 	public void setPayNo(int payNo) {
 		this.payNo = payNo;
 	}
-
-
-	public char getPayFlag() {
-		return payFlag;
-	}
-
-
-	public void setPayFlag(char payFlag) {
-		this.payFlag = payFlag;
-	}
-
 
 	public User getUser() {
 		return user;
@@ -105,12 +93,12 @@ public class Pay {
 	}
 
 
-	public char getPayMethod() {
+	public int getPayMethod() {
 		return payMethod;
 	}
 
 
-	public void setPayMethod(char payMethod) {
+	public void setPayMethod(int payMethod) {
 		this.payMethod = payMethod;
 	}
 
@@ -157,7 +145,7 @@ public class Pay {
 
 	@Override
 	public String toString() {
-		return "Pay [payNo=" + payNo + ", payFlag=" + payFlag + ", user=" + user + ", meet=" + meet + ", offMeet="
+		return "Pay [payNo=" + payNo + ", user=" + user + ", meet=" + meet + ", offMeet="
 				+ offMeet + ", business=" + business + ", totalAmount=" + totalAmount + ", payDate=" + payDate
 				+ ", payMethod=" + payMethod + ", reserveStartTime=" + reserveStartTime + ", reserveEndTime="
 				+ reserveEndTime + ", reserveDate=" + reserveDate + ", reserveMemNum=" + reserveMemNum + "]";
