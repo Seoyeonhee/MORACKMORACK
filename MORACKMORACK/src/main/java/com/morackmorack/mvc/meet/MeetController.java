@@ -435,7 +435,7 @@ public class MeetController {
 			user.setAddress("¼­¿ï½Ã");
 			user.setGender('0');
 			
-			System.out.println(user);
+			System.out.println(">> "+user);
 			userService.addUser(user);
 		}
 		
