@@ -40,14 +40,12 @@
 					<input class="form-control" type="text" id="userId" name="userId" value="${user.userId}" readonly="readonly"/>
 				</div>
 				<div class="form-group has-feedback">
-					<label class="control-label" for="userPass">비밀번호</label>
+					<label class="control-label" for="Password">비밀번호</label>
 					<input class="form-control" type="password" id="password" name="password" />
 				</div>
-				<div class="form-group">
-		    		<label for="password2" class="col-sm-offset-1 col-sm-3 control-label">비밀번호 확인</label>
-		    		<div class="col-sm-4">
-		      			<input type="password" class="form-control" id="password2" name="password2" placeholder="비밀번호 확인">
-		    		</div>
+				<div class="form-group has-feedback">
+		    		<label class="control-label" for="userPass">비밀번호 확인</label>
+		      		<input type="password" class="form-control" id="password2" name="password2" placeholder="비밀번호 확인">
 		  		</div>
 				<div class="form-group has-feedback">
 					<button class="btn btn-success" type="submit" id="submit">회원탈퇴</button>
