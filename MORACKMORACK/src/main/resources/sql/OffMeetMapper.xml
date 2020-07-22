@@ -21,7 +21,6 @@
   	
 	<resultMap type="pay" id="paySelectMap">
 		<result property="payNo" 				column="PAY_NO" 		jdbcType="INTEGER"/>
-	    <result property="payFlag" 				column="pAY_FLAG" 		jdbcType="CHAR"/>
   		<result property="user.userId" 	column="USER_ID" 		jdbcType="VARCHAR"/>
   		<result property="meet.meetId" 		column="MEET_ID"		jdbcType="VARCHAR"/>
   		<result property="offMeet.offNo" 		column="OFF_NO"		jdbcType="INTEGER"/>
@@ -45,7 +44,7 @@
    	
 	<select id="getOff" parameterType="int" resultMap="offmeetSelectMap">
   		SELECT 
- 		user_id, meet_id, off_name, off_loc, off_max, off_mem, amount, off_date, off_time
+ 		off_no, user_id, meet_id, off_name, off_loc, off_max, off_mem, amount, off_date, off_time
 		FROM offmeet
 		WHERE
 		off_no = #{offNo}
@@ -89,10 +88,9 @@
 		  
 	 <insert id="addOffPay" parameterType ="pay">
 	 	INSERT 
-		INTO pay(pay_no, pay_flag, user_id, meet_id, off_no, total_amount, pay_date, pay_method)
+		INTO pay(pay_no, user_id, meet_id, off_no, total_amount, pay_date, pay_method)
 		VALUES (
 					seq_pay_pay_no.NEXTVAL,
-					#{payFlag:CHAR},
 					#{user.userId:VARCHAR},
 					#{meet.meetId:VARCHAR},
 					#{offMeet.offNo:INTEGER},
@@ -105,20 +103,20 @@
 	 
 	 <select id="getOffPay" parameterType="int" resultMap="paySelectMap">
   		SELECT 
-		pay_date, user_id, meet_id, off_no, total_Amount, pay_date, pay_method
-		FROM pay
-		WHERE pay_flag ='0' 
-		AND	pay_no= #{payNo}
+		p.pay_date, user_id, meet_id, off_no, total_Amount, pay_date, pay_method
+		FROM pay p , user u, offMeet o, meet m 
+     	off_no= #{offNo}
+     	AND o.off_no(+) = p.off_no
+     	ADN m.meet_id(+) = p.meet_id
   	</select>
   	
   	
 	 
 	  <insert id="addBusinessPay" parameterType ="pay">
 	 	INSERT 
-		INTO pay(pay_no, pay_flag, user_id, meet_id, off_no, business_id, total_amount, pay_date, pay_method, reserve_date, reserve_start_time, reserve_end_time, reserve_mem_num)
+		INTO pay(pay_no, user_id, meet_id, off_no, business_id, total_amount, pay_date, pay_method, reserve_date, reserve_start_time, reserve_end_time, reserve_mem_num)
 		VALUES (
 					seq_pay_pay_no.NEXTVAL,
-					#{payFlag:CHAR},
 					#{user.userId:VARCHAR},
 					#{meet.meetId:INTEGER},
 					#{offMeet.offNo:INTEGER},
@@ -136,10 +134,11 @@
 	 
 	 <select id="getBusinessPay" parameterType="int" resultMap="paySelectMap">
   		SELECT 
-		pay_date, user_id, total_amount, reserve_mem_num, reserve_start_time, reserve_end_time, reserve_date
-		FROM pay
-		WHERE pay_flag = '1' AND
-		pay_no = #{payNo} 
+		p.pay_date, u.user_id, b.business_id, p.total_amount, p.reserve_mem_num, p.reserve_start_time, p.reserve_end_time, p.reserve_date
+		FROM pay p, business b, user u
+		business_no = #{businessNo} 
+		AND o.off_no(+) = p.off_no
+     	AND m.meet_id(+) = p.meet_id
   	</select>
   	
   			 	
