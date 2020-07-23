@@ -49,6 +49,7 @@ public class MeetServiceImpl implements MeetService{
 	}
 	
 	public void joinMeet(MeetMem meetMem){
+		System.out.println("+++++++++++"+meetMem);
 		meetDao.joinMeet(meetMem);
 	}
 	

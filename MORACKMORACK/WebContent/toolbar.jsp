@@ -34,7 +34,7 @@ $(function() {
 	$("#menubar-menus li").mouseenter(function(event) {
 		$(this).find("div").parent().css("background", "#FFF");
 		$(this).find("div").parent().children("a").css("color", "#000").css("size", "15px");
-		$(this).find("div").slideDown("fast");
+		$(this).find("div").slideDown("slow");
 	}).mouseleave(function() {
 		$(this).find("div:visible").slideUp(50, function() {
 			$(this).parent().css("background", "#4D5F78");
@@ -49,7 +49,7 @@ $(function() {
     <span style="float:right;">
     <c:if test="${empty sessionScope.user}">
     <a href="/user/login">로그인</a>
-    <a href="/user/addUserView" style="margin-left:10px">회원가입</a>
+    <a href="/user/addUser" style="margin-left:10px">회원가입</a>
     <a href="#" style="margin-left:10px">업체 로그인</a>
     <a href="#" style="margin-left:10px">업체 회원가입</a>
     </c:if>
@@ -66,9 +66,9 @@ $(function() {
 		<li>
 			<a href="#">모임 검색</a>
 			<div>
-			<p><a href="/meet/listMeet/0">모임 유형 검색</a></p>			
-			<p><a href="/meet/listMeet/1">카테고리 검색</a></p>
-			<p><a href="/meet/listMeet/2">해시태그 검색</a></p>
+			<p><a href="/meet/listMeet?searchType=0">모임 유형 검색</a></p>			
+			<p><a href="/meet/listMeet?searchType=1">카테고리 검색</a></p>
+			<p><a href="/meet/listMeet?searchType=2">해시태그 검색</a></p>
 			</div>		
 		</li>
 		<li>
@@ -104,7 +104,7 @@ $(function() {
 			<div>
 			<p><a href="/user/getUser?userId=${user.userId}">내 정보 조회</a></p>
 			<p><a href="/user/updateUser?userId=${user.userId}">내 정보 변경</a></p>
-			<p><a href="/user/delUser?userId=${userId}">회원 탈퇴</a></p>
+			<p><a href="/user/delUser?userId=${user.userId}">회원 탈퇴</a></p>
 			</div>	
 		</li>
 	</ul>

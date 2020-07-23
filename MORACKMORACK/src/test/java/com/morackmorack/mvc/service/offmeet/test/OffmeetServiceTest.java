@@ -96,7 +96,7 @@ public void addOffPay() throws Exception {
 		pay.setUser(user);
 		pay.setMeet(meet);
 		pay.setOffMeet(offMeet);
-		pay.setPayMethod(0);
+		pay.setPayMethod('0');
 		pay.setTotalAmount(100000);
 		
 		offMeetService.addOffPay(pay);

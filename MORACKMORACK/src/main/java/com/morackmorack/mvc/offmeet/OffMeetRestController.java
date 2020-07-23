@@ -6,9 +6,11 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.morackmorack.mvc.common.Search;
 import com.morackmorack.mvc.service.domain.OffMeet;
 import com.morackmorack.mvc.service.domain.Pay;
 import com.morackmorack.mvc.service.offmeet.OffMeetService;
@@ -32,7 +35,12 @@ import com.morackmorack.mvc.service.offmeet.OffMeetService;
 @RestController
 @RequestMapping("/offmeet/*")
 public class OffMeetRestController {
+	@Value("#{commonProperties['pageUnit']}")
+	int pageUnit;
 
+	@Value("#{commonProperties['pageSize']}")
+	int pageSize;
+	
 	@Autowired
 	@Qualifier("offMeetServiceImpl")
 	private OffMeetService offMeetService;
@@ -41,7 +49,8 @@ public class OffMeetRestController {
 		System.out.println(this.getClass());
 	}
 	
-
+	
+	
 //	 IamportClient client;
 //		
 //		public void setup() throws Exception {
@@ -68,6 +77,16 @@ public class OffMeetRestController {
 		return pay;
 	}	
  	
- 
+ @RequestMapping(value="json/listOff/{page}")
+	public List<OffMeet> listOff(@PathVariable int page) throws Exception {
+			
+		Search search = new Search(); 
+		
+		search.setCurrentPage(page);		
+		search.setPageSize(pageSize);
+					 
+	
+		return (List<OffMeet>) offMeetService.getOffList(search).get("list");
+	}
 
 }

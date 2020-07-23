@@ -39,7 +39,8 @@
 $(function() {
 
 	$( "button.btn.btn-primary" ).on("click" , function() {
-		self.location =  "/offmeet/reqOff?offNo=10002"
+		var offNo = $(this).next().val();
+		self.location =  "/offmeet/reqOff?offNo=${ offMeet.offNo}"
 		}); 
 	});
 </script>
@@ -47,7 +48,9 @@ $(function() {
 
 <body>
 <div class="container">
-
+	
+	 <input type="hidden" id="offNo" value="${offMeet.offNo}"/>
+	 
 	<div class="page-header">
 	     <h3 class=" text-info">오프라인모임 정보</h3>
 	     

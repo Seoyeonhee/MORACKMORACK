@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="EUC-KR">
-<title>카테고리 모임 목록</title>
+<title>모임 가입 신청</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
@@ -24,18 +24,15 @@
 
 <script type ="text/javascript">
 
-$(function (){
-})
-
 </script>
 
 </head>
-
 <body>
 
 <div class="container">
 	<jsp:include page="/toolbar.jsp"/>
 </div>
 
+모임 가입 화면
 </body>
 </html>

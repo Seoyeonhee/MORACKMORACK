@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
+import com.morackmorack.mvc.common.Search;
 import com.morackmorack.mvc.service.domain.OffMeet;
 import com.morackmorack.mvc.service.domain.Pay;
 import com.morackmorack.mvc.service.offmeet.OffMeetDao;
@@ -56,6 +57,30 @@ public class OffMeetDaoImpl implements OffMeetDao{
 
 	public Pay getBusinessPay(int payNo) throws Exception {
 		return sqlSession.selectOne("OffMeetMapper.getBusinessPay", payNo);
+	}
+
+	@Override
+	public List<OffMeet> getOffList(Search search) throws Exception {
+		return sqlSession.selectList("OffMeetMapper.getOffList", search);
+	}
+
+	@Override
+	public int getOffTotalCount(Search search) throws Exception {
+	
+		return sqlSession.selectOne("OffMeetMapper.getOffTotalCount", search);
+	}
+
+	@Override
+	public int getOffPayTotalCount(Search search) throws Exception {
+		return sqlSession.selectOne("OffMeetMapper.getPayTotalCount", search);
+	}
+
+	@Override
+	public List<Pay> getBusinessPayList(Search search, String userId) throws Exception {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("search", search);
+		map.put("userId",userId);
+		return sqlSession.selectList("OffMeetMapper.getBusinessPayList", map);
 	}
 	
 

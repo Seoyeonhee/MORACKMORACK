@@ -70,6 +70,9 @@ public class FriendDAOImpl implements FriendDAO {
 	public void mangFriend(int friendNo) throws Exception {
 		// TODO Auto-generated method stub
 		
+			sqlSession.update("friendMapper.denyFriend", friendNo);
+		
+			sqlSession.update("friendMapper.okFriend",friendNo);
 	}
 
 	@Override

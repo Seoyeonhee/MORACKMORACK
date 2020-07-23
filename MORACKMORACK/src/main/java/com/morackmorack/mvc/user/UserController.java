@@ -141,17 +141,17 @@ public class UserController {
 	}
 	
 	// 회원 탈퇴 get
-	@RequestMapping(value="/delUserView", method = RequestMethod.GET)
-	public String memberDeleteView() throws Exception{
-		return "user/delUserView";
+	@RequestMapping(value="delUser", method = RequestMethod.GET)
+	public String delUserView() throws Exception{
+		return "redirect:/user/delUserView.jsp";
 	}
 		
 	// 회원 탈퇴 post
-	@RequestMapping(value="/delUser", method = RequestMethod.POST)
+	@RequestMapping(value="delUser", method = RequestMethod.POST)
 	public String delUser(User user, HttpSession session, RedirectAttributes rttr) throws Exception{
 			
 		// 세션에 있는 member를 가져와 member변수에 넣어줍니다.
-		User user1 = (User) session.getAttribute("user1");
+		User user1 = (User) session.getAttribute("user");
 		// 세션에있는 비밀번호
 		String sessionPassword = user1.getPassword();
 		// vo로 들어오는 비밀번호
@@ -159,11 +159,14 @@ public class UserController {
 			
 		if(!(sessionPassword.equals(userPassword))) {
 			rttr.addFlashAttribute("msg", false);
-			return "redirect:/user/delUserView";
+			return "redirect:/user/delUserView.jsp";
 		}
 		userService.delUser(user);
+		System.out.println("234243243243243");
 		session.invalidate();
-		return "redirect:/";
+		
+		System.out.println(123);
+		return "redirect:/index.jsp";
 	}
 	
 	
