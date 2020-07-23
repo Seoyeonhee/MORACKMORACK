@@ -49,7 +49,7 @@
      
      	<!-- websocket handler -->
 	<bean id="echoHandler" class="com.morackmorack.mvc.common.EchoHandler" />
- 
+ 	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
 	<websocket:handlers>
 		<websocket:mapping handler="echoHandler" path="/echo" />
 		<websocket:handshake-interceptors>
