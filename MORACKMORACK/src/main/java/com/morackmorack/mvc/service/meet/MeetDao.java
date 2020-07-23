@@ -2,6 +2,7 @@ package com.morackmorack.mvc.service.meet;
 
 import java.util.List;
 
+import com.morackmorack.mvc.common.Search;
 import com.morackmorack.mvc.service.domain.Meet;
 import com.morackmorack.mvc.service.domain.MeetMem;
 import com.morackmorack.mvc.service.domain.User;
@@ -14,13 +15,13 @@ public interface MeetDao {
 	
 	public void updateMeet(String meetId);
 	
-	public List<Meet> listMeet();
+	public List<Meet> listMeet(Search search);
 	
 	public void delMeet(String userId, String meetId);
 	
 	public void joinMeet(MeetMem meetMem);
 	
-	public void addMeetMem(MeetMem meetMem);
+	public void addMemNum(String meetId); 
 	
 	public User getMeetMem(String meetId);
 	

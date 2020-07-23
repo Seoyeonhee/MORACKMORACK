@@ -19,7 +19,7 @@
 		<result property="regDate" column="reg_date" jdbcType="DATE"/>
 		<result property="meetStar" column="meet_star" jdbcType="INTEGER"/>
 		<result property="bank" column="bank" jdbcType="VARCHAR"/>
-		<result property="accNum" column="accNum" jdbcType="INTEGER"/>
+		<result property="accNum" column="accNum" jdbcType="VARCHAR"/>
 		<result property="category" column="category" jdbcType="INTEGER"/>
 		<result property="meetAppr" column="meet_appr" jdbcType="CHAR"/>
 		<result property="meetType" column="meet_type" jdbcType="CHAR"/>
@@ -71,15 +71,21 @@
 	</insert>
 	
 	<insert id="joinMeet" parameterType="meetMem">
-	<if test ="join_code == 0">
+	<if test="joinCode == 0">
 	INSERT INTO meetmem(mem_no, user_id, meet_id, join_code, meet_role, join_req_date, join_date, intro, notify_count)
-	VALUES (seq_meetmem_mem_no.nextval, #{userId}, #{meetId}, #{joinCode}, #{meetRole}, sysdate, #{join_date:Date}, #{intro:VARCHAR}, 0)
+	VALUES (seq_meetmem_mem_no.nextval, #{user.userId}, #{meet.meetId}, #{joinCode}, #{meetRole}, SYSDATE, #{joinDate:DATE}, #{intro:VARCHAR}, 0)
 	</if>
-	<if test ="join_code == 1">
+	<if test="joinCode == 1">
 	INSERT INTO meetmem(mem_no, user_id, meet_id, join_code, meet_role, join_req_date, join_date, intro, notify_count)
-	VALUES (seq_meetmem_mem_no.nextval, #{userId}, #{meetId}, #{joinCode}, #{meetRole}, sysdate, sysdate, #{intro:VARCHAR}, 0)
+	VALUES (seq_meetmem_mem_no.nextval, #{user.userId}, #{meet.meetId}, #{joinCode}, #{meetRole}, SYSDATE, SYSDATE, #{intro:VARCHAR}, 0)	
 	</if>
 	</insert>
+	
+	<update id="addMemNum" parameterType="String">
+	UPDATE meet 
+	SET mem_num = mem_num+1
+	WHERE meet_id = #{meetId}
+	</update>
 	
 	<select id="listMeetMem" parameterType="String" resultMap="meetMemSelectMap">
 	SELECT mem_no, user_id, meet_id, join_code, meet_role, join_req_date, join_date, intro, notify_count
@@ -97,8 +103,8 @@
 	
 	<update id="okJoinMeetUser" parameterType="map">
 	UPDATE meetmem 
-	SET join_code ='1'
-	WHERE user_id = #{userId} and meet_id = #{meetId}
+	SET join_code ='1', join_date = SYSDATE
+	WHERE user_id = #{userId} AND meet_id = #{meetId}
 	</update>
 	
 	<delete id="refuseJoinMeetUser" parameterType="map">
@@ -113,9 +119,20 @@
 	ORDER BY join_date
 	</select>
 	
-	<select id="listMeet" resultMap="meetSelectMap">
+	<select id="listMeet" parameterType="search" resultMap="meetSelectMap">
 	SELECT meet_id, leader_id, meet_name, meet_loc, max_num, mem_num, meet_img, s_intro, l_intro, reg_date, meet_star, bank, accNum, category, meet_appr, meet_type
 	FROM meet
+	<if test="searchCondition == 0">
+		<if test="searchWay == 0">
+			WHERE meet_type = '0'
+		</if>
+		<if test="searchWay == 1">
+			WHERE meet_type = '1' 
+		</if>
+	</if>
+	<if test="searchCondition == 1">
+	WHERE category = #{searchWay}
+	</if>
 	ORDER BY reg_date
 	</select>
 	

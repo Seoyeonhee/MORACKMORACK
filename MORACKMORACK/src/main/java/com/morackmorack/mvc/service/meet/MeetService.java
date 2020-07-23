@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.morackmorack.mvc.common.Search;
 import com.morackmorack.mvc.service.domain.Meet;
 import com.morackmorack.mvc.service.domain.MeetMem;
 import com.morackmorack.mvc.service.domain.User;
@@ -18,13 +19,13 @@ public interface MeetService {
 	
 	public void updateMeet(String meetId);
 	
-	public List<Meet> listMeet();
+	public List<Meet> listMeet(Search search);
 	
 	public void delMeet(String userId, String meetId);
 	
 	public void joinMeet(MeetMem meetMem);
 	
-	public void addMeetMem(MeetMem meetMem);
+	public void addMemNum(String meetId);
 	
 	public User getMeetMem(String meetId);
 	

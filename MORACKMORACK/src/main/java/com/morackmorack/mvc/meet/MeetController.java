@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.morackmorack.mvc.common.Search;
 import com.morackmorack.mvc.service.domain.Meet;
 import com.morackmorack.mvc.service.domain.MeetMem;
 import com.morackmorack.mvc.service.domain.User;
@@ -66,27 +67,33 @@ public class MeetController {
 		return mav;
 	}
 
-	@RequestMapping(value = "addMeet", method = RequestMethod.POST)
-	public ModelAndView addMeet(@ModelAttribute("meet") Meet meet, HttpServletRequest request) throws Exception {
+	@RequestMapping(value = "addMeet/{maxNum}", method = RequestMethod.POST)
+	public ModelAndView addMeet(HttpServletRequest request, @ModelAttribute("meet") Meet meet, @PathVariable ("maxNum") int maxNum) throws Exception {
 		System.out.println("/meet/addMeet : POST");
-
+		
+		System.out.println(">>>>>>>>>> "+meet);
 		meet.setMeetLoc("서울시"); // 나중에 지워랑
 
 		HttpSession session = request.getSession(true);
 		User user = (User) session.getAttribute("user");
-		String userId = user.getUserId(); ////
+		//String userId = user.getUserId(); 
+		
+		String userId = "user06";	
+		user = userService.getUser(userId);
 
 		String uuid = (UUID.randomUUID().toString().replaceAll("-", "")).substring(0, 14);
-		//Date date = new Date();
-		//SimpleDateFormat simpleDate = new SimpleDateFormat("yyMMdd");
-		//String meetId = uuid + simpleDate.format(date);
-		String meetId = uuid;
+		Date date = new Date();
+		SimpleDateFormat simpleDate = new SimpleDateFormat("yyMMdd");
+		String meetId = uuid + simpleDate.format(date);
 		
 		meet.setMeetId(meetId);
 		meet.setLeaderId(userId);
+		meet.setMaxNum(maxNum);
 
 		String bank = meet.getBank();
 		int len = 0;
+		
+		System.out.println(bank);
 
 		if (bank.equals("기업") || bank.equals("국민")) {
 			len = 14;
@@ -130,23 +137,33 @@ public class MeetController {
 		meetMem.setMeet(meet);
 		meetMem.setJoinCode('1');
 		meetMem.setMeetRole('0');
+		
 		meetService.joinMeet(meetMem);
-
+		meetService.addMemNum(meetId);
+		
+		meet = meetService.getMeet(meetId);
+		
 		ModelAndView mav = new ModelAndView();
+		mav.addObject(meet);
 		mav.setViewName("/meet/getMeet.jsp");
 		return mav;
 	}
 
-	@RequestMapping(value = "listMeet", method = RequestMethod.GET)
-	public ModelAndView listMeet() {////////////////////////
+	@RequestMapping(value = "listMeet/{searchType}", method = RequestMethod.GET)
+	public ModelAndView listMeet(@PathVariable ("searchType") int searchType, @ModelAttribute("meet") Meet meet, @ModelAttribute Search search ) {
 		System.out.println("/meet/listMeet  : GET");
 
-		List<Meet> listMeet = meetService.listMeet();
+		search.setSearchCondition(searchType);
+		
+		System.out.println(">>>>>>>>>>>"+search);
+		
+		List<Meet> listMeet = meetService.listMeet(search);
 
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("listMeet", listMeet);
+		mav.addObject("search", search);
 		mav.setViewName("/meet/listMeet.jsp");
-
+	
 		return mav;
 	}
 
@@ -331,7 +348,7 @@ public class MeetController {
 		 //User user = (User)session.getAttribute("user");
 		 //String userId = user.getUserId();
 		 
-		 String userId = "user01";
+		 String userId = "user06";
 
 		List<MeetMem> listMyMeet = meetService.listMyMeet(userId);
 

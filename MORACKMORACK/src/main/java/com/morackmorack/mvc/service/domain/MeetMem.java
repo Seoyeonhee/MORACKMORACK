@@ -41,13 +41,13 @@ public class MeetMem {
 	public void setMeet(Meet meet) {
 		this.meet = meet;
 	}
-	public int getJoinCode() {
+	public char getJoinCode() {
 		return joinCode;
 	}
 	public void setJoinCode(char joinCode) {
 		this.joinCode = joinCode;
 	}
-	public int getMeetRole() {
+	public char getMeetRole() {
 		return meetRole;
 	}
 	public void setMeetRole(char meetRole) {

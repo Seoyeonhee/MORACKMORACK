@@ -90,11 +90,34 @@ $(function(){
 	        $(this).parent().removeClass('focus');
 	    }
 	})
+	
+	$("#meetType").on("change", function(){
+		var meetType = $("#meetType").val();
+		
+		if(meetType == 0){
+			$("#max").val(2);
+			$("#max").attr("readonly",true);
+		}else{
+			$("#max").attr("readonly",false);
+			$("#max").focus();
+		}
+	})
+	
+	$("#meetImg").on("click", function(){
+		document.all.file.click();
+	})
+	
+	$("#lImg").on("click", function(){
+		document.all.file.click();
+	})
 
 	
 	$("#addMeet").on("click", function(){
+		
+		var maxNum = $("#max").val();
+		alert(maxNum);
 	
-		$("form").attr("method", "POST").attr("action", "/meet/addMeet").submit();
+		$("form").attr("method", "POST").attr("action", "/meet/addMeet/"+maxNum).submit();
 	})
 	
 	});
@@ -112,63 +135,61 @@ $(function(){
    	 	
 <div class="col-xs-6 col-md-6">
   		
-  <div class="form-group">
-   		 <label for="exampleInputFile">모임 대표 이미지 선택</label>
-   			<a href="#" class="thumbnail" style="height:300px; width:500px">
-     	 		<img src="..." alt="...">
-    		</a>
-  </div>
-    	
+	<div class="form-group">
+		<label for="meetImg">모임 대표 이미지 선택</label>
+			<a href="#" class="thumbnail" id="meetImg" style="height:300px; width:500px">
+			<!-- <img src="..." alt="...">  -->
+			</a>
+  
 	<div>
-    <label for="exampleInputFile" style="text-align:left">모임 상세 소개 입력</label>   
-    <input class="btn btn-default" type="button" id="addImg" value="이미지 추가" style="text-align:right"> </div>
- 	<div class="row">
-  		<div class="col-xs-6 col-md-3">
-    		<a href="#" class="thumbnail">
-     		 <img src="..." alt="...">
+		<p style="text-align:left;">
+		<label for="exampleInputFile" style="text-align:left">모임 상세 소개 입력</label>   
+		<span style="float:right;">
+		<input class="btn btn-default" type="button" id="addImg" name="addImg" value="이미지 추가" style="margin-right:50px"> </span>
+	</div>
+	
+	<div class="row">
+		<div class="col-xs-6 col-md-3">
+			<a href="#" class="thumbnail" id="lImg" style="height:220px; width:220px">
+			<!-- <img src="..." alt="..."> -->
     		</a>
-  		</div>
-  		<div class="col-xs-6 col-md-3">
-    		<a href="#" class="thumbnail">
-     		<img src="..." alt="...">
+		</div>
+  		
+  		<div class="col-xs-6 col-md-3" style="margin-left:120px">
+    		<a href="#" class="thumbnail" id="lImg" style="height:220px; width:220px">
+     		 <!-- <img src="..." alt="..."> -->
    			</a>
 		</div>
 	</div>
-
-<textarea form="inform" cols="10" rows="20" wrap="hard" id="lIntro" name="lIntro" class="form-control"></textarea>
-    	
+	
+		<textarea form="inform" cols="10" rows="20" wrap="soft" id="lIntro" name="lIntro" class="form-control"></textarea>
+		
+	</div>
 </div>
     	
 <div class="col-xs-6 col-md-6">
-  		
-  		<div class="row">
-  		  <div class="col-xs-6 col-md-3">
-   		<p><strong>모임명</strong></p>
-   		 <input type="text" class="form-control" id="meetId" placeholder="모임명" style="width:200px" />
-   		 </div>
-   		   <div class="col-xs-6 col-md-3" >
-   		 <p><strong>은행 선택</strong></p>
-   		 <div class="selectbox">
-    	<label for="select"></label>
-		<select id="bank">
-		<option selected="selected">은행 선택</option>
-        <option value="기업">기업은행</option>
-        <option value="농협">농협은행</option>
-        <option value="국민">국민은행</option>
-        <option value="우리">우리은행</option>
-        <option value="SC제일">SC제일은행</option>
-        <option value="한국씨티">한국씨티은행</option>
-        <option value="신한">신한은행</option>
-</select>
-</div>
-   		 </div>
-   		 </div>
+
+	<p><strong>모임명</strong></p>
+	<input type="text" class="form-control" id="meetName" name="meetName" placeholder="모임명" style="height:50px; width:300px" />
+
+	<p style="margin-top:20px"><strong>은행 선택</strong></p>
+	<div class="selectbox">
+		<label for="select">은행</label>
+		<select id="bank" name="bank">
+		<option value="기업">기업은행</option>
+		<option value="농협">농협은행</option>
+		<option value="국민">국민은행</option>
+		<option value="우리">우리은행</option>
+		<option value="SC제일">SC제일은행</option>
+		<option value="한국씨티">한국씨티은행</option>
+		<option value="신한">신한은행</option>
+		</select>
+	</div>
    		 
-   		 <p><strong>카테고리 선택</strong></p>
-   		 <div class="selectbox">
+	<p style="margin-top:20px"><strong>카테고리 선택</strong></p>
+	<div class="selectbox">
     	<label for="select">카테고리</label>
-		<select id="category">
-		<option selected="selected">카테고리 선택</option>
+		<select id="category" name="category">	
         <option value="1">여행</option>
         <option value="2">게임</option>
         <option value="3">음악</option>
@@ -187,56 +208,48 @@ $(function(){
         <option value="16">공예</option>
         <option value="17">기타</option>
 		</select>
-		</div>
+	</div>
 		
 		
-		<div class="form-group">
-    <p><strong>모임 유형 선택</strong></p>
+    <p style="margin-top:20px"><strong>모임 유형 선택</strong></p>
     <div class="selectbox">
-    	<label for="select"></label>
-		<select id="meetType">
-		<option selected="selected">모임 유형</option>
+    	<label for="select">모임 유형</label>
+		<select id="meetType" name="meetType">
        	 <option value="0">2인 모임</option>
       	 <option value="1">다수인 모임</option>
       	 </select>
-      	 </div>
+	</div>
       	 
-      	 <div class="form-group">
-    	<p><strong>모임 정원</strong></p>
-			<input type="number" id="maxNum" name="maxNum" class="form-control" style="width:100px"/>
-      	 </div>
-</div>
+	<p style="margin-top:20px"><strong>모임 정원</strong></p>
+	<input type="number" id="max" name="max" class="form-control" style="height:30px; width:80px"/>
       	  
-      	  <div class="form-group">
-    <p><strong>가입 승인 필요 여부</strong></p>
+    <p style="margin-top:20px"><strong>가입 승인 필요 여부</strong></p>
     <label class="radio-inline">
 		<input type="radio" id="meetAppr" name="meetAppr" value="1" checked />필요 <br><br/>
 		<input type="radio" id="meetAppr" name="meetAppr" value="0" />불필요<br/><br/>
-		</label>
-      	  </div>
+	</label>
       	  
-      	<p><strong>주요 활동 위치 선택</strong></p>
+	<p style="margin-top:20px"><strong>주요 활동 위치 선택</strong></p>
+     	  
       	  
-      	  
-      	  <div class="form-group">
-      	 <p><strong>모임 간략 소개</strong></p>
-<input type="text" id="sIntro" name="sIntro" class="form-control"/><br/>
-</div>
+ 
+	<p style="margin-top:20px"><strong>모임 간략 소개</strong></p>
+	<input type="text" id="sIntro" name="sIntro" class="form-control" style="height:100px; width:500px"/><br/>
 
-<div class="form-group">
-<p><strong>해시태그 입력</strong></p>
-<textarea form="inform" cols="40" rows="10" wrap="hard" id="hash" name="hash" class="form-control"></textarea>
-</div>
+
+	<p style="margin-top:20px"><strong>해시태그 입력</strong></p>
+	<textarea form="inform" cols="40" rows="10" wrap="hard" id="hash" name="hash" class="form-control"></textarea>
+	
  </div>    
   	  
-
+</form>
+</div>
 
 <div class="text-center" style="margin-top:30px">
-<input class="btn btn-default" type="button" id="addMeet" name="addMeet" value="모임 생성">
+	<input class="btn btn-default" type="button" id="addMeet" name="addMeet" value="모임 생성">
 </div>
 
- </form>
-</div>
+<input type="file" name="file" id="file" style="display: none;"/>  
 
 </body>
 </html>

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.morackmorack.mvc.common.Search;
 import com.morackmorack.mvc.service.domain.Meet;
 import com.morackmorack.mvc.service.domain.MeetMem;
 import com.morackmorack.mvc.service.domain.User;
@@ -39,8 +40,8 @@ public class MeetServiceImpl implements MeetService{
 		meetDao.updateMeet(meetId);
 	}
 	
-	public List<Meet> listMeet(){
-		return meetDao.listMeet();
+	public List<Meet> listMeet(Search search){
+		return meetDao.listMeet(search);
 	}
 	
 	public void delMeet(String userId, String meetId){
@@ -51,8 +52,8 @@ public class MeetServiceImpl implements MeetService{
 		meetDao.joinMeet(meetMem);
 	}
 	
-	public void addMeetMem(MeetMem meetMem){
-		meetDao.addMeetMem(meetMem);
+	public void addMemNum(String meetId) {
+		meetDao.addMemNum(meetId);
 	}
 	
 	public User getMeetMem(String meetId){

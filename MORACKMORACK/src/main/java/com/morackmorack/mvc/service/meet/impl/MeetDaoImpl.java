@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
+import com.morackmorack.mvc.common.Search;
 import com.morackmorack.mvc.service.domain.Meet;
 import com.morackmorack.mvc.service.domain.MeetMem;
 import com.morackmorack.mvc.service.domain.User;
@@ -39,8 +40,8 @@ public class MeetDaoImpl implements MeetDao {
 		
 	}
 	
-	public List<Meet> listMeet(){
-		return sqlSession.selectList("MeetMapper.listMeet");
+	public List<Meet> listMeet(Search search){
+		return sqlSession.selectList("MeetMapper.listMeet", search);
 	}
 	
 	public void delMeet(String userId, String meetId){
@@ -51,8 +52,8 @@ public class MeetDaoImpl implements MeetDao {
 		sqlSession.insert("MeetMapper.joinMeet", meetMem);
 	}
 	
-	public void addMeetMem(MeetMem meetMem){		
-		//sqlSession.insert("MeetMapper.addMeetMem", meetMem);
+	public void addMemNum(String meetId) {
+		sqlSession.update("MeetMapper.addMemNum", meetId);
 	}
 	
 	public User getMeetMem(String meetId){

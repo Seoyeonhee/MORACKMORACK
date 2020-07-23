@@ -18,10 +18,10 @@
 <script type="text/javascript">
 
 $(function(){
-	var meetId = $("#div").children().val();
+	//var meetId = $("#div").children().val();
 	
 	$("#meetImg, #meetName").on("click", function(){
-		//var meetId = $(this).next().val();
+		var meetId = $(this).next().val();
 		self.location="/meet/getMeet/"+meetId;
 	})
 	
@@ -53,9 +53,9 @@ $(function(){
 
 <c:forEach var="meetMem" items="${listMyMeet}">
 <div class="row" id="div">
-  <input type="hidden" id="meetId" value="${meetMem.meet.meetId}"/>
-  <div class="col-md-2" id="meetImg">${meetMem.meet.meetImg}</div>
+  <div class="col-md-2" id="meetImg" style="margin-top:50px">${meetMem.meet.meetImg}</div>
   <div class="col-md-2" id="meetName">${meetMem.meet.meetName}</div> 
+  <input type="hidden" id="meetId" value="${meetMem.meet.meetId}"/>
   <div class="col-md-2"><fmt:formatDate value="${meetMem.joinDate}" pattern="yyyy.MM.dd" /></div>
   <div class="col-md-2">${meetMem.meet.memNum}/${meetMem.meet.maxNum}</div>
   <div class="col-md-2">

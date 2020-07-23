@@ -66,9 +66,9 @@ $(function() {
 		<li>
 			<a href="#">모임 검색</a>
 			<div>
-			<p><a href="/meet/listMeet/type">모임 유형 검색</a></p>
-			<p><a href="/meet/listMeet/hashtag">해시태그 검색</a></p>
-			<p><a href="/meet/listMeet/category">카테고리 검색</a></p>
+			<p><a href="/meet/listMeet/0">모임 유형 검색</a></p>			
+			<p><a href="/meet/listMeet/1">카테고리 검색</a></p>
+			<p><a href="/meet/listMeet/2">해시태그 검색</a></p>
 			</div>		
 		</li>
 		<li>
