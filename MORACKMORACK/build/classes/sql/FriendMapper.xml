@@ -26,8 +26,8 @@
 	 					,	req_friend_date
 	 					,	friend_date
 	 					) VALUES (	seq_friend_friend_no.nextval
-	 							  ,	#{friend.userId:VARCHAR2}
-	 							  ,	#{friend.userId:VARCHAR2}
+	 							  ,	#{reqFriend.userId:VARCHAR2}
+	 							  ,	#{recvFriend.userId:VARCHAR2}
 	 							  ,	'0'
 	 							  ,	sysdate
 	 							  ,	null
@@ -46,5 +46,21 @@
 		FROM Friend
 		WHERE friend_no=#{friendNo}
 	</select>
+	
+	<update id="denyFriend" parameterType="friend">
+		UPDATE friend
+		<set>
+			friend_code='1'
+		</set>
+		WHERE friend_no=#{friendNo:INTEGERE}
+	</update>
+	
+	<update id="okFriend" parameterType="friend">
+		UPDATE friend
+		<set>
+			friend_code='2'
+		</set>
+		WHERE friend_no=#{friendNo:INTEGER}
+	</update>
 	
 </mapper>

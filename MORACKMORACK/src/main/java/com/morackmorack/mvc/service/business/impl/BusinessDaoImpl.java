@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
+import com.morackmorack.mvc.common.Search;
 import com.morackmorack.mvc.service.business.BusinessDao;
 import com.morackmorack.mvc.service.domain.Business;
 import com.morackmorack.mvc.service.domain.Menu;
@@ -26,11 +27,33 @@ public class BusinessDaoImpl implements BusinessDao {
 	
 	///Constructor
 	public BusinessDaoImpl() {
-		System.out.println("¼­¿¬Èñ_DaoImpl");
 		System.out.println(this.getClass());
 	}
 
 	///Method
+	public void addBusiness(Business business) throws Exception {
+		sqlSession.insert("BusinessMapper.addBusiness", business);
+	}
+	
+	public Business getBusiness(String businessId) throws Exception {
+		return sqlSession.selectOne("BusinessMapper.getBusiness", businessId);
+	}
+	
+	public void updateBusiness(Business business) throws Exception {
+		sqlSession.update("BusinessMapper.updateBusiness", business);
+	}
+	
+	public List<Business> getBusinessList(Search search) throws Exception {
+		return sqlSession.selectList("BusinessMapper.getBusinessList", search);
+	}
+	
+	public void delBusiness(String businessId) throws Exception {
+		sqlSession.delete("BusinessMapper.delBusiness", businessId);
+	}
+	
+	
+	
+	
 	public void addBusinessMenu(Menu menu) throws Exception {
 		sqlSession.insert("BusinessMapper.addBusinessMenu", menu);
 	}
