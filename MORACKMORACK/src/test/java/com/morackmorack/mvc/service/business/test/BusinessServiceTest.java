@@ -3,7 +3,6 @@ package com.morackmorack.mvc.service.business.test;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,9 +10,12 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.morackmorack.mvc.common.Search;
 import com.morackmorack.mvc.service.business.BusinessService;
 import com.morackmorack.mvc.service.domain.Business;
 import com.morackmorack.mvc.service.domain.Menu;
+
+import oracle.sql.DATE;
 
 // JUnit으로 BusinessLayer 단위테스트
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -33,6 +35,101 @@ public class BusinessServiceTest {
 	@Qualifier("businessServiceImpl")
 	private BusinessService businessService;
 
+	//@Test
+	public void addBusiness() throws Exception {
+		
+		Business business = new Business();
+
+		business.setBusinessId("bus03");
+		business.setBusinessPass("3333");
+		business.setBusinessName("베스킨라빈스");
+		business.setBusinessLoc("제주도 서귀포시");
+		business.setCategoryNo(3);
+		business.setBusinessPhone("010-3333-3333");
+		business.setBusinessNum("34578");
+		business.setBusinessOwner("베스킨");
+		business.setBank("하나은행");
+		business.setDepositAccNum("345-98765-245678");
+		business.setBusinessStartTime("09:00");
+		business.setBusinessEndTime("20:30");
+		
+		System.out.println("서연희");
+		System.out.println(business);
+		
+		businessService.addBusiness(business);
+
+	}
+	
+	
+	//@Test
+	public void getBusiness() throws Exception{
+		
+		String businessId = "bus03";
+		
+		Business business = businessService.getBusiness(businessId);
+		
+		System.out.println("서연희");
+		System.out.println(business);
+		
+	}
+	
+	
+	//@Test
+	public void updateBusiness() throws Exception{
+		
+		String businessId = "bus03";
+		Business business = new Business();
+		business.setBusinessId(businessId);
+		business.setBusinessPass("4444");
+		business.setBusinessName("베스킨라빈스_수정");
+		business.setBusinessLoc("제주도 서귀포시_수정");
+		business.setCategoryNo(4);
+		business.setBusinessPhone("010-4444-4444");
+		business.setBusinessImg("베스킨라빈스31_수정.jsp");
+		business.setBusinessNum("34578_수정");
+		business.setBusinessOwner("베스킨_수정");
+		business.setBank("하나은행_수정");
+		business.setDepositAccNum("345-98765-245678_수정");
+		business.setBusinessStartTime("00:00");
+		business.setBusinessEndTime("10:00");
+		
+		businessService.updateBusiness(business);
+		
+	}
+	
+	
+	//@Test
+	public void getBusinessList() throws Exception{
+		
+		Search search = new Search();
+		
+		List<Business> businessList = new ArrayList<>();
+		
+		businessList = businessService.getBusinessList(search);
+		
+		System.out.println("서연희");
+		System.out.println(businessList);
+		
+	}
+	
+	
+	//@Test
+	public void delBusiness() throws Exception{
+		
+		String businessId = "bus03";
+		
+		businessService.delBusiness(businessId);
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	//@Test
 	public void testAddBusinessMenu() throws Exception {
 		

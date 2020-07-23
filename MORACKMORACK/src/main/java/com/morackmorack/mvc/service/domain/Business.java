@@ -19,10 +19,10 @@ public class Business implements Serializable {
 	private String businessOwner;
 	private Date regDate;
 	private String bank;
-	private String depositAcNum;
-	private int business_star;
-	private Date businessStartTime;
-	private Date businessEndTime;
+	private String depositAccNum;
+	private int businessStar;
+	private String businessStartTime;
+	private String businessEndTime;
 	
 	private List<ReserveAble> reserveAble;
 	
@@ -32,6 +32,7 @@ public class Business implements Serializable {
 	public Business() {
 	}
 
+	
 	/// Method
 	public String getBusinessId() {
 		return businessId;
@@ -121,35 +122,35 @@ public class Business implements Serializable {
 		this.bank = bank;
 	}
 
-	public String getDepositAcNum() {
-		return depositAcNum;
+	public String getDepositAccNum() {
+		return depositAccNum;
 	}
 
-	public void setDepositAcNum(String depositAcNum) {
-		this.depositAcNum = depositAcNum;
+	public void setDepositAccNum(String depositAccNum) {
+		this.depositAccNum = depositAccNum;
 	}
 
-	public int getBusiness_star() {
-		return business_star;
+	public int getBusinessStar() {
+		return businessStar;
 	}
 
-	public void setBusiness_star(int business_star) {
-		this.business_star = business_star;
+	public void setBusinessStar(int businessStar) {
+		this.businessStar = businessStar;
 	}
 
-	public Date getBusinessStartTime() {
+	public String getBusinessStartTime() {
 		return businessStartTime;
 	}
 
-	public void setBusinessStartTime(Date businessStartTime) {
+	public void setBusinessStartTime(String businessStartTime) {
 		this.businessStartTime = businessStartTime;
 	}
 
-	public Date getBusinessEndTime() {
+	public String getBusinessEndTime() {
 		return businessEndTime;
 	}
 
-	public void setBusinessEndTime(Date businessEndTime) {
+	public void setBusinessEndTime(String businessEndTime) {
 		this.businessEndTime = businessEndTime;
 	}
 
@@ -169,15 +170,25 @@ public class Business implements Serializable {
 		this.menu = menu;
 	}
 
+
 	@Override
 	public String toString() {
 		return "Business [businessId=" + businessId + ", businessPass=" + businessPass + ", businessName="
 				+ businessName + ", businessLoc=" + businessLoc + ", categoryNo=" + categoryNo + ", businessPhone="
 				+ businessPhone + ", businessImg=" + businessImg + ", businessNum=" + businessNum + ", businessOwner="
-				+ businessOwner + ", regDate=" + regDate + ", bank=" + bank + ", depositAcNum=" + depositAcNum
-				+ ", business_star=" + business_star + ", businessStartTime=" + businessStartTime + ", businessEndTime="
-				+ businessEndTime + ", reserveAble=" + reserveAble + ", menu=" + menu + "]";
+				+ businessOwner + ", regDate=" + regDate + ", bank=" + bank + ", depositAccNum=" + depositAccNum
+				+ ", businessStar=" + businessStar + ", businessStartTime=" + businessStartTime + ", businessEndTime="
+				+ businessEndTime + ", reserveAble=" + reserveAble + ", menu=" + menu + ", getBusinessId()="
+				+ getBusinessId() + ", getBusinessPass()=" + getBusinessPass() + ", getBusinessName()="
+				+ getBusinessName() + ", getBusinessLoc()=" + getBusinessLoc() + ", getCategoryNo()=" + getCategoryNo()
+				+ ", getBusinessPhone()=" + getBusinessPhone() + ", getBusinessImg()=" + getBusinessImg()
+				+ ", getBusinessNum()=" + getBusinessNum() + ", getBusinessOwner()=" + getBusinessOwner()
+				+ ", getRegDate()=" + getRegDate() + ", getBank()=" + getBank() + ", getDepositAccNum()="
+				+ getDepositAccNum() + ", getBusinessStar()=" + getBusinessStar() + ", getBusinessStartTime()="
+				+ getBusinessStartTime() + ", getBusinessEndTime()=" + getBusinessEndTime() + ", getReserveAble()="
+				+ getReserveAble() + ", getMenu()=" + getMenu() + ", getClass()=" + getClass() + ", hashCode()="
+				+ hashCode() + ", toString()=" + super.toString() + "]";
 	}
 
-
+	
 }
