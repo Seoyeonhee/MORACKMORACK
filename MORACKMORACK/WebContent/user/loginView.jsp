@@ -51,9 +51,46 @@
 					return;
 				}
 				
-				$("form").attr("method","POST").attr("action","/user/login").attr("target","_parent").submit();
+				//////////////////////////////////// 추가 , 변경된 부분 ///////////////////////////////////
+				//$("form").attr("method","POST").attr("action","/user/login").attr("target","_parent").submit();
+				////////////////////////////////////////////////////////////////////////////////////
+				$.ajax(
+						{
+							url : "/user/json/login",
+							method : "POST" ,
+							dataType : "json" ,
+							headers : {
+								"Accept" : "application/json",
+								"Content-Type" : "application/json"
+							},
+							data : JSON.stringify({
+								userId : id,
+								password : pw
+							}),
+							success : function(JSONData , status) {
+								
+								//Debug...
+								//alert(status);
+								//alert("JSONData : \n"+JSONData);
+								//alert( "JSON.stringify(JSONData) : \n"+JSON.stringify(JSONData) );
+								//alert( JSONData != null );
+								
+								if( JSONData.userId != null ){
+									$("form").attr("method","POST").attr("action","/user/login").attr("target","_parent").submit();
+									//[방법1]
+									//$(window.parent.document.location).attr("href","/index.jsp");
+									
+									//[방법2]
+									//window.parent.document.location.reload();
+									
+								}else{
+									alert("아이디 , 패스워드를 확인하시고 다시 로그인...");
+								}
+							}
+					});
+					////////////////////////////////////////////////////////////////////////////////////////////////	
 			});
-		});	
+		});
 		
 		
 		//============= 회원가입화면이동 =============

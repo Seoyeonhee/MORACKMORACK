@@ -51,10 +51,13 @@ public class UserRestController {
 		User dbUser=userService.getUser(user.getUserId());
 		
 		if( user.getPassword().equals(dbUser.getPassword())){
-			session.setAttribute("user", dbUser);
+			return dbUser;
+		}else {
+			User user2 = new User();
+			return user2;
 		}
 		
-		return dbUser;
+		
 	}
 	
 	@RequestMapping( value="json/checkDuplication/{userId}", method=RequestMethod.GET)
@@ -72,4 +75,21 @@ public class UserRestController {
 		
 		return sendMap;
 	}
+	
+	@RequestMapping( value="json/checkDuplication2/{nickName}", method=RequestMethod.GET)
+	public  Map checkDuplication2( @PathVariable String nickName) throws Exception{
+		
+		System.out.println("/user/checkDuplication2 : GET");
+		System.out.println(nickName);
+		
+		boolean result=userService.checkDuplication2(nickName);
+		
+		Map<String, Object> sendMap = new HashMap<String, Object>();
+		
+		sendMap.put("result", new Boolean(result));
+		sendMap.put("nickName", nickName);
+		
+		return sendMap;
+	}
+	
 }
