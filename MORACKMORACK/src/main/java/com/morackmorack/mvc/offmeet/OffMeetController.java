@@ -64,13 +64,13 @@ public OffMeetController() {
 	}
 
 
-@RequestMapping(value="addOffView", method =RequestMethod.GET)
+@RequestMapping(value="addOfView", method =RequestMethod.GET)
 public String addOffView() throws Exception {
 	
 	System.out.println("/offmeet/addOff :GET");
 	
 	
-	return "redirect:/offMeet/addOff.jsp";
+	return "forward:/offMeet/addOff.jsp";
 }
 
 

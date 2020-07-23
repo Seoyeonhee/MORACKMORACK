@@ -41,54 +41,113 @@
 
 <!--  ///////////////////////// CSS ////////////////////////// -->
 <style>
-body {
-	padding-top: 50px;
+:root {
+  background: #f5f6fa;
+  color: #9c9c9c;
+  font: 1rem "PT Sans", sans-serif;
 }
+
+
+a {
+  color: inherit;
+}
+a:hover {
+  color: #7f8ff4;
+}
+
+
+.uppercase {
+  text-transform: uppercase;
+}
+
+.btn {
+  display: inline-block;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  border: 0;
+  outline: 0;
+  padding: 0;
+  -webkit-transition: all 200ms ease-in;
+  transition: all 200ms ease-in;
+  cursor: pointer;
+}
+.btn--primary {
+  background: #7f8ff4;
+  color: #fff;
+  box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.1);
+  border-radius: 2px;
+  padding: 12px 36px;
+}
+.btn--primary:hover {
+  background: #6c7ff2;
+}
+.btn--primary:active {
+  background: #7f8ff4;
+  box-shadow: inset 0 0 10px 2px rgba(0, 0, 0, 0.2);
+}
+.btn--inside {
+  margin-left: -96px;
+}
+
+.form__field {
+  width: 360px;
+  background: #fff;
+  color: #a3a3a3;
+  font: inherit;
+  box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.1);
+  border: 0;
+  outline: 0;
+  padding: 22px 18px;
+}
+
+
 </style>
 
 <script type="text/javascript">
-
 	$(function() {
 		
-		$(".thumbnail-wrapper").on("click", function() {
+		$(".thumbnail").on("click", function() {
 			 var offNo = $(this).find($("input[name='offNo']")).val();
 			self.location = "/offmeet/getInfoOff?offNo="+ offNo;
 		});
 	});
+	
 </script>
 </head>
 
-<body>
-
-	<!-- ToolBar Start /////////////////////////////////////-->
-   	<!-- ToolBar End /////////////////////////////////////-->
+<body>	
+<div class="container">
 	
-	<!--  화면구성 div Start /////////////////////////////////////-->
-	<div class="container">
-	
-		<div class="page-header text-success">
-	       <h3>오프라인 모임 리스트</h3>
-	    </div>
-	    
+<div class="page-header text-success">
+   <h3>오프라인 모임 리스트</h3>
+</div>
+    
+ <div style="text-align:center; margin-top:50px">
+<div class="row" style="display:inline-block">
 
-		<div class="row">
-			<c:set var="i" value="0" />
-			<c:forEach var="offMeet" items="${list}">
-				<div class="col-xs-6 col-md-4">
-					<a href="#" class="thumbnail-wrapper"><input type="hidden" name="offNo"value="${offMeet.offNo }" />
-					<img src="/resources/images/uploadFiles/offmeet/${offMeet.imageFile}" width="300" height="300"/>
-					<div class="caption" align="left">
-						<h3>${offMeet.offName }</h3>
-					</div></a>
-				</div>
-			</c:forEach>
-		</div>
+<div style="text-align:center; margin-top:50px">
+<div class="row" style="display:inline-block">
 
-	
-	</div>
-
+	<c:forEach var="offMeet" items="${list}">
+  		<div class="col-sm-6 col-md-4">
+    	<div class="thumbnail">
+    	<input type="hidden" name="offNo"value="${offMeet.offNo }" />
+     	 <img src="/resources/images/uploadFiles/offmeet/${offMeet.imageFile}">
+     	 <div class="caption">
+        <h3></h3>
+        <p>오프라인 모임명: ${offMeet.offName}</p>
+        <p>참여인원  : ${offMeet.offMem}/${offMeet.offMax}</p>
+      	</div>
+    	</div>
+  </div>  
+  </c:forEach>
+  
+</div>
+</div>
 
 </body>
-
 </html>
+  
+  
 
