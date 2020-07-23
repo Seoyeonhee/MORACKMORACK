@@ -5,6 +5,7 @@ import java.util.List;
 import com.morackmorack.mvc.common.Search;
 import com.morackmorack.mvc.service.domain.Business;
 import com.morackmorack.mvc.service.domain.Menu;
+import com.morackmorack.mvc.service.domain.ReserveAble;
 
 public interface BusinessDao {
 	
@@ -27,7 +28,7 @@ public interface BusinessDao {
 
 	
 	// INSERT MENU
-	public void addBusinessMenu(Menu menu) throws Exception ;
+	public void addBusinessMenu(Menu menu) throws Exception;
 	
 	// LIST MENU
 	public List<Menu> listBusinessMenu(String businessId) throws Exception;
@@ -40,4 +41,21 @@ public interface BusinessDao {
 	
 	// DELETE MENU
 	public void delBusinessMenu(int menuNo) throws Exception;
+	
+	
+	
+	
+	
+	
+	// INSERT RESERVEABLE
+	public void addReserveAbleTime(ReserveAble reserveAble) throws Exception;
+	
+	// DELETE RESERVEABLE
+	public void delReserveAbleTime(String businessId) throws Exception;
+	
+	// LIST RESERVEABLE
+	public List<ReserveAble> listReserveAbleTime(String businessId) throws Exception;
+	
+	
+	
 }

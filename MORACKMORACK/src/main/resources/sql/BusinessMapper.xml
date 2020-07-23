@@ -81,9 +81,9 @@
 		SELECT business_id, business_name, business_loc, business_phone, category_no, business_img, reg_date, bank, deposit_acc_num, business_star, business_start_time, business_end_time
 		FROM business
 		WHERE 1=1
-<!-- 		<if test=" searchKeyword!=null and searchKeyword!='' ">
-			 AND b.businessName = #{searchKeyword}
-		</if> -->
+			<if test=" searchKeyword!=null and searchKeyword!='' ">
+				 AND b.businessName = #{searchKeyword}
+			</if>
 		ORDER BY reg_date
 	</select>
 	
@@ -101,29 +101,29 @@
 	
 	<!-- SQL : MENU_INSERT -->
 	<insert 	id="addBusinessMenu"		parameterType="menu" >
-	 	INSERT
+		INSERT
 		INTO menu( menu_no, business_id, business_menu, business_menu_fee, business_menu_img ) 
 		VALUES	 (	seq_menu_menu_no.nextval, #{businessId}, #{businessMenu}, #{businessMenuFee}, #{businessMenuImg} )
-	 </insert>
+	</insert>
 	
 	<!-- SQL : MENU_SELECT -->
-	 <select 	id="getBusinessMenu"	parameterType="int"	resultMap="MenuSelectMap">
+	<select 	id="getBusinessMenu"	parameterType="int"	resultMap="MenuSelectMap">
 		SELECT
 		menu_no, business_id, business_menu, business_menu_fee, business_menu_img
 		FROM menu
 		WHERE menu_no = #{menuNo}
-	 </select>
-
+	</select>
+	
 	<!-- SQL : MENU_UPDATE -->
-	 <update	id="updateBusinessMenu"	parameterType="menu" >
-	   	UPDATE menu
-	   	<set>
-	   		business_menu			=		#{businessMenu} ,
-			business_menu_fee		=		#{businessMenuFee} ,
-			business_menu_img		=		#{businessMenuImg}
-	   	</set>
-	   	WHERE menu_no = #{menuNo}
-	 </update>
+	<update	id="updateBusinessMenu"	parameterType="menu" >
+		UPDATE menu
+			<set>
+				business_menu			=		#{businessMenu} ,
+				business_menu_fee		=		#{businessMenuFee} ,
+				business_menu_img		=		#{businessMenuImg}
+			</set>
+		WHERE menu_no = #{menuNo}
+	</update>
 	 
 	<!-- SQL : MENU_SELECT LIST -->
 	<select  id="getBusinessMenuList"  parameterType="String"	resultMap="MenuSelectMap">
@@ -135,9 +135,37 @@
 	
 	<!-- SQL : MENU_DELETE -->
 	<delete  id="delBusinessMenu"  parameterType="int">
-	  	DELETE FROM menu
-	  	WHERE menu_no = #{menuNo}
+		DELETE FROM menu
+		WHERE menu_no = #{menuNo}
 	</delete>
+	
+	
+	
+	
+	
+	
+	<!-- 업체 예약 가능 시간 -->
+	
+	<!-- SQL : RESERVEABLE_INSERT -->
+	<insert 	id="addReserveAbleTime"		parameterType="reserveAble" >
+		INSERT
+		INTO reserveable( reserve_able_no, business_id, reserve_able_start_time, reserve_able_end_time ) 
+		VALUES	 (	seq_reserve_able_no.nextval, #{businessId}, #{reserveAbleStartTime}, #{reserveAbleEndTime} )
+	</insert>
+	
+	<!-- SQL : RESERVEABLE_DELETE -->
+	<delete  id="delReserveAbleTime"  parameterType="String">
+		DELETE FROM reserveable
+		WHERE business_id = #{businessId}
+	</delete>
+	
+	<!-- SQL : RESERVEABLE_SELECT LIST -->
+	<select  id="getReserveAbleTimeList"  parameterType="String"	resultMap="ReserveAbleSelectMap">
+	  	SELECT reserve_able_no, business_id, reserve_able_start_time , reserve_able_end_time
+		FROM reserveable
+		WHERE business_id = #{businessId}
+		ORDER BY reserve_able_start_time
+	</select>
 	
 	
 	
