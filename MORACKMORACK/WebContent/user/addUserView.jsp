@@ -161,7 +161,48 @@
 														
 													});
 			});
-		});	
+		});
+		
+		 $(function() {
+				 $("input[name='nickName']").on("keyup" , function() {
+												var nickName = $("input[name='nickName']").val().trim()
+												//alert(nickName)
+												$.ajax(
+														{
+															url : "/user/json/checkDuplication2/"+nickName ,
+															method : "GET" ,
+															dataType : "json" ,
+															headers : {
+																"Accept" : "application/json",
+																"Content-Type" : "application/json"
+															},
+															success : function(JSONData, status){
+																//alert(status)
+																//var JSONdata = JSON.stringify(JSONData);
+																//alert(JSONdata);
+																//alert(JSONData)
+																//alert(JSONData.result)
+																
+																var result = "";
+																if(JSONData.result == false){
+																	result = "불"
+																}
+																
+																var displayValue = "<h6>"
+																	+JSONData.nickName+" 아이디는 사용 "
+																	+result
+																	+"가능합니다"
+																	+"</h6>";
+																	
+																$("h6").remove();
+																$("#helpBlock").html(displayValue);
+																
+																
+															}
+															
+														});
+				});
+			});	
 
 	</script>		
     
@@ -222,14 +263,14 @@
 		  <div class="form-group">
 		    <label for="nickName" class="col-sm-offset-1 col-sm-3 control-label">닉네임</label>
 		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="nickName" name="nickName" placeholder="중복체크하세요"  >
+		      <input type="text" class="form-control" id="nickName" name="nickName" placeholder="닉네임을 입력하세요"  >
 		       <span id="helpBlock" class="help-block">
-		      	<strong class="text-danger">입력후 중복체크 필수</strong>
+		      	<!-- <strong class="text-danger">입력후 중복체크 필수</strong> -->
 		      </span>
 		    </div>
-		    <div class="col-sm-3">
+		    <!-- <div class="col-sm-3">
 		      <button type="button" id ="check" class="btn btn-info">중복체크</button>
-		    </div>
+		    </div> -->
 		  </div>
 		  
 		  <div class="form-group">
