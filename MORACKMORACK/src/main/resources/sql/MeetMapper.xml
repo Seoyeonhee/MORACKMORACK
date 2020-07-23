@@ -71,11 +71,11 @@
 	</insert>
 	
 	<insert id="joinMeet" parameterType="meetMem">
-	<if test="joinCode == 0">
+	<if test="joinCode != null and joinCode.equals('0')">
 	INSERT INTO meetmem(mem_no, user_id, meet_id, join_code, meet_role, join_req_date, join_date, intro, notify_count)
 	VALUES (seq_meetmem_mem_no.nextval, #{user.userId}, #{meet.meetId}, #{joinCode}, #{meetRole}, SYSDATE, #{joinDate:DATE}, #{intro:VARCHAR}, 0)
 	</if>
-	<if test="joinCode == 1">
+	<if test="joinCode != null and joinCode.equals('1')">
 	INSERT INTO meetmem(mem_no, user_id, meet_id, join_code, meet_role, join_req_date, join_date, intro, notify_count)
 	VALUES (seq_meetmem_mem_no.nextval, #{user.userId}, #{meet.meetId}, #{joinCode}, #{meetRole}, SYSDATE, SYSDATE, #{intro:VARCHAR}, 0)	
 	</if>

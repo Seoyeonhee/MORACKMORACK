@@ -71,7 +71,6 @@ public class MeetController {
 	public ModelAndView addMeet(HttpServletRequest request, @ModelAttribute("meet") Meet meet, @PathVariable ("maxNum") int maxNum) throws Exception {
 		System.out.println("/meet/addMeet : POST");
 		
-		System.out.println(">>>>>>>>>> "+meet);
 		meet.setMeetLoc("서울시"); // 나중에 지워랑
 
 		HttpSession session = request.getSession(true);
@@ -137,7 +136,7 @@ public class MeetController {
 		meetMem.setMeet(meet);
 		meetMem.setJoinCode('1');
 		meetMem.setMeetRole('0');
-		
+
 		meetService.joinMeet(meetMem);
 		meetService.addMemNum(meetId);
 		
@@ -150,7 +149,7 @@ public class MeetController {
 	}
 
 	@RequestMapping(value = "listMeet/{searchType}", method = RequestMethod.GET)
-	public ModelAndView listMeet(@PathVariable ("searchType") int searchType, @ModelAttribute("meet") Meet meet, @ModelAttribute Search search ) {
+	public ModelAndView listMeet(@PathVariable ("searchType") int searchType, @ModelAttribute("meet") Meet meet, @ModelAttribute("search")  Search search ) {
 		System.out.println("/meet/listMeet  : GET");
 
 		search.setSearchCondition(searchType);
