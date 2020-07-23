@@ -31,9 +31,7 @@
    		</div> 	
 
 <div>	
-	<a href="/meet/test">회원 insert</a> <br/><br/>
-	<a href="/meet/aaaMeet.jsp">모임 관리 테스트 페이지</a> <br/><br/>
-	<a href="/user/N.jsp">회원 관리 테스트 페이지</a> <br/><br/>
+	<a href="/meet/test">회원 데이터 INSERT</a> <br/><br/>
 </div>
  
  <div id="carousel-example-generic" class="carousel slide" data-ride="carousel" style="margin-top:180px"> <!-- 모임 추천 -->
@@ -46,12 +44,12 @@
 
   <div class="carousel-inner" role="listbox">
     <div class="item active">
-      <img src="..." alt="...">
+      <img src="..." alt="Image" style="height:500px; width:500px">
       <div class="carousel-caption">
       </div>
     </div>
     <div class="item">
-      <img src="..." alt="...">
+      <img src="..." alt="Image" style="height:500px; width:500px">
       <div class="carousel-caption">
       </div>
     </div>
@@ -70,29 +68,24 @@
 	
 
 <div class="row" style="margin-top:180px"> <!-- 모임 순위 -->
-  <div class="col-xs-6 col-md-3">
+  <div class="col-xs-6 col-md-4">
     <a href="#" class="thumbnail">
-      <img src="..." alt="...">
+      <img src="..." alt="IMAGE">
     </a>
   </div>
   
-  <div class="col-xs-6 col-md-3">
+  <div class="col-xs-6 col-md-4">
     <a href="#" class="thumbnail">
-      <img src="..." alt="...">
+      <img src="..." alt="IMAGE">
     </a>
   </div>
   
-  <div class="col-xs-6 col-md-3">
+  <div class="col-xs-6 col-md-4">
     <a href="#" class="thumbnail">
-      <img src="..." alt="...">
+      <img src="..." alt="IMAGE">
     </a>
   </div>
-  
-  <div class="col-xs-6 col-md-3">
-    <a href="#" class="thumbnail">
-      <img src="..." alt="...">
-    </a>
-  </div>
+ 
 </div>   
 
 <div class="row" style="margin-top:180px"> <!-- 업체 추천 -->

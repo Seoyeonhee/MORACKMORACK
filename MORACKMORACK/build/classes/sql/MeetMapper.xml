@@ -120,20 +120,24 @@
 	</select>
 	
 	<select id="listMeet" parameterType="search" resultMap="meetSelectMap">
-	SELECT meet_id, leader_id, meet_name, meet_loc, max_num, mem_num, meet_img, s_intro, l_intro, reg_date, meet_star, bank, accNum, category, meet_appr, meet_type
-	FROM meet
-	<if test="searchCondition == 0">
-		<if test="searchWay == 0">
-			WHERE meet_type = '0'
-		</if>
-		<if test="searchWay == 1">
-			WHERE meet_type = '1' 
+	SELECT meet.meet_id, meet.leader_id, meet.meet_name, meet.meet_loc, meet.max_num, meet.mem_num, meet.meet_img, meet.s_intro, meet.l_intro, meet.reg_date, meet.meet_star, meet.bank, meet.accNum, meet.category, meet.meet_appr, meet.meet_type
+	FROM meet, hashtag, meet_hashtag
+	<if test='searchType.equals("0")'>
+		WHERE meet.meet_type = #{searchCondition}
+		<if test='searchKeyword != null'>
+			AND meet.meet_name = #{searchKeyword}
 		</if>
 	</if>
-	<if test="searchCondition == 1">
-	WHERE category = #{searchWay}
+	<if test='searchType.equals("1")'>
+		WHERE meet.category= #{searchCondition}
+		<if test='searchKeyword != null'>
+			AND meet.meet_name = #{searchKeyword}
+		</if>
 	</if>
-	ORDER BY reg_date
+	<if test='searchType.equals("2") and searchKeyword != null'>
+		WHERE hashtag.hash_name = #{searchKeyword} and hashtag.hash_no = meet_hashtag.hash_no and meet_hashtag.meet_id = meet.meet_id
+	</if>
+	ORDER BY meet.reg_date
 	</select>
 	
 	<insert id="addWishMeet" parameterType="map">

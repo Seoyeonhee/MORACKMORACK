@@ -1,9 +1,10 @@
 package com.morackmorack.mvc.service.domain;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-public class Meet {
+public class Meet implements Serializable {
 	private String meetId;
 	private String leaderId;
 	private String meetImg;
