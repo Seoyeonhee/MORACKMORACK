@@ -23,6 +23,8 @@ import com.morackmorack.mvc.service.domain.User;
 import com.morackmorack.mvc.service.meet.MeetService;
 import com.morackmorack.mvc.service.meet.impl.MeetServiceImpl;
 import com.morackmorack.mvc.service.user.UserService;
+import com.morackmorack.mvc.common.Page;
+import com.morackmorack.mvc.common.Search;
 import com.morackmorack.mvc.service.domain.Meet;
 import com.morackmorack.mvc.service.domain.OffMeet;
 import com.morackmorack.mvc.service.domain.Pay;
@@ -51,6 +53,11 @@ private UserService userService;
 @Value("#{commonProperties['offmeetfilePath']}")
 String uploadPath;
 
+@Value("#{commonProperties['pageUnit']}")
+int pageUnit;
+
+@Value("#{commonProperties['pageSize']}")
+int pageSize;
 
 public OffMeetController() {
 		
@@ -123,7 +130,7 @@ public String getOff(@RequestParam("offNo") int offNo, Model model ) throws Exce
 	  
 	  model.addAttribute("offMeet", offMeet);
 	  
-	  return "forward:/offMeet/getInfOff.jsp";
+	  return "forward:/offMeet/getInfoOff.jsp";
 	}
 
 @RequestMapping(value="reqOff", method =RequestMethod.GET)
@@ -189,5 +196,26 @@ public String addBusinessPay (@ModelAttribute("pay") Pay pay) throws Exception{
 	return "forward:/offMeet/getReqOkBusiness.jsp";
 }
 
+@RequestMapping(value = "getOffList")
+public String getOffList(@ModelAttribute("search") Search search, Model model) throws Exception {
 
+
+	if (search.getCurrentPage() == 0) {
+		search.setCurrentPage(1);
+	}
+	search.setPageSize(pageSize);
+
+	Map<String, Object> map = offMeetService.getOffList(search);
+	System.out.println("map¿∫?"+map);
+	Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")).intValue(), pageUnit,
+			pageSize);
+
+	System.out.println(resultPage);
+
+	model.addAttribute("list", map.get("list"));
+	model.addAttribute("resultPage", resultPage);
+	model.addAttribute("search", search);
+
+	return "forward:/offMeet/offList.jsp";
+}
 }

@@ -47,7 +47,7 @@
    	
 	<select id="getOff" parameterType="int" resultMap="offmeetSelectMap">
   		SELECT 
- 		off_no, user_id, meet_id, off_name, off_loc, off_max, off_mem, amount, off_date, off_time, imageFile, reg_date
+ 		off_no, user_id, meet_id, off_name, off_loc, off_max, off_mem, amount, off_date, off_time, image_File, reg_date
 		FROM offmeet
 		WHERE
 		off_no = #{offNo}
@@ -84,7 +84,7 @@
 
 
 	<select  id="getOffList"  parameterType="search"	resultMap="offmeetSelectMap">
-		off_no, user_id, meet_id, off_name, off_loc, off_max, off_mem, amount, off_date, off_time, imageFile, reg_date
+		SELECT off_no, user_id, meet_id, off_name, off_loc, off_max, off_mem, amount, off_date, off_time, image_File, reg_date
 		FROM offmeet
 		<where>
 		SYSDATE -7 &lt; reg_date	 
@@ -182,14 +182,23 @@
   	
   	
   	
+  	  	
+  	 <select  id="getOffTotalCount"  parameterType="search"	 resultType="int">
+	  	SELECT COUNT(*)
+		FROM ( SELECT off_no, user_id, meet_id, off_name, off_loc, off_max, off_mem, amount, off_date, off_time, image_File, reg_date
+				FROM offmeet	
+			<where>
+			SYSDATE -7 <![CDATA[<]]> reg_date	
+			</where> 		
+			 ) countTable			
+	 </select>    			
   	
-  	
-  	 <select  id="getTotalCount"  parameterType="search"	 resultType="int">
+  	 <select  id="getPayTotalCount"  parameterType="search"	 resultType="int">
 	  	SELECT COUNT(*)
 		FROM ( SELECT pay_no, user_id, meet_id, off_no, business_id, total_amount, pay_date, pay_method, reserve_date, reserve_start_time, reserve_end_time, reserve_mem_num, pay_status
 				FROM pay
 			 ) countTable						
-	 </select>    			 	
+	 </select>  		 	
 </mapper>
 
 
