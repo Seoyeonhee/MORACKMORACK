@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="NotifyMapper">
+ 	
+ 	
+	<resultMap id="notifySelectMap" type="notify">
+		<result property="notifyNo" 			column="notify_no" 			jdbcType="INTEGER"/>
+		<result property="recvNotiUser.userId" 				column="notify_user" 					jdbcType="VARCHAR" />
+		<result property="reqNotiUser.userId" 			column="req_notify_user" 		jdbcType="VARCHAR" />
+		<result property="notiType" 				column="notify_type" 					jdbcType="CHAR" />
+		<result property="notiDetail" 		column="notify_detail" 			jdbcType="VARCHAR" />
+		<result property="notifyDate"			column="notify_date"			jdbcType="DATE"/>
+		<result property="prohibit"			column="notify_mang"			jdbcType="CHAR"/>
+	</resultMap>
+	
+	<!-- SQL : INSERT -->
+	<insert 	id="notifyUser"		parameterType="notify" >
+	 	INSERT
+	 	INTO	Notify(		notify_no)
+	 					,	notify_user
+	 					,	req_notify_user
+	 					,	notify_type
+	 					,	notify_detail
+	 					,	notify_mang
+	 					) VALUES (	seq_friend_friend_no.nextval
+	 							  ,	#{recvNotiUser.userId:VARCHAR2}
+	 							  ,	#{reqNotiUser.userId:VARCHAR2}
+	 							  ,	#{notiType:CHAR}
+	 							  ,	#{notiDetail:VARCHAR}
+	 							  ,	SYSDATE
+	 							  ,	'0'
+	 							  )
+	 					
+	</insert>
+	
+	<select id="getNotifyUser" parameterType="int" resultMap="notifySelectMap">
+		SELECT *
+		FROM Notify
+		WHERE notify_user=#{recvNotiUser.userId:VARCHAR}
+	</select>
+	
+	<select id="listNotiUser" parameterType="map" resultMap="notifySelectMap">
+		SELECT*
+		FROM( SELECT ROWNUM AS row_seq, inner_table.*
+				FROM (SELECT notify_user, notify_date, notify_type
+					  FROM notify
+					  ORDER BY notify_user) inner_table);	
+	</select>
+	
+	<update id="prohibit" parameterType="notify">
+		UPDATE notify
+		<set>
+			 notify_mang=#{prohibit:CHAR}
+		</set>
+		WHERE notify_user=#{recvNotiUser.userId:VARCHAR}
+	</update>
+	
+	<update id="prohibitUser" parameterType="notify">
+		UPDATE users
+		<set>
+			user_state=#{prohibit:CHAR}
+		</set>
+		WHERE user_id=#{recvNotiUser.userId:VARCHAR}
+	</update>
+
+</mapper>

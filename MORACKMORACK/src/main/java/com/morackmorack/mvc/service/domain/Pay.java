@@ -11,7 +11,7 @@ public class Pay {
 	private Business business;
 	private int totalAmount;
 	private String payDate;
-	private int payMethod;
+	private char payMethod;
 	private String reserveStartTime;
 	private String reserveEndTime;
 	private String reserveDate;
@@ -93,12 +93,12 @@ public class Pay {
 	}
 
 
-	public int getPayMethod() {
+	public char getPayMethod() {
 		return payMethod;
 	}
 
 
-	public void setPayMethod(int payMethod) {
+	public void setPayMethod(char payMethod) {
 		this.payMethod = payMethod;
 	}
 

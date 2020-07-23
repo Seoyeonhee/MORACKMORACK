@@ -49,7 +49,7 @@ $(function() {
     <span style="float:right;">
     <c:if test="${empty sessionScope.user}">
     <a href="/user/login">로그인</a>
-    <a href="/user/addUserView" style="margin-left:10px">회원가입</a>
+    <a href="/user/addUser" style="margin-left:10px">회원가입</a>
     <a href="#" style="margin-left:10px">업체 로그인</a>
     <a href="#" style="margin-left:10px">업체 회원가입</a>
     </c:if>
@@ -104,7 +104,7 @@ $(function() {
 			<div>
 			<p><a href="/user/getUser?userId=${user.userId}">내 정보 조회</a></p>
 			<p><a href="/user/updateUser?userId=${user.userId}">내 정보 변경</a></p>
-			<p><a href="/user/delUser?userId=${userId}">회원 탈퇴</a></p>
+			<p><a href="/user/delUser?userId=${user.userId}">회원 탈퇴</a></p>
 			</div>	
 		</li>
 	</ul>

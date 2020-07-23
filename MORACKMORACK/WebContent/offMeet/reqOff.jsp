@@ -36,6 +36,16 @@ function fncreqOk() {
 	var offName = '${offMeet.offName}';
 	var pay = $("select[name='payMethod']").val();
 	var amount ='${offMeet.amount}';
+	var offMem ='${offMeet.offMem}';
+	var offMax ='${offMeet.offMax}';
+	
+	
+	if(parseInt(offMem) >= parseInt(offMax)){
+		alert("오프라인 모임 참여 정원 수가 가득 찼습니다. ");
+		return;
+	}
+	
+
 	
 	if (pay == '0') {
 		pay = 'trans';
@@ -86,8 +96,8 @@ function fncreqOk() {
 		        window.location.reload(true);
 		        return;
 		    }
-// 		    $("form").attr("method" , "POST").attr("action" , "/offmeet/addOffPay?offNo=${offMeet.offNo}").submit();
- 		  $("form").attr("method" , "POST").attr("action" , "/offmeet/addOffPay?offNo=10002").submit();	 
+ 		    $("form").attr("method" , "POST").attr("action" , "/offmeet/addOffPay?offNo=${offMeet.offNo}").submit();
+//  		  $("form").attr("method" , "POST").attr("action" , "/offmeet/addOffPay?offNo=10002").submit();	 
 		});
 		
 }

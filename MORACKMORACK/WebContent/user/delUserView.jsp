@@ -14,9 +14,8 @@
 	<script type="text/javascript">
 		$(document).ready(function(){
 			// 취소
-			$(".cancle").on("click", function(){
-				
-				location.href = "/";
+			$("#cancle").on("click", function(){
+				 $('form')[0].reset();
 						    
 			})
 		
@@ -26,15 +25,22 @@
 					$("#password").focus();
 					return false;
 				}	
+				
+				if($("#password").val() != $("#password2").val()){
+					alert("비밀번호와 비밀번호 확인이 일치하지 않습니다.");
+				}
+				
+			
+				
+				
 			});
 			
 				
-			
 		})
 	</script>
 	<body>
 		<section id="container">
-			<form action="/member/memberDelete" method="post">
+			<form action="/user/delUser" method="post">
 				<div class="form-group has-feedback">
 					<label class="control-label" for="userId">ID</label>
 					<input class="form-control" type="text" id="userId" name="userId" value="${user.userId}" readonly="readonly"/>
@@ -49,7 +55,7 @@
 		  		</div>
 				<div class="form-group has-feedback">
 					<button class="btn btn-success" type="submit" id="submit">회원탈퇴</button>
-					<button class="cencle btn btn-danger" type="button">취소</button>
+					<button id="cancle" class="cancle btn btn-danger" type="button">취소</button>
 				</div>
 			</form>
 			<div>
