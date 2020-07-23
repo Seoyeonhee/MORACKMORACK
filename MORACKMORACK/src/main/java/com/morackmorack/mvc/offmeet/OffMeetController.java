@@ -1,12 +1,15 @@
 package com.morackmorack.mvc.offmeet;
 
+import java.io.File;
 import java.util.Map;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.morackmorack.mvc.service.domain.User;
 import com.morackmorack.mvc.service.meet.MeetService;
@@ -44,6 +48,10 @@ private MeetService meetService;
 @Qualifier("userServiceImpl")
 private UserService userService;
 
+@Value("#{commonProperties['offmeetfilePath']}")
+String uploadPath;
+
+
 public OffMeetController() {
 		
 	}
@@ -61,7 +69,7 @@ public String addOffView() throws Exception {
 
 
 @RequestMapping (value ="addOff", method = RequestMethod.POST)
-public String addOff (@ModelAttribute ("offMeet") OffMeet offMeet, HttpSession session) throws Exception {
+public String addOff (@ModelAttribute ("offMeet") OffMeet offMeet, @RequestParam("file") MultipartFile uploadFile, HttpSession session) throws Exception {
 	
 	System.out.println("offMeet : "+offMeet);
 //	offMeet.setUser((User)session.getAttribute("user"));
@@ -72,8 +80,18 @@ public String addOff (@ModelAttribute ("offMeet") OffMeet offMeet, HttpSession s
 	Meet meet = new Meet();
 	meet.setMeetId("meet02");
 	offMeet.setMeet(meet);
+	
+	String originFileName = uploadFile.getOriginalFilename();
+	
+	offMeet.setImageFile(originFileName);
+	
+	File file = new File (uploadPath,originFileName);
+	
+	uploadFile.transferTo(file);
+	
+	
 	offMeetService.addOff(offMeet);
-	System.out.println("offMeet¿∫?" + offMeet);
+	
 	return "forward:/offMeet/getInfoOff.jsp";
 }
 
@@ -128,7 +146,7 @@ public String reqOff (@RequestParam("offNo") int offNo, Model model, HttpSession
 }
 
 @RequestMapping (value="addOffPay", method = RequestMethod.POST)
-public String addOffPay (@RequestParam ("offNo") int offNo, @RequestParam("payMethod") int payMethod, @RequestParam("amount") int amount,  Model model,HttpSession session) throws Exception{
+public String addOffPay (@RequestParam ("offNo") int offNo, @RequestParam("payMethod") char payMethod, @RequestParam("amount") int amount,  Model model,HttpSession session) throws Exception{
 
 	System.out.println("/addPay : POST");
 	System.out.println("offNo1?"+offNo);

@@ -16,7 +16,9 @@
   		<result property="offMem" 			column="OFF_MEM" 		jdbcType="INTEGER"/>
   		<result property="amount" 			column="AMOUNT" 	jdbcType="INTEGER"/>
   		<result property="offDate" 			column="OFF_DATE" 	jdbcType="VARCHAR"/>
-  		<result property="offTime" 			column="OFF_TIME" 		jdbcType="VARCHAR"/>  		 
+  		<result property="offTime" 			column="OFF_TIME" 		jdbcType="VARCHAR"/>
+  		<result property="imageFile"        column="IMAGE_FILE"     jdbcType="VARCHAR"/>
+  		<result property="regDate"          column="REG_DATE"       jdbcType="DATE"/>  		 
   	</resultMap>
   	
 	<resultMap type="pay" id="paySelectMap">
@@ -30,6 +32,7 @@
   		<result property="reserveEndTime" 		column="RESERVE_END_TIME" jdbcType="VARCHAR"/>
   		<result property="reserveDate" 			column="RESERVE_DATE" 		jdbcType="DATE"/>
   		<result property="totalAmount" 			column="TOTAL_AMOUNT" 	jdbcType="INTEGER"/>
+  	    <result property="payStatus" 		column="PAY_STATUS"	jdbcType="CHAR"/>
   		<result property="payDate" 			column="PAY_DATE" 	jdbcType="DATE"/>
   		<result property="payMethod" 			column="PAY_METHOD" 		jdbcType="CHAR"/>  		 
   	</resultMap>
@@ -44,7 +47,7 @@
    	
 	<select id="getOff" parameterType="int" resultMap="offmeetSelectMap">
   		SELECT 
- 		off_no, user_id, meet_id, off_name, off_loc, off_max, off_mem, amount, off_date, off_time
+ 		off_no, user_id, meet_id, off_name, off_loc, off_max, off_mem, amount, off_date, off_time, imageFile, reg_date
 		FROM offmeet
 		WHERE
 		off_no = #{offNo}
@@ -52,7 +55,7 @@
   	
 	<insert id="addOff" parameterType="offMeet">
 		INSERT 
-		INTO offmeet(off_no, user_id, meet_id, off_name, off_loc, off_max, off_mem, amount, off_date, off_time)
+		INTO offmeet(off_no, user_id, meet_id, off_name, off_loc, off_max, off_mem, amount, off_date, off_time, image_file, reg_date)
 		VALUES (
 					seq_offmeet_off_no.NEXTVAL,
 					#{user.userId:VARCHAR},
@@ -63,7 +66,9 @@
 					#{offMem:INTEGER},
 					#{amount:INTEGER},
 					#{offDate:VARCHAR},
-					#{offTime:VARCHAR}
+					#{offTime:VARCHAR},
+					#{imageFile:VARCHAR},
+					SYSDATE
 					)
 	</insert>
 	
@@ -76,6 +81,16 @@
 	   	WHERE off_no = #{offNo}
 	 </update>
 
+
+
+	<select  id="getOffList"  parameterType="search"	resultMap="offmeetSelectMap">
+		off_no, user_id, meet_id, off_name, off_loc, off_max, off_mem, amount, off_date, off_time, imageFile, reg_date
+		FROM offmeet
+		<where>
+		SYSDATE -7 &lt; reg_date	 
+		</where>
+	 </select>
+	
 
 	<update id ="updateOffMem" parameterType="pay">
 	UPDATE offmeet
@@ -101,6 +116,16 @@
 	</insert>
 	 
 	 
+	  <update id="updateStatus"	parameterType="pay"   >
+	   	UPDATE pay
+	   	<set>
+			PAY_STATUS = #{payStatus}
+	   	</set>
+	   	WHERE pay_id = #{payId} 
+	 </update>
+	 
+	 
+	 
 	 <select id="getOffPay" parameterType="int" resultMap="paySelectMap">
   		SELECT 
 		p.pay_date, user_id, meet_id, off_no, total_Amount, pay_date, pay_method
@@ -110,11 +135,24 @@
      	ADN m.meet_id(+) = p.meet_id
   	</select>
   	
-  	
-	 
+   <select id="getBusinessPayList" parameterType="map" resultMap="paySelectMap">
+	  		SELECT *
+	  		FROM ( SELECT inner_table.*, ROWNUM AS row_seq
+	  						FROM (  SELECT b.business_id , b.businessName, p.reserve_date , p.total_amount ,  p.pay_no , p.reserve_mem_num, p.reserve_start_time, p.reserve_end_time,  p.pay_date, p.pay_status , p.user_id,
+	  								 p.pay_method
+											FROM business b, users u , pay p 
+											WHERE p.business_id  = b.business_id(+)
+											AND p.user_id = u.user_id(+)
+											AND u.user_id = #{userId}
+											ORDER BY pay_id  ) inner_table
+	  						WHERE ROWNUM <![CDATA[<=]]> #{search.currentPage}*#{search.pageSize} )
+	  		WHERE row_seq BETWEEN (#{search.currentPage}-1)*#{search.pageSize}+1
+	  		AND #{search.currentPage}*#{search.pageSize}
+	</select>
+	
 	  <insert id="addBusinessPay" parameterType ="pay">
 	 	INSERT 
-		INTO pay(pay_no, user_id, meet_id, off_no, business_id, total_amount, pay_date, pay_method, reserve_date, reserve_start_time, reserve_end_time, reserve_mem_num)
+		INTO pay(pay_no, user_id, meet_id, off_no, business_id, total_amount, pay_date, pay_method, reserve_date, reserve_start_time, reserve_end_time, reserve_mem_num, pay_status)
 		VALUES (
 					seq_pay_pay_no.NEXTVAL,
 					#{user.userId:VARCHAR},
@@ -127,21 +165,31 @@
 					#{reserveDate:VARCHAR},
 					#{reserveStartTime:VARCHAR},
 					#{reserveEndTime:VARCHAR},
-					#{reserveMemNum:INTEGER}
+					#{reserveMemNum:INTEGER},
+				    #{payStatus:CHAR}
 					)
 	</insert>
 	
 	 
 	 <select id="getBusinessPay" parameterType="int" resultMap="paySelectMap">
   		SELECT 
-		p.pay_date, u.user_id, b.business_id, p.total_amount, p.reserve_mem_num, p.reserve_start_time, p.reserve_end_time, p.reserve_date
+		p.pay_date, u.user_id, b.business_id, p.total_amount, p.reserve_mem_num, p.reserve_start_time, p.reserve_end_time, p.reserve_date, p.pay_method, p.pay_status
 		FROM pay p, business b, user u
 		business_no = #{businessNo} 
 		AND o.off_no(+) = p.off_no
      	AND m.meet_id(+) = p.meet_id
   	</select>
   	
-  			 	
+  	
+  	
+  	
+  	
+  	 <select  id="getTotalCount"  parameterType="search"	 resultType="int">
+	  	SELECT COUNT(*)
+		FROM ( SELECT pay_no, user_id, meet_id, off_no, business_id, total_amount, pay_date, pay_method, reserve_date, reserve_start_time, reserve_end_time, reserve_mem_num, pay_status
+				FROM pay
+			 ) countTable						
+	 </select>    			 	
 </mapper>
 
 

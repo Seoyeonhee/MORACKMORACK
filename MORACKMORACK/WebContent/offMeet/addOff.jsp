@@ -98,7 +98,7 @@ $( function() {
 <div class="container">	
 
 
-<form class="form-horizontal">
+<form class="form-horizontal" enctype="multipart/form-data">
 
  <div class="form-group">
  <label for="offName" class="col-sm-offset-1 col-sm-3 control-label">오프라인 모임명</label>
@@ -124,7 +124,7 @@ $( function() {
       center: new kakao.maps.LatLng(37.537187, 127.005476), // 지도의 중심좌표 level: 5 // 지도의 확대 레벨 }; //지도를 미리 생성 
       level: 5 // 지도의 확대 레벨
       };
-      
+     
   	var map = new kakao.maps.Map(mapContainer, mapOption); //주소-좌표 변환 객체를 생성 
   	
   	var geocoder = new kakao.maps.services.Geocoder(); //마커를 미리 생성 
@@ -134,7 +134,8 @@ $( function() {
   	, map: map 
   	});
 
-
+  	searchAddrFromCoords(map.getCenter(), displayCenterInfo);
+     
   function execDaumPostcode() { 
 
   	new daum.Postcode({ 
@@ -170,15 +171,36 @@ $( function() {
   			  map.relayout();
 
   			 map.setCenter(coords);
-  			 
-  			 marker.setPosition(coords)
+  			
+  			marker.setPosition(coords)
+  			
+  			var infowindow = new kakao.maps.InfoWindow({
+  				
+  				 
+  				content: '<div style="width:150px;text-align:center;padding:6px 0;">'+fullAddr+'</div>'
+  	    
+  			});
+  			
+  	        infowindow.open(map, marker);
+  	        		 
           }
       });
   }
   }).open();
+  	
   }
+  
   </script>
-  </div>  	
+  
+  </div> 
+    
+  <div class="form-group">
+				<label for="fileName"class="col-sm-offset-1 col-sm-3 control-label">오프라인 모임 이미지</label>
+				<div class="col-sm-4">
+			<input type="file" class="form-control" id="file" name="file" placeholder="상품이미지">
+			</div>
+   </div>
+  
  <div class="form-group">
  <label for="offDate" class="col-sm-offset-1 col-sm-3 control-label">모임날짜</label>
 	<div class="col-sm-4">

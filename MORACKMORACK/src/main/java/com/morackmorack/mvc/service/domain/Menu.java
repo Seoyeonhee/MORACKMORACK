@@ -12,6 +12,12 @@ public class Menu implements Serializable {
 	private int businessMenuFee;
 	private String businessMenuImg;
 	
+	private String[] businessMenuList;
+	private int[] businessMenuFeeList;
+	private String[] businessMenuImgList;
+	
+	
+	
 	/// Constructor
 	public Menu() {
 	}
@@ -21,6 +27,7 @@ public class Menu implements Serializable {
 		this.businessMenuImg = businessMenuImg;
 		
 	}
+
 	public Menu(String businessId, String businessMenu, int businessMenuFee, String businessMenuImg) {
 		this.businessId = businessId;
 		this.businessMenu = businessMenu;
@@ -58,6 +65,25 @@ public class Menu implements Serializable {
 	}
 	public void setBusinessMenuImg(String businessMenuImg) {
 		this.businessMenuImg = businessMenuImg;
+	}
+	
+	public String[] getBusinessMenuList() {
+		return businessMenuList;
+	}
+	public void setBusinessMenuList(String[] businessMenuList) {
+		this.businessMenuList = businessMenuList;
+	}
+	public int[] getBusinessMenuFeeList() {
+		return businessMenuFeeList;
+	}
+	public void setBusinessMenuFeeList(int[] businessMenuFeeList) {
+		this.businessMenuFeeList = businessMenuFeeList;
+	}
+	public String[] getBusinessMenuImgList() {
+		return businessMenuImgList;
+	}
+	public void setBusinessMenuImgList(String[] businessMenuImgList) {
+		this.businessMenuImgList = businessMenuImgList;
 	}
 	
 	

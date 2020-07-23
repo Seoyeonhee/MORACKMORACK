@@ -63,10 +63,10 @@
 	 
 	 
 	 <!-- 회원탈퇴 -->
-	<delete id="memberDelete">
-		DELETE FROM MP_MEMBER
-		WHERE USERID = #{userId}
-	  		AND USERPASS = #{userPass} 
+	<delete id="delUser" parameterType="user" >
+		DELETE FROM users
+		WHERE user_id = #{userId}
+	  		AND password = #{password} 
 </delete>
 	 
 
