@@ -49,10 +49,12 @@ $(function (){
        
         });
 
+        $("#addOffMeet").on("click", function(){
+        	self.location="/offmeet/addOfView";
+        })
 
 
-
-	$("#addOffMeet").on("click", function(){
+	/* $("#addOffMeet").on("click", function(){
 		
 		//var jbResult = prompt( 'Lorem ipsum dolor', '' );
 	      //document.write( jbResult );	 
@@ -80,7 +82,7 @@ $(function (){
 				console.log(err);
 			}
 		})
-	})	
+	}) */	
 })
 
 </script>
@@ -98,7 +100,7 @@ $(function (){
 
 <input type="button" value="쪽지 초대"/>
 <input type="button" value="카카오톡 초대"/>
-<input type="button" value="모임 생성"/>
+<input type="button" id="addOffMeet" value="모임 생성"/>
 </div>
 
 <label id="list-group"><span class="glyphicon glyphicon-align-justify"></span></label>
@@ -109,6 +111,7 @@ $(function (){
 <li role="presentation"><a href="#">채팅</a></li>
 <li role="presentation"><a href="#">추천업체 조회</a></li>
 <li role="presentation"><a href="#">참여비 내역</a></li>
+<li role="presentation"><a href="/offmeet/getOffList">오프라인 모임 목록</a></li>
 <li role="presentation"><a href="#">가입 신청 회원 목록</a></li>
 <li role="presentation"><a href="#">신고받은 회원 목록</a></li>
 </ul>
@@ -126,24 +129,24 @@ $(function (){
 		<h3>#${hashtag} </h3>
 		</c:forEach>
  		<c:choose>
-		<c:when test="${meet.category eq 1}">여행</c:when>
-		<c:when test="${meet.category eq 2}">게임</c:when>
-		<c:when test="${meet.category eq 3}">음악</c:when>
-		<c:when test="${meet.category eq 4}">영화</c:when>
-		<c:when test="${meet.category eq 5}">공연</c:when>
-		<c:when test="${meet.category eq 6}">맛집</c:when>
-		<c:when test="${meet.category eq 7}">취업/자기계발</c:when>
-		<c:when test="${meet.category eq 8}">액티비티</c:when>
-		<c:when test="${meet.category eq 9}">독서/만화</c:when>
-		<c:when test="${meet.category eq 10}">댄스</c:when>
-		<c:when test="${meet.category eq 11}">사진</c:when>
-		<c:when test="${meet.category eq 12}">반려동물</c:when>
-		<c:when test="${meet.category eq 13}">요리</c:when>
-		<c:when test="${meet.category eq 14}">차</c:when>
-		<c:when test="${meet.category eq 15}">스포츠</c:when>
-		<c:when test="${meet.category eq 16}">공예</c:when>
-		<c:when test="${meet.category eq 17}">기타</c:when>
-		</c:choose>
+		<c:when test="${meet.category eq 0}">여행</c:when>
+		<c:when test="${meet.category eq 1}">게임</c:when>
+		<c:when test="${meet.category eq 2}">음악</c:when>
+		<c:when test="${meet.category eq 3}">영화</c:when>
+		<c:when test="${meet.category eq 4}">공연</c:when>
+		<c:when test="${meet.category eq 5}">맛집</c:when>
+		<c:when test="${meet.category eq 6}">취업/자기계발</c:when>
+		<c:when test="${meet.category eq 7}">액티비티</c:when>
+		<c:when test="${meet.category eq 8}">독서/만화</c:when>
+		<c:when test="${meet.category eq 9}">댄스</c:when>
+		<c:when test="${meet.category eq 10}">사진</c:when>
+		<c:when test="${meet.category eq 11}">반려동물</c:when>
+		<c:when test="${meet.category eq 12}">요리</c:when>
+		<c:when test="${meet.category eq 13}">차</c:when>
+		<c:when test="${meet.category eq 14}">스포츠</c:when>
+		<c:when test="${meet.category eq 15}">공예</c:when>
+		<c:when test="${meet.category eq 16}">기타</c:when>
+	</c:choose>
 		<h3>${meet.sIntro}</h3>
 		<h3>${meet.meetLoc}</h3>
 		<h3>${meet.meetStar}</h3>

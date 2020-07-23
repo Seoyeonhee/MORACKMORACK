@@ -2,6 +2,7 @@ package com.morackmorack.mvc.service.offmeet;
 
 import java.util.Map;
 
+import com.morackmorack.mvc.common.Search;
 import com.morackmorack.mvc.service.domain.OffMeet;
 import com.morackmorack.mvc.service.domain.Pay;
 
@@ -22,5 +23,8 @@ public interface OffMeetService {
 	
     public Pay getBusinessPay(int payNo) throws Exception;
 
-	
+    public Map<String, Object> getOffList(Search search) throws Exception;
+  
+	public Map<String,Object> getBusinessPayList(Search search, String userId) throws Exception;
+    
 }

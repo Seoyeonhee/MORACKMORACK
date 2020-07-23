@@ -75,6 +75,73 @@
 
 $(function(){
 	
+	 $("input[type='file']").change(function(e){//div 내용 비워주기
+	      $('#preview').empty();
+
+	      var files = e.target.files;
+	      var arr =Array.prototype.slice.call(files);
+	      
+	      //업로드 가능 파일인지 체크
+	      for(var i=0;i<files.length;i++){
+	        if(!checkExtension(files[i].name,files[i].size)){
+	          return false;
+	        }
+	      }
+	      
+	      preview(arr);
+	      
+	      
+	    });//file change
+	    
+	    function checkExtension(fileName,fileSize){
+
+	      var regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$");
+	      var maxSize = 20971520;  //20MB
+	      
+	      if(fileSize >= maxSize){
+	        alert('파일 사이즈 초과');
+	        $("input[type='file']").val("");  //파일 초기화
+	        return false;
+	      }
+	      
+	      if(regex.test(fileName)){
+	        alert('업로드 불가능한 파일이 있습니다.');
+	        $("input[type='file']").val("");  //파일 초기화
+	        return false;
+	      }
+	      return true;
+	    }
+	    
+	    function preview(arr){
+	      arr.forEach(function(f){
+	        
+	        //파일명이 길면 파일명...으로 처리
+	        var fileName = f.name;
+	        if(fileName.length > 10){
+	          fileName = fileName.substring(0,7)+"...";
+	        }
+	        
+	        //div에 이미지 추가
+	        var str = '<div style="display: inline-flex; padding: 10px;">';
+	        
+	        
+	        //이미지 파일 미리보기
+	        if(f.type.match('image.*')){
+	          var reader = new FileReader(); //파일을 읽기 위한 FileReader객체 생성
+	          reader.onload = function (e) { //파일 읽어들이기를 성공했을때 호출되는 이벤트 핸들러
+	            //str += '<button type="button" class="delBtn" value="'+f.name+'" style="background: red">x</button><br>';
+	            str += '<img src="'+e.target.result+'" title="'+f.name+'" width=480px height=280px />';
+	            str += '</li></div>';
+	            $(str).appendTo('#preview');
+	          } 
+	          reader.readAsDataURL(f);
+	        }else{
+	          str += '<img src="/resources/images/uploadFiles/fileImg.png" title="'+f.name+'" width=100 height=100 />';
+	          $(str).appendTo('#preview');
+	        }
+	      });//arr.forEach
+	    }
+	
 	var selectTarget = $('.selectbox select');
 
     selectTarget.change(function(){
@@ -103,14 +170,13 @@ $(function(){
 		}
 	})
 	
-	$("#meetImg").on("click", function(){
+	$(".thumbnail").on("click", function(e){
 		document.all.file.click();
 	})
 	
-	$("#lImg").on("click", function(){
-		document.all.file.click();
+	$("#addImg").on("click", function(e){						
+		//추가해야됨
 	})
-
 	
 	$("#addMeet").on("click", function(){
 		
@@ -137,8 +203,9 @@ $(function(){
   		
 	<div class="form-group">
 		<label for="meetImg">모임 대표 이미지 선택</label>
-			<a href="#" class="thumbnail" id="meetImg" style="height:300px; width:500px">
-			<!-- <img src="..." alt="...">  -->
+			<a href="#" class="thumbnail" id="meetImgThum" style="height:300px; width:500px">
+			<input type="file" name="file" id="meetImg" style="display: none;" multiple/>  
+			<div id="preview"></div>
 			</a>
   
 	<div>
@@ -148,18 +215,20 @@ $(function(){
 		<input class="btn btn-default" type="button" id="addImg" name="addImg" value="이미지 추가" style="margin-right:50px"> </span>
 	</div>
 	
+	<div id="addDiv">
 	<div class="row">
 		<div class="col-xs-6 col-md-3">
-			<a href="#" class="thumbnail" id="lImg" style="height:220px; width:220px">
-			<!-- <img src="..." alt="..."> -->
+			<a href="#" class="thumbnail" id="lImg1" style="height:220px; width:220px">
+			
     		</a>
 		</div>
   		
   		<div class="col-xs-6 col-md-3" style="margin-left:120px">
-    		<a href="#" class="thumbnail" id="lImg" style="height:220px; width:220px">
-     		 <!-- <img src="..." alt="..."> -->
+    		<a href="#" class="thumbnail" id="lImg2" style="height:220px; width:220px">
+     		
    			</a>
 		</div>
+	</div>
 	</div>
 	
 		<textarea form="inform" cols="10" rows="20" wrap="soft" id="lIntro" name="lIntro" class="form-control"></textarea>
@@ -176,6 +245,7 @@ $(function(){
 	<div class="selectbox">
 		<label for="select">은행</label>
 		<select id="bank" name="bank">
+		<option value="">은행</option>
 		<option value="기업">기업은행</option>
 		<option value="농협">농협은행</option>
 		<option value="국민">국민은행</option>
@@ -190,23 +260,24 @@ $(function(){
 	<div class="selectbox">
     	<label for="select">카테고리</label>
 		<select id="category" name="category">	
-        <option value="1">여행</option>
-        <option value="2">게임</option>
-        <option value="3">음악</option>
-        <option value="4">영화</option>
-        <option value="5">공연</option>
-        <option value="6">맛집</option>
-        <option value="7">취업/자기계발</option>
-        <option value="8">액티비티</option>
-        <option value="9">독서/만화</option>
-        <option value="10">댄스</option>
-        <option value="11">사진</option>
-        <option value="12">반려동물</option>
-        <option value="13">요리</option>
-        <option value="14">차</option>
-        <option value="15">스포츠</option>
-        <option value="16">공예</option>
-        <option value="17">기타</option>
+		<option value="">카테고리</option>
+        <option value="0">여행</option>
+        <option value="1">게임</option>
+        <option value="2">음악</option>
+        <option value="3">영화</option>
+        <option value="4">공연</option>
+        <option value="5">맛집</option>
+        <option value="6">취업/자기계발</option>
+        <option value="7">액티비티</option>
+        <option value="8">독서/만화</option>
+        <option value="9">댄스</option>
+        <option value="10">사진</option>
+        <option value="11">반려동물</option>
+        <option value="12">요리</option>
+        <option value="13">차</option>
+        <option value="14">스포츠</option>
+        <option value="15">공예</option>
+        <option value="16">기타</option>
 		</select>
 	</div>
 		
@@ -215,6 +286,7 @@ $(function(){
     <div class="selectbox">
     	<label for="select">모임 유형</label>
 		<select id="meetType" name="meetType">
+		<option value="">모임 유형</option>
        	 <option value="0">2인 모임</option>
       	 <option value="1">다수인 모임</option>
       	 </select>
@@ -248,8 +320,5 @@ $(function(){
 <div class="text-center" style="margin-top:30px">
 	<input class="btn btn-default" type="button" id="addMeet" name="addMeet" value="모임 생성">
 </div>
-
-<input type="file" name="file" id="file" style="display: none;"/>  
-
 </body>
 </html>

@@ -15,27 +15,18 @@
 	function addForm(){
 	   	   
 		var addedFormDiv = document.getElementById("addedFormDiv");
-		var str1 = "";
-		var str2 = "";
-		var str3 = "";
 		var str="";
 		
 		// 추가할 폼(에 들어갈 HTML)
-		/* str+="<br>메뉴명-"+count+" <input type='text' name='businessMenu"+count+"'>";
-		str+="<br>가격-"+count+" <input type='text' name='businessMenuFee"+count+"'>";
-		str+="<br>사진-"+count+" <input type='text' name='businessMenuImg"+count+"'><BR>"; */
-		
-		str1+= "<br>메뉴명-" +count+ " <input type='text' name='businessMenu[" +count+ "].businessMenu'>";
-		str2+= "<br>가격-" +count+ " <input type='text' name='businessMenu[" +count+ "].businessMenuFee'>";
-		str3+= "<br>사진-" +count+ " <input type='text' name='businessMenu[" +count+ "].businessMenuImg'>";
+		str+="<br>메뉴명-"+count+" <input type='text' name='businessMenuList'>";
+		str+="<br>가격-"+count+" <input type='text' name='businessMenuFeeList'>";
+		str+="<br>사진-"+count+" <input type='text' name='businessMenuImgList'><BR>";
 		
 		// 폼 생성
 		var addedDiv = document.createElement("div");
 		
 		// 폼 Div에 ID 부여 (삭제를 위해)
 		addedDiv.id = "added_"+count;
-		
-		str = str1+str2+str3;
 		
 		// 폼 Div안에 HTML삽입
 		addedDiv.innerHTML = str;
@@ -74,7 +65,7 @@
 	$(function() {
 	
 		$("#addBusinessMenu").on("click", function() {
-			$("form").attr("method", "POST").attr("action", "/MORACKMORACK/business/addBusinessMenu").submit();
+			$("form").attr("method", "POST").attr("action", "/business/addBusinessMenu").submit();
 		})
 	   	   
 	});
@@ -86,24 +77,22 @@
 
 <body onload="addForm();">
 
-<center>
 
-<!-- <form name="baseForm" action="/addBusinessMenu" method="POST"> -->
-<form name="baseForm">
 
-           <input type="hidden" name="count" value="0">
+	<form name="baseForm">
+	
+		<input type="hidden" name="count" value="0">
+		
+		<!-- 폼을 삽입할 DIV -->
+		<div id="addedFormDiv"></div><BR>
+		
+		<input type="button" value="추가" onclick="addForm()">
+		<input type="button" value="삭제" onclick="delForm()">
+		<input type="button" id="addBusinessMenu" value="완료">
+	
+	</form>
 
-           <div id="addedFormDiv"></div><BR> <!-- 폼을 삽입할 DIV -->
 
-           <input type="button" value="추가" onclick="addForm()">
-
-           <input type="button" value="삭제" onclick="delForm()">
-
-           <input type="button" id="addBusinessMenu" value="완료">
-
-</form>
-
-</center>
 
 </body>
 

@@ -30,6 +30,8 @@ public class OffMeet {
 	private int amount;
 	private String offDate;
 	private String offTime;
+	private String imageFile;
+	private Date regDate;
 	
 	@ManyToMany(mappedBy = "offMeet")
 	private List<MeetMem> meetMem = new ArrayList<MeetMem>();
@@ -108,11 +110,29 @@ public class OffMeet {
 		this.offTime = string;
 	}
 
+	public String getImageFile() {
+		return imageFile;
+	}
+
+	public void setImageFile(String imageFile) {
+		this.imageFile = imageFile;
+	}
+
+	public Date getRegDate() {
+		return regDate;
+	}
+
+	public void setRegDate(Date regDate) {
+		this.regDate = regDate;
+	}
+
 	@Override
 	public String toString() {
 		return "OffMeet [offNo=" + offNo + ", user=" + user + ", meet=" + meet + ", offName=" + offName + ", offLoc="
 				+ offLoc + ", offMax=" + offMax + ", offMem=" + offMem + ", amount=" + amount + ", offDate=" + offDate
-				+ ", offTime=" + offTime + ", meetMem=" + meetMem + "]";
+				+ ", offTime=" + offTime + ", imageFile=" + imageFile + ", regDate=" + regDate + ", meetMem=" + meetMem
+				+ "]";
 	}
+
 	
 }

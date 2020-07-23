@@ -9,8 +9,8 @@ public class ReserveAble implements Serializable {
 	/// Field
 	private int reserveAbleNo;
 	private String businessId;
-	private Date reserveAbleStartTime;
-	private Date reserveAbleEndTime;
+	private String reserveAbleStartTime;
+	private String reserveAbleEndTime;
 	
 	/// Constructor
 	public ReserveAble() {
@@ -33,28 +33,28 @@ public class ReserveAble implements Serializable {
 		this.businessId = businessId;
 	}
 
-	public Date getReserveAbleStartTime() {
+	public String getReserveAbleStartTime() {
 		return reserveAbleStartTime;
 	}
-	
-	public void setReserveAbleStartTime(Date reserveAbleStartTime) {
+
+	public void setReserveAbleStartTime(String reserveAbleStartTime) {
 		this.reserveAbleStartTime = reserveAbleStartTime;
 	}
-	
-	public Date getReserveAbleEndTime() {
+
+	public String getReserveAbleEndTime() {
 		return reserveAbleEndTime;
 	}
-	
-	public void setReserveAbleEndTime(Date reserveAbleEndTime) {
+
+	public void setReserveAbleEndTime(String reserveAbleEndTime) {
 		this.reserveAbleEndTime = reserveAbleEndTime;
 	}
 
+	
 	
 	@Override
 	public String toString() {
 		return "ReserveAble [reserveAbleNo=" + reserveAbleNo + ", businessId=" + businessId + ", reserveAbleStartTime="
 				+ reserveAbleStartTime + ", reserveAbleEndTime=" + reserveAbleEndTime + "]";
 	}
-	
 
 }

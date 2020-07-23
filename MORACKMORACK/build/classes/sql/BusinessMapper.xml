@@ -7,7 +7,7 @@
 <mapper namespace="BusinessMapper">
  	
  	
-	<resultMap id="businessSelectMap" type="business">
+	<resultMap id="BusinessSelectMap" type="business">
 		<result property="businessId" 					column="business_id" 					jdbcType="VARCHAR"/>
 		<result property="businessPass" 				column="business_pass" 					jdbcType="VARCHAR"/>
 		<result property="businessName" 				column="business_name" 					jdbcType="VARCHAR"/>
@@ -21,17 +21,8 @@
 		<result property="bank" 						column="bank" 							jdbcType="VARCHAR"/>
 		<result property="depositAccNum" 				column="deposit_acc_num" 				jdbcType="VARCHAR"/>
 		<result property="businessStar" 				column="business_star" 					jdbcType="VARCHAR"/>
-		<result property="businessStartTime"	 		column="business_start_time" 			jdbcType="DATE"/>
-		<result property="businessEndTime" 				column="business_end_time" 				jdbcType="DATE"/>
-		
-		
-		<result property="reserveAble" 					column="business_end_time" 				jdbcType="DATE"/>
-		<!-- <result property="reserveAbleStartTime" 		column="reserve_able_start_time" 		jdbcType="DATE"/>
-		<result property="reserveAbleEndTime" 			column="reserve_able_end_time" 			jdbcType="DATE"/>
-		
-		<result property="businessMenu" 				column="business_menu" 					jdbcType="VARCHAR"/>
-		<result property="businessMenuFee" 				column="business_menu_fee" 				jdbcType="INTEGER"/>
-		<result property="businessMenuImg" 				column="business_menu_img" 				jdbcType="VARCHAR"/> -->
+		<result property="businessStartTime"	 		column="business_start_time" 			jdbcType="VARCHAR"/>
+		<result property="businessEndTime" 				column="business_end_time" 				jdbcType="VARCHAR"/>
 	</resultMap>
 	
 	<resultMap id="MenuSelectMap" type="menu">
@@ -45,28 +36,85 @@
 	<resultMap id="ReserveAbleSelectMap" type="reserveAble">
 		<result property="reserveAbleNo" 				column="reserve_able_no" 				jdbcType="INTEGER"/>
 		<result property="businessId" 					column="business_id" 					jdbcType="VARCHAR"/>
-		<result property="reserveAbleStartTime" 		column="reserve_able_start_time" 		jdbcType="DATE"/>
-		<result property="reserveAbleEndTime" 			column="reserve_able_end_time" 			jdbcType="DATE"/>
+		<result property="reserveAbleStartTime" 		column="reserve_able_start_time" 		jdbcType="VARCHAR"/>
+		<result property="reserveAbleEndTime" 			column="reserve_able_end_time" 			jdbcType="VARCHAR"/>
 	</resultMap>
+	
+	<!-- 제휴 업체 -->
+	
+	<!-- SQL : Business_INSERT -->
+	<!-- 가입 시 은행이랑 계좌번호도 같이 받기!!!! -->
+	<insert  id="addBusiness"	parameterType="business">
+	  	INSERT
+	  	INTO business ( business_id, business_pass, business_num, business_owner, business_name, business_phone, business_loc, business_start_time, business_end_time, category_no, bank, deposit_acc_num, reg_date )
+	  	VALUES ( #{businessId}, #{businessPass}, #{businessNum}, #{businessOwner}, #{businessName}, #{businessPhone}, #{businessLoc}, #{businessStartTime:VARCHAR}, #{businessEndTime:VARCHAR}, #{categoryNo}, #{bank}, #{depositAccNum}, SYSDATE  )
+	</insert>
+	
+	<!-- SQL : Business_SELECT -->
+	<select  id="getBusiness"	parameterType="String"	resultMap="BusinessSelectMap">
+	  	SELECT
+		business_id, business_pass, business_name, business_loc, category_no, business_phone, business_img, business_num, business_owner, reg_date, bank, deposit_acc_num, business_star, business_start_time, business_end_time
+		FROM business
+		WHERE business_id = #{businessId}
+	</select>
+	
+	<!-- SQL : Business_UPDATE -->
+	<update  id="updateBusiness"	parameterType="business">
+	   	UPDATE business
+	   	<set>
+	   		business_pass			=		#{businessPass},
+	   		business_name			=		#{businessName},
+	   		business_loc			=		#{businessLoc},
+	   		business_phone			=		#{businessPhone},
+	   		business_img			=		#{businessImg:VARCHAR},
+	   		business_owner			=		#{businessOwner},
+	   		bank					=		#{bank},
+	   		deposit_acc_num			=		#{depositAccNum},
+	   		business_start_time		=		#{businessStartTime:VARCHAR},
+	   		business_end_time		=		#{businessEndTime:VARCHAR}
+	   	</set>
+	   	WHERE business_id = #{businessId}
+	</update>
+	
+	<!-- SQL : Business_SELECT LIST -->
+	<select  id="getBusinessList"	parameterType="search"	resultMap="BusinessSelectMap, MenuSelectMap">
+		SELECT business_id, business_name, business_loc, business_phone, category_no, business_img, reg_date, bank, deposit_acc_num, business_star, business_start_time, business_end_time
+		FROM business
+		WHERE 1=1
+<!-- 		<if test=" searchKeyword!=null and searchKeyword!='' ">
+			 AND b.businessName = #{searchKeyword}
+		</if> -->
+		ORDER BY reg_date
+	</select>
+	
+	<!-- SQL : Business_DELETE -->
+	<delete  id="delBusiness"	parameterType="String">
+	  	DELETE FROM business
+	  	WHERE business_id = #{businessId}
+	</delete>
+	
+	
+	
+	
+	
+	<!-- 업체 메뉴 -->
 	
 	<!-- SQL : MENU_INSERT -->
 	<insert 	id="addBusinessMenu"		parameterType="menu" >
 	 	INSERT
 		INTO menu( menu_no, business_id, business_menu, business_menu_fee, business_menu_img ) 
-		VALUES	 (	seq_menu_menu_no.nextval, #{businessId}, #{businessMenu}, #{businessMenuFee}, #{businessMenuImg:VARCHAR} )
+		VALUES	 (	seq_menu_menu_no.nextval, #{businessId}, #{businessMenu}, #{businessMenuFee}, #{businessMenuImg} )
 	 </insert>
-	 
-	 
-	 <!-- SQL : MENU_SELECT -->
+	
+	<!-- SQL : MENU_SELECT -->
 	 <select 	id="getBusinessMenu"	parameterType="int"	resultMap="MenuSelectMap">
 		SELECT
 		menu_no, business_id, business_menu, business_menu_fee, business_menu_img
 		FROM menu
 		WHERE menu_no = #{menuNo}
 	 </select>
-	 
-	 
-	 <!-- SQL : MENU_UPDATE -->
+
+	<!-- SQL : MENU_UPDATE -->
 	 <update	id="updateBusinessMenu"	parameterType="menu" >
 	   	UPDATE menu
 	   	<set>
@@ -77,7 +125,6 @@
 	   	WHERE menu_no = #{menuNo}
 	 </update>
 	 
-	 
 	<!-- SQL : MENU_SELECT LIST -->
 	<select  id="getBusinessMenuList"  parameterType="String"	resultMap="MenuSelectMap">
 	  	SELECT menu_no, business_id, business_menu , business_menu_fee , business_menu_img
@@ -86,12 +133,16 @@
 		ORDER BY menu_no
 	</select>
 	
-	
 	<!-- SQL : MENU_DELETE -->
 	<delete  id="delBusinessMenu"  parameterType="int">
 	  	DELETE FROM menu
 	  	WHERE menu_no = #{menuNo}
 	</delete>
+	
+	
+	
+	
+	
 	 
 	 
 </mapper>

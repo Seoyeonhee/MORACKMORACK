@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-
+import com.morackmorack.mvc.common.Search;
 import com.morackmorack.mvc.service.domain.OffMeet;
 import com.morackmorack.mvc.service.domain.Pay;
 import com.morackmorack.mvc.service.offmeet.OffMeetDao;
@@ -66,6 +66,30 @@ public class OffMeetServiceImpl implements OffMeetService{
 		return offMeetDao.getBusinessPay(payNo);
 	}
 
+	@Override
+	public Map<String, Object> getOffList(Search search) throws Exception {
+		List<OffMeet> list = offMeetDao.getOffList(search);
+		int totalCount = offMeetDao.getOffTotalCount(search);
+
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("list", list);
+		map.put("totalCount", new Integer(totalCount));
+
+		return map;
+	}
+
+	@Override
+	public Map<String, Object> getBusinessPayList(Search search, String userId) throws Exception {
+		List<Pay> list= (List<Pay>) offMeetDao.getBusinessPayList(search, userId);
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		int totalCount = offMeetDao.getOffPayTotalCount(search);
+		map.put("list", list);
+		map.put("totalCount", new Integer(totalCount));
+		
+		System.out.println(map);
+		return map;
+	}
 
 	
 }
