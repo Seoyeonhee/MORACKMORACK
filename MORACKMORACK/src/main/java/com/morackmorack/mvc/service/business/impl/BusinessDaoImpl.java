@@ -11,6 +11,7 @@ import com.morackmorack.mvc.common.Search;
 import com.morackmorack.mvc.service.business.BusinessDao;
 import com.morackmorack.mvc.service.domain.Business;
 import com.morackmorack.mvc.service.domain.Menu;
+import com.morackmorack.mvc.service.domain.ReserveAble;
 
 //==> 회원관리 DAO CRUD 구현
 @Repository("businessDaoImpl")
@@ -72,6 +73,21 @@ public class BusinessDaoImpl implements BusinessDao {
 	
 	public void delBusinessMenu(int menuNo) throws Exception {
 		sqlSession.delete("BusinessMapper.delBusinessMenu", menuNo);
+	}
+	
+	
+	
+	
+	public void addReserveAbleTime(ReserveAble reserveAble) throws Exception {
+		sqlSession.insert("BusinessMapper.addReserveAbleTime", reserveAble);
+	}
+	
+	public void delReserveAbleTime(String businessId) throws Exception {
+		sqlSession.delete("BusinessMapper.delReserveAbleTime", businessId);
+	}
+	
+	public List<ReserveAble> listReserveAbleTime(String businessId) throws Exception {
+		return sqlSession.selectList("BusinessMapper.getReserveAbleTimeList", businessId);
 	}
 
 }

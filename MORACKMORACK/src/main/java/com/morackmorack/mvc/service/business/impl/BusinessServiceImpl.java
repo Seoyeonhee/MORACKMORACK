@@ -11,6 +11,7 @@ import com.morackmorack.mvc.service.business.BusinessDao;
 import com.morackmorack.mvc.service.business.BusinessService;
 import com.morackmorack.mvc.service.domain.Business;
 import com.morackmorack.mvc.service.domain.Menu;
+import com.morackmorack.mvc.service.domain.ReserveAble;
 
 //==> 회원관리 서비스 구현
 @Service("businessServiceImpl")
@@ -75,6 +76,25 @@ public class BusinessServiceImpl implements BusinessService {
 	}
 	public void delBusinessMenu(int menuNo) throws Exception {
 		businessDao.delBusinessMenu(menuNo);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	public void addReserveAbleTime(ReserveAble reserveAble) throws Exception {
+		businessDao.addReserveAbleTime(reserveAble);
+	}
+	
+	public void delReserveAbleTime(String businessId) throws Exception {
+		businessDao.delReserveAbleTime(businessId);
+	}
+	
+	public List<ReserveAble> listReserveAbleTime(String businessId) throws Exception {
+		return businessDao.listReserveAbleTime(businessId);
 	}
 
 }
