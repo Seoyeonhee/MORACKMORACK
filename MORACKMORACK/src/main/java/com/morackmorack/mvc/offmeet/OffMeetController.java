@@ -66,7 +66,7 @@ public OffMeetController() {
 	}
 
 
-@RequestMapping(value="addOfView", method =RequestMethod.GET)
+@RequestMapping(value="addOffView", method =RequestMethod.GET)
 public String addOffView() throws Exception {
 	
 	System.out.println("/offmeet/addOff :GET");
