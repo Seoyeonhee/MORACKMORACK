@@ -1,12 +1,15 @@
 package com.morackmorack.mvc.service.notify.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
+import com.morackmorack.mvc.common.Search;
 import com.morackmorack.mvc.service.domain.Notify;
 import com.morackmorack.mvc.service.notify.NotifyDao;
 
@@ -32,9 +35,13 @@ public class NotifyDaoImpl implements NotifyDao {
 	}
 
 	@Override
-	public List<Notify> listNotifyUser() throws Exception {
+	public List<Notify> listNotifyUser(Search search) throws Exception {
 		// TODO Auto-generated method stub
-		return null;
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("search", search);
+		
+		return sqlSession.selectList("NotifyMapper.listNotify",search);
+		
 	}
 
 	@Override
@@ -49,6 +56,12 @@ public class NotifyDaoImpl implements NotifyDao {
 		sqlSession.update("NotifyMapper.prohibit", notify);
 		sqlSession.update("NotifyMapper.prohibitUser", notify);
 		
+	}
+
+	@Override
+	public int getTotalCount(Search search) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("notifyMapper.totalCount", search);
 	}
 
 }
