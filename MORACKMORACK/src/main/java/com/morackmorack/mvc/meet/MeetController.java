@@ -148,13 +148,16 @@ public class MeetController {
 		return mav;
 	}
 
-	@RequestMapping(value = "listMeet/{searchType}", method = RequestMethod.GET)
-	public ModelAndView listMeet(@PathVariable ("searchType") int searchType, @ModelAttribute("meet") Meet meet, @ModelAttribute("search")  Search search ) {
+	@RequestMapping(value = "listMeet",  method = {RequestMethod.GET, RequestMethod.POST})
+	public ModelAndView listMeet(@ModelAttribute("search")  Search search, @RequestParam(value="searchType" , required=false) String searchType) {
 		System.out.println("/meet/listMeet  : GET");
-
-		search.setSearchCondition(searchType);
 		
-		System.out.println(">>>>>>>>>>>"+search);
+		if(searchType != null) {
+			search.setSearchType(searchType);
+			search.setSearchCondition("0");
+			}
+		
+		System.out.println(search);
 		
 		List<Meet> listMeet = meetService.listMeet(search);
 
@@ -207,13 +210,16 @@ public class MeetController {
 	}
 
 	@RequestMapping(value = "joinMeet", method = RequestMethod.GET)
-	public ModelAndView joinMeet(HttpServletRequest request, @RequestParam("meetId") String meetId) {
+	public ModelAndView joinMeet(HttpServletRequest request, @RequestParam("meetId") String meetId) throws Exception {
 		System.out.println("/meet/joinMeet : GET");
 		
 		HttpSession session = request.getSession(true);
 		User user = (User) session.getAttribute("user");
-		String userId = user.getUserId();
-
+		//String userId = user.getUserId();
+		
+		String userId = "user07";
+		user = userService.getUser(userId);
+		
 		Meet meet = meetService.getMeet(meetId);
 
 		ModelAndView mav = new ModelAndView();
@@ -225,8 +231,7 @@ public class MeetController {
 		meetMem.setJoinCode('1');
 		meetMem.setMeetRole('2');
 		
-		mav.addObject("meet", meet);
-		mav.setViewName("redirect:/meet/getMeet.jsp");
+		mav.setViewName("/meet/getMeet.jsp");
 		
 		if (meet.getMaxNum() == meet.getMemNum()) {
 			mav.addObject(joinMessage, "모임 인원 초과");
@@ -235,19 +240,23 @@ public class MeetController {
 
 		if (meet.getMeetType() == '0') {
 			meetService.joinMeet(meetMem);
+			meetService.addMemNum(meetId);
 		} else {
 			if (meetService.checkJoinMeetCount(user.getMeetCount())) {
 				if (meet.isMeetAppr()) {
-					mav.setViewName("redirect:/meet/joinMeet.jsp");
+					mav.setViewName("/meet/joinMeet.jsp");
 					return mav;
 				} else {
 					meetService.joinMeet(meetMem);
+					meetService.addMemNum(meetId);
 				}
 			} else {
 				mav.addObject(joinMessage, "가입 가능한 모임은 최대 5개");
 			}
 		}
-
+		
+		meet = meetService.getMeet(meetId);
+		mav.addObject("meet", meet);
 		return mav;
 	}
 	
@@ -278,8 +287,8 @@ public class MeetController {
 	}
 	
 
-	@RequestMapping(value = "listJoinMeetUser", method = RequestMethod.POST)
-	public ModelAndView listJoinMeetUser(@RequestParam("meetId") String meetId) {
+	@RequestMapping(value = "listJoinMeetUser/{meetId}", method = RequestMethod.GET)
+	public ModelAndView listJoinMeetUser(@PathVariable("meetId") String meetId) {
 		System.out.println("/meet/listJoinMeetUser : POST");
 
 		List<MeetMem> listJoinMeetUser = new ArrayList<MeetMem>();
@@ -287,7 +296,7 @@ public class MeetController {
 
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("listJoinMeetUser", listJoinMeetUser);
-		mav.setViewName("redirect:/meet/listJoinMeetUser.jsp");
+		mav.setViewName("/meet/listJoinMeetUser.jsp");
 
 		return mav;
 	}
@@ -308,16 +317,16 @@ public class MeetController {
 		return mav;
 	}
 
-	@RequestMapping(value = "listMeetMem", method = RequestMethod.POST)
-	public ModelAndView listMeetMem(@RequestParam("meetId") String meetId) {
-		System.out.println("/meet/listMeetMem : POST");
+	@RequestMapping(value = "listMeetMem/{meetId}", method = RequestMethod.GET)
+	public ModelAndView listMeetMem(@PathVariable("meetId") String meetId) {
+		System.out.println("/meet/listMeetMem : GET");
 
 		List<MeetMem> listMeetMem = new ArrayList<MeetMem>();
 		listMeetMem = meetService.listMeetMem(meetId);
 
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("listMeetMem", listMeetMem);
-		mav.setViewName("redirect:/meet/listMeetMem.jsp");
+		mav.setViewName("/meet/listMeetMem.jsp");
 
 		return mav;
 	}
@@ -363,13 +372,14 @@ public class MeetController {
 		System.out.println("/meet/delMyMeet : GET");
 	}
 
-	@RequestMapping(value = "addWishMeet/{meetId}", method = RequestMethod.GET)
-	public ModelAndView addWishMeet(HttpServletRequest request, @PathVariable("meetId") String meetId) {
+	@RequestMapping(value = "addWishMeet", method = RequestMethod.GET)
+	public ModelAndView addWishMeet(HttpServletRequest request, @RequestParam("meetId") String meetId) {
 		System.out.println("/meet/addWishMeet :GET");
 
 		HttpSession session = request.getSession(true);
 		User user = (User) session.getAttribute("user");
-		String userId = user.getUserId();
+		//String userId = user.getUserId();
+		String userId = "user07";
 		
 		meetService.addWishMeet(userId, meetId);
 		
@@ -377,7 +387,7 @@ public class MeetController {
 	
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("meet", meet);
-		mav.setViewName("redirect:/meet/getMeet.jsp");
+		mav.setViewName("/meet/getMeet.jsp");
 		
 		return mav;
 	}

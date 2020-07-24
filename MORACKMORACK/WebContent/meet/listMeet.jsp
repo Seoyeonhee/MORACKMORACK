@@ -91,6 +91,16 @@ $(function (){
 		self.location="/meet/getMeet/"+meetId;
 	})
 	
+	$("#searchMeet").on("click", function(){
+		$("form").attr("method", "POST").attr("action", "/meet/listMeet").submit();
+	})
+	
+	$("#searchKeyword").keydown(function(key) {
+		if (key.keyCode == 13) {
+			$("form").attr("method", "POST").attr("action", "/meet/listMeet").submit();
+		}
+	})
+
 })
 
 </script>
@@ -98,37 +108,40 @@ $(function (){
 </head>
 
 <body>
+<form>
+<input type="hidden" id="searchType" name="searchType" value="${search.searchType}"/>
+<input type="hidden" id="searchCondition" name="searchCondition" value="${search.searchCondition}"/>
 
 <div class="container">
 	<jsp:include page="/toolbar.jsp"/>
 </div>
 
 <div class="container">
-<c:if test="${search.searchCondition eq 0}">
+<c:if test="${search.searchType eq 0}">
 
-<h2 style="margin-left:300px">유형 검색 목록</h2>
+<h4 style="text-align:right">유형 검색 목록</h4>
 	<div style="text-align:center; margin-top:50px">
-	<h2><a href="">다수인 모임</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="">2인 모임</a></h2>
+	<h4><a id="multiMeet">다수인 모임</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a id="twoMeet">2인 모임<a></h4>
 	</div>
 	
 </c:if>
 
-<c:if test="${search.searchCondition eq 1}">
+<c:if test="${search.searchType eq 1}">
 
-<h2 style="margin-left:300px">카테고리 검색 목록</h2>
+<h4 style="text-align:right">카테고리 검색 목록</h4>
 </c:if>
 
-<c:if test="${search.searchCondition eq 2}">
+<c:if test="${search.searchType eq 2}">
 
-<h2 style="margin-left:300px">해시태그 검색 목록</h2>
+<h4 style="text-align:right">해시태그 검색 목록</h4>
 
 </c:if>
 
 
 	<div class="container__item">
 		<form class="form">
-			<input type="email" class="form__field" placeholder="${search.searchCondition eq 0 or search.searchCondition eq 1? '모임명 검색' :'해시태그 검색'}"/>
-			<button type="button" class="btn btn--primary btn--inside uppercase">검색</button>
+			<input type="text" id="searchKeyword" name="searchKeyword" class="form__field" placeholder="${search.searchType eq 0 or search.searchType eq 1? '모임명 검색' :'해시태그 검색'}" value="${! empty search.searchKeyword ? search.searchKeyword : '' }"/>
+			<button type="button" id="searchMeet" class="btn btn--primary btn--inside uppercase">검색</button>
 		</form>
 	</div>
 </div>
@@ -143,7 +156,7 @@ $(function (){
      	 <img src="resources/images/uploadFiles/${meet.meetImg}" alt="MORACKMORACK" title="${meet.meetName}">
      	 <div class="caption">
         <h3></h3>
-        <p>${meet.meetName}</p>
+        <p id="meetName">${meet.meetName}</p><input type="hidden" value="${meet.meetId}"/>
         <p>${meet.memNum}/${meet.maxNum}</p>
       	</div>
     	</div>
@@ -152,6 +165,6 @@ $(function (){
   
 </div>
 </div>
-
+</form>
 </body>
 </html>

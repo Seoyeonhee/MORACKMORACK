@@ -1,6 +1,8 @@
 package com.morackmorack.mvc.service.domain;
 
-public class WishMeet {
+import java.io.Serializable;
+
+public class WishMeet  implements Serializable{
 	private String userId;
 	private Meet meet;
 	

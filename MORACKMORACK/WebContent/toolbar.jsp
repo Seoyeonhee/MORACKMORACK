@@ -34,7 +34,7 @@ $(function() {
 	$("#menubar-menus li").mouseenter(function(event) {
 		$(this).find("div").parent().css("background", "#FFF");
 		$(this).find("div").parent().children("a").css("color", "#000").css("size", "15px");
-		$(this).find("div").slideDown("fast");
+		$(this).find("div").slideDown("slow");
 	}).mouseleave(function() {
 		$(this).find("div:visible").slideUp(50, function() {
 			$(this).parent().css("background", "#4D5F78");
@@ -66,9 +66,9 @@ $(function() {
 		<li>
 			<a href="#">모임 검색</a>
 			<div>
-			<p><a href="/meet/listMeet/0">모임 유형 검색</a></p>			
-			<p><a href="/meet/listMeet/1">카테고리 검색</a></p>
-			<p><a href="/meet/listMeet/2">해시태그 검색</a></p>
+			<p><a href="/meet/listMeet?searchType=0">모임 유형 검색</a></p>			
+			<p><a href="/meet/listMeet?searchType=1">카테고리 검색</a></p>
+			<p><a href="/meet/listMeet?searchType=2">해시태그 검색</a></p>
 			</div>		
 		</li>
 		<li>

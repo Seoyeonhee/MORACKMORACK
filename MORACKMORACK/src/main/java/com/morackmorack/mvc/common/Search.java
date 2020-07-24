@@ -1,25 +1,25 @@
 package com.morackmorack.mvc.common;
 
 public class Search {
-	private int searchType;
-	private int searchCondition;
+	private String searchType;
+	private String searchCondition;
 	private String searchKeyword;
-	private int searchWay;
 	private int currentPage;
 	private int pageSize;
 	private int startRowNum;
 	private int endRowNum;
 	
-	public int getSearchType() {
+	
+	public String getSearchType() {
 		return searchType;
 	}
-	public void setSearchType(int searchType) {
+	public void setSearchType(String searchType) {
 		this.searchType = searchType;
 	}
-	public int getSearchCondition() {
+	public String getSearchCondition() {
 		return searchCondition;
 	}
-	public void setSearchCondition(int searchCondition) {
+	public void setSearchCondition(String searchCondition) {
 		this.searchCondition = searchCondition;
 	}
 	public String getSearchKeyword() {
@@ -27,12 +27,6 @@ public class Search {
 	}
 	public void setSearchKeyword(String searchKeyword) {
 		this.searchKeyword = searchKeyword;
-	}
-	public int getSearchWay() {
-		return searchWay;
-	}
-	public void setSearchWay(int searchWay) {
-		this.searchWay = searchWay;
 	}
 	public int getCurrentPage() {
 		return currentPage;
@@ -58,4 +52,11 @@ public class Search {
 	public void setEndRowNum(int endRowNum) {
 		this.endRowNum = endRowNum;
 	}
+	@Override
+	public String toString() {
+		return "Search [searchType=" + searchType + ", searchCondition=" + searchCondition + ", searchKeyword="
+				+ searchKeyword + ", currentPage=" + currentPage + ", pageSize=" + pageSize + ", startRowNum="
+				+ startRowNum + ", endRowNum=" + endRowNum + "]";
+	}
+	
 }

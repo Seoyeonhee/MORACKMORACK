@@ -1,5 +1,6 @@
 package com.morackmorack.mvc.service.domain;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -9,7 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
-public class MeetMem {
+public class MeetMem implements Serializable{
 	private int memNo;
 	private User user;
 	private  Meet meet;

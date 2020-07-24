@@ -19,41 +19,24 @@
 
 <style>
 
-    
-ul{
-   list-style:none;
-   padding-left:10px;
-   }
-   
-li{
-	color: #FFF; 
-}
-
 </style>
 
 
 <script type ="text/javascript">
 
 $(function (){
+	var meetId = $("#meetId").val();
 	
-        $("#list-group").click(function(){
-            var submenu = $(this).next("div");
- 
-            if( submenu.is(":visible") ){
-                submenu.slideUp();
-            }else{
-                submenu.slideDown();
-            }
-        }).mouseover(function(){
-            $(this).next("div").slideDown();
-       
-        });
-
-        $("#addOffMeet").on("click", function(){
-        	self.location="/offmeet/addOfView";
-        })
-
-
+	$("#joinMeet").on("click", function(){		
+		self.location("/meet/joinMeet?meetId="+meetId)		
+	})
+	
+	$("#addWishMeet").on("click", function(){		
+		self.location("/meet/addWishMeet?meetId="+meetId)		
+		alert("찜!")
+	})
+	
+	
 	/* $("#addOffMeet").on("click", function(){
 		
 		//var jbResult = prompt( 'Lorem ipsum dolor', '' );
@@ -94,39 +77,34 @@ $(function (){
 	<jsp:include page="/toolbar.jsp"/>
 </div>
 
+<div class="row" style="margin-left:30px">
+	<jsp:include page="/meet/sidebar.jsp"/>
+	<input type="hidden" id="meetId" value="${meetId}"/>
+	
+</div>
+
+
 <div style="float:right">
-<input type="button" value="모임 가입"/>
-<input type="button" value="찜하기"/> 
+<input type="button" id="joinMeet" value="모임 가입"/>
+<input type="button" id="addWishMeet" value="찜하기"/> 
 
 <input type="button" value="쪽지 초대"/>
 <input type="button" value="카카오톡 초대"/>
-<input type="button" id="addOffMeet" value="모임 생성"/>
+<input type="button" id="addOffMeet" value="오프라인 모임 생성"/>
 </div>
 
-<label id="list-group"><span class="glyphicon glyphicon-align-justify"></span></label>
-<div>
-<ul class="nav nav-pills nav-stacked col-md-1">
-<li role="presentation"><a href="#">모임 회원 목록</a></li>
-<li role="presentation"><a href="#">커뮤니티</a></li>
-<li role="presentation"><a href="#">채팅</a></li>
-<li role="presentation"><a href="#">추천업체 조회</a></li>
-<li role="presentation"><a href="#">참여비 내역</a></li>
-<li role="presentation"><a href="/offmeet/getOffList">오프라인 모임 목록</a></li>
-<li role="presentation"><a href="#">가입 신청 회원 목록</a></li>
-<li role="presentation"><a href="#">신고받은 회원 목록</a></li>
-</ul>
-</div>
+
 
 <div class="row" style="margin-left:150px">
  	<div class="col-xs-6 col-md-5">
     <a href="#" class="thumbnail">
-      <img src="${meetImg}" alt="...">
+      <img src="${meet.meetImg}" alt="Image" style="height:500px; width:500px"> 
     </a>
   </div>
-  	<div class="col-md-3" style="height:500px; background-color: #FFA07A">
+  	<div class="col-md-3" style="height:500px; border:1px solid red;">
 		<h3>${meet.meetName}</h3><h5>${meet.memNum}/${meet.maxNum}</h5>   
 		<c:forEach var="hashtag" items="${meet.hashtag}">
-		<h3>#${hashtag} </h3>
+		<h3># ${hashtag}</h3>
 		</c:forEach>
  		<c:choose>
 		<c:when test="${meet.category eq 0}">여행</c:when>
@@ -151,7 +129,7 @@ $(function (){
 		<h3>${meet.meetLoc}</h3>
 		<h3>${meet.meetStar}</h3>
 	</div>
-	<div class="col-md-3" style="height:500px; background-color: #F08080; margin-left:30px">
+	<div class="col-md-3" style="height:500px; border:1px solid red; margin-left:30px">
 	오프라인 모임 정보
 	</div>
 </div>
@@ -159,10 +137,10 @@ $(function (){
 <div class="row" style="margin-left:120px; margin-top:100px"> <!-- 상세 이미지 / 테이블 만들어지면 넣기 -->
  	<div class="col-xs-6 col-md-7">
     <a href="#" class="thumbnail">
-      <img src="" alt="...">
+      <img src="" alt="Image" style="height:500px; width:500px">
     </a>
   </div>
-  	<div class="col-md-4" style="height:500px; background-color: #CD5C5C">  <!-- 후기 / 테이블 만들어지면 넣기 -->
+  	<div class="col-md-4" style="height:500px; border:1px solid red;">  <!-- 후기 / 테이블 만들어지면 넣기 -->
 		<h3>후기</h3>  
 		<h3></h3>  
 	</div>

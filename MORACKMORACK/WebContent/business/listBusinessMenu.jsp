@@ -87,27 +87,32 @@
 
 <body>
 
+	<jsp:include page="/toolbar.jsp"/>
+
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">
 	
+		<div class="page-header text-info">
+			<img id="businessImg" style="float:left; height:100px; width:100px; margin:5px" src="../../resources/images/down-arrow.png" alt="@@업체 대표 이미지@@">
+			<%-- <h2>${business.businessName}</h2> --%>
+			<h2 style="padding-top:10px;">업체명</h2>
+			<h5>메뉴 목록</h5>
+	    </div>
+	
 	
 		<div class="row">
-			<div class="col-md-12 text-center ">
+			<div style="float:right">
 				<button type="button" id="addBusinessMenu" name="addBusinessMenu" class="btn btn-primary">추가</button>
 				<button type="button" id="ok" name="ok" class="btn btn-primary">확인</button>
-			</div>
-			
-			<div class="col-md-12 text-center ">
-				<!-- <button type="button" class="btn btn-primary">확인</button> -->
 			</div>
 		</div>
 	
 		<!--  table Start /////////////////////////////////////-->
-		<table class="table table-hover table-striped" >
+		<%-- <table class="table table-hover table-striped" >
 	      
 			<thead>
 				<tr>
-					<th align="left">삭제</th>
+					<th align="center">삭제</th>
 					<th align="center" >사진</th>
 					<th align="center">메뉴명</th>
 					<th align="center">가격</th>
@@ -126,7 +131,7 @@
 						</td>
 						<td align="center">
 							${menu.businessMenuImg}
-							<%-- <input type="hidden" value="${menu.businessId}"> --%>
+							<input type="hidden" value="${menu.businessId}">
 						</td>
 						<td align="center">${menu.businessMenu}</td>
 						<td align="center">${menu.businessMenuFee}</td>
@@ -135,8 +140,37 @@
 			
 			</tbody>
 	      
-		</table>
+		</table> --%>
 		<!--  table End /////////////////////////////////////-->
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+		<c:forEach var="menu" items="${menuList}">
+			<form name='form' class='form-horizontal'>
+				<div class='form-group'>
+					<input type="hidden" id="menuNo" name="menuNo" value="${menu.menuNo}">
+					<input type="hidden" id="businessId" name="businessId" value="${menu.businessId}">
+					<!-- <button type="button" id="delBusinessMenu" name="delBusinessMenu" class="btn btn-primary">삭제</button> -->
+					<div class='page-header text-info'>
+					
+						<!-- <button type="button" id="delBusinessMenu" name="delBusinessMenu" style='float:left' class="btn btn-primary">삭제</button> -->
+						<input type='button' id="delBusinessMenu" name="delBusinessMenu" value='-' style='margin-top: 80px; float: left;' class="btn">
+						<p style="float:left">&nbsp;&nbsp;&nbsp;&nbsp;</p>
+						<img id='businessMenuImg' style='float:left; height:200px; width:200px; margin:5px' src='../../resources/images/down-arrow.png' alt='@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 메뉴 이미지 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@'>
+				  		<h2> ${menu.businessMenu} </h2>
+				  		<p> </p>
+				  		<h3> ${menu.businessMenuFee} </h3>
+				  		<br><br>
+				  	</div>
+				</div>
+			</form>
+	  	</c:forEach>
+	  
+	  
 	  
 	</div>
 	<!--  화면구성 div End /////////////////////////////////////-->

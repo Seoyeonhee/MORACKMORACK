@@ -3,8 +3,6 @@ package com.morackmorack.mvc.business;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -19,6 +17,7 @@ import com.morackmorack.mvc.common.Search;
 import com.morackmorack.mvc.service.business.BusinessService;
 import com.morackmorack.mvc.service.domain.Business;
 import com.morackmorack.mvc.service.domain.Menu;
+import com.morackmorack.mvc.service.domain.ReserveAble;
 
 //==> 업체관리 Controller
 @Controller
@@ -51,15 +50,10 @@ public class BusinessController {
 		System.out.println(businessList);
 		
 		mv.addObject(businessList);
-		mv.setViewName("forward:/business/listBusiness.jsp");
+		mv.setViewName("redirect:/business/listBusiness.jsp");
 		
 		return mv;
 	}
-	
-	
-	
-	
-	
 	
 	
 	
@@ -70,8 +64,8 @@ public class BusinessController {
 //	업체 메뉴 등록
 	@RequestMapping( value="addBusinessMenu", method=RequestMethod.POST )
 	public ModelAndView addBusinessMenu( @RequestParam(value="businessMenuList", required=true) List<String> businessMenuList,
-									@RequestParam(value="businessMenuFeeList") List<Integer> businessMenuFeeList,
-									@RequestParam(value="businessMenuImgList") List<String> businessMenuImgList ) throws Exception {
+										@RequestParam(value="businessMenuFeeList", required=true) List<Integer> businessMenuFeeList,
+										@RequestParam(value="businessMenuImgList" ) List<String> businessMenuImgList ) throws Exception {
 
 		System.out.println("/business/addBusinessMenu : POST");
 		
@@ -85,7 +79,7 @@ public class BusinessController {
 			businessService.addBusinessMenu(menu);
 		}
 		
-		mv.setViewName("forward:/business/BusinessTestURL.jsp");
+		mv.setViewName("redirect:/business/BusinessTestURL.jsp");
 		
 		return mv;
 	}
@@ -103,9 +97,9 @@ public class BusinessController {
 		Business business = new Business();
 		List<Menu> menuList = businessService.listBusinessMenu(businessId);
 		
-		/*business.setMenu(businessService.listBusinessMenu(businessId));*/
+		business.setMenu(businessService.listBusinessMenu(businessId));
 		
-		/*mv.addObject(business);*/
+		mv.addObject(business);
 		mv.addObject(menuList);
 		mv.setViewName("forward:/business/listBusinessMenu.jsp");
 		
@@ -127,7 +121,7 @@ public class BusinessController {
 		menu = businessService.getBusinessMenu(menuNo);
 		
 		mv.addObject(menu);
-		mv.setViewName("forward:/business/getBusinessMenu.jsp");
+		mv.setViewName("redirect:/business/getBusinessMenu.jsp");
 		
 		return mv;
 	}
@@ -145,7 +139,7 @@ public class BusinessController {
 		
 		businessService.updateBusinessMenu(menu);
 		
-		mv.setViewName("forward:/business/BusinessTestURL.jsp");
+		mv.setViewName("redirect:/business/BusinessTestURL.jsp");
 		
 		return mv;
 	}
@@ -163,7 +157,98 @@ public class BusinessController {
 		
 		businessService.delBusinessMenu(menuNo);
 		
-		mv.setViewName("forward:/business/listBusinessMenu.jsp");
+		mv.setViewName("redirect:/business/listBusinessMenu.jsp");
+		
+		return mv;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+//	2020-07-23 서연희
+//	addReserveAbleTime
+//	업체 예약 가능 시간 재등록
+	@RequestMapping( value="addReserveAbleTime", method=RequestMethod.POST )
+	public ModelAndView addReserveAbleTime( @RequestParam(value="reserveAbleStartTime", required=true) List<String> reserveAbleStartTime,
+											@RequestParam(value="reserveAbleEndTime", required=true) List<String> reserveAbleEndTime ) throws Exception {
+
+		System.out.println("/business/addReserveAbleTime : POST");
+		
+		ModelAndView mv = new ModelAndView();
+		
+		// 서연희_수정필요
+		// 업체 가입과 로그인 구현 이후 "bus02"대신 세션에서 받아오는 업체 아이디 넣을것!!!!
+		String businessId = "bus02";
+		
+		for(int i=0 ; i<reserveAbleStartTime.size() ; i++) {
+			ReserveAble reserveAble = new ReserveAble();
+			reserveAble.setBusinessId(businessId);
+			reserveAble.setReserveAbleStartTime(reserveAbleStartTime.get(i));
+			reserveAble.setReserveAbleEndTime(reserveAbleEndTime.get(i));
+			
+			System.out.println("서연희");
+			System.out.println("businessService.addReserveAbleTime(reserveAble) 실행 전 메뉴\n" + reserveAble);
+			businessService.addReserveAbleTime(reserveAble);
+		}
+		
+		List<ReserveAble> reserveAbleTimeList = businessService.listReserveAbleTime(businessId);
+		
+		mv.addObject(reserveAbleTimeList);
+		mv.setViewName("forward:/business/listReserveAbleTime.jsp");
+		
+		return mv;
+	}
+	
+	
+//	2020-07-23 서연희
+//	delReserveAbleTime
+//	업체 예약 가능 등록 화면으로 이동하면서 예약 가능 시간 목록 삭제
+	@RequestMapping( value="delReserveAbleTime", method=RequestMethod.GET )
+	public ModelAndView delReserveAbleTime( @RequestParam("businessId") String businessId ) throws Exception {
+
+		System.out.println("/business/delReserveAbleTime : GET");
+		
+		ModelAndView mv = new ModelAndView();
+		
+		// 서연희_수정필요
+		// 업체 가입과 로그인 구현 이후 "bus02"대신 세션에서 받아오는 업체 아이디 넣을것!!!!
+		businessService.delReserveAbleTime(businessId);
+		
+		mv.setViewName("redirect:/business/addReserveAbleTime.jsp");
+		
+		return mv;
+	}
+	
+	
+//	2020-07-23 서연희
+//	listReserveAbleTime
+//	업체 예약 가능 시간 목록
+	/*@RequestMapping( value="listReserveAbleTime", method=RequestMethod.GET )*/
+	@RequestMapping( value="listReserveAbleTime" )
+	public ModelAndView listReserveAbleTime( @RequestParam("businessId") String businessId ) throws Exception {
+
+		System.out.println("/business/listReserveAbleTime : GET/POST");
+		
+		ModelAndView mv = new ModelAndView();
+		
+		/*businessId = "bus02";*/
+		List<ReserveAble> reserveAbleTimeList = businessService.listReserveAbleTime(businessId);
+		
+		System.out.println("서연희");
+		System.out.println(reserveAbleTimeList);
+		
+		mv.addObject(reserveAbleTimeList);
+		mv.setViewName("forward:/business/listReserveAbleTime.jsp");
 		
 		return mv;
 	}
