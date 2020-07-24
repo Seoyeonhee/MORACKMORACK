@@ -27,7 +27,12 @@
 <body>
 
         <div class="container">
-        	<jsp:include page="toolbar.jsp" />
+        	<c:if test="${ ! empty sessionScope.business }">
+        		<jsp:include page="/business/businessToolbar.jsp" />
+        	</c:if>
+        	<c:if test="${ empty sessionScope.business }">
+        		<jsp:include page="toolbar.jsp" />
+        	</c:if>
    		</div> 	
 
 <div>	

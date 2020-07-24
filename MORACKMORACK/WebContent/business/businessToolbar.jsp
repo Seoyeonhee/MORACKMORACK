@@ -10,7 +10,7 @@ body {
 	width: 100%; height: 62px; background: #4D5F78;
 }
 #menubar-menus {
-	width: 600px; margin: 0 auto; list-style: none; padding: 0; text-align: center; font-size: 0; display: table;
+	width: 900px; margin: 0 auto; list-style: none; padding: 0; text-align: center; font-size: 0; display: table;
 }
 #menubar-menus > li {
 	padding: 12px 0px; width: 200px; height: 40px; display: table-cell; vertical-align: middle; text-align: center; vertical-align: middle; font-size: 15px; 
@@ -47,15 +47,24 @@ $(function() {
 
 <p style="text-align:left;"><a href="/index.jsp">MORACKMORACK</a>
     <span style="float:right;">
-    <c:if test="${empty sessionScope.user}">
+	
+	<!-- 비회원 -->
+    <c:if test="${empty sessionScope.user && empty sessionScope.business}">
     <a href="/user/login">로그인</a>
     <a href="/user/addUser" style="margin-left:10px">회원가입</a>
     <a href="/business/login" style="margin-left:10px">업체 로그인</a>
     <a href="/business/addBusiness" style="margin-left:10px">업체 회원가입</a>
     </c:if>
+    
+    <!-- 회원 -->
     <c:if test="${!empty sessionScope.user}">
      <a href="/meet/listWishMeet" style="margin-left:50px">찜목록</a>
      <a href="/user/logout" style="margin-left:10px">로그아웃</a>
+     </c:if>
+     
+     <!-- 업체 -->
+     <c:if test="${!empty sessionScope.business}">
+     	<a href="/business/logout" style="margin-left:10px">로그아웃</a>
      </c:if>
      </span>
 </p>
@@ -64,48 +73,22 @@ $(function() {
 <div id="menubar">
 	<ul id="menubar-menus">
 		<li>
-			<a href="#">모임 검색</a>
-			<div>
-			<p><a href="/meet/listMeet?searchType=0">모임 유형 검색</a></p>			
-			<p><a href="/meet/listMeet?searchType=1">카테고리 검색</a></p>
-			<p><a href="/meet/listMeet?searchType=2">해시태그 검색</a></p>
-			</div>		
+			<a href="/business/listBusiness">업체 목록</a>		
 		</li>
 		<li>
-			<a href="#">모임 관리</a>
-			<div>
-			<p><a href="/meet/listMyMeet">내가 가입한 모임</a></p>
-                <p><a href="/meet/addMeet">모임 생성</a></p>
-			</div>	
+			<a href="/business/getBusiness">업체 정보 조회</a>	
 		</li>
 		<li>
-			<a href="#">소셜 네트워크</a>
-			<div>
-			<p><a href="/friend/listFriend">친구</a></p>
-			<p><a href="/message/listRecMessage">쪽지함</a></p>
-			</div>	
+			<a href="/business/updateBusinessView">업체 정보 변경</a>
 		</li>
 		<li>
-			<a href="#">업체</a>
-			<div>
-			<p><a href="/business/listBusiness">추천 업체 목록</a></p>
-			<p><a href="/business/listReserveBusiness">업체 이용 목록 조회</a></p>
-			</div>	
+			<a href="#">업체 후기 조회</a>
 		</li>
 		<li>
-			<a href="#">후기 관리</a>
-			<div>
-			<p><a href="/community/getOffReviewList">모임 후기 조회</a></p>
-			<p><a href="/community/getBusinessReviewList">업체 후기 조회</a></p>
-			</div>		
+			<a href="/business/listReserve">예약 목록 조회</a>		
 		</li>
 		<li>
-			<a href="#">마이페이지</a>
-			<div>
-			<p><a href="/user/getUser?userId=${user.userId}">내 정보 조회</a></p>
-			<p><a href="/user/updateUser?userId=${user.userId}">내 정보 변경</a></p>
-			<p><a href="/user/delUser?userId=${user.userId}">회원 탈퇴</a></p>
-			</div>	
+			<a href="/business/delBusiness">업체 해지</a>	
 		</li>
 	</ul>
 </div>

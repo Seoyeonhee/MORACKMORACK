@@ -3,6 +3,7 @@ package com.morackmorack.mvc.business;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -18,6 +19,7 @@ import com.morackmorack.mvc.service.business.BusinessService;
 import com.morackmorack.mvc.service.domain.Business;
 import com.morackmorack.mvc.service.domain.Menu;
 import com.morackmorack.mvc.service.domain.ReserveAble;
+import com.morackmorack.mvc.service.domain.User;
 
 //==> 업체관리 Controller
 @Controller
@@ -33,11 +35,66 @@ public class BusinessController {
 		System.out.println(this.getClass());
 	}
 	
+	
+	
+//	2020-07-24 서연희
+//	login
+//	업체 로그인
+	@RequestMapping( value="login", method=RequestMethod.POST )
+	public ModelAndView login(@ModelAttribute("business") Business business , HttpSession session ) throws Exception{
+		
+		System.out.println("/business/login : POST");
+		
+		ModelAndView mv = new ModelAndView();
+		
+		Business dbBusienss = businessService.getBusiness(business.getBusinessId());
+		
+		if(business.getBusinessPass().equals(dbBusienss.getBusinessPass())) {
+			session.setAttribute("business", dbBusienss);
+		}
+		
+		/*mv.addObject("userFlag", "business");*/
+		mv.setViewName("redirect:/index.jsp");
+		
+		return mv;
+	}
+	
+	
+//	2020-07-24 서연희
+//	login
+//	업체 로그인
+	@RequestMapping( value="login", method=RequestMethod.GET )
+	public String login() throws Exception{
+		
+		System.out.println("/business/logon : GET");
+
+		return "redirect:/business/loginBusiness.jsp";
+	}
+	
+	
+//	2020-07-24 서연희
+//	logout
+//	업체 로그인
+	@RequestMapping( value="logout", method=RequestMethod.GET )
+	public String logout(HttpSession session ) throws Exception{
+		
+		System.out.println("/business/logout : POST");
+		
+		session.invalidate();
+		
+		return "redirect:/index.jsp";
+	}
+	
+	
+	
+	
+	
+	
 //	2020-07-22 서연희
 //	listBusiness
 //	업체 목록
 	@RequestMapping( value="listBusiness", method=RequestMethod.GET )
-	public ModelAndView listBusiness( @RequestParam("businessId") String businessId ) throws Exception {
+	public ModelAndView listBusiness( ) throws Exception {
 
 		System.out.println("/business/listBusiness : GET");
 		
