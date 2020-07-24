@@ -188,14 +188,14 @@
 																	result = "불"
 																}
 																
-																var displayValue = "<h6>"
-																	+JSONData.nickName+" 아이디는 사용 "
+																var displayValue = "<h7>"
+																	+JSONData.nickName+" 닉네임은 사용 "
 																	+result
 																	+"가능합니다"
-																	+"</h6>";
+																	+"</h7>";
 																	
-																$("h6").remove();
-																$("#helpBlock").html(displayValue);
+																$("h7").remove();
+																$("#helpBlock2").html(displayValue);
 																
 																
 															}
@@ -264,7 +264,7 @@
 		    <label for="nickName" class="col-sm-offset-1 col-sm-3 control-label">닉네임</label>
 		    <div class="col-sm-4">
 		      <input type="text" class="form-control" id="nickName" name="nickName" placeholder="닉네임을 입력하세요"  >
-		       <span id="helpBlock" class="help-block">
+		       <span id="helpBlock2" class="help-block">
 		      	<!-- <strong class="text-danger">입력후 중복체크 필수</strong> -->
 		      </span>
 		    </div>

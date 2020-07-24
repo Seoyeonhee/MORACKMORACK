@@ -14,7 +14,7 @@ public class User {
     private String profileImg;
     private String address;
     private char gender;
-    private List<String> userStateList;
+    private char userStateList;
     private String naverId;
     private String kakaoId;
     private String googleId;
@@ -68,7 +68,7 @@ public class User {
 		this.role = role;
 	}
 
-	public void setUserStateList(List<String> userStateList) {
+	public void setUserStateList(char userStateList) {
 		this.userStateList = userStateList;
 	}
 
@@ -159,11 +159,11 @@ public class User {
 		this.profileImg = profileImg;
 	}
 
-	public List<String> getUserStateList() {
+	public char getUserStateList() {
 		return userStateList;
 	}
 
-	public void setUserstateList(List<String> userStateList) {
+	public void setUserstateList(char userStateList) {
 		this.userStateList = userStateList;
 	}
 

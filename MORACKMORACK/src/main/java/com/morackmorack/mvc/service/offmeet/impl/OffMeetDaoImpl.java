@@ -60,8 +60,8 @@ public class OffMeetDaoImpl implements OffMeetDao{
 	}
 
 	@Override
-	public List<OffMeet> getOffList(Search search) throws Exception {
-		return sqlSession.selectList("OffMeetMapper.getOffList", search);
+	public List<OffMeet> getOffList(String meetId) throws Exception {
+		return sqlSession.selectList("OffMeetMapper.getOffList", meetId);
 	}
 
 	@Override

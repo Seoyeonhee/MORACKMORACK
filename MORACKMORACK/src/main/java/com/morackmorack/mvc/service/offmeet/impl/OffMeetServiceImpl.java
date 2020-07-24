@@ -66,19 +66,11 @@ public class OffMeetServiceImpl implements OffMeetService{
 		return offMeetDao.getBusinessPay(payNo);
 	}
 
-	@Override
-	public Map<String, Object> getOffList(Search search) throws Exception {
-		List<OffMeet> list = offMeetDao.getOffList(search);
-		int totalCount = offMeetDao.getOffTotalCount(search);
-
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("list", list);
-		map.put("totalCount", new Integer(totalCount));
-
-		return map;
+	public List<OffMeet> getOffList(String meetId) throws Exception {
+		return offMeetDao.getOffList(meetId);
 	}
 
-	@Override
+	
 	public Map<String, Object> getBusinessPayList(Search search, String userId) throws Exception {
 		List<Pay> list= (List<Pay>) offMeetDao.getBusinessPayList(search, userId);
 		Map<String, Object> map = new HashMap<String, Object>();
