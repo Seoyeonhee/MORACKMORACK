@@ -1,6 +1,8 @@
 package com.morackmorack.mvc.offmeet;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -197,24 +199,15 @@ public String addBusinessPay (@ModelAttribute("pay") Pay pay) throws Exception{
 }
 
 @RequestMapping(value = "getOffList")
-public String getOffList(@ModelAttribute("search") Search search, Model model) throws Exception {
+public String getOffList(@RequestParam("meetId") String meetId, Model model) throws Exception {
 
 
-	if (search.getCurrentPage() == 0) {
-		search.setCurrentPage(1);
-	}
-	search.setPageSize(pageSize);
+	List<OffMeet> getOffList = new ArrayList<OffMeet>();
+	getOffList = offMeetService.getOffList(meetId);
+	
 
-	Map<String, Object> map = offMeetService.getOffList(search);
-	System.out.println("map¿∫?"+map);
-	Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")).intValue(), pageUnit,
-			pageSize);
+	model.addAttribute("list", getOffList);
 
-	System.out.println(resultPage);
-
-	model.addAttribute("list", map.get("list"));
-	model.addAttribute("resultPage", resultPage);
-	model.addAttribute("search", search);
 
 	return "forward:/offMeet/offList.jsp";
 }

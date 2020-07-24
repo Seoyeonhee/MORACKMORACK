@@ -83,11 +83,14 @@
 
 
 
-	<select  id="getOffList"  parameterType="search"	resultMap="offmeetSelectMap">
-		SELECT off_no, user_id, meet_id, off_name, off_loc, off_max, off_mem, amount, off_date, off_time, image_File, reg_date
-		FROM offmeet
+	<select  id="getOffList"  parameterType="String"	resultMap="offmeetSelectMap">
+		SELECT o.off_no, u.user_id, m.meet_id, o.off_name, o.off_loc, o.off_max, o.off_mem, o.amount, o.off_date, o.off_time, o.image_File, o.reg_date
+		FROM offmeet o, meet m, users u
 		WHERE
-		SYSDATE -7 <![CDATA[<]]> reg_date
+		u.user_id(+) = o.user_id
+		AND m.meet_id(+) = o.meet_id
+		AND m.meet_id = #{meet.meetId}
+<!-- 		SYSDATE -7 <![CDATA[<]]> reg_date -->
 	 </select>
 	
 
