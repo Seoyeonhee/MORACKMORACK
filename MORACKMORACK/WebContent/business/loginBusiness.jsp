@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="EUC-KR">
-<title>업체 로그인</title>
+<title>��泥� 濡�洹몄��</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -89,7 +89,7 @@
 <body>
 
 <!-- Button HTML (to Trigger Modal) -->
-	<a href="#myModal" class="trigger-btn" data-toggle="modal" id="businessLogin">업체 로그인</a>
+	<a href="#myModal" class="trigger-btn" data-toggle="modal" id="businessLogin">"로그인"</a>
 	<br><br><br><br><br><br><br><br>
 
 	<div id="myModal" class="modal fade">
