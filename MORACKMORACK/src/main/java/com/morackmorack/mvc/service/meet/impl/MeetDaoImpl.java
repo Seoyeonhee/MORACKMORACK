@@ -27,25 +27,46 @@ public class MeetDaoImpl implements MeetDao {
 		this.sqlSession = sqlSession;
 	}
 	
+	public  List<Meet> getMeetMain(){
+		return sqlSession.selectList("MeetMapper.getMeetMain");
+	}
+	
 	public void addMeet(Meet meet) {
 	sqlSession.insert("MeetMapper.addMeet", meet);
 }
 	
 	public Meet getMeet(String meetId) {
-		return sqlSession.selectOne("MeetMapper.getMeet", meetId);
+		Meet meet = sqlSession.selectOne("MeetMapper.getMeet", meetId);	
+		meet.setHashtag(getMeetHashtag(meetId));
 		
+		System.out.println(meet.getHashtag());
+		
+		return meet;
 	}
 	
-	public void updateMeet(String meetId) {
-		
+	public List<String> getMeetHashtag(String meetId){
+		return sqlSession.selectList("MeetMapper.getMeetHashtag", meetId);	
+	}
+	
+	public void updateMeet(Meet meet) {
+		sqlSession.update("MeetMapper.updateMeet", meet);
 	}
 	
 	public List<Meet> listMeet(Search search){
 		return sqlSession.selectList("MeetMapper.listMeet", search);
 	}
 	
-	public void delMeet(String userId, String meetId){
+	public void outMeet(String userId, String meetId){
+		Map map = new HashMap();
+		map.put("userId", userId);
+		map.put("meetId", meetId);
 		
+		sqlSession.delete("MeetMapper.outMeet", map);
+	}
+	
+	public void delMeet(String meetId){	
+		sqlSession.delete("MeetMapper.delHash", meetId);
+		sqlSession.delete("MeetMapper.delMeet", meetId);
 	}
 	
 	public void joinMeet(MeetMem meetMem){
@@ -96,16 +117,21 @@ public class MeetDaoImpl implements MeetDao {
 		sqlSession.update("MeetMapper.refuseJoinMeetUser", map);
 	}
 	
-	public void provideStaff(String userId, String meetId){
+	public void provideStaff(String userId, String meetId, String pstnNum){
 		Map map = new HashMap();
 		map.put("userId", userId);
 		map.put("meetId", meetId);
+		map.put("pstnNum", pstnNum);
 		
 		sqlSession.update("MeetMapper.provideStaff", map);
 	}
 	
 	public void provideLeader(String userId, String meetId){
+		Map map = new HashMap();
+		map.put("userId", userId);
+		map.put("meetId", meetId);
 		
+		sqlSession.update("MeetMapper.provideLeader", map);
 	}
 	
 	public List<MeetMem> listMyMeet(String userId){

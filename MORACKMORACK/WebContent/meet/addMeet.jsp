@@ -76,7 +76,7 @@
 $(function(){
 	
 	 $("input[type='file']").change(function(e){//div 내용 비워주기
-	      $('#preview').empty();
+	      $('#meetImgPrev').empty();
 
 	      var files = e.target.files;
 	      var arr =Array.prototype.slice.call(files);
@@ -132,12 +132,12 @@ $(function(){
 	            //str += '<button type="button" class="delBtn" value="'+f.name+'" style="background: red">x</button><br>';
 	            str += '<img src="'+e.target.result+'" title="'+f.name+'" width=480px height=280px />';
 	            str += '</li></div>';
-	            $(str).appendTo('#preview');
+	            $(str).appendTo('#meetImgPrev');
 	          } 
 	          reader.readAsDataURL(f);
 	        }else{
 	          str += '<img src="/resources/images/uploadFiles/fileImg.png" title="'+f.name+'" width=100 height=100 />';
-	          $(str).appendTo('#preview');
+	          $(str).appendTo('#meetImgPrev');
 	        }
 	      });//arr.forEach
 	    }
@@ -170,12 +170,15 @@ $(function(){
 		}
 	})
 	
-	$(".thumbnail").on("click", function(e){
-		document.all.file.click();
+	$("#meetImgThum").on("click", function(e){
+		document.all.meetImg.click();
+		
+		var aa = $(this).next.id();
+		alert(aa);
 	})
 	
-	$("#addImg").on("click", function(e){						
-		//추가해야됨
+	$("#lImgThum").on("click", function(e){						
+		document.all.lImg1.click();
 	})
 	
 	$("#addMeet").on("click", function(){
@@ -191,12 +194,12 @@ $(function(){
 </head>
 <body>
 
-<div class="container">
-	<jsp:include page="/toolbar.jsp"/>
-</div>
+<header>
+<jsp:include page="/toolbar.jsp" />
+</header>
 
 <div class="container" style="margin-top:150px">
-<form class="form-horizontal">
+<form class="form-horizontal" enctype="multipart/form-data">
 	
    	 	
 <div class="col-xs-6 col-md-6">
@@ -205,7 +208,7 @@ $(function(){
 		<label for="meetImg">모임 대표 이미지 선택</label>
 			<a href="#" class="thumbnail" id="meetImgThum" style="height:300px; width:500px">
 			<input type="file" name="file" id="meetImg" style="display: none;" multiple/>  
-			<div id="preview"></div>
+			<div id="meetImgPrev"></div>
 			</a>
   
 	<div>
@@ -218,15 +221,17 @@ $(function(){
 	<div id="addDiv">
 	<div class="row">
 		<div class="col-xs-6 col-md-3">
-			<a href="#" class="thumbnail" id="lImg1" style="height:220px; width:220px">
-			
-    		</a>
+    		<a href="#" class="thumbnail" id="lImgThum" style="height:220px; width:220px">
+			<input type="file" name="file" id="lImg1" style="display: none;" multiple/>  
+			<div id="preview"></div>
+			</a>
 		</div>
   		
   		<div class="col-xs-6 col-md-3" style="margin-left:120px">
-    		<a href="#" class="thumbnail" id="lImg2" style="height:220px; width:220px">
-     		
-   			</a>
+    		<a href="#" class="thumbnail" id="lImgThum" style="height:220px; width:220px">
+			<input type="file" name="file" id="lImg2" style="display: none;" multiple/>  
+			<div id="preview"></div>
+			</a>
 		</div>
 	</div>
 	</div>

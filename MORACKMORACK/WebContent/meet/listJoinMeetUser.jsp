@@ -1,13 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
-    
+   
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
-
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+ 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="EUC-KR">
-<title>모임 회원 목록 조회</title>
+<title>가입 신청 회원 목록 조회</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
@@ -17,27 +18,106 @@
 
 
 <style>
+button {
+    width:100px;
+    background-color: #FFA69E;
+    border: none;
+    color:#fff;
+    padding: 15px 0;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 15px;
+    margin: 4px;
+    cursor: pointer;
+    border-radius:10px;
+
+}
+button:hover {
+    background-color: #FFFFFF;
+    color:#FFA69E;
+}
+
 
 </style>
+
+<script type ="text/javascript">
+
+$(function (){
+	
+	$("#okJoinMeetUser").on("click", function(){
+		var userId = $(this).next().val();
+		alert($("#meetId").val())
+		$("form").attr("method", "POST").attr("action", "/meet/mangJoinMeetUser/"+userId+"/1");
+		
+	})
+	
+	$("#refuseJoinMeetUser").on("click", function(){
+		var userId = $(this).next().val();
+		
+		$("form").attr("method", "POST").attr("action", "/meet/mangJoinMeetUser/"+userId+"/0");
+		
+	})
+})
+
+</script>
 
 </head>
 <body>
 
-<div class="container">
-	<jsp:include page="/toolbar.jsp"/>
-</div>
+<header>
+<jsp:include page="/toolbar.jsp" />
+</header>
 
-<div class="row" style="margin-left:30px">
-	<jsp:include page="/meet/sidebar.jsp"/>
-	<input type="hidden" id="meetId" value="${meetId}"/>
-</div>
+<section style="float: left; margin-top:100px;">
+<jsp:include page="/meet/sidebar.jsp" />
+</section>
 
-<div class="container">
-<c:forEach var="meetMem" items="${listMeetMem}">
-${meetMem.user.profileImg} ${meetMem.user.nickName}(${meetMem.user.userId}) ${meetMem.user.gender} ${meetMem.user.birthday} 
-<c:forEach var="category" items="${meetMem.user.category}"> ${category} </c:forEach> 
-<c:forEach var="blacklist" items="${meetMem.blackList}"> ${blacklist} </c:forEach> 
-</c:forEach>
-</div>
+<form>
+
+<input type="hidden" id="meetId" name="meetId" value="${meetId}"/>
+
+<div style="text-align: center;">
+<section id="container" style="text-align: center;">
+    <div id="title">
+        <h2>가입 신청 회원 목록</h2>
+    </div>
+    <table class="table table-hover">
+        <tr>
+        	<td>이미지</td>
+            <td>닉네임</td>
+            <td>성별</td>
+            <td>생년월일</td>
+            <td>회원 카테고리</td>
+            <td>블랙리스트 이력</td>
+            <td>가입 소개<td>
+            <td></td>
+        </tr>
+        <c:forEach var="joinMeetUser" items="${listJoinMeetUser}">
+            <tr>
+                <td>            
+                <c:if test="${! empty joinMeetUser.user.profileImg}">
+				<img src="/resources/images/uploadFiles/meet/${joinMeetUser.user.profileImg}" alt="MORACK MORACK" class="img-circle" style="height:100px; width:100px"></c:if>
+    			<input type="hidden" value="${joinMeetUser.user.profileImg}"/>
+    			
+    			<c:if test="${empty joinMeetUser.user.profileImg}">
+    			<img src="/resources/images/uploadFiles/meet/empty_Img.png" alt="MORACK MORACK" class="img-circle" style="height:100px; width:100px"></c:if>
+    			<input type="hidden" value="${joinMeetUser.user.profileImg}"/>
+    			</td>
+                
+                <td>${joinMeetUser.user.nickName}(${joinMeetUser.user.userId})</td>
+                <td><c:if test="${joinMeetUser.user.gender eq '0'}">남자</c:if><c:if test="${joinMeetUser.user.gender eq '1'}">여자</c:if></td>
+                <td><fmt:formatDate value="${joinMeetUser.user.birthday}" pattern="yyyy.MM.dd" /></td>
+                <td><c:forEach var="category" items="${joinMeetUser.user.category}"> ${category} </c:forEach></td>
+                <td><c:forEach var="blacklist" items="${joinMeetUser.blackList}"> ${blacklist} </c:forEach></td> 
+                <td>${joinMeetUser.intro}</td>
+                <td><button id="okJoinMeetUser">가입 승인</button><input type="hidden" value="${joinMeetUser.user.userId}"/> &nbsp; 
+                <button id="refuseJoinMeetUser">가입 거절</button><input type="hidden" value="${joinMeetUser.user.userId}"/></td>
+            </tr>
+        </c:forEach>
+    </table>
+    </section>
+    </div>
+</form>
 </body>
 </html>

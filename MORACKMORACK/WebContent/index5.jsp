@@ -26,46 +26,14 @@
 </head>
 <body>
 
-        <div class="container">
-        	<jsp:include page="toolbar.jsp" />
-   		</div> 	
+<header>
+<jsp:include page="/toolbar.jsp" />
+</header>
 
-<div>	
-	<a href="/meet/test">회원 데이터 INSERT</a> <br/><br/>
-</div>
- 
- <div id="carousel-example-generic" class="carousel slide" data-ride="carousel" style="margin-top:180px"> <!-- 모임 추천 -->
-  <ol class="carousel-indicators">
-    <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-    <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-    <li data-target="#carousel-example-generic" data-slide-to="2"></li>
-  </ol>
-
-
-  <div class="carousel-inner" role="listbox">
-    <div class="item active">
-      <img src="..." alt="Image" style="height:500px; width:500px">
-      <div class="carousel-caption">
-      </div>
-    </div>
-    <div class="item">
-      <img src="..." alt="Image" style="height:500px; width:500px">
-      <div class="carousel-caption">
-      </div>
-    </div>
-  </div>
-
-
-  <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
-    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-    <span class="sr-only">Previous</span>
-  </a>
-  <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
-    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-    <span class="sr-only">Next</span>
-  </a>
-</div>
-	
+<article>
+  <h2>Navigation</h2>
+  <p><a href="/meet/test">회원 데이터 INSERT</a></p>
+ 	
 
 <div class="row" style="margin-top:180px"> <!-- 모임 순위 -->
   <div class="col-xs-6 col-md-4">
@@ -113,6 +81,6 @@
     </a>
   </div>
 </div> 
-
+</article>
 </body>
 </html>

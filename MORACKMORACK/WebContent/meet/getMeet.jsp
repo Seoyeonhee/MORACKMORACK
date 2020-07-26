@@ -2,6 +2,7 @@
     pageEncoding="EUC-KR"%>
     
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ include file="/webSocket.jsp" %>
 
 <!DOCTYPE html>
@@ -11,14 +12,23 @@
 <title>모임 상세 조회</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.1.1.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-
+<script src="/resources/js/includeHTML.js"></script>
 
 <style>
-
+.form__field {
+  width: 300px;
+  background: #fff;
+  color: #a3a3a3;
+  font: inherit;
+  box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.1);
+  border: 0;
+  outline: 0;
+  padding: 22px 18px;
+}
 </style>
 
 
@@ -26,6 +36,13 @@
 
 $(function (){
 	var meetId = $("#meetId").val();
+	var joinMessage = $("#joinMessage").val();
+	
+	if(joinMessage == '1'){
+		$('#modalBox').modal('show');
+		console.log("click open");
+	}
+	
 	
 	$("#joinMeet").on("click", function(){		
 		self.location("/meet/joinMeet?meetId="+meetId)		
@@ -33,10 +50,24 @@ $(function (){
 	
 	$("#addWishMeet").on("click", function(){		
 		self.location("/meet/addWishMeet?meetId="+meetId)		
-		alert("찜!")
+		alert("찜!") //찜 모달창 만들기
 	})
 	
+	$("#inputIntro").on("click", function(){
+			var intro = $("#intro").val();
+			alert(intro)
+			alert(meetId)
+			$("form").attr("method", "POST").attr("action", "/meet/joinMeet").submit();
+	})
 	
+
+	$('#myModal').on('show.bs.modal', function (event) { // myModal 윈도우가 오픈할때 아래의 옵션을 적용
+	  var button = $(event.relatedTarget) // 모달 윈도우를 오픈하는 버튼
+	  var titleTxt = button.data('title') // 버튼에서 data-title 값을 titleTxt 변수에 저장
+	  var modal = $(this)
+	  modal.find('.modal-title').text('Title : ' + titleTxt) // 모달위도우에서 .modal-title을 찾아 titleTxt 값을 치환
+	})
+		
 	/* $("#addOffMeet").on("click", function(){
 		
 		//var jbResult = prompt( 'Lorem ipsum dolor', '' );
@@ -71,82 +102,44 @@ $(function (){
 </script>
 
 </head>
+
 <body>
+<form>
 
-<div class="container">
-	<jsp:include page="/toolbar.jsp"/>
-</div>
+<header>
+<jsp:include page="/toolbar.jsp" />
+</header>
 
-<div class="row" style="margin-left:30px">
-	<jsp:include page="/meet/sidebar.jsp"/>
-	<input type="hidden" id="meetId" value="${meetId}"/>
-	
-</div>
+<section style="float: left; margin-top:100px;">
+<jsp:include page="/meet/sidebar.jsp" />
+</section>
 
 
-<div style="float:right">
-<input type="button" id="joinMeet" value="모임 가입"/>
+
+
+
+
+
+<input type="hidden" id="joinMessage" value="${joinMessage}"/>
+<input type="hidden" id="meetId" name="meetId" value="${meet.meetId}"/>
+
+
+<section style="float: left; margin-left:100px">
+<div>
+
 <input type="button" id="addWishMeet" value="찜하기"/> 
+<input type="button" id="joinMeet" value="모임 가입"/> 
 
 <input type="button" value="쪽지 초대"/>
 <input type="button" value="카카오톡 초대"/>
 <input type="button" id="addOffMeet" value="오프라인 모임 생성"/>
 </div>
 
+</section>
 
+</form>
 
-<div class="row" style="margin-left:150px">
- 	<div class="col-xs-6 col-md-5">
-    <a href="#" class="thumbnail">
-      <img src="${meet.meetImg}" alt="Image" style="height:500px; width:500px"> 
-    </a>
-  </div>
-  	<div class="col-md-3" style="height:500px; border:1px solid red;">
-		<h3>${meet.meetName}</h3><h5>${meet.memNum}/${meet.maxNum}</h5>   
-		<c:forEach var="hashtag" items="${meet.hashtag}">
-		<h3># ${hashtag}</h3>
-		</c:forEach>
- 		<c:choose>
-		<c:when test="${meet.category eq 0}">여행</c:when>
-		<c:when test="${meet.category eq 1}">게임</c:when>
-		<c:when test="${meet.category eq 2}">음악</c:when>
-		<c:when test="${meet.category eq 3}">영화</c:when>
-		<c:when test="${meet.category eq 4}">공연</c:when>
-		<c:when test="${meet.category eq 5}">맛집</c:when>
-		<c:when test="${meet.category eq 6}">취업/자기계발</c:when>
-		<c:when test="${meet.category eq 7}">액티비티</c:when>
-		<c:when test="${meet.category eq 8}">독서/만화</c:when>
-		<c:when test="${meet.category eq 9}">댄스</c:when>
-		<c:when test="${meet.category eq 10}">사진</c:when>
-		<c:when test="${meet.category eq 11}">반려동물</c:when>
-		<c:when test="${meet.category eq 12}">요리</c:when>
-		<c:when test="${meet.category eq 13}">차</c:when>
-		<c:when test="${meet.category eq 14}">스포츠</c:when>
-		<c:when test="${meet.category eq 15}">공예</c:when>
-		<c:when test="${meet.category eq 16}">기타</c:when>
-	</c:choose>
-		<h3>${meet.sIntro}</h3>
-		<h3>${meet.meetLoc}</h3>
-		<h3>${meet.meetStar}</h3>
-	</div>
-	<div class="col-md-3" style="height:500px; border:1px solid red; margin-left:30px">
-	오프라인 모임 정보
-	</div>
-</div>
-
-<div class="row" style="margin-left:120px; margin-top:100px"> <!-- 상세 이미지 / 테이블 만들어지면 넣기 -->
- 	<div class="col-xs-6 col-md-7">
-    <a href="#" class="thumbnail">
-      <img src="" alt="Image" style="height:500px; width:500px">
-    </a>
-  </div>
-  	<div class="col-md-4" style="height:500px; border:1px solid red;">  <!-- 후기 / 테이블 만들어지면 넣기 -->
-		<h3>후기</h3>  
-		<h3></h3>  
-	</div>
-</div>
-
-
-<a href="#">n개 후기 모두 보기</a>
 </body>
+<script>
+</script>
 </html>
