@@ -1,11 +1,14 @@
 package com.morackmorack.mvc.service.notify.impl;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import com.morackmorack.mvc.common.Search;
 import com.morackmorack.mvc.service.domain.Notify;
 import com.morackmorack.mvc.service.notify.NotifyDao;
 import com.morackmorack.mvc.service.notify.NotifyService;
@@ -32,9 +35,16 @@ public class NotifyServiceImpl implements NotifyService {
 	}
 
 	@Override
-	public Map<String, Object> listNotifyUser() throws Exception {
+	public Map<String, Object> listNotifyUser(Search search) throws Exception {
 		// TODO Auto-generated method stub
-		return null;
+		List<Notify> list =  notifyDao.listNotifyUser(search);
+		int totalCount = notifyDao.getTotalCount(search);
+		
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("list", list);
+		map.put("totalcCount", new Integer(totalCount));
+		
+		return map;
 	}
 
 	@Override

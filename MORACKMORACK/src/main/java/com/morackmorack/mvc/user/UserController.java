@@ -150,11 +150,11 @@ public class UserController {
 	@RequestMapping(value="delUser", method = RequestMethod.POST)
 	public String delUser(User user, HttpSession session, RedirectAttributes rttr) throws Exception{
 			
-		// 세션에 있는 member를 가져와 member변수에 넣어줍니다.
+		// 세션에 있는 user를 가져와 user1변수에 넣어줍니다.
 		User user1 = (User) session.getAttribute("user");
 		// 세션에있는 비밀번호
 		String sessionPassword = user1.getPassword();
-		// vo로 들어오는 비밀번호
+		// 도메인으로 들어오는 비밀번호
 		String userPassword = user.getPassword();
 			
 		if(!(sessionPassword.equals(userPassword))) {
@@ -162,7 +162,6 @@ public class UserController {
 			return "redirect:/user/delUserView.jsp";
 		}
 		userService.delUser(user);
-		System.out.println("234243243243243");
 		session.invalidate();
 		
 		System.out.println(123);

@@ -77,16 +77,16 @@ public class OffMeetRestController {
 		return pay;
 	}	
  	
- @RequestMapping(value="json/listOff/{page}")
-	public List<OffMeet> listOff(@PathVariable int page) throws Exception {
-			
-		Search search = new Search(); 
-		
-		search.setCurrentPage(page);		
-		search.setPageSize(pageSize);
-					 
-	
-		return (List<OffMeet>) offMeetService.getOffList(search).get("list");
-	}
+// @RequestMapping(value="json/listOff/{page}")
+//	public List<OffMeet> listOff(@PathVariable int page) throws Exception {
+//			
+//		Search search = new Search(); 
+//		
+//		search.setCurrentPage(page);		
+//		search.setPageSize(pageSize);
+//					 
+//	
+//		return (List<OffMeet>) offMeetService.getOffList(search).get("list");
+//	}
 
 }
