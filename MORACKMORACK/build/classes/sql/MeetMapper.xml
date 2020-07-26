@@ -49,9 +49,15 @@
 	</insert>
 	
 	<select id="getMeet" parameterType="String" resultMap="meetSelectMap">
-	SELECT meet_id, leader_id, meet_name, meet_loc, max_num, mem_num, meet_img, s_intro, l_intro, reg_date, meet_star, bank, accNum, category, meet_appr, meet_type 
-	FROM meet 
-	WHERE meet_id = #{meetId}
+	SELECT meet_id, leader_id, meet_name, meet_loc, max_num, mem_num, meet_img, s_intro, l_intro, reg_date, meet_star, bank, accNum, category, meet_appr, meet_type
+	FROM meet
+	WHERE meet.meet_id = #{meetId}
+	</select>
+	
+	<select id="getMeetHashtag" parameterType="String" resultType="java.util.HashMap">
+	SELECT hashtag.hash_name 
+	FROM meet, meet_hashtag, hashtag
+	WHERE meet.meet_id = #{meetId} and meet.meet_id = meet_hashtag.meet_Id and meet_hashtag.hash_no = hashtag.hash_no
 	</select>
 	
 	<insert id="addHash" parameterType="String">
@@ -121,23 +127,30 @@
 	
 	<select id="listMeet" parameterType="search" resultMap="meetSelectMap">
 	SELECT meet.meet_id, meet.leader_id, meet.meet_name, meet.meet_loc, meet.max_num, meet.mem_num, meet.meet_img, meet.s_intro, meet.l_intro, meet.reg_date, meet.meet_star, meet.bank, meet.accNum, meet.category, meet.meet_appr, meet.meet_type
-	FROM meet, hashtag, meet_hashtag
+	from meet LEFT OUTER JOIN meet_hashtag ON meet.meet_id = meet_hashtag.meet_id, hashtag
 	<if test='searchType.equals("0")'>
 		WHERE meet.meet_type = #{searchCondition}
 		<if test='searchKeyword != null'>
-			AND meet.meet_name = #{searchKeyword}
+			AND meet.meet_name LIKE '%${searchKeyword}%'
 		</if>
 	</if>
 	<if test='searchType.equals("1")'>
 		WHERE meet.category= #{searchCondition}
 		<if test='searchKeyword != null'>
-			AND meet.meet_name = #{searchKeyword}
+			AND meet.meet_name LIKE '%${searchKeyword}%'
 		</if>
 	</if>
 	<if test='searchType.equals("2") and searchKeyword != null'>
 		WHERE hashtag.hash_name = #{searchKeyword} and hashtag.hash_no = meet_hashtag.hash_no and meet_hashtag.meet_id = meet.meet_id
-	</if>
+	</if>	
+	GROUP BY meet.meet_id, meet.leader_id, meet.meet_name, meet.meet_loc, meet.max_num, meet.mem_num, meet.meet_img, meet.s_intro, meet.l_intro, meet.reg_date, meet.meet_star, meet.bank, meet.accNum, meet.category, meet.meet_appr, meet.meet_type
 	ORDER BY meet.reg_date
+	</select>
+	
+	<select id="getMeetMain" resultMap="meetSelectMap">
+	SELECT meet.meet_id, meet.leader_id, meet.meet_name, meet.meet_loc, meet.max_num, meet.mem_num, meet.meet_img, meet.s_intro, meet.l_intro, meet.reg_date, meet.meet_star, meet.bank, meet.accNum, meet.category, meet.meet_appr, meet.meet_type
+	FROM meet
+	ORDER BY meet.meet_star, meet.reg_date
 	</select>
 	
 	<insert id="addWishMeet" parameterType="map">
@@ -159,15 +172,36 @@
 	
 	<update id="provideStaff" parameterType="map">
 	UPDATE meetmem 
-	SET meet_role="1"
+	SET meet_role = #{pstnNum}
 	WHERE user_id = #{userId} and meet_id = #{meetId}
 	</update>
 	
 	<update id="provideLeader" parameterType="map">
-	UPDATE meet, meetmem
-	SET meet.meet_leader = #{userId} and meetMem.
-	WHERE meet.meet_id = #{meetId}
+	UPDATE meet
+	SET leader_id = #{userId}
+	WHERE meet_id = #{meetId}
 	</update>
+	
+	<update id="updateMeet" parameterType="meet">
+	UPDATE meet
+	SET meet_loc = #{meetLoc:VARCHAR}, max_num = #{maxNum:INTEGER}, mem_num = #{memNum:INTEGER}, meet_img = #{meetImg:VARCHAR}, s_intro = #{sIntro:VARCHAR}, l_intro = #{lIntro:VARCHAR}
+	WHERE meet_id = #{meetId}
+	</update>
+	
+	<delete id="delMeet" parameterType="String">
+	DELETE FROM meet
+	WHERE meet_id = #{meetId}
+	</delete>
+	
+	<delete id="delHash" parameterType="String">
+	DELETE FROM meet_hashtag
+	WHERE meet_id = #{meetId}
+	</delete>
+	
+	<delete id="outMeet" parameterType="map">
+	DELETE FROM meetmem
+	WHERE meet_id = #{meetId} and user_id = #{userId}
+	</delete>
 	
 
 </mapper>

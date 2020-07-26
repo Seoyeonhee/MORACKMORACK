@@ -17,7 +17,7 @@ public class Meet implements Serializable {
 	private String lIntro;
 	private List<String> lImg;
 	private List<String> hashtag;
-	private int meetType;
+	private char meetType;
 	private boolean meetAppr;
 	private int meetStar;
 	private Date regDate;
@@ -100,10 +100,10 @@ public class Meet implements Serializable {
 	public void setHashtag(List<String> hashtag) {
 		this.hashtag = hashtag;
 	}
-	public int getMeetType() {
+	public char getMeetType() {
 		return meetType;
 	}
-	public void setMeetType(int meetType) {
+	public void setMeetType(char meetType) {
 		this.meetType = meetType;
 	}
 	public boolean isMeetAppr() {

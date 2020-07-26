@@ -50,21 +50,22 @@ a:hover {
   cursor: pointer;
 }
 .btn--primary {
-  background: #7f8ff4;
+  background: #8cafb9;
   color: #fff;
   box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.1);
   border-radius: 2px;
   padding: 12px 36px;
 }
 .btn--primary:hover {
-  background: #6c7ff2;
+  font: #ffffff;
+  background: #8cafb9;
 }
 .btn--primary:active {
-  background: #7f8ff4;
+  background: #8cafb9;
   box-shadow: inset 0 0 10px 2px rgba(0, 0, 0, 0.2);
 }
 .btn--inside {
-  margin-left: -96px;
+  margin-left: -66px;
 }
 
 .form__field {
@@ -78,6 +79,166 @@ a:hover {
   padding: 22px 18px;
 }
 
+@charset "UTF-8";
+fieldset {
+  border: none;
+  padding: 40px;
+}
+
+.input-field {
+  position: relative;
+  padding: 30px 10px 0;
+  box-sizing: border-box;
+  overflow: hidden;
+  margin: 20px 0;
+}
+.input-field.w50 {
+  width: 50%;
+  float: left;
+}
+.input-field input,
+.input-field textarea {
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid #9e9e9e;
+  border-radius: 0;
+  outline: none;
+  height: 40px;
+  width: 100%;
+  font-size: 20px;
+  margin: 0 0 20px 0;
+  padding: 0;
+  box-shadow: none;
+  box-sizing: border-box;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+}
+.input-field input:focus,
+.input-field textarea:focus {
+  border-bottom: 3px solid #f00;
+}
+.input-field input:focus + label, .input-field input + label.active,
+.input-field textarea:focus + label,
+.input-field textarea + label.active {
+  color: #c50;
+  font-size: 15px;
+  top: 10px;
+}
+.input-field label {
+  color: #9e9e9e;
+  position: absolute;
+  top: 35px;
+  left: 10px;
+  font-size: 20px;
+  cursor: text;
+  -webkit-transition: 0.2s ease-out;
+  transition: 0.2s ease-out;
+}
+.input-field textarea {
+  height: 80px;
+}
+
+.list-group {
+  list-style: none;
+  margin: 0 0 50px;
+  padding: 0;
+}
+.list-group li {
+  position: relative;
+  display: inline-block;
+  margin-right: 100px;
+}
+
+.input + label {
+  position: relative;
+  font-size: 20px;
+  padding-left: 40px;
+  cursor: pointer;
+}
+.input[type="radio"]:not(:checked) + label, .input[type="checkbox"]:not(:checked) + label {
+  color: #9e9e9e;
+}
+.input[type="radio"]:checked + label, .input[type="checkbox"]:checked + label {
+  color: #2ac1bc;
+}
+.input[type="radio"]:not(:checked), .input[type="radio"]:checked, .input[type="checkbox"]:not(:checked), .input[type="checkbox"]:checked {
+  position: absolute;
+  left: -9999px;
+  color: #888;
+}
+.input[type="radio"]:not(:checked) + label:before, .input[type="radio"]:checked + label:before {
+  content: "";
+  width: 16px;
+  height: 16px;
+  border: 3px solid #444;
+  border-radius: 50%;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+.input[type="radio"]:checked + label:before {
+  border: 3px solid #2ac1bc;
+  /*background: #2ac1bc;*/
+}
+.input[type="radio"]:checked + label:after {
+  content: "";
+  display: block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #2ac1bc;
+  position: absolute;
+  top: 7px;
+  left: 7px;
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
+}
+.input[type="checkbox"]:not(:checked) + label:before, .input[type="checkbox"]:checked + label:before {
+  content: "";
+  width: 16px;
+  height: 16px;
+  border: 3px solid #444;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+.input[type="radio"]:checked + label:before {
+  border: 3px solid #2ac1bc;
+}
+.input[type="checkbox"]:checked + label:before {
+  border: 3px solid #2ac1bc;
+  /*background: #2ac1bc;*/
+}
+.input[type="checkbox"]:checked + label:after {
+  content: "";
+  display: block;
+  width: 8px;
+  height: 8px;
+  background: #2ac1bc;
+  position: absolute;
+  top: 7px;
+  left: 7px;
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
+}
+.input[type="radio"]:not(:checked) + label:after, .input[type="checkbox"]:not(:checked) + label:after {
+  opacity: 0;
+  -webkit-transform: scale(0);
+          transform: scale(0);
+}
+.input[type="radio"]:checked + label:after, .input[type="checkbox"]:checked + label:after {
+  opacity: 1;
+  -webkit-transform: scale(1);
+          transform: scale(1);
+}
+
+#box {
+  width: 100px;
+  height: 100px;
+  margin: 20px;
+  background: #ff0;
+  opacity: 0;
+}
 
 </style>
 
@@ -100,6 +261,25 @@ $(function (){
 			$("form").attr("method", "POST").attr("action", "/meet/listMeet").submit();
 		}
 	})
+	
+	$("#meetTypeisone").on("click", function(){
+		$("#searchCondition").val('0');
+		alert($("#searchCondition").val())
+		$("form").attr("method", "POST").attr("action", "/meet/listMeet").submit();
+	})
+	
+	$("#meetTypeismul").on("click", function(){
+		$("#searchCondition").val('1');
+		alert($("#searchCondition").val())
+		$("form").attr("method", "POST").attr("action", "/meet/listMeet").submit();
+	})
+	
+	function myButton() {
+  var aaa = document.getElementById("box")
+  aaa.style.fontSize = "25px"; 
+  aaa.style.backgroundColor = "red"; 
+  aaa.style.opacity = "1.0";
+}
 
 })
 
@@ -112,16 +292,16 @@ $(function (){
 <input type="hidden" id="searchType" name="searchType" value="${search.searchType}"/>
 <input type="hidden" id="searchCondition" name="searchCondition" value="${search.searchCondition}"/>
 
-<div class="container">
-	<jsp:include page="/toolbar.jsp"/>
-</div>
+<header>
+<jsp:include page="/toolbar.jsp" />
+</header>
 
 <div class="container">
 <c:if test="${search.searchType eq 0}">
 
 <h4 style="text-align:right">유형 검색 목록</h4>
 	<div style="text-align:center; margin-top:50px">
-	<h4><a id="multiMeet">다수인 모임</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a id="twoMeet">2인 모임<a></h4>
+	<h4><a id="meetTypeismul">다수인 모임</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a id="meetTypeisone">2인 모임</a></h4>
 	</div>
 	
 </c:if>
@@ -129,6 +309,80 @@ $(function (){
 <c:if test="${search.searchType eq 1}">
 
 <h4 style="text-align:right">카테고리 검색 목록</h4>
+
+  <fieldset>
+    <ul class="list-group" style="margin-left:50px">
+      <li>
+        <input type="radio" name="group1" id="r1" class="input" checked>
+        <label for="r1">여행</label>
+      </li>
+      <li>
+        <input type="radio" name="group1" id="r2" class="input">
+        <label for="r2">게임</label>
+      </li>
+      <li>
+        <input type="radio" name="group1" id="r3" class="input">
+        <label for="r3">음악</label>
+      </li>
+      <li>
+        <input type="radio" name="group1" id="r4" class="input">
+        <label for="r4">영화</label>
+      </li>
+      <li>
+        <input type="radio" name="group1" id="r5" class="input">
+        <label for="r5">공연</label><br/><br/>
+      </li>
+      <li>
+        <input type="radio" name="group1" id="r6" class="input">
+        <label for="r6">맛집</label>
+      </li>
+      <li>
+        <input type="radio" name="group1" id="r7" class="input">
+        <label for="r7">취업/자기계발</label>
+      </li>
+      <li>
+        <input type="radio" name="group1" id="r8" class="input">
+        <label for="r8">액티비티</label>
+      </li>
+      <li>
+        <input type="radio" name="group1" id="r9" class="input">
+        <label for="r9">독서/만화</label>
+      </li>
+      <li>
+        <input type="radio" name="group1" id="r10" class="input">
+        <label for="r10">댄스</label><br/><br/>
+      </li>
+      <li>
+        <input type="radio" name="group1" id="r11" class="input">
+        <label for="r11">사진</label>
+      </li>
+      <li>
+        <input type="radio" name="group1" id="r12" class="input">
+        <label for="r12">반려동물</label>
+      </li>
+      <li>
+        <input type="radio" name="group1" id="r13" class="input">
+        <label for="r13">요리</label>
+      </li>
+      <li>
+        <input type="radio" name="group1" id="r14" class="input">
+        <label for="r14">차</label>
+      </li>
+      <li>
+        <input type="radio" name="group1" id="r15" class="input">
+        <label for="r15">스포츠</label>
+      </li>
+      <li>
+        <input type="radio" name="group1" id="r16" class="input">
+        <label for="r16">공예</label>
+      </li>
+      <li>
+        <input type="radio" name="group1" id="r17" class="input">
+        <label for="r17">기타</label>
+      </li>
+    </ul>
+    </fieldset>
+
 </c:if>
 
 <c:if test="${search.searchType eq 2}">
@@ -152,8 +406,8 @@ $(function (){
 
 	<c:forEach var="meet" items="${listMeet}">
   		<div class="col-sm-6 col-md-4">
-    	<div class="thumbnail">
-     	 <img src="resources/images/uploadFiles/${meet.meetImg}" alt="MORACKMORACK" title="${meet.meetName}">
+    	<div class="thumbnail"> 
+     	 <img src="/resources/images/uploadFiles/meet/${meet.meetImg}" alt="MORACK MORACK" title="${meet.meetName}">
      	 <div class="caption">
         <h3></h3>
         <p id="meetName">${meet.meetName}</p><input type="hidden" value="${meet.meetId}"/>

@@ -28,6 +28,10 @@ public class MeetServiceImpl implements MeetService{
 	@Qualifier("meetDaoImpl")
 	private MeetDao meetDao;
 	
+	public  List<Meet> getMeetMain(){
+		return meetDao.getMeetMain();
+	}
+	
 	public void addMeet(Meet meet) {
 	meetDao.addMeet(meet);
 }
@@ -36,20 +40,27 @@ public class MeetServiceImpl implements MeetService{
 		return meetDao.getMeet(meetId);
 	}
 	
-	public void updateMeet(String meetId){
-		meetDao.updateMeet(meetId);
+	public List<String> getMeetHashtag(String meetId){
+		return meetDao.getMeetHashtag(meetId);
+	}
+	
+	public void updateMeet(Meet meet){
+		meetDao.updateMeet(meet);
 	}
 	
 	public List<Meet> listMeet(Search search){
 		return meetDao.listMeet(search);
 	}
 	
-	public void delMeet(String userId, String meetId){
-		meetDao.delMeet(userId, meetId);
+	public void outMeet(String userId, String meetId){
+		meetDao.outMeet(userId, meetId);
+	}
+	
+	public void delMeet(String meetId){
+		meetDao.delMeet(meetId);
 	}
 	
 	public void joinMeet(MeetMem meetMem){
-		System.out.println("+++++++++++"+meetMem);
 		meetDao.joinMeet(meetMem);
 	}
 	
@@ -77,8 +88,8 @@ public class MeetServiceImpl implements MeetService{
 		meetDao.refuseJoinMeetUser(userId, meetId);
 	}
 	
-	public void provideStaff(String userId, String meetId){
-		meetDao.provideStaff(userId, meetId);
+	public void provideStaff(String userId, String meetId, String pstnNum){
+		meetDao.provideStaff(userId, meetId, pstnNum);
 	}
 	
 	public void provideLeader(String userId, String meetId){

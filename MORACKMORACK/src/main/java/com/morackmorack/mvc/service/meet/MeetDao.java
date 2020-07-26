@@ -9,15 +9,22 @@ import com.morackmorack.mvc.service.domain.User;
 import com.morackmorack.mvc.service.domain.WishMeet;
 
 public interface MeetDao {
+	
+	public  List<Meet> getMeetMain();
+	
 	public void addMeet(Meet meet);
 	
 	public Meet getMeet(String meetId);
 	
-	public void updateMeet(String meetId);
+	public List<String> getMeetHashtag(String meetId);
+	
+	public void updateMeet(Meet meet);
 	
 	public List<Meet> listMeet(Search search);
 	
-	public void delMeet(String userId, String meetId);
+	public void outMeet(String userId, String meetId);
+	
+	public void delMeet(String meetId);
 	
 	public void joinMeet(MeetMem meetMem);
 	
@@ -33,7 +40,7 @@ public interface MeetDao {
 	
 	public void refuseJoinMeetUser(String userId, String meetId);
 	
-	public void provideStaff(String userId, String meetId);
+	public void provideStaff(String userId, String meetId, String pstnNum);
 	
 	public void provideLeader(String userId, String meetId);
 	
