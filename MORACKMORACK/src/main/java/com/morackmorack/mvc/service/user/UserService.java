@@ -18,4 +18,6 @@ public interface UserService {
 	
 	public void delUser(User user) throws Exception ;
 	
+	public void getUserCategory(String userId) throws Exception;
+	
 }
