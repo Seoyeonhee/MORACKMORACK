@@ -3,10 +3,17 @@ package com.morackmorack.mvc.user;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.core.convert.converter.Converter;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -43,9 +50,27 @@ public class UserController {
 	}
 	
 	@RequestMapping( value="addUser", method=RequestMethod.POST)
-	public String addUser( @ModelAttribute("user") User user ) throws Exception {
+	public String addUser( @ModelAttribute("user") User user, HttpServletRequest request) throws Exception {
 
 		System.out.println("/user/adduser : POST");
+		
+		@Component class StringToDateConverter
+		  implements Converter<String, Date> {
+		 
+		    @Override
+		    public Date convert(String source) {
+		        SimpleDateFormat format = new SimpleDateFormat("yyyyy-MM-dd");
+		        try {
+					return format.parse(source);
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				return null; 
+		    }
+		}
+		
+		//Business Logic
 		userService.addUser(user);
 		
 		return "redirect:/user/loginView.jsp";
