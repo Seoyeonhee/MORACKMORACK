@@ -40,4 +40,7 @@ public class UserDaoImpl implements UserDao{
 		sqlSession.delete("UserMapper.delUser", user);
 		
 	}
+	public void getUserCategory(String userId) throws Exception{
+		sqlSession.selectList("Usermapper.getUserCategory", userId);
+	}
 }
