@@ -73,7 +73,7 @@
   	
 	<insert id="addOff" parameterType="offMeet">
 		INSERT 
-		INTO offmeet(off_no, user_id, meet_id, off_name, off_loc, off_max, off_mem, amount, off_date, off_time, image_file, reg_date, reserve_able_no)
+		INTO offmeet(off_no, user_id, meet_id, off_name, off_loc, off_max, off_mem, amount, off_date, off_time, image_file, reg_date)
 		VALUES (
 					seq_offmeet_off_no.NEXTVAL,
 					#{user.userId:VARCHAR},
@@ -86,8 +86,7 @@
 					#{offDate:VARCHAR},
 					#{offTime:VARCHAR},
 					#{imageFile:VARCHAR},
-					SYSDATE,
-					#{reserveAbleNo:INTEGER}
+					SYSDATE
 					)
 	</insert>
 	
@@ -219,7 +218,7 @@
 	
 	  <insert id="addBusinessPay" parameterType ="pay">
 	 	INSERT 
-		INTO pay(pay_no, user_id, meet_id, off_no, business_id, total_amount, pay_date, pay_method, reserve_date, reserve_start_time, reserve_end_time, reserve_mem_num, pay_status)
+		INTO pay(pay_no, user_id, meet_id, off_no, business_id, total_amount, pay_date, pay_method, reserve_date, reserve_start_time, reserve_end_time, reserve_mem_num, pay_status, reserve_able_no )
 		VALUES (
 					seq_pay_pay_no.NEXTVAL,
 					#{user.userId:VARCHAR},
@@ -234,13 +233,14 @@
 					#{reserveEndTime:VARCHAR},
 					#{reserveMemNum:INTEGER},
 				    #{payStatus:CHAR}
+				    #{reserveAbleNo:INTEGER}
 					)
 	</insert>
 	
 	 
 	 <select id="getBusinessPay" parameterType="int" resultMap="paySelectMap">
   		SELECT 
-		pay_no, pay_date, user_id, business_id, total_amount, reserve_mem_num, reserve_start_time, reserve_end_time, reserve_date, pay_method, pay_status
+		pay_no, pay_date, user_id, business_id, total_amount, reserve_mem_num, reserve_start_time, reserve_end_time, reserve_date, pay_method, pay_status, reserve_able_no
 		FROM pay p
 		WHERE
 		pay_no = #{payNo}

@@ -67,14 +67,7 @@
 		WHERE friend_no=#{friendNo:INTEGERE}
 	</update>
 	
-	<update id="okFriend" parameterType="friend">
-		UPDATE friend
-		<set>
-			friend_code='1'
-		</set>
-		WHERE friend_no=#{friendNo:INTEGER}
-	</update>
-	
+
 	<insert id="okFriend" parameterType="friend">
 		INSERT
 		INTO friend	(		friend_no

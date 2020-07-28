@@ -32,7 +32,7 @@
 
 function fncreqOk() {
 	
-	var meetMemName = '${user.name}';
+	var meetMemName = '${user.userName}';
 	var offName = '${offMeet.offName}';
 	var pay = $("select[name='payMethod']").val();
 	var amount ='${offMeet.amount}';
@@ -147,7 +147,7 @@ $( function() {
 	<div class="form-group"> 
  			<label class="col-sm-offset-1 col-sm-3 control-label">¿Ã∏ß</label> 
 			<div class="col-sm-4"> 
- 				${user.name} 
+ 				${user.userName} 
  			</div> 
 		</div> 
  		 
