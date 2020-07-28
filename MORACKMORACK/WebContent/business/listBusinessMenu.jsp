@@ -45,41 +45,23 @@
 		});
 		
 		// 해당 메뉴 수정
-		$("#businessMenuImg").on("click", function() {
-			self.location = "/business/updateBusinessMenu?businessId=${business.businessId}"
+		$(".businessMenuImg").on("click", function() {
+			var menuNo = $( $(this).parents("div").children()[0] ).val();
+			self.location = "/business/getBusinessMenu?menuNo="+menuNo;
 		});
 		
 		// 메뉴 삭제 후 다시 메뉴 리스트 출력
-		$("#delBusinessMenu").on("click", function() {
-			alert("메뉴 삭제");
-			/* var menuNo = $("#menuNo").val();
-			alert(menuNO)
-			var businessId = $("#businessId").val();
-			alert(businessId)
-			var url="/business/delBusinessMenu?businessId="+businessId+"&menuNo="+menuNo;
-			alert(url); */
-			/* self.location = "/business/delBusinessMenu?businessId="+businessId+"&menuNo="+menuNo */;
-			delBusinessMenu();
+		$(".delBusinessMenu").on("click", function() {
+			var menuNo = $( $(this).parents("div").children()[0] ).val();
+			self.location = "/business/delBusinessMenu?menuNo="+menuNo;
 		});
 		
 		$("#ok").on("click", function() {
-			/* self.location = "/business/updateBusiness?businessId=${business.businessId}" */
 			history.go(-1);
 		});
 	   	   
 	});
-	
-	
-	function delBusinessMenu(){
-		alert("서연희")
-		
-		var menuNo = $("#menuNo").val();
-		alert(menuNo)
-		var businessId = $("#businessId").val();
-		alert(businessId)
-		var url="/business/delBusinessMenu?businessId="+businessId+"&menuNo="+menuNo;
-		alert(url);
-	};
+
 
 </script>
 
@@ -87,16 +69,16 @@
 
 <body>
 
-	<jsp:include page="/toolbar.jsp"/>
+	<jsp:include page="/business/businessToolbar.jsp"/>
 
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">
 	
 		<div class="page-header text-info">
 			<img id="businessImg" style="float:left; height:100px; width:100px; margin:5px" src="../../resources/images/down-arrow.png" alt="@@업체 대표 이미지@@">
-			<%-- <h2>${business.businessName}</h2> --%>
-			<h2 style="padding-top:10px;">업체명</h2>
-			<h5>메뉴 목록</h5>
+			<h2 style="padding-top:10px;">${business.businessName}</h2>
+			<!-- <h2 style="padding-top:10px;">업체명</h2> -->
+			<h5>메뉴 등록</h5>
 	    </div>
 	
 	
@@ -107,60 +89,17 @@
 			</div>
 		</div>
 	
-		<!--  table Start /////////////////////////////////////-->
-		<%-- <table class="table table-hover table-striped" >
-	      
-			<thead>
-				<tr>
-					<th align="center">삭제</th>
-					<th align="center" >사진</th>
-					<th align="center">메뉴명</th>
-					<th align="center">가격</th>
-				</tr>
-			</thead>
-		       
-			<tbody>
-			
-
-				<c:forEach var="menu" items="${menuList}">
-					<tr>
-						<td align="left">
-							<input type="hidden" id="menuNo" name="menuNo" value="${menu.menuNo}">
-							<input type="hidden" id="businessId" name="businessId" value="${menu.businessId}">
-							<button type="button" id="delBusinessMenu" name="delBusinessMenu" class="btn btn-primary">삭제</button>
-						</td>
-						<td align="center">
-							${menu.businessMenuImg}
-							<input type="hidden" value="${menu.businessId}">
-						</td>
-						<td align="center">${menu.businessMenu}</td>
-						<td align="center">${menu.businessMenuFee}</td>
-					</tr>
-				</c:forEach>
-			
-			</tbody>
-	      
-		</table> --%>
-		<!--  table End /////////////////////////////////////-->
-	  
-	  
-	  
-	  
-	  
-	  
 	  
 		<c:forEach var="menu" items="${menuList}">
 			<form name='form' class='form-horizontal'>
 				<div class='form-group'>
-					<input type="hidden" id="menuNo" name="menuNo" value="${menu.menuNo}">
-					<input type="hidden" id="businessId" name="businessId" value="${menu.businessId}">
-					<!-- <button type="button" id="delBusinessMenu" name="delBusinessMenu" class="btn btn-primary">삭제</button> -->
 					<div class='page-header text-info'>
-					
-						<!-- <button type="button" id="delBusinessMenu" name="delBusinessMenu" style='float:left' class="btn btn-primary">삭제</button> -->
-						<input type='button' id="delBusinessMenu" name="delBusinessMenu" value='-' style='margin-top: 80px; float: left;' class="btn">
+						<input type="hidden" class="menuNo" value="${menu.menuNo}">
+						<input type="hidden" class="businessId" value="${menu.businessId}">
+						
+						<input type='button' class="delBusinessMenu" value='-' style='margin-top: 80px; float: left;' class="btn">
 						<p style="float:left">&nbsp;&nbsp;&nbsp;&nbsp;</p>
-						<img id='businessMenuImg' style='float:left; height:200px; width:200px; margin:5px' src='../../resources/images/down-arrow.png' alt='@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 메뉴 이미지 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@'>
+						<img class='businessMenuImg' style='float:left; height:200px; width:200px; margin:5px' src='../../resources/images/down-arrow.png' alt='@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 메뉴 이미지 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@'>
 				  		<h2> ${menu.businessMenu} </h2>
 				  		<p> </p>
 				  		<h3> ${menu.businessMenuFee} </h3>

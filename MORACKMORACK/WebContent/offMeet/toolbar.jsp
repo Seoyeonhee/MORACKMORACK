@@ -2,6 +2,7 @@
     pageEncoding="EUC-KR"%>
     
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
+<%@ include file="/webSocket.jsp" %>
 
 <DOCTYPE html>
 <html>
@@ -262,7 +263,7 @@ article {
               <a href="/friend/listFriend">模备</a>
             </li>
             <li>
-              <a href="/message/listRecvMessage">率瘤窃</a>
+              <a href="/message/listRecMessage">率瘤窃</a>
             </li>
           </ul>
         </li>

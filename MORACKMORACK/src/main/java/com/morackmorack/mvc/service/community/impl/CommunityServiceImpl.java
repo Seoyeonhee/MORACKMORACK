@@ -41,22 +41,23 @@ import com.morackmorack.mvc.service.domain.Community;
 			communityDao.updateOffReview(community);
 		}
 
-		public Map<String, Object> getOffReviewList(Search search, String communityName) throws Exception {
-			
-			List<Community> list= communityDao.getOffReviewList(search, communityName);
-			int totalCount = communityDao.getOffReviewListCount(search, communityName);
+		public void deleteOffReview(int postNo) throws Exception {
+			communityDao.deleteOffReview(postNo);
+		}
+		
+		@Override
+		public Map<String, Object> getOffReviewList(Search search, int offNo) throws Exception {
+		
+			List<Community> list= communityDao.getOffReviewList(search, offNo);
+			int totalCount = communityDao.getOffReviewListCount2(offNo);
 			
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("list", list );
 			map.put("totalCount", new Integer(totalCount));
-			
+		
 			return map;
 		}
-	
-		public void deleteOffReview(int postNo) throws Exception {
-			communityDao.deleteOffReview(postNo);
-		}
-	
+		
 		public void addBusinessReview(Community community) throws Exception {
 			communityDao.addBusinessReview(community);
 		}
@@ -79,6 +80,10 @@ import com.morackmorack.mvc.service.domain.Community;
 		public void deleteBusinessReview(int postNo) throws Exception {
 			communityDao.deleteBusinessReview(postNo);
 		}
-		
+
+
+		public Community getRecentOffReview(String MeetId) throws Exception {
+			return communityDao.getRecentOffReview(MeetId);
+		}
 
 }

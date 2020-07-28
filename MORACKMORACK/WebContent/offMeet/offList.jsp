@@ -118,7 +118,8 @@ a:hover {
 
 <body>	
 <div class="container">
-	
+
+<input type="hidden" id="meetId" value="${param.meetId}"/>
 <div class="page-header text-success">
    <h3>오프라인 모임 리스트</h3>
 </div>
@@ -133,7 +134,7 @@ a:hover {
   		<div class="col-sm-6 col-md-4">
     	<div class="thumbnail">
     	<input type="hidden" name="offNo"value="${offMeet.offNo }" />
-     	 <img src="/resources/images/uploadFiles/offmeet/${offMeet.imageFile}">
+     	 <img src="/resources/images/uploadFiles/offmeet/${offMeet.imageFile}" style="width:150px; height:150px;"  onError="this.src='/resources/images/noImage.jpg'" alt="noImage">
      	 <div class="caption">
         <h3></h3>
         <p>오프라인 모임명: ${offMeet.offName}</p>

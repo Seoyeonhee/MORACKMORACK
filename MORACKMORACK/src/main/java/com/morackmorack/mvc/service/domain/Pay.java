@@ -10,20 +10,39 @@ public class Pay {
 	private OffMeet offMeet;
 	private Business business;
 	private int totalAmount;
-	private String payDate;
+	private Date payDate;
 	private char payMethod;
 	private String reserveStartTime;
 	private String reserveEndTime;
 	private String reserveDate;
 	private int reserveMemNum;
-
-
+	private char payStatus;
+	private int reserveAbleNo;
 	
+
+
 	public Pay() {
 		
 	}
 	
+	public char getPayStatus() {
+		return payStatus;
+	}
+
+	public void setPayStatus(char payStatus) {
+		this.payStatus = payStatus;
+	}
+
 	
+	
+	public int getReserveAbleNo() {
+		return reserveAbleNo;
+	}
+
+	public void setReserveAbleNo(int reserveAbleNo) {
+		this.reserveAbleNo = reserveAbleNo;
+	}
+
 	public int getReserveMemNum() {
 		return reserveMemNum;
 	}
@@ -83,13 +102,14 @@ public class Pay {
 	}
 
 
-	public String getPayDate() {
+
+	public Date getPayDate() {
 		return payDate;
 	}
 
 
-	public void setPayDate(String string) {
-		this.payDate = string;
+	public void setPayDate(Date payDate) {
+		this.payDate = payDate;
 	}
 
 
@@ -142,15 +162,14 @@ public class Pay {
 		this.offMeet = offMeet;
 	}
 
-
 	@Override
 	public String toString() {
-		return "Pay [payNo=" + payNo + ", user=" + user + ", meet=" + meet + ", offMeet="
-				+ offMeet + ", business=" + business + ", totalAmount=" + totalAmount + ", payDate=" + payDate
-				+ ", payMethod=" + payMethod + ", reserveStartTime=" + reserveStartTime + ", reserveEndTime="
-				+ reserveEndTime + ", reserveDate=" + reserveDate + ", reserveMemNum=" + reserveMemNum + "]";
+		return "Pay [payNo=" + payNo + ", user=" + user + ", meet=" + meet + ", offMeet=" + offMeet + ", business="
+				+ business + ", totalAmount=" + totalAmount + ", payDate=" + payDate + ", payMethod=" + payMethod
+				+ ", reserveStartTime=" + reserveStartTime + ", reserveEndTime=" + reserveEndTime + ", reserveDate="
+				+ reserveDate + ", reserveMemNum=" + reserveMemNum + ", payStatus=" + payStatus + ", reserveAbleNo="
+				+ reserveAbleNo + "]";
 	}
-
 
 
 }

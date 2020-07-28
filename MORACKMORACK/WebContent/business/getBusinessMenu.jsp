@@ -27,25 +27,42 @@
 </head>
 
 <body>
-
+	
+	<jsp:include page="/business/businessToolbar.jsp"/>
+	
 	<div class="container">
+	
+		<div class="page-header text-info">
+			<img id="businessImg" style="float:left; height:100px; width:100px; margin:5px" src="../../resources/images/down-arrow.png" alt="@@업체 대표 이미지@@">
+			<h2 style="padding-top:10px;">${business.businessName}</h2>
+			<!-- <h2 style="padding-top:10px;">업체명</h2> -->
+			<h5>메뉴 등록</h5>
+	    </div>
+	    
+	    
 
 		<form name="updateBusinessForm">
 			<input type="hidden" name="menuNo" value="${menu.menuNo}"/>
 			
-			<div>
-				<label for="businessMenu">메뉴명</label>
-				<input type="text" id="businessMenu" name="businessMenu" value="${menu.businessMenu}">
+			<div class="form-group">
+				<label for="businessMenu" class="col-sm-offset-1 col-sm-3 control-label">메뉴명</label>
+				<div class="col-sm-4">
+					<input type="text" class="form-control" id="businessMenu" name="businessMenu" value="${menu.businessMenu}">
+			    </div>
 			</div>
 			
-			<div>
-				<label for="businessMenuFee">가격</label>
-				<input type="text" id="businessMenuFee" name="businessMenuFee" value="${menu.businessMenuFee}">
+			<div class="form-group">
+				<label for="businessMenuFee" class="col-sm-offset-1 col-sm-3 control-label">메뉴 가격</label>
+				<div class="col-sm-4">
+					<input type="text" class="form-control" id="businessMenuFee" name="businessMenuFee" value="${menu.businessMenuFee}">
+			    </div>
 			</div>
 			
-			<div>
-				<label for="businessMenuImg">사진</label>
-				<input type="text" id="businessMenuImg" name="businessMenuImg" value="${menu.businessMenuImg}">
+			<div class="form-group">
+				<label for="businessMenuImg" class="col-sm-offset-1 col-sm-3 control-label">메뉴 이미지</label>
+				<div class="col-sm-4">
+					<input type="text" class="form-control" id="businessMenuImg" name="businessMenuImg" value="${menu.businessMenuImg}">
+			    </div>
 			</div>
 
 			<button type="button" id="updateBusinessMenu" name="updateBusinessMenu">수  정</button>

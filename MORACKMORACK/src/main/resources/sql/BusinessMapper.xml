@@ -77,12 +77,12 @@
 	</update>
 	
 	<!-- SQL : Business_SELECT LIST -->
-	<select  id="getBusinessList"	parameterType="search"	resultMap="BusinessSelectMap, MenuSelectMap">
-		SELECT business_id, business_name, business_loc, business_phone, category_no, business_img, reg_date, bank, deposit_acc_num, business_star, business_start_time, business_end_time
+	<select  id="getBusinessList"	parameterType="search"	resultMap="BusinessSelectMap">
+		SELECT business_id, business_name, business_loc, business_phone, category_no, business_img
 		FROM business
 		WHERE 1=1
 			<if test=" searchKeyword!=null and searchKeyword!='' ">
-				 AND b.businessName = #{searchKeyword}
+				 AND business_name LIKE '%'||#{searchKeyword}||'%'
 			</if>
 		ORDER BY reg_date
 	</select>

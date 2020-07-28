@@ -47,11 +47,11 @@
 		$(function() {
 			
 			$("#addReserveAbleTime").on("click", function() {
-				self.location = "/business/delReserveAbleTime?businessId=bus02"
+				self.location = "/business/delReserveAbleTime";
 			});
 			
 			$("#ok").on("click", function() {
-				self.location = "/business/updateBusienss?businessId=${business.businessId}"
+				self.location = "/business/updateBusienss";
 			})
 		   	   
 		});
@@ -62,7 +62,7 @@
 
 <body>
 
-	<jsp:include page="/toolbar.jsp"/>
+	<jsp:include page="/business/businessToolbar.jsp"/>
 	
 	<div class="container">
 
@@ -70,8 +70,8 @@
 	
 		<div class="page-header text-info">
 			<img id="businessImg" style="float:left; height:100px; width:100px; margin:5px" src="../../resources/images/down-arrow.png" alt="@@업체 대표 이미지@@">
-			<%-- <h2>${business.businessName}</h2> --%>
-			<h2 style="padding-top:10px;">업체명</h2>
+			<h2 style="padding-top:10px;">${business.businessName}</h2>
+			<!-- <h2 style="padding-top:10px;">업체명</h2> -->
 			<h5>예약 가능 시간 목록</h5>
 	    </div>
 	    
@@ -94,27 +94,11 @@
 			</thead>
        
 			<tbody>
-			
-			<%-- <c:set var="i" value="0" />
+			 
 				<c:forEach var="reserveAble" items="${reserveAbleTimeList}">
-					<c:set var="i" value="${ i+1 }" />
-					<tr>
-						<td>${reserveAble.reserveAbleNo}</td>
-						<td>
-							<input type="text" class="form-control" value="${reserveAble.reserveAbleStartTime}" disabled/>
-							~
-							<input type="text" class="form-control" value="${reserveAble.reserveAbleEndTime}" disabled/>
-						</td>
-					</tr>
-				</c:forEach>
-			 --%>
-			 
-			 
-			 <c:forEach var="reserveAble" items="${reserveAbleTimeList}">
 					<tr>
 						<td align="left">
 							<input type="hidden" id="reserveAbleNo" name="reserveAbleNo" value="${reserveAble.reserveAbleNo}">
-							<button type="button" id="delBusinessMenu" name="delBusinessMenu" class="btn btn-primary">삭제</button>
 						</td>
 						<td align="center">
 							${reserveAble.reserveAbleStartTime}  ~  ${reserveAble.reserveAbleEndTime}
@@ -123,10 +107,9 @@
 					</tr>
 				</c:forEach>
 			 
-			 
 			</tbody>
       
-      </table>
+     	 </table>
 		
 		
 	  

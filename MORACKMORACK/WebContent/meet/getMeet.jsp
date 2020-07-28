@@ -219,6 +219,11 @@ $(function (){
 		alert("Âò!") //Âò ¸ð´ÞÃ¢ ¸¸µé±â
 	});
 	
+	$("#addOffMeet").on("click", function(){		
+		self.location("/offmeet/addOffView?meetId="+meetId)		
+	})
+	
+	
 	$("#inputIntro").on("click", function(){
 			var intro = $("#intro").val();
 			alert(intro)

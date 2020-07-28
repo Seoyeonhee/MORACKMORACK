@@ -20,7 +20,7 @@
 <body>
 
 	<!-- Button HTML (to Trigger Modal) -->
-	<jsp:include page="/business/loginBusiness.jsp"/>
+<%-- 	<jsp:include page="/business/loginBusiness2.jsp"/> --%>
 	<br><br><br><br><br><br><br><br>
 
 
@@ -28,25 +28,15 @@
 	<a href="/business/addBusinessMenu.jsp">업체 메뉴 등록</a>
 	<br>
 	
-	<!-- 화면 없이 단위테스트 -->
-	<a href="/business/listBusinessMenu?businessId=bus02">업체 메뉴 목록</a>
+	<a href="/business/listBusinessMenu">업체 메뉴 목록</a>
 	<br>
-	
-	<a href="/business/getBusinessMenu?businessId=bus01&menuNo=3">업체 메뉴 상세</a>
-	<br>
-	
-	<a href="/business/getBusinessMenu?businessId=bus01&menuNo=3">업체 메뉴 수정(=메뉴 상세페이지)</a>
-	<br>
-	
-	<a href="/business/delBusinessMenu?menuNo=3">업체 메뉴 삭제</a>
-	<br><br><br><br><br><br><br><br>
+
 	
 	
 	
 	
 	
-	
-	<a href="/business/listReserveAbleTime?businessId=bus02">업체 예약 가능 시간 목록</a>
+	<a href="/business/listReserveAbleTime">업체 예약 가능 시간 목록</a>
 	<br><br><br><br><br><br><br><br>
 	
 	
