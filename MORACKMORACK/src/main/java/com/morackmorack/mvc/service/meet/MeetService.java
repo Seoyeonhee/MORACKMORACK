@@ -1,6 +1,7 @@
 package com.morackmorack.mvc.service.meet;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -51,7 +52,7 @@ public interface MeetService {
 	
 	public void addWishMeet(String userId, String meetId);
 	
-	public List<WishMeet> listWishMeet(String userId);
+	public Map listWishMeet(String userId);
 	
 	public void delWishMeet(String userId, String meetId);
 	

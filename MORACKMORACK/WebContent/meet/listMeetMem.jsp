@@ -10,7 +10,6 @@
 <meta charset="EUC-KR">
 <title>모임 회원 목록 조회</title>
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
@@ -47,26 +46,40 @@ A:hover {text-decoration:none; color:#646464;}
 
 <script type ="text/javascript">
 $(function(){
-	var birthdate= $("#birthday").val(); 
-	var birthday = new Date(birthdate);
-	var today = new Date();
-	var years = today.getFullYear() - birthday.getFullYear();
-	
-	$("#birth").text(years+1)
-	
-	$("button[id^='provideStaff']").on("click", function(){
-		
+
+	$("button[id^='sendMessage']").on("click", function(){
 		var userId = $(this).next().val();
-		$("form").attr("method", "POST").attr("action", "/meet/providePstn/1/"+userId).submit();
+		var meetId = $(this).next().next().val();
+		
+		//self.location="index.jsp"
+		
+		self.location="/message/sendMessage/"+userId+"/"+meetId;
+	});
+	
+	$("button[id^='reqFriend']").on("click", function(){
+		var userId = $(this).next().val();
+		self.location = "/friend/reqFriend?userId="+userId;
+	});
+	
+	$("button[id^='notifyUser']").on("click", function(){
+		var userId = $(this).next().val();
+		self.location = "/notify/notifyUser?userId="+userId;
+	});
+	
+	$("button[id^='provideStaff']").on("click", function(){		
+		var userId = $(this).next().val();
+		var meetId  = $(this).next().val();
+		$("form").attr("method", "POST").attr("action", "/meet/providePstn/1/"+userId+"/"+meetId).submit();
 				
-	})
+	});
 	
 	$("button[id^='provideLeader']").on("click", function(){
 		var userId = $(this).next().val();
-		$("form").attr("method", "POST").attr("action", "/meet/providePstn/0/"+userId).submit();
-	})
+		var meetId  = $(this).next().next().val();
+		$("form").attr("method", "POST").attr("action", "/meet/providePstn/0/"+userId+"/"+meetId).submit();
+	});
 	
-})
+});
 
 
 </script>
@@ -106,7 +119,6 @@ $(function(){
             <td></td>
         </tr>
         <c:forEach var="meetMem" items="${listMeetMem}" varStatus="status"> 
-        <input type="hidden" id="meetId" name="meetId" value="${meetMem.meet.meetId}"/>
             <tr>
             	<td>
             	<c:if test="${meetMem.meetRole eq '0'.charAt(0)}">모임장</c:if>
@@ -116,19 +128,25 @@ $(function(){
                 <td>${meetMem.user.profileImg}</td>
                 <td>${meetMem.user.nickName}(${meetMem.user.userId})</td>
                 <td><fmt:formatDate value="${meetMem.joinDate}" pattern="yyyy.MM.dd" /></td>
-                <td><c:if test="${meetMem.user.gender eq '0'.charAt(0)}">남자</c:if><c:if test="${meetMem.user.gender eq '1'.charAt(0)}">여자</c:if></td>
-                
-                <td><p id="birth"></p> <fmt:formatDate value="${today}" pattern="yyyy"/> - <fmt:formatDate value="${meetMem.user.birthday}" pattern="yyyy" /> +1
-                
-                <input type="hidden" id="birthday" value="<fmt:formatDate value="${meetMem.user.birthday}" pattern="yyyy/MM/dd" />"/></td>
-                
+                <td>${meetMem.user.gender}</td>             
+                <td>${meetMem.user.birthday}</td>              
                 <td><c:forEach var="category" items="${meetMem.user.category}"> ${category} </c:forEach></td>
                 <td><c:forEach var="blacklist" items="${meetMem.blackList}"> ${blacklist} </c:forEach></td> 
                 <td>
-                <button id="provideStaff${status.count}">참모진 임명</button>
+                <button type="button" id="sendMessage${status.count}">쪽지 보내기</button>
+                <input type="text" value="${meetMem.user.userId}"/>
+                <input type="text" value="${meetMem.meet.meetId}"/><br/>
+                
+                <button type="button" id="reqFriend${status.count}">친구 신청</button><br/> 
                 <input type="hidden" value="${meetMem.user.userId}"/>
-                <button id="provideLeader${status.count}">모임장 위임</button>
+                
+                <button type="button" id="notifyUser${status.count}">회원 신고</button> <br/> 
                 <input type="hidden" value="${meetMem.user.userId}"/>
+                
+                <button type="button" id="provideStaff${status.count}">참모진 임명</button><br/>
+                <input type="hidden" value="${meetMem.user.userId}"/><input type="hidden" value="${meetMem.meet.meetId}"/>
+                <button type="button" id="provideLeader${status.count}">모임장 위임</button><br/>
+                <input type="hidden" value="${meetMem.user.userId}"/><input type="hidden" value="${meetMem.meet.meetId}"/>          
                 </td>
             </tr>
         </c:forEach>

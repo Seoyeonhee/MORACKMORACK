@@ -165,8 +165,14 @@
 	ORDER BY wish_date
 	</select>
 	
+	<select id="getWishMeetCount" parameterType="String" resultType="int">
+	SELECT COUNT(*)
+	FROM wishmeet
+	WHERE user_id = #{userId}
+	</select>
+	
 	<delete id="delWishMeet" parameterType="map">
-	DELECT FROM wishmeet
+	DELETE FROM wishmeet
 	WHERE user_id = #{userId} and meet_id = #{meetId}
 	</delete>
 	

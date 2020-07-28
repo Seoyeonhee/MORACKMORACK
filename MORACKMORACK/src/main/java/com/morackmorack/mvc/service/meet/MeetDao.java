@@ -1,6 +1,7 @@
 package com.morackmorack.mvc.service.meet;
 
 import java.util.List;
+import java.util.Map;
 
 import com.morackmorack.mvc.common.Search;
 import com.morackmorack.mvc.service.domain.Meet;
@@ -48,7 +49,7 @@ public interface MeetDao {
 	
 	public void addWishMeet(String userId, String meetId);
 	
-	public List<WishMeet> listWishMeet(String userId);
+	public Map listWishMeet(String userId);
 	
 	public void delWishMeet(String userId, String meetId);
 	

@@ -1,6 +1,7 @@
 package com.morackmorack.mvc.service.meet.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -104,7 +105,7 @@ public class MeetServiceImpl implements MeetService{
 		meetDao.addWishMeet(userId, meetId);
 	}
 	
-	public List<WishMeet> listWishMeet(String userId){
+	public Map listWishMeet(String userId){
 		return meetDao.listWishMeet(userId);
 	}
 	

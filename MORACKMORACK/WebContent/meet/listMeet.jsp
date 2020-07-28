@@ -2,7 +2,6 @@
     pageEncoding="EUC-KR"%>
     
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
-<%@ include file="/webSocket.jsp" %>
 
 <!DOCTYPE html>
 <html>
@@ -126,7 +125,7 @@ fieldset {
 }
 .input-field label {
   color: #9e9e9e;
-  position: absolute;
+  position: relative;
   top: 35px;
   left: 10px;
   font-size: 20px;
@@ -144,14 +143,14 @@ fieldset {
   padding: 0;
 }
 .list-group li {
-  position: relative;
+  position: static;
   display: inline-block;
   margin-right: 100px;
 }
 
 .input + label {
   position: relative;
-  font-size: 20px;
+  font-size: 15px;
   padding-left: 40px;
   cursor: pointer;
 }
@@ -240,6 +239,10 @@ fieldset {
   opacity: 0;
 }
 
+.category-li{
+padding: 30px 30px 30px 30px;
+}
+
 </style>
 
 
@@ -311,72 +314,72 @@ $(function (){
 <h4 style="text-align:right">카테고리 검색 목록</h4>
 
   <fieldset>
-    <ul class="list-group" style="margin-left:50px">
-      <li>
+    <ul class="list-group">
+      <li class="category-li">
         <input type="radio" name="group1" id="r1" class="input" checked>
         <label for="r1">여행</label>
       </li>
-      <li>
+      <li class="category-li">
         <input type="radio" name="group1" id="r2" class="input">
         <label for="r2">게임</label>
       </li>
-      <li>
+      <li class="category-li">
         <input type="radio" name="group1" id="r3" class="input">
         <label for="r3">음악</label>
       </li>
-      <li>
+      <li class="category-li">
         <input type="radio" name="group1" id="r4" class="input">
         <label for="r4">영화</label>
       </li>
-      <li>
+      <li class="category-li">
         <input type="radio" name="group1" id="r5" class="input">
-        <label for="r5">공연</label><br/><br/>
+        <label for="r5">공연</label>
       </li>
-      <li>
+      <li class="category-li">
         <input type="radio" name="group1" id="r6" class="input">
         <label for="r6">맛집</label>
       </li>
-      <li>
+      <li class="category-li">
         <input type="radio" name="group1" id="r7" class="input">
-        <label for="r7">취업/자기계발</label>
+        <label for="r7">자기계발</label>
       </li>
-      <li>
+      <li class="category-li">
         <input type="radio" name="group1" id="r8" class="input">
         <label for="r8">액티비티</label>
       </li>
-      <li>
+      <li class="category-li">
         <input type="radio" name="group1" id="r9" class="input">
         <label for="r9">독서/만화</label>
       </li>
-      <li>
+      <li class="category-li">
         <input type="radio" name="group1" id="r10" class="input">
-        <label for="r10">댄스</label><br/><br/>
+        <label for="r10">댄스</label>
       </li>
-      <li>
+      <li class="category-li">
         <input type="radio" name="group1" id="r11" class="input">
         <label for="r11">사진</label>
       </li>
-      <li>
+      <li class="category-li">
         <input type="radio" name="group1" id="r12" class="input">
         <label for="r12">반려동물</label>
       </li>
-      <li>
+      <li class="category-li">
         <input type="radio" name="group1" id="r13" class="input">
         <label for="r13">요리</label>
       </li>
-      <li>
+      <li class="category-li">
         <input type="radio" name="group1" id="r14" class="input">
         <label for="r14">차</label>
       </li>
-      <li>
+      <li class="category-li">
         <input type="radio" name="group1" id="r15" class="input">
         <label for="r15">스포츠</label>
       </li>
-      <li>
+      <li class="category-li">
         <input type="radio" name="group1" id="r16" class="input">
         <label for="r16">공예</label>
       </li>
-      <li>
+      <li class="category-li">
         <input type="radio" name="group1" id="r17" class="input">
         <label for="r17">기타</label>
       </li>
@@ -407,7 +410,7 @@ $(function (){
 	<c:forEach var="meet" items="${listMeet}">
   		<div class="col-sm-6 col-md-4">
     	<div class="thumbnail"> 
-     	 <img src="/resources/images/uploadFiles/meet/${meet.meetImg}" alt="MORACK MORACK" title="${meet.meetName}">
+     	 <img src="/resources/images/uploadFiles/meet/${meet.meetImg}" alt="MORACK MORACK" title="${meet.meetName}" style="hight:500px; width:500px">
      	 <div class="caption">
         <h3></h3>
         <p id="meetName">${meet.meetName}</p><input type="hidden" value="${meet.meetId}"/>

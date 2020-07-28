@@ -24,6 +24,7 @@
 		<typeAlias alias="meetmemoffmeet" type="com.morackmorack.mvc.service.domain.Meetmemoffmeet"/>
 		<typeAlias alias="pay" type="com.morackmorack.mvc.service.domain.Pay"/>
 		<typeAlias alias="comments" type="com.morackmorack.mvc.service.domain.Comments"/>
+		<typeAlias alias="message" type="com.morackmorack.mvc.service.domain.Message"/>
 		<typeAlias alias="search" type="com.morackmorack.mvc.common.Search"/>	
 	</typeAliases>
 
@@ -34,6 +35,7 @@
 		 <mapper resource="sql/FriendMapper.xml"/> 
 		 <mapper resource="sql/CommunityMapper.xml"/> 
 		 <mapper resource="sql/OffMeetMapper.xml"/> 
+		 <mapper resource="sql/MessageMapper.xml"/> 
 	</mappers>
 
 </configuration>

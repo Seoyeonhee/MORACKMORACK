@@ -79,8 +79,7 @@ public class MeetDaoImpl implements MeetDao {
 	
 	public User getMeetMem(String meetId){
 		return null;
-		
-		
+				
 	}
 	
 	public List<MeetMem> listMeetMem(String meetId){
@@ -151,13 +150,20 @@ public class MeetDaoImpl implements MeetDao {
 		sqlSession.insert("MeetMapper.addWishMeet", map);
 	}
 	
-	public List<WishMeet> listWishMeet(String userId){
+	public Map listWishMeet(String userId){
 		List<WishMeet> listWishMeet = sqlSession.selectList("MeetMapper.listWishMeet", userId);
 		
 		for(int i=0; i<listWishMeet.size(); i++) {
 			listWishMeet.get(i).setMeet(sqlSession.selectOne("MeetMapper.getMeet", listWishMeet.get(i).getMeet().getMeetId()));
 		}
-		return listWishMeet;
+		
+		int wishCount = sqlSession.selectOne("MeetMapper.getWishMeetCount", userId);
+		
+		Map map = new HashMap();
+		map.put("listWishMeet", listWishMeet);
+		map.put("wishCount", wishCount);
+				
+		return map;
 	}
 	
 	public void delWishMeet(String userId, String meetId){

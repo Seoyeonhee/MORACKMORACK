@@ -2,13 +2,12 @@
     pageEncoding="EUC-KR"%>
     
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
-<%@ include file="/webSocket.jsp" %>
 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="EUC-KR">
-<title>수신 쪽지 상세 조회</title>
+<title>수신 쪽지 목록</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
@@ -33,9 +32,13 @@ $(function (){
 
 <body>
 
-<div class="container">
-	<jsp:include page="/toolbar.jsp"/>
-</div>
+<header>
+<jsp:include page="/toolbar.jsp" />
+</header>
+
+<section style="float: left; margin-top:100px;">
+<jsp:include page="/message/sidebar.jsp" />
+</section>
 
 </body>
 </html>

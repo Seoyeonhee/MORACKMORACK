@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
+import org.json.JSONObject;
+import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
@@ -13,67 +15,55 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import com.morackmorack.mvc.service.domain.User;
 
+@Component
 public class EchoHandler extends TextWebSocketHandler{
 	
-	private Map<String, WebSocketSession> sessions = new HashMap<String, WebSocketSession>();
+	//webSocketSession 클라이언트 당 하나씩 생성, 해당 클라이언트와 연결된 웹소켓을 연결 
+	//해당 객체를 통해 메세지를 주고 받음
+	private List<WebSocketSession> users;
+	private Map<String, Object> userMap;
 	
-	//로그인한 전체
-	private List<WebSocketSession> sessionAll = new ArrayList<WebSocketSession>();
+	public EchoHandler() {
+		users = new ArrayList<WebSocketSession>();
+		userMap = new HashMap<String, Object>();
+	}
 	
 	// 클라이언트가 서버로 연결된 이후 실행
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception{
 		
-		System.out.println("afterConnectionEstablished");
-		
-		User user = (User) session.getAttributes().get("user");
-		sessions.put("user01", session);
-		
-		sessionAll.add(session);
-		
-		System.out.println(sessions);
-		System.out.println(sessionAll);
+		System.out.println("afterConnectionEstablished : 연결 생성");
+		users.add(session);
 	}
 	
 	// 클라이언트가 서버로 메세지 전송했을 때 실행
 	@Override
 	public void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception{
-		System.out.println("handleTextMessage");
+		System.out.println("handleTextMessage : 메세지 수신");
+		System.out.println("메세지 : "+message.getPayload());
 		
-		String msg = message.getPayload();
+		JSONObject object = new JSONObject(message.getPayload());
+		String type = object.getString("type");
 		
-		System.out.println(msg);
-		
-		if(StringUtils.isNotEmpty(msg)) {
-			String[] strs = msg.split(",");
+		if( type != null && type.equals("message")) {
+			String sendId = object.getString("sendId");
+			userMap.put(sendId, session);
 			
-			if(strs != null) {
-				String alarm_meetNo = strs[0];
-				String alarm_maker = strs[1];
-				String alarm_message = strs[2];
-				
-				for(WebSocketSession sess : sessionAll) {
-					sess.sendMessage(new TextMessage(alarm_meetNo+alarm_maker+alarm_message));
-				}
+			String recvId = object.getString("recvId");
+			WebSocketSession ws = (WebSocketSession)userMap.get(recvId);
+			String content = object.getString("content");
+			
+			if(ws != null) {
+				ws.sendMessage(new TextMessage(content));
 			}
-		}
 	}
+}
 	
 	// 클라이언트가 연결 끊었을 때 실행
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception{
-		System.out.println("afterConnectionClosed" + session +", "+ status);
-		
-		sessions.remove(session.getId());
-		sessionAll.remove(session);
+		System.out.println("afterConnectionClosed : 연결 종료");
+		users.remove(session);
 	}
-	
-	// 연결된 클라이언트에서 예외 발생 시 실행
-	/*
-	 * @Override public void handleTransPortError(WebSocketSession session,
-	 * Throwable exception) throws Exception{
-	 * 
-	 * }
-	 */
 
 }

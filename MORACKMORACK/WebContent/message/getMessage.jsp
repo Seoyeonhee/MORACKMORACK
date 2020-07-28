@@ -2,7 +2,6 @@
     pageEncoding="EUC-KR"%>
     
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
-<%@ include file="/webSocket.jsp" %>
 
 <!DOCTYPE html>
 <html>
@@ -33,9 +32,14 @@ $(function (){
 
 <body>
 
-<div class="container">
-	<jsp:include page="/toolbar.jsp"/>
-</div>
+<header>
+<jsp:include page="/toolbar.jsp" />
+</header>
+
+<section style="float: left; margin-top:100px;">
+<jsp:include page="/message/sidebar.jsp" />
+</section>
+
 
 </body>
 </html>

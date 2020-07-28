@@ -47,10 +47,11 @@
      	<!-- websocket handler -->
 	<bean id="echoHandler" class="com.morackmorack.mvc.common.EchoHandler" />
  	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
+	
 	<websocket:handlers>
 		<websocket:mapping handler="echoHandler" path="/echo" />
 		<websocket:handshake-interceptors>
-	         <bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"/>
+	         <bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"/> <!-- 웹소켓 생성을 위한 handshake-interceptor -->
 	      </websocket:handshake-interceptors>
 	      <websocket:sockjs />
 	 </websocket:handlers>

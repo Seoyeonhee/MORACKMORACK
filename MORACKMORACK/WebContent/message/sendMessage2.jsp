@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
-   
+    
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
 
 <!DOCTYPE html>
 <html>
@@ -13,6 +14,8 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<script src="/resources/js/sockjs.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
 
 <jsp:useBean id="today" class="java.util.Date"/>
 
@@ -45,6 +48,74 @@ A:hover {text-decoration:none; color:#646464;}
 
 
 <script type="text/javascript">
+
+var ws;
+var userId = "${sessionScope.user.userId}"; //sender
+
+$(function (){
+	connect();
+	$("#btnSend").on("click", function(){
+		var chat = $("#msgArea").val();
+		chat = chat + "\나 : "+ $("#chatMsg").val();
+		$("#msgArea").val(chat);
+		sendMsg();
+		$("#chatMsg").val("");
+		
+	})
+})
+
+
+function connect(){ 
+	
+	//웹소켓 객체 생성하는 부분
+	//핸들러 등록(연결 생성, 메세지 수신, 연결 종료)
+	
+	//url 연결할 서버의 경로
+	ws = new SockJS("<c:url value="/echo"/>");
+	
+	ws.onopen = function(){
+		console.log('연결 생성');
+	};
+	ws.onmessage = function(e){
+		console.log('메세지 받음');
+		var data = e.data;
+		alert("받은 메세지 : "+ data);
+		addMsg(data);
+	};
+	ws.onclose = function(){
+		console.log('연결 끊김');
+	};
+	
+}
+
+function addMsg(msg){ //원래 채팅 메세지에 방금 받은 메세지 더해서 set
+	var chat = $("#msgArea").val();
+	chat = chat + "\n 상대방 : "+ msg;
+	$("#msgArea").val(chat);
+}
+
+function sender(){ //메세지 수신을 위한 서버에 id 등록
+	var msg = {
+			type : "senderId", //메세지 구분하는 구분자 - 상대방 아이디와 메세지 포함
+			sendId : "${sessionScope.user.userId}"
+	
+	};
+	
+	ws.send(JSON.stringify(msg));
+}
+
+function sendMsg(){
+	var msg = {
+			type : "message", //메세지 구분하는 구분자 - 상대방 아이디와 메세지 포함
+			sendId : "${sessionScope.user.userId}",
+			recvId : $("#targetUser").val(),
+			content : $("#chatMsg").val()
+	};
+	ws.send(JSON.stringify(msg));
+};
+
+
+
 </script>
 
 </head>
