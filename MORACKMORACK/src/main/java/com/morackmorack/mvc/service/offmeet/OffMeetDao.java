@@ -30,5 +30,15 @@ public interface OffMeetDao {
     public int getOffPayTotalCount(Search search) throws Exception;
     
     public List<Pay> getBusinessPayList(Search search, String userId) throws Exception;
+    
+    public void addOff_MeetMem(int memNo, int offNo);
 	
+	//오프라인 모임 중복 체크용 조회
+	public Pay getOffPay2(String userId, int offNo) throws Exception;
+	
+	public List<Pay>getOffPayList(Search search, String userId) throws Exception;
+	
+	public List<OffMeet> getOffList2(Search search, String userId) throws Exception;
+
+
 }

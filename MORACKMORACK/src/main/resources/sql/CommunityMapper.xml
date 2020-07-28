@@ -9,7 +9,7 @@
 	<resultMap type ="community" id="communitySelectMap">
 	<result property="postNo" column="POST_NO" jdbcType="INTEGER" />
 		<result property="user.userId" column="USER_ID" jdbcType="VARCHAR" />
-		<result property="communityName" column="COMMUNIT_NAME" jdbcType="CHAR" />
+		<result property="communitesName" column="COMMUNIT_NAME" jdbcType="CHAR" />
 		<result property="meet.meetId" column="MEET_ID" jdbcType="INTEGER" />
 		<result property="offMeet.offNo" column="OFF_NO" jdbcType="INTEGER" />
 		<result property="business_businessId" column="BUSINESS_Id" jdbcType="VARCHAR"/>
@@ -38,40 +38,53 @@
 	
 	<insert id="addOffReview"		parameterType="community" >
 		INSERT
-		INTO community( post_no , user_id , community_name , meet_id , off_no , title , content , reg_date , mod_date, rvstar) 
-		VALUES	 ( seq_community_post_no.NEXTVAL , #{user.userId:VARCHAR} , '2' , #{meet.meetId:INTEGER} , 
+		INTO communites( post_no , user_id , communites_name , meet_id , off_no , title , content , reg_date , mod_date, rvstar) 
+		VALUES	 ( seq_communites_post_no.NEXTVAL , #{user.userId:VARCHAR} , '2' , #{meet.meetId:INTEGER} , 
 							#{offMeet.offNo:INTEGER} , #{title:VARCHAR} ,  #{content:VARCHAR}, SYSDATE, NULL, #{rvStar:INTEGER} )
 	</insert>
 	
 	<update id="updateOffReview" parameterType="community" >
-		UPDATE community
+		UPDATE communites
 		<set>
 		title = #{title}, 
 		content = #{content} , 
 	    modDate = sysdate
 		</set>
-		WHERE community_name = '2' and post_no = #{postNo} 
+		WHERE communites_name = '2' and post_no = #{postNo} 
 	</update>
 	
 	<select id="getOffReview" parameterType="INT" resultMap="communitySelectMap">
 	SELECT * 
-	FROM community 
-	WHERE board_type = '2' AND post_no = #{postNo}
+	FROM communites 
+	WHERE communites_name = '2' AND post_no = #{postNo}
 	</select>
 	
 	<delete id="deleteOffReview" parameterType="community" >
-	DELETE FROM community 
+	DELETE FROM communites 
 	WHERE post_no = #{postNo}
 	</delete>
+	
+	
+	<select id ="getRecentOffReview" parameterType="String" resultMap="communitySelectMap">
+	SELECT * 
+	FROM (SELECT *
+  	FROM communites
+   	order by reg_date DESC) 
+   	where Meet_id = #{meet.meetId}
+   	AND communites_name  = '2'
+   	AND ROWNUM = 1
+	</select>
+
+	
 	
 	<select id="getOffReviewList" parameterType="map" resultMap="communitySelectMap">
   		SELECT *
   		FROM ( SELECT inner_table.*, ROWNUM AS row_seq
-  						FROM ( SELECT  c.post_no, c.user_id  o.off_Id, c.title, c.content, c.rvstar, c.reg_date
-										FROM community c,  offMeet o
-										WHERE c.off_no = o.off_no 
-										AND c.user_id = u.user_id 
-										AND c.off_no = #{offNo}
+  						FROM ( SELECT  post_no, communites_name, meet_id, user_id  off_no, title, content, rvstar, reg_date
+										FROM communites
+										WHERE 
+										communites_name  = '2'
+										AND off_no = #{offNo}
 										ORDER BY reg_date DESC  ) inner_table
   						WHERE ROWNUM <![CDATA[<=]]> #{search.currentPage}*#{search.pageSize} )
   		WHERE row_seq BETWEEN (#{search.currentPage}-1)*#{search.pageSize}+1
@@ -79,43 +92,57 @@
 	</select>
 	
 	
-	<select id="getOffReviewListCount" parameterType="int" resultType="int">
+	<select id="getOffReviewCount_meetId" parameterType="String" resultType="int">
 		SELECT COUNT(*) FROM (
 			SELECT
-				c.post_no, c.user_id, o.off_no, c.title, c.content, c.rvstar, c.reg_date
-			FROM community c,  offMeet o
+			post_no, user_id, off_no, title, content, rvstar, reg_date
+			FROM communites
 			WHERE
-			WHERE c.off_no = o.off_no 
-			AND c.user_id = u.user_id 
-			AND c.off_no = #{offNo}
+			meet_Id = #{value}
+			ORDER BY reg_date DESC
 		) countTable
 	</select>	 
 	
+	
+	<select id="getOffReviewCount_offNo" parameterType="int" resultType="int">
+		SELECT COUNT(*) FROM (
+			SELECT
+			post_no, user_id, off_no, title, content, rvstar, reg_date
+			FROM communites
+			WHERE
+			offNo = #{value}
+			ORDER BY reg_date DESC
+		) countTable
+	</select>	 
+	
+	
+	
+	
 	<insert id="addBusinessReview"		parameterType="community" >
 		INSERT
-		INTO community( post_no , user_id , community_name , meet_id , business_id, title , content , reg_date , mod_date, rvstar) 
-		VALUES	 ( seq_community_post_no.NEXTVAL , #{user.userId:VARCHAR} , '3' , #{meet.meetId:INTEGER} , 
+		INTO communites( post_no , user_id , communites_name , meet_id , business_id, title , content , reg_date , mod_date, rvstar) 
+		VALUES	 ( seq_communites_post_no.NEXTVAL , #{user.userId:VARCHAR} , '3' , #{meet.meetId:INTEGER} , 
 				  #{business.businessId:VARCHAR} #{title:VARCHAR} ,  #{content:VARCHAR}, SYSDATE, NULL, #{rvStar:INTEGER} )
 	</insert>
 	
 	<update id="updateBusinessReview" parameterType="community" >
-		UPDATE community
+		UPDATE communites
 		<set>
 		title = #{title}, 
 		content = #{content}, 
 	    modDate = sysdate
 		</set>
-		WHERE community_name = '3' and post_no = #{postNo} 
+		WHERE communites_name = '3' and post_no = #{postNo} 
 	</update>
 	
-<!-- 	<select id="getBusinessReview" parameterType="INT" resultMap="communitySelectMap"> -->
+<!-- 	<select id="getBusinessReview" parameterType="INT" resultMap="communitesSelectMap"> -->
 <!-- 	SELECT *  -->
-<!-- 	FROM community  -->
+<!-- 	FROM communites  -->
 <!-- 	WHERE board_type = '3' AND post_no = #{postNo} -->
 <!-- 	</select> -->
 	
 	<delete id="deleteBusinessReview" parameterType="community" >
-	DELETE FROM community 
+	DELETE FROM communites 
 	WHERE post_no = #{postNo}
 	</delete>
 
@@ -123,7 +150,7 @@
   		SELECT *
   		FROM ( SELECT inner_table.*, ROWNUM AS row_seq
   						FROM ( SELECT  c.post_no, c.user_id,  b.Business_id, c.title, c.content, c.rvstar, c.reg_date
-										FROM community c,  business b
+										FROM communites c,  business b
 										WHERE c.business_id = b.business_id 
 										AND c.user_id = u.user_id 
 										AND b.business_id = #{businessId}
@@ -138,12 +165,13 @@
 		SELECT COUNT(*) FROM (
 			SELECT
 			c.post_no, p.user_id, b.Business_id, c.title, c.content, c.rvstar, c.reg_date
-			FROM community c,  business b
+			FROM communites c,  business b
 			WHERE c.business_id = b.business_id
 			AND c.user_id = u.user_id 
 		    AND b.business_id = #{businessId}
 		) countTable
 	</select>	 
+	
 	
 	
 </mapper>

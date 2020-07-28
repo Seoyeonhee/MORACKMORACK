@@ -12,8 +12,10 @@ public interface CommunityService {
 	public void updateOffReview(Community community) throws Exception ;
 	
 //	public Community getOffReview(String postNo, String userId, String CommunityName) throws Exception ;
-
-	public Map<String, Object> getOffReviewList(Search search, String communityName) throws Exception ;
+	
+	public Community getRecentOffReview(String MeetId) throws Exception ;
+	
+	public Map<String,Object> getOffReviewList(Search search, int offNo) throws Exception ;
 	
 	public void deleteOffReview(int postNo) throws Exception;
 	

@@ -15,6 +15,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 
+import org.springframework.web.multipart.MultipartFile;
+
 
 	
 public class OffMeet {
@@ -32,23 +34,24 @@ public class OffMeet {
 	private String offTime;
 	private String imageFile;
 	private Date regDate;
+	private MultipartFile image;
 	
-	@ManyToMany(mappedBy = "offMeet")
-	private List<MeetMem> meetMem = new ArrayList<MeetMem>();
-	
-	
-	public List<MeetMem> getMeetMem() {
-		return meetMem;
-	}
-
-	public void setMeetMem(List<MeetMem> meetMem) {
-		this.meetMem = meetMem;
-	}
+	private int payNo;
 
 	public OffMeet() {
 		
 	}
 
+	
+	public int getPayNo() {
+		return payNo;
+	}
+
+	public void setPayNo(int payNo) {
+		this.payNo = payNo;
+	}
+	
+	
 	public int getOffNo() {
 		return offNo;
 	}
@@ -126,12 +129,21 @@ public class OffMeet {
 		this.regDate = regDate;
 	}
 
+	public MultipartFile getImage() {
+		return image;
+	}
+
+	public void setImage(MultipartFile image) {
+		this.image = image;
+	}
+
+
 	@Override
 	public String toString() {
 		return "OffMeet [offNo=" + offNo + ", user=" + user + ", meet=" + meet + ", offName=" + offName + ", offLoc="
 				+ offLoc + ", offMax=" + offMax + ", offMem=" + offMem + ", amount=" + amount + ", offDate=" + offDate
-				+ ", offTime=" + offTime + ", imageFile=" + imageFile + ", regDate=" + regDate + ", meetMem=" + meetMem
-				+ "]";
+				+ ", offTime=" + offTime + ", imageFile=" + imageFile + ", regDate=" + regDate + ", image=" + image
+				+ ", payNo=" + payNo + "]";
 	}
 
 	

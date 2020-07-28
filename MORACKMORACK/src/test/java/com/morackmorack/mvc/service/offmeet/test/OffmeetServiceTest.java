@@ -16,6 +16,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.morackmorack.mvc.service.domain.OffMeet;
 import com.morackmorack.mvc.service.domain.Pay;
 import com.morackmorack.mvc.service.domain.User;
+import com.morackmorack.mvc.common.Search;
 import com.morackmorack.mvc.service.domain.Business;
 import com.morackmorack.mvc.service.domain.Meet;
 import com.morackmorack.mvc.service.offmeet.OffMeetService;
@@ -156,4 +157,26 @@ public void testBusinessPay() throws Exception {
 
 }	
 
+
+       @Test
+		public void testGetOffList() throws Exception{
+			 
+			Search search = new Search();
+		 	search.setCurrentPage(1);
+		 	search.setPageSize(3);
+		 	Map<String,Object> map = offMeetService.getOffList2(search, "user01");
+		 	List<Object> list = (List<Object>) map.get("list");
+		 	
+			//==> console »Æ¿Œ
+		 	System.out.println(list);
+		 	
+		 	Integer totalCount = (Integer)map.get("totalCount");
+		 	System.out.println(totalCount);
+		 	
+		 	System.out.println("=======================================");
+		 	
+		 }
+		 	
+		
+		
 }

@@ -62,7 +62,7 @@ function fncAddOffMeet(){
 		return;
 	}
 	
-	$("form").attr("method", "POST").attr("action", "/offmeet/addOff").submit();
+	$("form").attr("method", "POST").attr("action", "/offmeet/addOff?meetId=${param.meetId}").submit();
 	
 	//document.detailForm.submit();
 }
@@ -99,6 +99,8 @@ $( function() {
 
 
 <form class="form-horizontal" enctype="multipart/form-data">
+
+<input type="hidden" id="meetId" value="${parm.meetId}"/>
 
  <div class="form-group">
  <label for="offName" class="col-sm-offset-1 col-sm-3 control-label">오프라인 모임명</label>
@@ -197,7 +199,7 @@ $( function() {
   <div class="form-group">
 				<label for="fileName"class="col-sm-offset-1 col-sm-3 control-label">오프라인 모임 이미지</label>
 				<div class="col-sm-4">
-			<input type="file" class="form-control" id="file" name="file" placeholder="상품이미지">
+			<input type="file" class="form-control" id="image" name="image" accept="image/*">
 			</div>
    </div>
   

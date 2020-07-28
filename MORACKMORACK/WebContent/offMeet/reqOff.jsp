@@ -135,7 +135,7 @@ $( function() {
 
 	<form class="form-horizontal">
 	<input type="hidden" name="offNo" value="${offMeet.offNo}" />
-		
+	<input type="hidden" name="meetId" value="${offMeet.meet.meetId}" />
 		
 			<div class="form-group"> 
  			<label class="col-sm-offset-1 col-sm-3 control-label">회원 ID</label> 
@@ -173,6 +173,7 @@ $( function() {
  			${user.nickName}
  			</div> 
  		</div> 
+ 		 	 
  		 
  		<div class="form-group"> 
  			<label class="col-sm-offset-1 col-sm-3 control-label">오프라인모임명</label> 
