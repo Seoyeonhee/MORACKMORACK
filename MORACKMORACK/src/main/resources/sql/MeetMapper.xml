@@ -113,6 +113,12 @@
 	WHERE meet_id = #{meetId}
 	</update>
 	
+	<select id="getMeetMem" parameterType="map" resultMap="meetMemSelectMap">
+	SELECT mem_no, user_id, meet_id, join_code, meet_role, join_req_date, join_date, intro, notify_count
+	FROM meetmem
+	WHERE meet_id = #{meetId} and user_id = #{userId} and join_code = '1'
+	</select>
+	
 	<select id="listMeetMem" parameterType="String" resultMap="meetMemSelectMap">
 	SELECT mem_no, user_id, meet_id, join_code, meet_role, join_req_date, join_date, intro, notify_count
 	FROM meetmem
@@ -177,6 +183,13 @@
 	INSERT INTO wishmeet(wish_no, user_id, meet_id, wish_date)
 	VALUES (seq_wishmeet_wish_no.nextval, #{userId}, #{meetId}, sysdate)
 	</insert>
+	
+	<select id="getWishMeet" parameterType="map" resultMap="wishMeetSelectMap">
+	SELECT meet_id
+	FROM wishmeet
+	WHERE meet_id = #{meetId} and user_id = #{userId}
+	GROUP BY meet_id
+	</select>
 	
 	<select id="listWishMeet" parameterType="String" resultMap="wishMeetSelectMap">
 	SELECT meet_id, wish_date 

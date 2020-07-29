@@ -11,7 +11,6 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-<script type ="text/javascript" src="http://api.vworld.kr/req/data?service=data&request=GetFeature&data=LT_C_ADSIGG_INFO&key=9DFC76E0-8CA9-3BD3-8072-677811231E91"></script>
 
 
 <style>
@@ -165,9 +164,13 @@ $(function(){
 		if(meetType == 0){
 			$("#max").val(2);
 			$("#max").attr("readonly",true);
+			$('input:radio[name="meetAppr"]').removeAttr('checked');
+			$("input:radio[name='meetAppr']:input[value='0']").attr("checked", true);
+			$("#meetAppr:not(:checked)").attr('disabled', true);
 		}else{
 			$("#max").attr("readonly",false);
 			$("#max").focus();
+			$("#meetAppr:not(:checked)").attr('disabled', false);
 		}
 	})
 	
@@ -175,8 +178,7 @@ $(function(){
 		document.all.meetImg.click();
 		
 		var aa = $(this).next.id();
-		alert(aa);
-	})
+	}) 
 	
 	$("#lImgThum").on("click", function(e){						
 		document.all.lImg1.click();
@@ -189,8 +191,6 @@ $(function(){
 		var gugun = $("#gugun").val();
 		
 		$("#meetLoc").val(sido+' '+gugun)
-		
-		alert($("#meetLoc").val());
 	
 		$("form").attr("method", "POST").attr("action", "/meet/addMeet/"+maxNum).submit();
 	})
@@ -358,8 +358,8 @@ $(function(){
       	  
     <p style="margin-top:20px"><strong>가입 승인 필요 여부</strong></p>
     <label class="radio-inline">
-		<input type="radio" id="meetAppr" name="meetAppr" value="1" checked />필요 <br><br/>
-		<input type="radio" id="meetAppr" name="meetAppr" value="0" />불필요<br/><br/>
+		<input type="radio" id="meetAppr" name="meetAppr" value="1" checked="true" />필요 <br><br/>
+		<input type="radio" id="meetAppr" name="meetAppr" value="0" checked="true" />불필요<br/><br/>
 	</label>
       	  
 	<p style="margin-top:20px"><strong>주요 활동 위치 선택</strong></p>

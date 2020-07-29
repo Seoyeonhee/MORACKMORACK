@@ -16,7 +16,19 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
 <style>
+@font-face { font-family: 'yg-jalnan'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.2/JalnanOTF00.woff') format('woff'); font-weight: normal; font-style: normal; }
+@font-face { font-family: 'MapoGoldenPier'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/MapoGoldenPierA.woff') format('woff'); font-weight: normal; font-style: normal; }
+
 .form__field {
   width: 300px;
   background: #fff;
@@ -190,6 +202,182 @@ button::before, button::after {
 .buttons {
   isolation: isolate;
 }
+.grid12-6{
+     position:relative;
+     padding: 30px 30px 30px 30px;
+     margin-top : 30px;
+}
+.grid12-6 .inner_box{
+     position:absolute;
+     background:rgba(255,255,255,0.7);
+     width: 40%;
+     height: 40%;
+     top:50%;
+     left:50%;
+     transform:translate(-50%,-50%);
+     padding:35px;
+     text-align:center;
+}
+.grid12-6 .inner_box h2{
+     font-family: 'yg-jalnan';
+     text-align:center;
+     text-size : 50px;
+     font-weight:normal;
+     color:#777;
+}
+
+#mainCart{
+	width: 360px;
+	height: 72px;
+	margin: auto;
+	background: #ececec;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	display: block;
+	-moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+	border-radius: 6px;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+	-moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+	-webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12),
+		0 1px 2px rgba(0, 0, 0, 0.24);
+}
+
+a.add-to-cart {
+	width: 216px;
+	height: 48px;
+	background: #ffab00;
+	font-size: 18px;
+	line-height: 48px;
+	letter-spacing: 2px;
+	color: rgb(255, 255, 255);
+	text-transform: uppercase;
+	-moz-border-radius: 24px;
+	-webkit-border-radius: 24px;
+	border-radius: 24px;
+	text-decoration: none;
+	text-align: center;
+	left: 24px;
+	position: absolute;
+	top: 48px;
+	display: block;
+	box-shadow: 0 3px 6px rgba(255, 171, 0, 0.16),
+		0 3px 6px rgba(255, 171, 0, 0.23);
+	-moz-box-shadow: 0 3px 6px rgba(255, 171, 0, 0.16),
+		0 3px 6px rgba(255, 171, 0, 0.23);
+	-webkit-box-shadow: 0 3px 6px rgba(255, 171, 0, 0.16),
+		0 3px 6px rgba(255, 171, 0, 0.23);
+}
+
+a.add-to-cart.size {
+	width: 48px;
+	left: 108px;
+	font-size: 0;
+	color: #e7bb45;
+	letter-spacing: 0;
+	-webkit-transition: 0.2s linear;
+	-moz-transition: 0.2s linear;
+	-ms-transition: 0.2s linear;
+	-o-transition: 0.2s linear;
+	transition: 0.2s linear;
+}
+
+a.add-to-cart.hover {
+	-webkit-transition: 0.2s linear;
+	-moz-transition: 0.2s linear;
+	-ms-transition: 0.2s linear;
+	-o-transition: 0.2s linear;
+	transition: 0.2s linear;
+	-webkit-transform: rotate(180deg);
+	-moz-transform: rotate(180deg);
+	-ms-transform: rotate(180deg);
+	-o-transform: rotate(180deg);
+	transform: rotate(180deg);
+	-webkit-transform-origin: 108px 24px;
+	-moz-transform-origin: 108px 24px;
+	-o-transform-origin: 108px 24px;
+	-ms-transform-origin: 108px 24px;
+	transform-origin: 108px 24px;
+}
+
+a.cart {
+	width: 72px;
+	height: 72px;
+	-moz-border-radius: 36px;
+	-webkit-border-radius: 36px;
+	border-radius: 36px;
+	font-size: 18px;
+	text-align: center;
+	color: #616161;
+	text-decoration: none;
+	position: absolute;
+	right: 24px;
+	top: 36px;
+	display: block;
+	background: #535558
+		url(http://images.vfl.ru/ii/1484930184/14435803/15757225.png) center no-repeat;
+	background-size: 36px;
+	box-shadow: 0 3px 6px rgba(97, 97, 97 0.16), 0 3px 6px rgba(97, 97, 97 0.23);
+	-moz-box-shadow: 0 3px 6px rgba(97, 97, 97 0.16),
+		0 3px 6px rgba(97, 97, 97 0.23);
+	-webkit-box-shadow: 0 3px 6px rgba(97, 97, 97 0.16),
+		0 3px 6px rgba(97, 97, 97 0.23);
+}
+a.cart > span {
+	width: 24px;
+	height: 24px;
+	font-size: 16px;
+	color: #fff;
+	line-height: 24px;
+	position: absolute;
+	-moz-border-radius: 12px;
+	-webkit-border-radius: 12px;
+	border-radius: 12px;
+	display: block;
+	transform: scale(0);
+	-o-transform: scale(0);
+	-ms-transform: scale(0);
+	-moz-transform: scale(0);
+	-webkit-transform: scale(0);
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	margin: auto;
+	background: #ffab00;
+	box-shadow: 0 3px 6px rgba(255, 171, 0, 0.16),
+		0 3px 6px rgba(255, 171, 0, 0.23);
+	-moz-box-shadow: 0 3px 6px rgba(255, 171, 0, 0.16),
+		0 3px 6px rgba(255, 171, 0, 0.23);
+	-webkit-box-shadow: 0 3px 6px rgba(255, 171, 0, 0.16),
+		0 3px 6px rgba(255, 171, 0, 0.23);
+}
+a.cart > span.counter {
+	left: 48px;
+	bottom: 48px;
+	-webkit-transition: 0.2s linear;
+	-moz-transition: 0.2s linear;
+	-ms-transition: 0.2s linear;
+	-o-transition: 0.2s linear;
+	transition: 0.2s linear;
+	transform: scale(1);
+	-o-transform: scale(1);
+	-ms-transform: scale(1);
+	-moz-transform: scale(1);
+	-webkit-transform: scale(1);
+}
+
+#mainMeetName{
+font-family: 'yg-jalnan';
+text-size : 50px;
+}
+
+#mainHashtag{
+font-family: 'MapoGoldenPier'
+}
 
 </style>
 
@@ -209,7 +397,6 @@ $(function(){
 	}else if(joinMessage == '3'){
 		alert("가입 가능한 모임은 5개")
 	}
-	
 	
 	$("#joinMeet").on("click", function(){	
 		self.location("/meet/joinMeet?meetId="+meetId)		
@@ -241,6 +428,45 @@ $(function(){
 	$("#addOffMeet").on("click", function(){
 		self.location("/offmeet/addOffView?meetId="+meetId);
 	});
+	
+	//var count = 0;
+	var count = $("#wishCount").val();
+	$("a.cart > span").addClass("counter");
+	$("a.cart > span.counter").text(count);
+	
+	$("a.add-to-cart").click(function(event) {
+		if($("#wishMeet").val() == ''){
+		$("a.add-to-cart").addClass("size");
+		setTimeout(function() {
+			$("a.add-to-cart").addClass("hover");
+		}, 200);
+		setTimeout(function() {
+			$("a.cart > span").addClass("counter");
+			$("a.cart > span.counter").text(count);
+		}, 400);
+		setTimeout(function() {
+			$("a.add-to-cart").removeClass("hover");
+			$("a.add-to-cart").removeClass("size");
+		}, 600);
+		event.preventDefault();
+		self.location("/meet/addWishMeet?meetId="+meetId);
+		}else if($("#wishMeet").val() != ''){
+			$("a.add-to-cart").addClass("size");
+			setTimeout(function() {
+				$("a.add-to-cart").addClass("hover");
+			}, 200);
+			setTimeout(function() {
+				$("a.cart > span").addClass("counter");
+				$("a.cart > span.counter").text(count);
+			}, 400);
+			setTimeout(function() {
+				$("a.add-to-cart").removeClass("hover");
+				$("a.add-to-cart").removeClass("size");
+			}, 600);
+			event.preventDefault();
+			self.location("/meet/delWishMeet/"+meetId+"/get");
+		}
+	}); 
 })
 </script>
 
@@ -260,25 +486,48 @@ $(function(){
 
 
 <input type="hidden" id="joinMessage" value="${joinMessage}"/>
+<input type="hidden" id="meetMem" name="meetMem" value="${meetMem}"/>
 <input type="hidden" id="meetId" name="meetId" value="${meet.meetId}"/>
+<input type="hidden" id="wishMeet" name="wishMeet" value="${wishMeet}"/>
+<input type="hidden" id="wishCount" name="wishCount" value="${wishCount}"/>
 
+<aside>
+<section style="float: right; margin-bottom:10px;">
 
-<section style="float: right; margin-left:100px">
+  <div id="mainCart" style="float:right; margin-top:100px;">
+  <c:if test="${empty wishMeet}">
+	<a href="#" class="add-to-cart">add to cart</a>
+	</c:if>
+	<c:if test="${!empty wishMeet}">
+	<a href="#" class="add-to-cart">Delete to cart</a>
+	</c:if>
+	<a href="#" class="cart"><span></span></a>
+</div>
 
-<section class="model-4">
-  <div class="model-4 checkbox">
-    <input type="checkbox" id="addWishMeet"/>
-    <label></label>
-  </div>
-</section>
-
-
+<c:if test="${empty meetMem}">
 <button type="button" class="draw meet" id="joinMeet">모임가입</button>
+</c:if>
+<c:if test="${!empty meetMem}">
 <button type="button" class="draw meet">쪽지 초대</button>
 <button type="button" class="draw meet">카카오톡 초대</button>
+<c:if test="${meetMem.meetRole eq '0'.charAt(0) or meetMem.meetRole eq '1'.charAt(0)}">
 <button type="button" class="draw meet" id="addOffMeet">오프라인 모임 생성</button>
+</c:if>
+</c:if>
+</section>
 
+<section style="float: left; margin-bottom:10px;">
+<div class="grid12-6">
+<img src="/resources/images/uploadFiles/meet/${meet.meetImg}" width="1200" height="1200">
+<div class="inner_box">
+     <h2 id="mainMeetName">${meet.meetName}</h2>
+     <br/><br/>
+     <h4 id="mainHashtag"><c:forEach var="hashtag" items="${meet.hashtag}">#${hashtag.HASH_NAME} </c:forEach></h4>
+     <!-- <button>See More</button> -->
+</div>
 
+</div>
+</section>
 
 
 <!-- 모달 영역 -->
@@ -292,12 +541,14 @@ $(function(){
 <div class="modal-body">
     	<div class="col-xs-6 col-md-5">
     		<a href="#" class="thumbnail">
-     		 <img src="/resources/images/uploadFiles/meet/${meet.meetImg}" alt="MORACK MORACK"/> 
+     		 <img src="/resources/images/uploadFiles/meet/${meet.meetImg}" width="100" height="100" alt="MORACK MORACK"/> 
     		</a>
  		 </div>
   		<strong>모임명</strong>
 		${meet.meetName} <br/>
-    	<c:if test="${meet.meetType=='0'}">2인모임</c:if><c:if test="${meet.meetType=='1'}">다수인모임</c:if> <br/>
+		<strong>모임유형</strong>
+    	<c:if test="${meet.meetType eq '0'.charAt(0)}">2인모임</c:if><c:if test="${meet.meetType eq '1'.charAt(0)}">다수인모임</c:if> <br/>
+    	<strong>모임명</strong>
     	<c:choose>
 		<c:when test="${meet.category eq 0}">여행</c:when>
 		<c:when test="${meet.category eq 1}">게임</c:when>
@@ -328,11 +579,7 @@ $(function(){
 </div>
 </div>
 
-
-
-
-</section>
-
+</aside>
 </form>
 
 </body>

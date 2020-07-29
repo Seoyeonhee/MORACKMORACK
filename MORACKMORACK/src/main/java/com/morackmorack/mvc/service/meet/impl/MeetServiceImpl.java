@@ -70,8 +70,8 @@ public class MeetServiceImpl implements MeetService{
 		meetDao.addMemNum(meetId);
 	}
 	
-	public User getMeetMem(String meetId){
-		return meetDao.getMeetMem(meetId);
+	public MeetMem getMeetMem(String meetId, String userId){
+		return meetDao.getMeetMem(meetId, userId);
 	}
 	
 	public List<MeetMem> listMeetMem(String meetId){
@@ -104,6 +104,10 @@ public class MeetServiceImpl implements MeetService{
 	
 	public void addWishMeet(String userId, String meetId){
 		meetDao.addWishMeet(userId, meetId);
+	}
+	
+	public Map getWishMeet(String meetId, String userId) {
+		return meetDao.getWishMeet(meetId, userId);
 	}
 	
 	public Map listWishMeet(String userId){

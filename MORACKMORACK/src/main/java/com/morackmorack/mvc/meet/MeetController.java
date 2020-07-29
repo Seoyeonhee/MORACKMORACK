@@ -208,8 +208,7 @@ public class MeetController {
 	}
 
 	@RequestMapping(value = "listMeet", method = { RequestMethod.GET, RequestMethod.POST })
-	public ModelAndView listMeet(@ModelAttribute("search") Search search,
-			@RequestParam(value = "searchType2", required = false) String searchType2) {
+	public ModelAndView listMeet(@ModelAttribute("search") Search search, @RequestParam(value = "searchType2", required = false) String searchType2) {
 		System.out.println("/meet/listMeet  : GET");
 
 		if (searchType2 != null) {
@@ -228,12 +227,30 @@ public class MeetController {
 	}
 
 	@RequestMapping(value = "getMeet/{meetId}", method = { RequestMethod.GET, RequestMethod.POST })
-	public ModelAndView getMeet(@PathVariable("meetId") String meetId) {
+	public ModelAndView getMeet(HttpServletRequest request, @PathVariable("meetId") String meetId) {
 		System.out.println("/meet/getMeet : GET");
-
-		Meet meet = meetService.getMeet(meetId);
-
+		
 		ModelAndView mav = new ModelAndView();
+
+		HttpSession session = request.getSession();
+		User user = (User) session.getAttribute("user");	
+		
+		if(user != null) {
+			String userId = user.getUserId();
+			MeetMem meetMem = meetService.getMeetMem(meetId, userId);
+			Map map = meetService.getWishMeet(meetId, userId);
+			
+			if(meetMem != null) {
+				mav.addObject("meetMem", meetMem);
+			}					
+			if(map.get("wishMeet") != null) {
+				mav.addObject("wishMeet", map.get("wishMeet"));
+			}
+			mav.addObject("wishCount", map.get("wishCount"));
+		}
+			
+		Meet meet = meetService.getMeet(meetId);
+		
 		mav.addObject("meet", meet);
 		mav.setViewName("/meet/getMeet.jsp");
 
@@ -267,8 +284,7 @@ public class MeetController {
 		meetMem.setMeet(meet);
 		meetMem.setJoinCode('1');
 		meetMem.setMeetRole('2');
-
-		//mav.setViewName("/meet/getMeet/" + meetId);
+		
 		mav.setViewName("/meet/getMeet/"+meetId);
 
 		if (meet.getMaxNum() == meet.getMemNum()) {
@@ -513,8 +529,8 @@ public class MeetController {
 		return mav;
 	}
 
-	@RequestMapping(value = "delWishMeet/{meetId}", method = RequestMethod.GET)
-	public ModelAndView delWishMeet(HttpServletRequest request, @PathVariable("meetId") String meetId) {
+	@RequestMapping(value = "delWishMeet/{meetId}/{delLoc}", method = RequestMethod.GET)
+	public ModelAndView delWishMeet(HttpServletRequest request, @PathVariable("meetId") String meetId, @PathVariable("delLoc") String delLoc) {
 		System.out.println("/meet/delWishMeet :GET");
 
 		HttpSession session = request.getSession(true);
@@ -524,9 +540,12 @@ public class MeetController {
 		meetService.delWishMeet(userId, meetId);
 
 		ModelAndView mav = new ModelAndView();
-
-		mav.setViewName("/meet/listWishMeet");
-
+		
+		if(delLoc.equals("get")) {
+			mav.setViewName("/meet/getMeet/"+meetId);
+		}else {
+			mav.setViewName("/meet/listWishMeet");
+		}
 		return mav;
 	}
 

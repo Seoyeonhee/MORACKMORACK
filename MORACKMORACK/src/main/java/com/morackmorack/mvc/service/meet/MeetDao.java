@@ -32,7 +32,7 @@ public interface MeetDao {
 	
 	public void addMemNum(String meetId); 
 	
-	public User getMeetMem(String meetId);
+	public MeetMem getMeetMem(String meetId, String userId);
 	
 	public List<MeetMem> listMeetMem(String meetId);
 	
@@ -49,6 +49,8 @@ public interface MeetDao {
 	public List<MeetMem> listMyMeet(String userId);
 	
 	public void addWishMeet(String userId, String meetId);
+	
+	public Map getWishMeet(String meetId, String userId);
 	
 	public Map listWishMeet(String userId);
 	

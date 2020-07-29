@@ -1,5 +1,6 @@
 package com.morackmorack.mvc.service.meet.impl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -48,11 +49,6 @@ public class MeetDaoImpl implements MeetDao {
 		return meet;
 	}
 	
-	/*
-	 * public List<String> getMeetHashtag(String meetId){ return
-	 * sqlSession.selectList("MeetMapper.getMeetHashtag", meetId); }
-	 */
-	
 	public void updateMeet(Meet meet) {
 		sqlSession.update("MeetMapper.updateMeet", meet);
 	}
@@ -82,9 +78,12 @@ public class MeetDaoImpl implements MeetDao {
 		sqlSession.update("MeetMapper.addMemNum", meetId);
 	}
 	
-	public User getMeetMem(String meetId){
-		return null;
-				
+	public MeetMem getMeetMem(String meetId, String userId){
+		Map map = new HashMap();
+		map.put("meetId", meetId);
+		map.put("userId", userId);
+		
+		return sqlSession.selectOne("MeetMapper.getMeetMem", map);				
 	}
 	
 	public List<MeetMem> listMeetMem(String meetId){
@@ -153,6 +152,22 @@ public class MeetDaoImpl implements MeetDao {
 		map.put("meetId", meetId);
 		
 		sqlSession.insert("MeetMapper.addWishMeet", map);
+	}
+	
+	public Map getWishMeet(String meetId, String userId) {
+		Map map = new HashMap();
+		map.put("meetId", meetId);
+		map.put("userId", userId);
+		
+		WishMeet wishMeet = sqlSession.selectOne("MeetMapper.getWishMeet", map);
+		int wishCount = sqlSession.selectOne("MeetMapper.getWishMeetCount", userId);
+		
+		map = new HashMap();
+		
+		map.put("wishMeet", wishMeet);
+		map.put("wishCount", wishCount);
+				
+		return map;
 	}
 	
 	public Map listWishMeet(String userId){

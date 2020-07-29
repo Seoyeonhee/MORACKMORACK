@@ -11,6 +11,13 @@
 
 <style>
 @charset "UTF-8";
+@font-face { font-family: 'TmoneyRoundWindExtraBold'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/TmoneyRoundWindExtraBold.woff') format('woff'); font-weight: normal; font-style: normal; }
+
+#logo{
+	font-family: 'TmoneyRoundWindExtraBold';
+	font-size : 28px;
+}
+
 .navigation {
   height: 80px;
   background: #4d5f78;
@@ -216,7 +223,7 @@ article {
 <section class="navigation">
   <div class="nav-container">
     <div class="brand">
-      <a href="/">MORACKMORACK</a>
+      <a href="/" id="logo">MORACKMORACK</a>
     </div>
     <nav>
       <div class="nav-mobile"><a id="nav-toggle" href="#!"><span></span></a></div>

@@ -22,7 +22,7 @@ $(function(){
 	$("a[id^=delWishMeet]").on("click", function(){
 		var meetId = $(this).next().val();
 		
-		self.location("/meet/delWishMeet/"+meetId)
+		self.location("/meet/delWishMeet/"+meetId+"/wish");
 	})
 	
 })
@@ -50,7 +50,7 @@ ${wishCount}
 	<c:forEach var="wishMeet" items="${listWishMeet}">
   		<div class="col-sm-6 col-md-4" style="margin-top:50px">
     	<div class="thumbnail">
-     	 <img src="resources/images/uploadFiles/${wishMeet.meet.meetImg}" alt="MORACKMORACK" title="${wishMeet.meet.meetName}">
+     	 <img src="/resources/images/uploadFiles/meet/${wishMeet.meet.meetImg}" alt="MORACKMORACK" title="${wishMeet.meet.meetName}">
      	 <div class="caption">
         <h3></h3>
         <p id="meetName">${wishMeet.meet.meetName}</p>
