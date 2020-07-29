@@ -267,13 +267,11 @@ $(function (){
 	
 	$("#meetTypeisone").on("click", function(){
 		$("#searchCondition").val('0');
-		alert($("#searchCondition").val())
 		$("form").attr("method", "POST").attr("action", "/meet/listMeet").submit();
 	})
 	
 	$("#meetTypeismul").on("click", function(){
 		$("#searchCondition").val('1');
-		alert($("#searchCondition").val())
 		$("form").attr("method", "POST").attr("action", "/meet/listMeet").submit();
 	})
 	

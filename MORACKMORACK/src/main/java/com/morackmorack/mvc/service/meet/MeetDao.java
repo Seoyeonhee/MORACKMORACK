@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.morackmorack.mvc.common.Search;
+import com.morackmorack.mvc.service.domain.Files;
 import com.morackmorack.mvc.service.domain.Meet;
 import com.morackmorack.mvc.service.domain.MeetMem;
 import com.morackmorack.mvc.service.domain.User;
@@ -11,13 +12,13 @@ import com.morackmorack.mvc.service.domain.WishMeet;
 
 public interface MeetDao {
 	
+	public void addLimg(Files file);
+	
 	public  List<Meet> getMeetMain();
 	
 	public void addMeet(Meet meet);
 	
 	public Meet getMeet(String meetId);
-	
-	public List<String> getMeetHashtag(String meetId);
 	
 	public void updateMeet(Meet meet);
 	

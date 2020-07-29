@@ -43,6 +43,26 @@
 		<result property="wishDate" column="wish_date" jdbcType="DATE"/>
 	</resultMap>
 	
+	<resultMap id="lImgSelectMap" type="files">
+		<result property="fileNo" column="file_no" jdbcType="INTEGER"/>
+		<result property="postNo" column="post_no" jdbcType="INTEGER"/>
+		<result property="meetId" column="meet_id" jdbcType="VARCHAR"/>
+		<result property="fileName" column="file_name" jdbcType="VARCHAR"/>
+		<result property="fileExtension" column="file_extension" jdbcType="VARCHAR"/>
+		<result property="fileSize" column="file_size" jdbcType="INTEGER"/>
+	</resultMap>
+	
+	<insert id="addLimg" parameterType="files">
+	INSERT INTO files(file_no, post_no, meet_id, file_name, file_extension, file_size)
+	VALUES (seq_files_file_no.nextval, #{postNo:INTEGER}, #{meetId:VARCHAR}, #{fileName:VARCHAR}, #{fileExtension:VARCHAR}, #{fileSize:INTEGER})
+	</insert>
+	
+	<select id="getLimg" parameterType="String" resultMap="lImgSelectMap">
+	SELECT file_no, post_no, meet_id, file_name, file_extension, file_size
+	FROM files
+	WHERE post_no IS NULL AND meet_id = #{meetId}
+	</select>
+	
 	<insert id="addMeet" parameterType="meet">
 	INSERT INTO meet (meet_id, leader_id, meet_name, meet_loc, max_num, mem_num, meet_img, s_intro, l_intro, reg_date, meet_star, bank, accNum, category, meet_appr, meet_type)
 	VALUES(#{meetId}, #{leaderId}, #{meetName}, #{meetLoc:VARCHAR}, #{maxNum}, 0, #{meetImg:VARCHAR}, #{sIntro:VARCHAR}, #{lIntro:VARCHAR}, SYSDATE, 0, #{bank:VARCHAR}, #{accNum}, #{category}, #{meetAppr}, #{meetType})

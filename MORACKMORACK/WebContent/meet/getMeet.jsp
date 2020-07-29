@@ -201,6 +201,7 @@ $(function (){
 	var joinMessage = $("#joinMessage").val();
 	
 	if(joinMessage == '1'){
+		$('#modalBox').modal('close');
 		$('#modalBox').modal('show');
 		console.log("click open");
 	}else if(joinMessage == '0'){
@@ -261,7 +262,6 @@ $(function (){
 
 
 
-
 <input type="hidden" id="joinMessage" value="${joinMessage}"/>
 <input type="hidden" id="meetId" name="meetId" value="${meet.meetId}"/>
 
@@ -282,12 +282,10 @@ $(function (){
 <button type="button" class="draw meet" id="addOffMeet">오프라인 모임 생성</button>
 
 
-<a href="/meet/joinMeet?meetId=${meet.meetId}">dddd</a>
 
-</section>
 
 <!-- 모달 영역 -->
-<div id="modalBox" class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<-div id="modalBox" class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 <div class="modal-dialog" role="document">
 <div class="modal-content">
 <div class="modal-header">
@@ -326,14 +324,14 @@ $(function (){
 		<strong>한줄 자기소개</strong> <input type="text" id="intro" name="intro" class="form__field" placeholder="자기소개 입력" value=""/>
 </div>
 <div class="modal-footer">
-<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
-            <button type="button" class="btn btn-primary" id="inputIntro">가입</button>
+<button class="btn btn-default" data-dismiss="modal">취소</button>
+            <button class="btn btn-primary" id="inputIntro">가입</button>
 </div>
 </div>
 </div>
 </div>
 
-
+</section>
 </form>
 
 </body>

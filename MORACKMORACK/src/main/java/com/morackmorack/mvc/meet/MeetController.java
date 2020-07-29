@@ -1,6 +1,8 @@
 package com.morackmorack.mvc.meet;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Path;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -27,6 +29,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.morackmorack.mvc.common.Search;
+import com.morackmorack.mvc.service.domain.Files;
 import com.morackmorack.mvc.service.domain.Meet;
 import com.morackmorack.mvc.service.domain.MeetMem;
 import com.morackmorack.mvc.service.domain.User;
@@ -78,12 +81,6 @@ public class MeetController {
 	@RequestMapping(value = "addMeet/{maxNum}", method = RequestMethod.POST)
 	public ModelAndView addMeet(HttpServletRequest request, @ModelAttribute("meet") Meet meet, @PathVariable ("maxNum") int maxNum, MultipartHttpServletRequest mtf) throws Exception {
 		System.out.println("/meet/addMeet : POST");
-		
-		meet.setMeetLoc("서울시"); // 나중에 지워랑
-		
-		MultipartFile meetImg = mtf.getFile("file");
-		String MeetImgFileName = meetImg.getOriginalFilename();
-		meetImg.transferTo(new File("C:\\Users\\LG\\git\\MORACKMORACK\\MORACKMORACK\\WebContent\\resources\\images\\uploadFiles\\meet\\"+MeetImgFileName));
 
 		HttpSession session = request.getSession(true);
 		User user = (User) session.getAttribute("user");
@@ -96,10 +93,49 @@ public class MeetController {
 		SimpleDateFormat simpleDate = new SimpleDateFormat("yyMMdd");
 		String meetId = uuid + simpleDate.format(date);
 		
+		List<MultipartFile> fileList = mtf.getFiles("file");
+		
+		  String root_path = request.getSession().getServletContext().getRealPath("/");  
+	      String attach_path = "resources/images/uploadFiles/meet/";
+	      
+			/*
+			 * Path uploadDir = root_path+attach_path;
+			 * 
+			 * if(!Files.isDirectory(uploadDir)) { Files.createDirectories(uploadDir); }
+			 */
+	      int imgIndex = 0;
+	      
+		for(MultipartFile mf : fileList) {		
+			
+			String originFileName = mf.getOriginalFilename(); 
+			long fileSize = mf.getSize();
+			
+			String safeFile =  System.currentTimeMillis() + originFileName;
+			
+			try{
+				mf.transferTo(new File(root_path + attach_path + safeFile));
+				if(imgIndex==0) {
+					meet.setMeetImg(safeFile);
+					imgIndex++;
+				}else {
+					Files file = new Files();
+					file.setFileName(safeFile);
+					file.setFileExtension( safeFile.substring(safeFile.lastIndexOf(".")));
+					file.setFileSize(fileSize);
+					file.setMeetId(meetId);
+					meetService.addLimg(file);
+					imgIndex++;
+				}
+			}catch (IllegalStateException e) {
+				e.printStackTrace();
+			}catch(IOException e){
+				e.printStackTrace();
+			}
+		}
+		
 		meet.setMeetId(meetId);
 		meet.setLeaderId(userId);
 		meet.setMaxNum(maxNum);
-		meet.setMeetImg(MeetImgFileName);
 		
 		String bank = meet.getBank();
 		int len = 0;
@@ -161,11 +197,10 @@ public class MeetController {
 		meet = meetService.getMeet(meetId);
 		
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("meet", meet);
-		mav.setViewName("/meet/getMeet.jsp");
+		//mav.addObject("meet", meet);
+		mav.setViewName("/meet/getMeet/"+meetId);
 		return mav;
 	}
-
 	@RequestMapping(value = "listMeet",  method = {RequestMethod.GET, RequestMethod.POST})
 	public ModelAndView listMeet(@ModelAttribute("search")  Search search, @RequestParam(value="searchType2" , required=false) String searchType2) {
 		System.out.println("/meet/listMeet  : GET");
@@ -185,7 +220,7 @@ public class MeetController {
 		return mav;
 	}
 
-	@RequestMapping(value = "getMeet/{meetId}", method = RequestMethod.GET)
+	@RequestMapping(value = "getMeet/{meetId}", method = {RequestMethod.GET, RequestMethod.POST})
 	public ModelAndView getMeet(@PathVariable("meetId") String meetId) {
 		System.out.println("/meet/getMeet : GET");
 
@@ -200,7 +235,7 @@ public class MeetController {
 
 	@RequestMapping(value = "joinMeet", method = RequestMethod.GET)
 	public ModelAndView joinMeet(HttpServletRequest request, @RequestParam("meetId") String meetId) throws Exception {
-		System.out.println(">>>>>>>>>>>>>> /meet/joinMeet : GET");
+		System.out.println("/meet/joinMeet : GET");
 		
 		ModelAndView mav = new ModelAndView();
 		
@@ -226,25 +261,20 @@ public class MeetController {
 		meetMem.setJoinCode('1');
 		meetMem.setMeetRole('2');
 		
-		mav.setViewName("/meet/getMeet.jsp");
+		mav.setViewName("/meet/getMeet/"+meetId);
 		
 		if (meet.getMaxNum() == meet.getMemNum()) {
 			mav.addObject("meet", meet);
 			mav.addObject("joinMessage", "0"); //모임 인원 초과
 			return mav;
 		}
-		
-		System.out.println("ccccccccccccccccccccccccccccccccccccccccccccccccccccccc");
 
 		if (meet.getMeetType() == '0') {
-			System.out.println("qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq");
 			meetService.joinMeet(meetMem);
 			meetService.addMemNum(meetId);
 		} else if(meet.getMeetType() == '1'){
 			if (meetService.checkJoinMeetCount(user.getMeetCount())) {
-				System.out.println("dddddddddddddddddddddddddddddddddddddddddddddddddddddd");
 				if (meet.isMeetAppr()) {
-					System.out.println("ssssssssssssssssssssssssssssssssssssssssssssssssssssss");
 					mav.addObject("joinMessage", "1"); //가입 승인 필요
 					mav.addObject("meet", meet);
 					return mav;
@@ -525,7 +555,6 @@ public class MeetController {
 			user.setAddress("서울시");
 			user.setGender('남');
 			
-			System.out.println(">> "+user);
 			userService.addUser(user);
 		}
 		

@@ -134,8 +134,8 @@ $(function(){
                 <td><c:forEach var="blacklist" items="${meetMem.blackList}"> ${blacklist} </c:forEach></td> 
                 <td>
                 <button type="button" id="sendMessage${status.count}">쪽지 보내기</button>
-                <input type="text" value="${meetMem.user.userId}"/>
-                <input type="text" value="${meetMem.meet.meetId}"/><br/>
+                <input type="hidden" value="${meetMem.user.userId}"/>
+                <input type="hidden" value="${meetMem.meet.meetId}"/><br/>
                 
                 <button type="button" id="reqFriend${status.count}">친구 신청</button><br/> 
                 <input type="hidden" value="${meetMem.user.userId}"/>

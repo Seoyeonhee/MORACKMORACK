@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import com.morackmorack.mvc.common.Search;
+import com.morackmorack.mvc.service.domain.Files;
 import com.morackmorack.mvc.service.domain.Meet;
 import com.morackmorack.mvc.service.domain.MeetMem;
 import com.morackmorack.mvc.service.domain.User;
@@ -27,6 +28,10 @@ public class MeetDaoImpl implements MeetDao {
 		this.sqlSession = sqlSession;
 	}
 	
+	public void addLimg(Files file) {
+		sqlSession.insert("MeetMapper.addLimg", file);
+	}
+	
 	public  List<Meet> getMeetMain(){
 		return sqlSession.selectList("MeetMapper.getMeetMain");
 	}
@@ -37,16 +42,16 @@ public class MeetDaoImpl implements MeetDao {
 	
 	public Meet getMeet(String meetId) {
 		Meet meet = sqlSession.selectOne("MeetMapper.getMeet", meetId);	
-		meet.setHashtag(getMeetHashtag(meetId));
-		
-		System.out.println(meet.getHashtag());
+		meet.setHashtag(sqlSession.selectList("MeetMapper.getMeetHashtag", meetId));
+		meet.setlImg(sqlSession.selectList("MeetMapper.getLimg", meetId));
 		
 		return meet;
 	}
 	
-	public List<String> getMeetHashtag(String meetId){
-		return sqlSession.selectList("MeetMapper.getMeetHashtag", meetId);	
-	}
+	/*
+	 * public List<String> getMeetHashtag(String meetId){ return
+	 * sqlSession.selectList("MeetMapper.getMeetHashtag", meetId); }
+	 */
 	
 	public void updateMeet(Meet meet) {
 		sqlSession.update("MeetMapper.updateMeet", meet);

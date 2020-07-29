@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 public class Meet implements Serializable {
 	private String meetId;
 	private String leaderId;
@@ -137,13 +139,14 @@ public class Meet implements Serializable {
 	public void setAccNum(String accNum) {
 		this.accNum = accNum;
 	}
+
 	@Override
 	public String toString() {
 		return "Meet [meetId=" + meetId + ", leaderId=" + leaderId + ", meetImg=" + meetImg + ", meetName=" + meetName
 				+ ", category=" + category + ", maxNum=" + maxNum + ", memNum=" + memNum + ", meetLoc=" + meetLoc
-				+ ", sIntro=" + sIntro + ", lIntro=" + lIntro + ", hashtag=" + hashtag + ", meetType=" + meetType
-				+ ", meetAppr=" + meetAppr + ", meetStar=" + meetStar + ", regDate=" + regDate + ", bank=" + bank
-				+ ", accNum=" + accNum + "]";
+				+ ", sIntro=" + sIntro + ", lIntro=" + lIntro + ", lImg=" + lImg + ", hashtag=" + hashtag
+				+ ", meetType=" + meetType + ", meetAppr=" + meetAppr + ", meetStar=" + meetStar + ", regDate="
+				+ regDate + ", bank=" + bank + ", accNum=" + accNum + "]";
 	}
 	
 }

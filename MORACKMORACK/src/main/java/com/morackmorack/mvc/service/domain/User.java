@@ -11,7 +11,6 @@ public class User {
 	private String userName;
     private String email;
     private String phoneNumber;
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date birthday;
     private String nickName;
     private String profileImg;

@@ -40,6 +40,22 @@ $(function (){
 <jsp:include page="/message/sidebar.jsp" />
 </section>
 
+<aside>
+<strong>쪽지 제목</strong> ${message.title} <br/><br/>
+<strong>받는 사람</strong><br/>
+<strong>모임명</strong>${message.meetName} <br/>
+<strong>수신자 ID</strong>  ${message.receiver.userId} / <strong>발신자 ID</strong>  ${message.sender.userId} <br/>
+<strong>수신자 닉네임</strong> ${message.receiver.nickName} / <strong>발신자 닉네임</strong>  ${message.sender.nickName} <br/><br/>
+
+<strong>보낸 사람</strong> ${message.sender.userId} / <strong>받은 사람</strong> ${message.receiver.userId} <br/><br/>
+
+<strong>쪽지 보낸 날짜</strong> ${message.sendDate} <br/><br/>
+
+${message.content} <br/><br/>
+
+<button type="button" id="delMessage">삭제</button>
+<button type="button" id="ok">확인</button>
+</aside>
 
 </body>
 </html>

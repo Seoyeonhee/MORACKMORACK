@@ -2,6 +2,7 @@
     pageEncoding="EUC-KR"%>
     
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html>
 <html>
@@ -23,7 +24,13 @@
 
 <script type ="text/javascript">
 
-$(function (){
+$(function(){
+	
+	$("#getMessage").on("click", function(){
+		var messageNo = $(this).next().val();
+		self.location="/message/getMessage/"+ messageNo;
+	});
+	
 })
 
 </script>
@@ -39,6 +46,31 @@ $(function (){
 <section style="float: left; margin-top:100px;">
 <jsp:include page="/message/sidebar.jsp" />
 </section>
+
+<aside>
+받은 쪽지함
+
+<section style="float: left; margin-left:100px; margin-top:100px">
+<div style="text-align: center;">
+<section id="container" style="text-align: center;">
+    <table class="table table-hover">
+
+<c:forEach var="message" items="${listRecvMessage}">
+<tr>
+<td><img src="/resources/images/uploadFiles/user/${message.sender.profileImg}"/></td>
+<td>${message.meetName} <br/>${message.sender.userId}<br/> ${message.sender.nickName}</td>
+<td> ${message.title}</td>
+
+<td id="getMessage"> <fmt:formatDate value="${message.sendDate}" pattern="yyyy.MM.dd" /></td>
+<input type="hidden" value="${message.messageNo}"/>
+</tr>
+</c:forEach>
+</table>
+</section>
+</div>
+</section>
+
+</aside>
 
 </body>
 </html>

@@ -44,7 +44,7 @@ public class MessageController {
 	
 	@RequestMapping(value="sendMessage/{userId}/{meetId}", method = RequestMethod.GET)
 	public ModelAndView sendMessage(@PathVariable("userId") String userId, @PathVariable("meetId") String meetId) throws Exception{
-	System.out.println(">>>>>>>>>>>>>>>>>>>>>>>> /message/sendMessage : GET");
+	System.out.println("/message/sendMessage : GET");
 	
 	//Meet meet  = new Meet();
 	Meet meet = meetService.getMeet(meetId);
@@ -52,17 +52,16 @@ public class MessageController {
 	//User user = new User();
 	User user = userService.getUser(userId);
 	
-	System.out.println("?///////////////////////////////////////////////////////////////////////////////////////////?");
 	ModelAndView mav = new ModelAndView();
 	mav.addObject("meet", meet);
-	mav.addObject("user", user);
+	mav.addObject("recvUser", user);
 	mav.setViewName("/message/sendMessage.jsp");
 	
 	return mav;
 	}
 	
 	@RequestMapping(value="sendMessage", method = RequestMethod.POST)
-	public ModelAndView sendMessage(HttpServletRequest request, @ModelAttribute("message") Message message){
+	public ModelAndView sendMessage(HttpServletRequest request, @ModelAttribute("message") Message message) throws Exception{
 	System.out.println("/message/sendMessage : POST");
 	
 	ModelAndView mav = new ModelAndView();
@@ -75,9 +74,10 @@ public class MessageController {
 			return mav;
 		 }
 	
-	String userId = user.getUserId();
+	String sendNickname = user.getNickName();
 	
-	message.setSendId(userId);
+	message.setSender(user);
+	message.setReceiver(userService.getUser(request.getParameter("recvId")));
 	message.setMessageFlag('0'); //0쪽지 1알림
 	
 	messageService.sendMessage(message);
@@ -87,7 +87,7 @@ public class MessageController {
 	return mav;
 	}
 	
-	@RequestMapping(value="listSendMessage", method = RequestMethod.GET)
+	@RequestMapping(value="listSendMessage", method = {RequestMethod.GET, RequestMethod.POST})
 	public ModelAndView listSendMessage(HttpServletRequest request) {
 		System.out.println("message/listSendMessage : GET");
 		
@@ -154,7 +154,7 @@ public class MessageController {
 		Message message = new Message();
 		message = messageService.getMessage(messageNo);
 		
-		if(message.getRecvId().equals("userId")) {
+		if(message.getReceiver().getUserId().equals("userId") && message.getReadState() == false) {
 			messageService.readMessage(messageNo);
 		}
 		

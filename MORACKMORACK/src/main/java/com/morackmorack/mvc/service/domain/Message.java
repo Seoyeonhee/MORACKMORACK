@@ -3,41 +3,57 @@ package com.morackmorack.mvc.service.domain;
 import java.io.Serializable;
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 public class Message implements Serializable {
-private int messagNo;
+private int messageNo;
 private char messageFlag;
-private String sendId;
-private String recvId;
-private String recvMeetId;
+private User sender;
+private User receiver;
+private String meetId;
+private String meetName;
 private int offNo;
 private String title;
 private String content;
 private Date sendDate;
-private Date readState;
+private boolean readState;
 
+
+public int getMessageNo() {
+	return messageNo;
+}
+public void setMessageNo(int messageNo) {
+	this.messageNo = messageNo;
+}
 public char getMessageFlag() {
 	return messageFlag;
 }
 public void setMessageFlag(char messageFlag) {
 	this.messageFlag = messageFlag;
 }
-public String getSendId() {
-	return sendId;
+public User getSender() {
+	return sender;
 }
-public void setSendId(String sendId) {
-	this.sendId = sendId;
+public void setSender(User sender) {
+	this.sender = sender;
 }
-public String getRecvId() {
-	return recvId;
+public User getReceiver() {
+	return receiver;
 }
-public void setRecvId(String recvId) {
-	this.recvId = recvId;
+public void setReceiver(User receiver) {
+	this.receiver = receiver;
 }
-public String getRecvMeetId() {
-	return recvMeetId;
+public String getMeetId() {
+	return meetId;
 }
-public void setRecvMeetId(String recvMeetId) {
-	this.recvMeetId = recvMeetId;
+public void setMeetId(String meetId) {
+	this.meetId = meetId;
+}
+public String getMeetName() {
+	return meetName;
+}
+public void setMeetName(String meetName) {
+	this.meetName = meetName;
 }
 public int getOffNo() {
 	return offNo;
@@ -63,18 +79,18 @@ public Date getSendDate() {
 public void setSendDate(Date sendDate) {
 	this.sendDate = sendDate;
 }
-public Date getReadState() {
+public boolean getReadState() {
 	return readState;
 }
-public void setReadState(Date readState) {
+public void setReadState(boolean readState) {
 	this.readState = readState;
 }
 
 @Override
 public String toString() {
-	return "Message [messageFlag=" + messageFlag + ", sendId=" + sendId + ", recvId=" + recvId + ", recvMeetId="
-			+ recvMeetId + ", offNo=" + offNo + ", title=" + title + ", content=" + content + ", sendDate=" + sendDate
-			+ ", readState=" + readState + "]";
+	return "Message [messageNo=" + messageNo + ", messageFlag=" + messageFlag + ", sender=" + sender + ", receiver="
+			+ receiver + ", meetId=" + meetId + ", meetName=" + meetName + ", offNo=" + offNo + ", title=" + title
+			+ ", content=" + content + ", sendDate=" + sendDate + ", readState=" + readState + "]";
 }
 
 }

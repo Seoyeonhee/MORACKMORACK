@@ -34,11 +34,23 @@ public class MessageDaoImpl implements MessageDao{
 	}
 	
 	public List<Message> listSendMessage(String userId){
-		return sqlSession.selectList("MessageMapper.listSendMessage", userId);
+		List<Message> listSendMessage = sqlSession.selectList("MessageMapper.listSendMessage", userId);
+		
+		for(int i=0; i<listSendMessage.size(); i++) {
+			listSendMessage.get(i).setSender(sqlSession.selectOne("UserMapper.getUser", listSendMessage.get(i).getSender().getUserId()));
+			listSendMessage.get(i).setReceiver(sqlSession.selectOne("UserMapper.getUser", listSendMessage.get(i).getReceiver().getUserId()));
+		}
+		return listSendMessage;
 	}
 	
 	public List<Message> listRecvMessage(String userId){
-		return sqlSession.selectList("MessageMapper.listRecvMessage", userId);
+		List<Message> listRecvMessage = sqlSession.selectList("MessageMapper.listRecvMessage", userId);
+		
+		for(int i=0; i<listRecvMessage.size(); i++) {
+			listRecvMessage.get(i).setSender(sqlSession.selectOne("UserMapper.getUser", listRecvMessage.get(i).getSender().getUserId()));
+			listRecvMessage.get(i).setReceiver(sqlSession.selectOne("UserMapper.getUser", listRecvMessage.get(i).getReceiver().getUserId()));
+		}
+		return listRecvMessage;
 	}
 	
 	public void delMessage(int messageNo){
