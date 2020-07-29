@@ -49,7 +49,6 @@ $(function (){
 	$("button[id^=okJoinMeetUser]").on("click", function(){
 		var userId = $(this).next().val();
 		var meetId = $(this).next().next().val();
-		alert(userId +"    "+ meetId)
 		$("form").attr("method", "POST").attr("action", "/meet/mangJoinMeetUser/"+userId+"/1?meetId="+meetId).submit();
 		
 	})
@@ -57,8 +56,6 @@ $(function (){
 	$("button[id^=refuseJoinMeetUser]").on("click", function(){
 		var userId = $(this).next().val();
 		var meetId = $(this).next().next().val();
-		alert(userId +"    "+ meetId)
-		
 		$("form").attr("method", "POST").attr("action", "/meet/mangJoinMeetUser/"+userId+"/0?meetId="+meetId).submit();
 		
 	})
@@ -120,7 +117,7 @@ $(function (){
                  &nbsp; 
                 <button type="button" id="refuseJoinMeetUser">가입 거절</button>
                 <input type="hidden" value="${joinMeetUser.user.userId}"/>
-                <input type="hidden" value="${joinMeetUsercc.meet.meetId}"/>
+                <input type="hidden" value="${joinMeetUser.meet.meetId}"/>
                 </td>
             </tr>
         </c:forEach>

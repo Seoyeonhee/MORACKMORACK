@@ -10,11 +10,11 @@
 <meta charset="EUC-KR">
 <title>모임 상세 조회</title>
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<script src="https://code.jquery.com/jquery-3.1.1.js"></script>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 <style>
 .form__field {
@@ -196,12 +196,12 @@ button::before, button::after {
 
 <script type ="text/javascript">
 
-$(function (){
+$(function(){
+	
 	var meetId = $("#meetId").val();
 	var joinMessage = $("#joinMessage").val();
 	
 	if(joinMessage == '1'){
-		$('#modalBox').modal('close');
 		$('#modalBox').modal('show');
 		console.log("click open");
 	}else if(joinMessage == '0'){
@@ -211,11 +211,11 @@ $(function (){
 	}
 	
 	
-	$("button[name='joinMeet']").on("click", function(){	
+	$("#joinMeet").on("click", function(){	
 		self.location("/meet/joinMeet?meetId="+meetId)		
 	});
 	
-	$("button[id='addWishMeet']").on("click", function(){		
+	$("#addWishMeet").on("click", function(){		
 		self.location("/meet/addWishMeet?meetId="+meetId)		
 		alert("찜!") //찜 모달창 만들기
 	});
@@ -227,8 +227,6 @@ $(function (){
 	
 	$("#inputIntro").on("click", function(){
 			var intro = $("#intro").val();
-			alert(intro)
-			alert(meetId)
 			$("form").attr("method", "POST").attr("action", "/meet/joinMeet").submit();
 	});
 	
@@ -244,7 +242,6 @@ $(function (){
 		self.location("/offmeet/addOffView?meetId="+meetId);
 	});
 })
-
 </script>
 
 </head>
@@ -254,7 +251,7 @@ $(function (){
 
 <header>
 <jsp:include page="/toolbar.jsp" />
-</header>
+</header> 
 
 <section style="float: left; margin-top:100px;">
 <jsp:include page="/meet/sidebar.jsp" />
@@ -275,8 +272,8 @@ $(function (){
   </div>
 </section>
 
-<!-- <button class="draw meet" id="joinMeet">모임 가입</button> -->
-<button type="button" class="draw meet" name="joinMeet">모임가입</button>
+
+<button type="button" class="draw meet" id="joinMeet">모임가입</button>
 <button type="button" class="draw meet">쪽지 초대</button>
 <button type="button" class="draw meet">카카오톡 초대</button>
 <button type="button" class="draw meet" id="addOffMeet">오프라인 모임 생성</button>
@@ -285,7 +282,7 @@ $(function (){
 
 
 <!-- 모달 영역 -->
-<-div id="modalBox" class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div id="modalBox" class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 <div class="modal-dialog" role="document">
 <div class="modal-content">
 <div class="modal-header">
@@ -331,11 +328,11 @@ $(function (){
 </div>
 </div>
 
-<<<<<<< HEAD
+
+
+
 </section>
-=======
-<script id="embeddedChatbot" data-botId="B2k983" src="https://www.closer.ai/js/webchat.min.js"> </script>
->>>>>>> refs/remotes/origin/master
+
 </form>
 
 </body>
