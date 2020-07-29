@@ -333,7 +333,7 @@ $(function (){
 </div>
 </div>
 
-
+<script id="embeddedChatbot" data-botId="B2k983" src="https://www.closer.ai/js/webchat.min.js"> </script>
 </form>
 
 </body>

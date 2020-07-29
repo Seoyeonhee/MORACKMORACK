@@ -1,5 +1,6 @@
 package com.morackmorack.mvc.service.friend;
 
+import java.util.List;
 import java.util.Map;
 
 import com.morackmorack.mvc.common.Search;
@@ -20,5 +21,7 @@ public interface FriendService {
 	public void mangFriend(int friendNo) throws Exception;
 	
 	public void delFriend(int friendNo) throws Exception;
+	
+	public List<Friend> friendList(String reqFriendId) throws Exception;
 	
 }

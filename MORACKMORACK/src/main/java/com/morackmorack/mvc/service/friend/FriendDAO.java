@@ -23,4 +23,5 @@ public interface FriendDAO {
 	
 	public int getTotalCount(String userId) throws Exception;
 
+	public List<Friend> friendList(String reqFriendId) throws Exception;
 }
