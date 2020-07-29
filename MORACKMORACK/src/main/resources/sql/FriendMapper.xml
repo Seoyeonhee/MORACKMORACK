@@ -26,8 +26,8 @@
 	 					,	req_friend_date
 	 					,	friend_date
 	 					) VALUES (	seq_friend_friend_no.nextval
-	 							  ,	#{reqFriend.userId:VARCHAR2}
-	 							  ,	#{recvFriend.userId:VARCHAR2}
+	 							  ,	#{reqFriend.userId:VARCHAR}
+	 							  ,	#{recvFriend.userId:VARCHAR}
 	 							  ,	'0'
 	 							  ,	sysdate
 	 							  ,	null
@@ -90,8 +90,14 @@
 		FROM (	
 				SELECT *
 				FROM	friend
-				WHERE 	req_friend_if=#{reqFriendId}
+				WHERE 	req_friend_id=#{reqFriendId}
 				)
+	</select>
+	
+	<select id="friendList"  parameterType="String"	resultMap="friendSelectMap">
+		SELECT	*
+		FROM	friend
+		WHERE	req_friend_id=#{reqFriendId} and friend_code='1'
 	</select>
 	
 </mapper>

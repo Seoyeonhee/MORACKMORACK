@@ -331,7 +331,11 @@ $(function (){
 </div>
 </div>
 
+<<<<<<< HEAD
 </section>
+=======
+<script id="embeddedChatbot" data-botId="B2k983" src="https://www.closer.ai/js/webchat.min.js"> </script>
+>>>>>>> refs/remotes/origin/master
 </form>
 
 </body>

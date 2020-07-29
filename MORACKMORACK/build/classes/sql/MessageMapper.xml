@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+		
+<mapper namespace = "MessageMapper">
+
+	<resultMap id="messageSelectMap" type="message">
+		<result property="messageNo" column="message_no" jdbcType="INTEGER"/>
+		<result property="messageFlag" column="message_flag" jdbcType="CHAR"/>
+		<result property="sender.userId" column="send_id" jdbcType="VARCHAR"/>
+		<result property="receiver.userId" column="recv_id" jdbcType="VARCHAR"/>
+		<result property="meetId" column="meet_id" jdbcType="VARCHAR"/>
+		<result property="meetName" column="meet_name" jdbcType="VARCHAR"/>
+		<result property="offNo" column="off_no" jdbcType="INTEGER"/>
+		<result property="title" column="title" jdbcType="VARCHAR"/>
+		<result property="content" column="content" jdbcType="VARCHAR"/>
+		<result property="sendDate" column="send_date" jdbcType="DATE"/>
+		<result property="readState" column="read_state" jdbcType="CHAR"/>
+	</resultMap>
+	
+	<insert id="sendMessage" parameterType="message">
+	INSERT INTO message (message_no, message_flag, send_id, recv_id, meet_id, meet_name, off_no, title, content, send_date, read_state)
+	VALUES (seq_message_message_no.nextval, #{messageFlag}, #{sendId}, #{recvId}, #{meetId:VARCHAR}, #{meetName:VARCHAR}, #{offNo:INTEGER}, #{title:VARCHAR}, #{content:VARCHAR}, SYSDATE, '0')
+	</insert>
+	
+	<select id="getMessage" parameterType="String" resultMap="messageSelectMap">
+	SELECT message_no, message_flag, send_id, recv_id, meet_id, meet_name, off_no, title, content, send_date, read_state
+	FROM message
+	WHERE message_no = #{messageNo}
+	</select>
+	
+	<update id="readMessage" parameterType="integer">
+	UPDATE message 
+	SET read_state='1'
+	WHERE message_no = #{messageNo}
+	</update>
+	
+	<delete id="delMessage" parameterType="String">
+	DELETE FROM message
+	WHERE message_no = #{messageNo}
+	</delete>
+	
+	<select id="listSendMessage" parameterType="String" resultMap="messageSelectMap">
+	SELECT message_no, message_flag, send_id, recv_id, meet_id, meet_name, off_no, title, content, send_date, read_state
+	FROM message
+	WHERE message_flag = '0' AND send_id = #{sendId}
+	</select>
+	
+	<select id="listRecvMessage" parameterType="String" resultMap="messageSelectMap">
+	SELECT message_no, message_flag, send_id, recv_id, meet_id, meet_name, off_no, title, content, send_date, read_state
+	FROM message
+	WHERE message_flag = '0' AND recv_id = #{recvId}
+	</select>
+	
+	
+</mapper>

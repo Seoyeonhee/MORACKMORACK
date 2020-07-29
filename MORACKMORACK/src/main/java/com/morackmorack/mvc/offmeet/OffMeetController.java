@@ -29,7 +29,6 @@ import com.morackmorack.mvc.service.domain.User;
 import com.morackmorack.mvc.service.meet.MeetService;
 import com.morackmorack.mvc.service.meet.impl.MeetServiceImpl;
 import com.morackmorack.mvc.service.user.UserService;
-import com.morackmorack.mvc.common.Page;
 import com.morackmorack.mvc.common.Search;
 import com.morackmorack.mvc.service.business.BusinessService;
 import com.morackmorack.mvc.service.domain.Business;
@@ -68,11 +67,7 @@ private BusinessService businessService;
 @Value("#{commonProperties['offmeetfilePath']}")
 String uploadPath;
 
-@Value("#{commonProperties['pageUnit']}")
-int pageUnit;
 
-@Value("#{commonProperties['pageSize']}")
-int pageSize;
 
 public OffMeetController() {
 		
@@ -279,20 +274,19 @@ public String getOffPayList(@ModelAttribute("search") Search search, Model model
 	if (search.getCurrentPage() == 0) {
 		search.setCurrentPage(1);
 	}
-	search.setPageSize(pageSize);
+
 
 	Map<String, Object> map = offMeetService.getOffList2(search, userId);
 	
 	System.out.println("map====="+map);
-	Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")).intValue(), pageUnit,
-			pageSize);
-	System.out.println("ListPurchaseAction ::" + resultPage);
+
+
 
 	List<Pay>offPayList = (List<Pay>) map.get("list");
 
 	model.addAttribute("list", map.get("list"));
 	model.addAttribute("userId", userId);
-	model.addAttribute("resultPage", resultPage);
+
 	model.addAttribute("search", search);
 	
 	return "forward:/offMeet/getPayList.jsp";

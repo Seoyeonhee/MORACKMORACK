@@ -259,7 +259,7 @@ article {
           <a href="#!">SOCIAL</a>
           <ul class="nav-dropdown">
             <li>
-              <a href="/friend/listFriend">模备</a>
+              <a href="/friend/friendList">模备</a>
             </li>
             <li>
               <a href="/message/listRecvMessage">率瘤窃</a>

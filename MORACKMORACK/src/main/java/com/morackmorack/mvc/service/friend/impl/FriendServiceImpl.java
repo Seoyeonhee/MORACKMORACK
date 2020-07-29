@@ -30,6 +30,7 @@ public class FriendServiceImpl implements FriendService {
 	@Override
 	public void reqFriend(Friend friend) throws Exception {
 		// TODO Auto-generated method stub
+		System.out.println(friend);
 		friendDAO.reqFriend(friend);
 	}
 	@Override
@@ -71,5 +72,10 @@ public class FriendServiceImpl implements FriendService {
 		// TODO Auto-generated method stub
 		friendDAO.delFriend(friendNo);
 	}
-
+	@Override
+	public List<Friend> friendList(String reqFriendId) throws Exception {
+		// TODO Auto-generated method stub
+		System.out.println(reqFriendId);
+		return friendDAO.friendList(reqFriendId);
+	}
 }
