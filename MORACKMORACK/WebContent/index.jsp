@@ -17,18 +17,15 @@
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<<<<<<< HEAD
+
 <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
 <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-=======
 
->>>>>>> refs/remotes/origin/master
 	
 <script type ="text/javascript">
 $(function(){
 	
 
-<<<<<<< HEAD
 $('#carousel-example-generic').carousel({
 	// 슬리아딩 자동 순환 지연 시간
 	// false면 자동 순환하지 않는다.
@@ -42,14 +39,13 @@ $('#carousel-example-generic').carousel({
 	});
 	
 });
-=======
 
-
->>>>>>> refs/remotes/origin/master
 </script>
 
  <style>
-    h2 { margin: 20px 0} 
+h2 {
+ margin: 20px;
+} 
 </style>
 
 </head>
