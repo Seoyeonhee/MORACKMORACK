@@ -74,10 +74,10 @@
        	<c:if test="${!empty sessionScope.user and !empty user.profileImg}">
        	<img class="sidebar-image" src="/resources/images/uploadFiles/user/${user.profileImg}">
        	</c:if>
-       	<c:if test="${!empty sessionScope.user and empty user.profileImg and user.gender eq '남'.charAt(0)}">
+       	<c:if test="${!empty sessionScope.user and empty user.profileImg and user.gender eq '남'}">
        	<img class="sidebar-image" src="/resources/images/uploadFiles/man.png">
        	</c:if>
-       	<c:if test="${!empty sessionScope.user and empty user.profileImg and user.gender eq '여'.charAt(0)}">
+       	<c:if test="${!empty sessionScope.user and empty user.profileImg and user.gender eq '여'}">
        	<img class="sidebar-image" src="/resources/images/uploadFiles/woman.png">
        	</c:if>
        	<strong id="sideNickName">

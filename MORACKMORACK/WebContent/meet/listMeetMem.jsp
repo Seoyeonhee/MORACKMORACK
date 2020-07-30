@@ -66,7 +66,7 @@ $(function(){
 	$("button[id^='notifyUserView']").on("click", function(){
 		var userId = $(this).next().val();
 		var meetId = $(this).next().next().val();
-		self.location = "/notify/notifyUserView?userId="+userId+"&"+"meetId="+meetId;
+		self.location = "/notify/notifyUserView?userId="+userId;
 	});
 	
 	$("button[id^='provideStaff']").on("click", function(){		

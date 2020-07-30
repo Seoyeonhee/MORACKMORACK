@@ -41,7 +41,7 @@ public class NotifyController {
 	}
 	
 	@RequestMapping(value="notifyUserView")
-	public ModelAndView notifyUserView(@RequestParam("userId") String userId, @RequestParam("meetId") String meetId, HttpSession session) throws Exception{
+	public ModelAndView notifyUserView(@RequestParam("userId") String userId, HttpSession session) throws Exception{
 		
 		System.out.println("/notifyUserView.do");
 		
