@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
     
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="EUC-KR">
-<title>¸ðÀÓ »ó¼¼ Á¶È¸</title>
+<title>ëª¨ìž„ ìƒì„¸ ì¡°íšŒ</title>
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
@@ -227,8 +227,8 @@ button::before, button::after {
 }
 
 #mainCart{
-	width: 360px;
-	height: 72px;
+	width: 340px;
+	height: 62px;
 	margin: auto;
 	background: #ececec;
 	position: fixed;
@@ -393,42 +393,42 @@ $(function(){
 		$('#modalBox').modal('show');
 		console.log("click open");
 	}else if(joinMessage == '0'){
-		alert("¸ðÀÓ ÀÎ¿ø ÃÊ°ú")
+		alert("ëª¨ìž„ ì¸ì› ì´ˆê³¼")
 	}else if(joinMessage == '3'){
-		alert("°¡ÀÔ °¡´ÉÇÑ ¸ðÀÓÀº 5°³")
+		alert("ê°€ìž… ê°€ëŠ¥í•œ ëª¨ìž„ì€ 5ê°œ")
 	}
 	
 	$("#joinMeet").on("click", function(){	
-		self.location("/meet/joinMeet?meetId="+meetId)		
+		self.location = "/meet/joinMeet?meetId="+meetId;	
 	});
 	
-	$("#addWishMeet").on("click", function(){		
-		self.location("/meet/addWishMeet?meetId="+meetId)		
-		alert("Âò!") //Âò ¸ð´ÞÃ¢ ¸¸µé±â
+	$("#inviteToMessage").on("click", function(){			
+		self.location = "/message/sendMessage?meetId="+meetId;	
 	});
 	
-	$("#addOffMeet").on("click", function(){		
-		self.location("/offmeet/addOffView?meetId="+meetId)		
-	})
 	
-	
-	$("#inputIntro").on("click", function(){
-			var intro = $("#intro").val();
-			$("form").attr("method", "POST").attr("action", "/meet/joinMeet").submit();
+	$("#inviteToKakao").on("click", function(){
+		self.location = "#";
 	});
 	
-
-	$('#myModal').on('show.bs.modal', function (event) { // myModal À©µµ¿ì°¡ ¿ÀÇÂÇÒ¶§ ¾Æ·¡ÀÇ ¿É¼ÇÀ» Àû¿ë
-	  var button = $(event.relatedTarget) // ¸ð´Þ À©µµ¿ì¸¦ ¿ÀÇÂÇÏ´Â ¹öÆ°
-	  var titleTxt = button.data('title') // ¹öÆ°¿¡¼­ data-title °ªÀ» titleTxt º¯¼ö¿¡ ÀúÀå
-	  var modal = $(this)
-	  modal.find('.modal-title').text('Title : ' + titleTxt) // ¸ð´ÞÀ§µµ¿ì¿¡¼­ .modal-titleÀ» Ã£¾Æ titleTxt °ªÀ» Ä¡È¯
-	});
 	
 	$("#addOffMeet").on("click", function(){
 		self.location("/offmeet/addOffView?meetId="+meetId);
 	});
 	
+	
+	$('#myModal').on('show.bs.modal', function (event) { // myModal ìœˆë„ìš°ê°€ ì˜¤í”ˆí• ë•Œ ì•„ëž˜ì˜ ì˜µì…˜ì„ ì ìš©
+	  var button = $(event.relatedTarget) // ëª¨ë‹¬ ìœˆë„ìš°ë¥¼ ì˜¤í”ˆí•˜ëŠ” ë²„íŠ¼
+	  var titleTxt = button.data('title') // ë²„íŠ¼ì—ì„œ data-title ê°’ì„ titleTxt ë³€ìˆ˜ì— ì €ìž¥
+	  var modal = $(this)
+	  modal.find('.modal-title').text('Title : ' + titleTxt) // ëª¨ë‹¬ìœ„ë„ìš°ì—ì„œ .modal-titleì„ ì°¾ì•„ titleTxt ê°’ì„ ì¹˜í™˜
+	});
+	
+	$("#inputIntro").on("click", function(){
+		var intro = $("#intro").val();
+		$("form").attr("method", "POST").attr("action", "/meet/joinMeet").submit();
+});
+
 	//var count = 0;
 	var count = $("#wishCount").val();
 	$("a.cart > span").addClass("counter");
@@ -491,8 +491,8 @@ $(function(){
 <input type="hidden" id="wishMeet" name="wishMeet" value="${wishMeet}"/>
 <input type="hidden" id="wishCount" name="wishCount" value="${wishCount}"/>
 
-<aside>
-<section style="float: right; margin-bottom:10px;">
+<aside >
+<section>
 
   <div id="mainCart" style="float:right; margin-top:100px;">
   <c:if test="${empty wishMeet}">
@@ -504,21 +504,23 @@ $(function(){
 	<a href="#" class="cart"><span></span></a>
 </div>
 
+<div style="float:right;">
 <c:if test="${empty meetMem}">
-<button type="button" class="draw meet" id="joinMeet">¸ðÀÓ°¡ÀÔ</button>
+<button type="button" class="draw meet" id="joinMeet">ëª¨ìž„ê°€ìž…</button>
 </c:if>
-<c:if test="${!empty meetMem}">
-<button type="button" class="draw meet">ÂÊÁö ÃÊ´ë</button>
-<button type="button" class="draw meet">Ä«Ä«¿ÀÅå ÃÊ´ë</button>
+<c:if test="${!empty meetMem and meetMem.joinCode eq '1'.charAt(0)}">
+<button type="button" class="draw meet" id="inviteToMessage">ìª½ì§€ ì´ˆëŒ€</button>
+<button type="button" class="draw meet" id="inviteToKakao">ì¹´ì¹´ì˜¤í†¡ ì´ˆëŒ€</button>
 <c:if test="${meetMem.meetRole eq '0'.charAt(0) or meetMem.meetRole eq '1'.charAt(0)}">
-<button type="button" class="draw meet" id="addOffMeet">¿ÀÇÁ¶óÀÎ ¸ðÀÓ »ý¼º</button>
+<button type="button" class="draw meet" id="addOffMeet">ì˜¤í”„ë¼ì¸ ëª¨ìž„ ìƒì„±</button>
 </c:if>
 </c:if>
+</div>
 </section>
 
-<section style="float: left; margin-bottom:10px;">
+<section style="float: left; margin-bottom:10px; margin-top:100px;">
 <div class="grid12-6">
-<img src="/resources/images/uploadFiles/meet/${meet.meetImg}" width="1200" height="1200">
+<img src="/resources/images/uploadFiles/meet/${meet.meetImg}" width="1350" height="1100">
 <div class="inner_box">
      <h2 id="mainMeetName">${meet.meetName}</h2>
      <br/><br/>
@@ -530,13 +532,13 @@ $(function(){
 </section>
 
 
-<!-- ¸ð´Þ ¿µ¿ª -->
+<!-- ëª¨ë‹¬ ì˜ì—­ -->
 <div id="modalBox" class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 <div class="modal-dialog" role="document">
 <div class="modal-content">
 <div class="modal-header">
-<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">¡¿</span></button>
-<h4 class="modal-title" id="myModalLabel">¸ðÀÓ °¡ÀÔ ½ÅÃ»</h4>
+<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">Ã—</span></button>
+<h4 class="modal-title" id="myModalLabel">ëª¨ìž„ ê°€ìž… ì‹ ì²­</h4>
 </div>
 <div class="modal-body">
     	<div class="col-xs-6 col-md-5">
@@ -544,36 +546,36 @@ $(function(){
      		 <img src="/resources/images/uploadFiles/meet/${meet.meetImg}" width="100" height="100" alt="MORACK MORACK"/> 
     		</a>
  		 </div>
-  		<strong>¸ðÀÓ¸í</strong>
+  		<strong>ëª¨ìž„ëª…</strong>
 		${meet.meetName} <br/>
-		<strong>¸ðÀÓÀ¯Çü</strong>
-    	<c:if test="${meet.meetType eq '0'.charAt(0)}">2ÀÎ¸ðÀÓ</c:if><c:if test="${meet.meetType eq '1'.charAt(0)}">´Ù¼öÀÎ¸ðÀÓ</c:if> <br/>
-    	<strong>¸ðÀÓ¸í</strong>
+		<strong>ëª¨ìž„ìœ í˜•</strong>
+    	<c:if test="${meet.meetType eq '0'.charAt(0)}">2ì¸ëª¨ìž„</c:if><c:if test="${meet.meetType eq '1'.charAt(0)}">ë‹¤ìˆ˜ì¸ëª¨ìž„</c:if> <br/>
+    	<strong>ëª¨ìž„ëª…</strong>
     	<c:choose>
-		<c:when test="${meet.category eq 0}">¿©Çà</c:when>
-		<c:when test="${meet.category eq 1}">°ÔÀÓ</c:when>
-		<c:when test="${meet.category eq 2}">À½¾Ç</c:when>
-		<c:when test="${meet.category eq 3}">¿µÈ­</c:when>
-		<c:when test="${meet.category eq 4}">°ø¿¬</c:when>
-		<c:when test="${meet.category eq 5}">¸ÀÁý</c:when>
-		<c:when test="${meet.category eq 6}">Ãë¾÷/ÀÚ±â°è¹ß</c:when>
-		<c:when test="${meet.category eq 7}">¾×Æ¼ºñÆ¼</c:when>
-		<c:when test="${meet.category eq 8}">µ¶¼­/¸¸È­</c:when>
-		<c:when test="${meet.category eq 9}">´í½º</c:when>
-		<c:when test="${meet.category eq 10}">»çÁø</c:when>
-		<c:when test="${meet.category eq 11}">¹Ý·Áµ¿¹°</c:when>
-		<c:when test="${meet.category eq 12}">¿ä¸®</c:when>
-		<c:when test="${meet.category eq 13}">Â÷</c:when>
-		<c:when test="${meet.category eq 14}">½ºÆ÷Ã÷</c:when>
-		<c:when test="${meet.category eq 15}">°ø¿¹</c:when>
-		<c:when test="${meet.category eq 16}">±âÅ¸</c:when>
+		<c:when test="${meet.category eq 0}">ì—¬í–‰</c:when>
+		<c:when test="${meet.category eq 1}">ê²Œìž„</c:when>
+		<c:when test="${meet.category eq 2}">ìŒì•…</c:when>
+		<c:when test="${meet.category eq 3}">ì˜í™”</c:when>
+		<c:when test="${meet.category eq 4}">ê³µì—°</c:when>
+		<c:when test="${meet.category eq 5}">ë§›ì§‘</c:when>
+		<c:when test="${meet.category eq 6}">ì·¨ì—…/ìžê¸°ê³„ë°œ</c:when>
+		<c:when test="${meet.category eq 7}">ì•¡í‹°ë¹„í‹°</c:when>
+		<c:when test="${meet.category eq 8}">ë…ì„œ/ë§Œí™”</c:when>
+		<c:when test="${meet.category eq 9}">ëŒ„ìŠ¤</c:when>
+		<c:when test="${meet.category eq 10}">ì‚¬ì§„</c:when>
+		<c:when test="${meet.category eq 11}">ë°˜ë ¤ë™ë¬¼</c:when>
+		<c:when test="${meet.category eq 12}">ìš”ë¦¬</c:when>
+		<c:when test="${meet.category eq 13}">ì°¨</c:when>
+		<c:when test="${meet.category eq 14}">ìŠ¤í¬ì¸ </c:when>
+		<c:when test="${meet.category eq 15}">ê³µì˜ˆ</c:when>
+		<c:when test="${meet.category eq 16}">ê¸°íƒ€</c:when>
 	</c:choose> <br/>
 		${meet.lIntro} <br/>
-		<strong>ÇÑÁÙ ÀÚ±â¼Ò°³</strong> <input type="text" id="intro" name="intro" class="form__field" placeholder="ÀÚ±â¼Ò°³ ÀÔ·Â" value=""/>
+		<strong>í•œì¤„ ìžê¸°ì†Œê°œ</strong> <input type="text" id="intro" name="intro" class="form__field" placeholder="ìžê¸°ì†Œê°œ ìž…ë ¥" value=""/>
 </div>
 <div class="modal-footer">
-<button class="btn btn-default" data-dismiss="modal">Ãë¼Ò</button>
-            <button class="btn btn-primary" id="inputIntro">°¡ÀÔ</button>
+<button type="button" class="btn btn-default" data-dismiss="modal">ì·¨ì†Œ</button>
+            <button type="button" class="btn btn-primary" id="inputIntro">ê°€ìž…</button>
 </div>
 </div>
 </div>

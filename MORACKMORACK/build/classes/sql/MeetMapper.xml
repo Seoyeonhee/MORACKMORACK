@@ -102,13 +102,12 @@
 	VALUES (seq_meet_hashtag_meet_hash_no.nextval, #{meetId}, #{hashNo})
 	</insert>
 	
-	<insert id="joinMeet" parameterType="meetMem">
-	<if test="joinCode != null and joinCode.equals('0')">
+	<insert id="joinMeet" parameterType="meetMem">	
 	INSERT INTO meetmem(mem_no, user_id, meet_id, join_code, meet_role, join_req_date, join_date, intro, notify_count)
+	<if test="joinCode != null and joinCode.equals('0')">
 	VALUES (seq_meetmem_mem_no.nextval, #{user.userId}, #{meet.meetId}, #{joinCode}, #{meetRole}, SYSDATE, #{joinDate:DATE}, #{intro:VARCHAR}, 0)
 	</if>
 	<if test="joinCode != null and joinCode.equals('1')">
-	INSERT INTO meetmem(mem_no, user_id, meet_id, join_code, meet_role, join_req_date, join_date, intro, notify_count)
 	VALUES (seq_meetmem_mem_no.nextval, #{user.userId}, #{meet.meetId}, #{joinCode}, #{meetRole}, SYSDATE, SYSDATE, #{intro:VARCHAR}, 0)	
 	</if>
 	</insert>
@@ -122,7 +121,7 @@
 	<select id="getMeetMem" parameterType="map" resultMap="meetMemSelectMap">
 	SELECT mem_no, user_id, meet_id, join_code, meet_role, join_req_date, join_date, intro, notify_count
 	FROM meetmem
-	WHERE meet_id = #{meetId} and user_id = #{userId} and join_code = '1'
+	WHERE meet_id = #{meetId} and user_id = #{userId}
 	</select>
 	
 	<select id="listMeetMem" parameterType="String" resultMap="meetMemSelectMap">
@@ -247,6 +246,11 @@
 	<delete id="delMeet" parameterType="String">
 	DELETE FROM meet
 	WHERE meet_id = #{meetId}
+	</delete>
+	
+	<delete id="delMeetWithReqJoinUser" parameterType="String">
+	DELETE FROM meetmem 
+	where meet_id = #{meetId}
 	</delete>
 	
 	<delete id="delHash" parameterType="String">

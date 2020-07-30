@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -42,19 +43,24 @@ public class MessageController {
 		
 	}
 	
-	@RequestMapping(value="sendMessage/{userId}/{meetId}", method = RequestMethod.GET)
-	public ModelAndView sendMessage(@PathVariable("userId") String userId, @PathVariable("meetId") String meetId) throws Exception{
+	@RequestMapping(value="sendMessage", method = RequestMethod.GET)
+	public ModelAndView sendMessage(@RequestParam(value = "userId", required = false) String userId, @RequestParam(value = "meetId", required = false) String meetId) throws Exception{
 	System.out.println("/message/sendMessage : GET");
 	
+	ModelAndView mav = new ModelAndView();
+	
 	//Meet meet  = new Meet();
+	if(meetId != null) {
 	Meet meet = meetService.getMeet(meetId);
+	mav.addObject("meet", meet);
+	}
 	
 	//User user = new User();
+	if(userId != null) {
 	User user = userService.getUser(userId);
-	
-	ModelAndView mav = new ModelAndView();
-	mav.addObject("meet", meet);
 	mav.addObject("recvUser", user);
+	}
+	
 	mav.setViewName("/message/sendMessage.jsp");
 	
 	return mav;

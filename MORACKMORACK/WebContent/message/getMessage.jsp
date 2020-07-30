@@ -24,6 +24,10 @@
 <script type ="text/javascript">
 
 $(function (){
+	
+	$("#ok").on("click", function(){
+		window.history.back();
+	})
 })
 
 </script>

@@ -106,7 +106,7 @@ $(function (){
     			</td>
                 
                 <td>${joinMeetUser.user.nickName}(${joinMeetUser.user.userId})</td>
-                <td><c:if test="${joinMeetUser.user.gender eq '0'}">남자</c:if><c:if test="${joinMeetUser.user.gender eq '1'}">여자</c:if></td>
+                <td><c:if test="${joinMeetUser.user.gender eq '남'}">남자</c:if><c:if test="${joinMeetUser.user.gender eq '여'}">여자</c:if></td>
                 <td><fmt:formatDate value="${joinMeetUser.user.birthday}" pattern="yyyy.MM.dd" /></td>
                 <td><c:forEach var="category" items="${joinMeetUser.user.category}"> ${category} </c:forEach></td>
                 <td><c:forEach var="blacklist" items="${joinMeetUser.blackList}"> ${blacklist} </c:forEach></td> 
