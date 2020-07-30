@@ -54,6 +54,14 @@ public class MeetServiceImpl implements MeetService{
 		return meetDao.listMeet(search);
 	}
 	
+	public List<Meet> listMeetFromMain(){
+		return meetDao.listMeetFromMain();
+	}
+	
+	public List<Meet> listMeetFromMain(List<Integer> categoryNo){
+		return meetDao.listMeetFromMain(categoryNo);
+	}
+	
 	public void outMeet(String userId, String meetId){
 		meetDao.outMeet(userId, meetId);
 	}
@@ -120,6 +128,10 @@ public class MeetServiceImpl implements MeetService{
 	
 	public String getHash(String hashtag) {
 		return meetDao.getHash(hashtag);
+	}
+	
+	public List<String> getHashtagFromMain(String hashtag) {
+		return meetDao.getHashtagFromMain(hashtag);
 	}
 	
 	public void addHash(String hashtag) {

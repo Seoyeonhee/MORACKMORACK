@@ -1,5 +1,6 @@
 package com.morackmorack.mvc.main;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,11 +33,15 @@ public class MainController {
 		HttpSession session = request.getSession(true);
 		User user = (User) request.getAttribute("user");
 		
-		//meetService.getMeetMain(category);
+		List<Meet> listMeetMain = new ArrayList<Meet>();
 		
-		List<Meet> meet = meetService.getMeetMain();
-		
-		mav.addObject("meet", meet);
+		if(user != null) {
+		listMeetMain = meetService.listMeetFromMain(user.getCategory());
+		}else {
+			listMeetMain = meetService.listMeetFromMain();
+		}
+
+		mav.addObject("listMeetMain", listMeetMain);
 		mav.setViewName("/index.jsp");
 		return mav;		
 	}

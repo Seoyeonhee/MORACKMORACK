@@ -24,6 +24,10 @@ public interface MeetDao {
 	
 	public List<Meet> listMeet(Search search);
 	
+	public List<Meet> listMeetFromMain();
+	
+	public List<Meet> listMeetFromMain(List<Integer> categoryNo);
+	
 	public void outMeet(String userId, String meetId);
 	
 	public void delMeet(String meetId);
@@ -55,6 +59,8 @@ public interface MeetDao {
 	public Map listWishMeet(String userId);
 	
 	public void delWishMeet(String userId, String meetId);
+	
+	public List<String> getHashtagFromMain(String hashtag);
 	
 	public String getHash(String hashtag);
 	

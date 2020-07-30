@@ -57,6 +57,15 @@ public class MeetDaoImpl implements MeetDao {
 		return sqlSession.selectList("MeetMapper.listMeet", search);
 	}
 	
+	public List<Meet> listMeetFromMain(){
+		List<Integer> categoryNo = null;
+		return sqlSession.selectList("MeetMapper.listMeetMain", categoryNo);
+	}
+	
+	public List<Meet> listMeetFromMain(List<Integer> categoryNo){
+		return sqlSession.selectList("MeetMapper.listMeetMain", categoryNo);
+	}
+	
 	public void outMeet(String userId, String meetId){
 		Map map = new HashMap();
 		map.put("userId", userId);
@@ -195,6 +204,10 @@ public class MeetDaoImpl implements MeetDao {
 	
 	public String getHash(String hashtag) {
 		return sqlSession.selectOne("MeetMapper.getHash", hashtag);
+	}
+	
+	public List<String> getHashtagFromMain(String hashtag) {
+		 return sqlSession.selectList("MeetMapper.getHashtagFromMain", hashtag);
 	}
 	
 	public void addHash(String hashtag) {
