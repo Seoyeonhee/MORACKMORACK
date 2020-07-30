@@ -11,18 +11,19 @@ public class User {
 	private String userName;
     private String email;
     private String phoneNumber;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date birthday;
     private String nickName;
     private String profileImg;
     private String address;
-    private char gender;
+    private String gender;
     private char userStateList;
     private String naverId;
     private String kakaoId;
     private String googleId;
     private int meetCount;
     private String role;
-    private List<Integer> category;
+    private List<String> category;
     private List<String> meetList;
     
     
@@ -98,11 +99,11 @@ public class User {
 		this.address = address;
 	}
 
-	public char getGender() {
+	public String getGender() {
 		return gender;
 	}
 
-	public void setGender(char gender) {
+	public void setGender(String gender) {
 		this.gender = gender;
 	}
 	
@@ -154,11 +155,11 @@ public class User {
 		this.role = role;
 	}
 
-	public List<Integer> getCategory() {
+	public List<String> getCategory() {
 		return category;
 	}
 
-	public void setCategory(List<Integer> category) {
+	public void setCategory(List<String> category) {
 		this.category = category;
 	}
 	

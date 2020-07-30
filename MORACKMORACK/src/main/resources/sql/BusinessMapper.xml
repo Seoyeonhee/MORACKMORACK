@@ -40,6 +40,31 @@
 		<result property="reserveAbleEndTime" 			column="reserve_able_end_time" 			jdbcType="VARCHAR"/>
 	</resultMap>
 	
+	
+	
+	
+	<resultMap type="pay" id="paySelectMap">
+		<result property="payNo" 				column="PAY_NO" 		jdbcType="INTEGER"/>
+  		<result property="user.userId" 	column="USER_ID" 		jdbcType="VARCHAR"/>
+  		<result property="meet.meetId" 		column="MEET_ID"		jdbcType="VARCHAR"/>
+  		<result property="offMeet.offNo" 		column="OFF_NO"		jdbcType="INTEGER"/>	
+  		<result property="reserveMemNum"		column="RESERVE_MEM_NUM" jdbcType="INTEGER"/>
+  		<result property="reserveStartTime" 		column="RESERVE_START_TIME" 	jdbcType="VARCHAR"/>
+  		<result property="reserveEndTime" 		column="RESERVE_END_TIME" jdbcType="VARCHAR"/>
+  		<result property="reserveDate" 			column="RESERVE_DATE" 		jdbcType="VARCHAR"/>
+  		<result property="totalAmount" 			column="TOTAL_AMOUNT" 	jdbcType="INTEGER"/>
+  	    <result property="payStatus" 		column="PAY_STATUS"	jdbcType="CHAR"/>
+  		<result property="payDate" 			column="PAY_DATE" 	jdbcType="DATE"/>
+  		<result property="payMethod" 			column="PAY_METHOD" 		jdbcType="CHAR"/> 
+  		<result property="reserveAbleNo" 			column="RESERVE_ABLE_NO" 		jdbcType="INTEGER"/> 	
+  		
+  		<collection property="business" resultMap="BusinessSelectMap"/>
+  	</resultMap>
+  	
+  	
+  	
+  	
+	
 	<!-- 제휴 업체 -->
 	
 	<!-- SQL : Business_INSERT -->
@@ -195,6 +220,27 @@
 		SELECT reserve_able_no, business_id, reserve_able_start_time, reserve_able_end_time
 		FROM reserveable
 		WHERE reserve_able_no = #{reserveAbleNo}
+	</select>
+	
+	
+	
+	
+	<!-- SQL : USED_BUSINESS_LIST -->
+	<select id="getUsedBusinessList" parameterType="String" resultMap="paySelectMap">
+		SELECT b.business_id, b.business_name, b.business_img,
+		        p.pay_no, p.meet_id, p.off_no, p.business_id, p.reserve_date, p.reserve_able_no, p.reserve_start_time, p.reserve_end_time
+		FROM business b,
+		                ( SELECT pay_no, meet_id, off_no, business_id, reserve_date, reserve_able_no, reserve_start_time, reserve_end_time
+		                from pay
+		                where off_no IN ( SELECT off_no
+		                                    FROM meetmem_offmeet
+		                                    WHERE mem_id in ( 
+		                                                    SELECT mem_no
+		                                                    FROM meetmem
+		                                                    WHERE user_id = #{userId}
+		                                                    ) )
+		                AND reserve_able_no IS NOT NULL ) p
+		WHERE b.business_id IN p.business_id
 	</select>
 	
 	

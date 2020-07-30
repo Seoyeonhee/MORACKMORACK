@@ -11,6 +11,7 @@ import com.morackmorack.mvc.service.business.BusinessDao;
 import com.morackmorack.mvc.service.business.BusinessService;
 import com.morackmorack.mvc.service.domain.Business;
 import com.morackmorack.mvc.service.domain.Menu;
+import com.morackmorack.mvc.service.domain.Pay;
 import com.morackmorack.mvc.service.domain.ReserveAble;
 
 //==> 회원관리 서비스 구현
@@ -108,6 +109,10 @@ public class BusinessServiceImpl implements BusinessService {
 	
 	public ReserveAble getReservAbleTime(int reserveAbleNo) throws Exception {
 		return businessDao.getReservAbleTime(reserveAbleNo);
+	}
+	
+	public List<Pay> getUsedBusinessList(String userId) throws Exception {
+		return businessDao.getUsedBusinessList(userId);
 	}
 
 }
