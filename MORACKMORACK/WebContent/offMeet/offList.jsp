@@ -43,7 +43,7 @@
 </header>
 
 <section style="float: left; margin-top:100px;">
-<jsp:include page="/offMeet/offSidebar.jsp" />
+<jsp:include page="../offMeet/offSidebar.jsp" />
 </section>
 
 <div class="container">
@@ -67,7 +67,7 @@
   		<div class="col-sm-6 col-md-4">
     	<div class="thumbnail">
     	<input type="hidden" name="offNo"value="${offMeet.offNo }" />
-     	 <img src="/resources/images/uploadFiles/offmeet/${offMeet.imageFile}" style="width:300px; height:300px;"  onError="this.src='/resources/images/noImage.jpg'" alt="noImage">
+     	 <img src="/resources/images/uploadFiles/offmeet/${offMeet.imageFile}" style="width:300px; height:300px;"  onError="this.src='/resources/images/logo.png'" alt="noImage">
      	 <div class="caption">
         <h3></h3>
         <p>오프라인 모임명: ${offMeet.offName}</p>

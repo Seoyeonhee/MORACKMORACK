@@ -45,7 +45,7 @@ $(function() {
 	});
 	
 	$("#list").click(function (){
-		self.location = "/offmeet/getPayList";
+		self.location = "/offmeet/listOffPay";
 	})
 	
 });	
@@ -124,7 +124,7 @@ $(function() {
  		 	  <div class="col-sm-offset-4  col-sm-4 text-center">
 		         <a class="btn btn-primary btn" href="#" role="button">확 &nbsp;인</a>
 		      <input type="hidden" id="meetId" value="${pay.meet.meetId}"/> 
-		      <button type="button" class="btn btn-outline-info" id="list" >참여비 내역 조회 바로가기</button>
+		      <button type="button" class="btn btn-primary btn" id="list" >참여비 목록</button>
  		</div> 
 	</div>
 </div>

@@ -29,13 +29,11 @@ public interface OffMeetService {
 
     public List<OffMeet> getOffList(String meetId) throws Exception;
   
-	public Map<String, Object> getOffMeetList(Search search, String userId) throws Exception;
-	
-	public Map<String,Object> getPayList(Search search, String userId) throws Exception;
+	public Map<String, Object> listOffPay(Search search, String userId) throws Exception;
 	
 	public Map<String, Object> listOffMem(Search search) throws Exception;
 	
-	public Map<String,Object> getBusinessPayList(Search search, String userId) throws Exception;
+	public Map<String,Object> listBusinessPay(Search search, String meetId) throws Exception;
 	
 	public Map <String, Object> listReserveBusiness(Search search) throws Exception;
 

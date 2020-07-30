@@ -109,10 +109,10 @@ public String addOff (@RequestParam("meetId") String meetId, @ModelAttribute ("o
 			offMeet.setImageFile(fileName);
 			System.out.println("offMeet : :::::"+offMeet);
 		}else {
-			offMeet.setImageFile("noImage.jpg");
+			offMeet.setImageFile("logo.png");
 		}
 	}else {
-		offMeet.setImageFile("noImage.jpg");
+		offMeet.setImageFile("logo.png");
 	}
 	System.out.println("offMeet : :::::"+offMeet);
 	offMeetService.addOff(offMeet);
@@ -214,16 +214,31 @@ public String getOffPay (@RequestParam("payNo") int payNo, Model model, HttpSess
 	return "forward:/offMeet/getOffPay.jsp";
 }
 
+@RequestMapping (value="getBusinessPay" , method = RequestMethod.GET)
+public String getBusinessPay (@RequestParam("payNo") int payNo, Model model, HttpSession session) throws Exception{
+
+	Pay pay = new Pay();
+	
+	pay = offMeetService.getBusinessPay(payNo);
+
+	User user = (User)session.getAttribute("user");
+	pay.setUser(user);
+	
+	model.addAttribute("pay", pay);
+	
+	return "forward:/offMeet/getBusinessPay.jsp";
+}
+
 @RequestMapping (value="addBusinessPay", method = RequestMethod.GET)
 public String addBusinessPay (HttpSession session, Model model) throws Exception{
 	Pay pay = new Pay();
 	
 	Business business = new Business();
-	String businessId ="bus01";
+	String businessId ="bus02";
 	Meet meet = new Meet();
 	String meetId ="a8665c70537944200730";
 	OffMeet offMeet = new OffMeet();
-	int  offNo = 10002;
+	int  offNo = 10004;
 	
 	pay.setMeet(meetService.getMeet(meetId));
 	pay.setUser((User)session.getAttribute("user"));
@@ -284,8 +299,8 @@ public String getOffList(@RequestParam("meetId") String meetId, Model model) thr
 	return "forward:/offMeet/offList.jsp";
 }
 
-@RequestMapping(value = "getPayList")
-public String getPayList(@ModelAttribute("search") Search search, Model model,HttpSession session, User user) throws Exception {
+@RequestMapping(value = "listOffPay")
+public String listOffPay(@ModelAttribute("search") Search search, Model model,HttpSession session, User user) throws Exception {
 
  System.out.println("컨트롤러 시작 ");
 	user = (User) session.getAttribute("user");
@@ -300,7 +315,7 @@ public String getPayList(@ModelAttribute("search") Search search, Model model,Ht
 	String userId = user.getUserId();
 	System.out.println("UserId ::" +userId);
 	
-	Map<String, Object> map = offMeetService.getOffMeetList(search, userId);
+	Map<String, Object> map = offMeetService.listOffPay(search, userId);
 	
 	 
 	Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")).intValue(), pageUnit,
@@ -313,8 +328,38 @@ public String getPayList(@ModelAttribute("search") Search search, Model model,Ht
 	model.addAttribute("resultPage", resultPage);
 	model.addAttribute("search", search);
 	
-	return "forward:/offMeet/getPayList.jsp";
+	return "forward:/offMeet/listOffPay.jsp";
 }
+
+
+@RequestMapping(value = "listBusinessPay")
+public String listBusinessPay(@RequestParam("meetId") String meetId, @ModelAttribute("search") Search search, Model model,HttpSession session, User user) throws Exception {
+
+	
+	if (search.getCurrentPage() == 0) {
+		search.setCurrentPage(1);
+	}
+	
+	search.setPageSize(pageSize);
+
+
+	
+	Map<String, Object> map = offMeetService.listBusinessPay(search, meetId);
+	
+	 
+	Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")).intValue(), pageUnit,
+			pageSize);
+	System.out.println("listBusinessPay ::" + resultPage);
+
+	System.out.println("list ::" +map.get("list"));
+
+	model.addAttribute("list", map.get("list"));
+	model.addAttribute("resultPage", resultPage);
+	model.addAttribute("search", search);
+	
+	return "forward:/offMeet/listBusinessPay.jsp";
+}
+
 
 
 }

@@ -33,20 +33,21 @@ public interface OffMeetDao {
     public int getOffPayTotalCount(String userId) throws Exception;
     
 	//참여비 사용 내역 리스트 조회
-	public List<OffMeet> getOffMeetList(Search search, String userId) throws Exception;
-	//참여비 사용 내역 리스트 조회
-	public List<OffMeet> getPayList(Search search, String userId) throws Exception;
+	public List<OffMeet> listOffPay(Search search, String userId) throws Exception;
+	
 	//오프라인 모임 참여자 목록
 	public List<Pay> listOffMem(Search search) throws Exception ;
 	//오프라인 모임 참여자 수
 	public int getTotalOffMemCount(Search search) throws Exception;
+	//제휴 업체 결제 내역 리스트 조회
+	public List<Pay> listBusinessPay(Search search, String meetId) throws Exception;
 	
-	public List<Pay> getBusinessPayList(Search search, String userId) throws Exception;
+	public int getBusinessPayTotalCount(String meetId) throws Exception;
+	
 	//업체가 예약 목록 확인
 	public List<Pay> listReserveBusiness(Search search) throws Exception;
 	//업체 예약한 모임 수 확인 
 	public int getReserveTotalCount(Search search) throws Exception;
-	
 	//업체가 상세 예약 확인
 	public Pay getReserveBusiness(int payNo) throws Exception;
 }
