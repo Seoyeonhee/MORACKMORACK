@@ -73,7 +73,7 @@ if (pay == '0') {
 	    buyer_email : 'iamport@siot.do',
 	    buyer_name : buyerName,
 	    }, function(rsp) {
-		    if ( rsp.success ) {
+		    if ( rsp.success ) { 
 		        var msg = '결제가 완료되었습니다.';
 		        msg += '고유ID : ' + rsp.imp_uid;
 		        msg += '상점 거래ID : ' + rsp.merchant_uid;
@@ -187,8 +187,8 @@ if (pay == '0') {
 	<div class="row" style="margin-bottom: 15px" >
 	  <div class="col-md-3">예약 인원</div>
 	  <div class="col-md-9">
-	  <input type="hidden" name="reserveMemNum" value= "${pay.reserveMemNum}"/>
-	  ${pay.reserveMemNum}명</div>
+	   <input type="number" style= "width:50px; height:30px;" class="form-control" id="reserveMemNum" name="reserveMemNum">
+	</div>
 	</div>		
 	
 	<div class="h4" style="margin-top:50px">결제 정보</div>

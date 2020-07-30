@@ -5,10 +5,33 @@
 
  
 <div class="container text-center">
-		 
-		 <nav>
+
+<style>
+.naviContainer{
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: 'Open Sans', sans-serif;
+  color: #222;
+}
+
+
+.naviContainer{
+  width: 100%;
+  max-width: 940px;
+  margin: 0 auto;
+  position: relative;
+  text-align: center;
+}
+
+
+
+</style>
+	
+		<div class="naviContainer">
 		  <!-- 크기조절 :  pagination-lg pagination-sm-->
-		  <ul class="pagination" >
+			<div class="pagination">
 		    
 		    <!--  <<== 좌측 nav -->
 		  	<c:if test="${ resultPage.currentPage <= resultPage.pageUnit }">
@@ -49,30 +72,7 @@
 		      <a href="javascript:fncGetUserList('${resultPage.endUnitPage+1}')" aria-label="Next">
 		        <span aria-hidden="true">&raquo;</span>
 		      </a>
-		    </li>
+	    </li>
 		  </ul>
-		</nav>
-		
-</div>
- 
-
-
-<div class="container">
-		<nav>
-		  <ul class="pager">
-		    <li><a href="#">Previous</a></li>
-		    <li><a href="#">Next</a></li>
-		  </ul>
-		</nav>
-</div>
-
-
-<div class="container">
-		<nav>
-		  <ul class="pager">
-		    <li class="previous disabled"><a href="#"><span aria-hidden="true">&larr;</span> Older</a></li>
-		    <!-- <li class="previous"><a href="#"><span aria-hidden="true">&larr;</span> Older</a></li>  -->
-		    <li class="next"><a href="#">Newer <span aria-hidden="true">&rarr;</span></a></li>
-		  </ul>
-		</nav>
+	</div>
 </div>

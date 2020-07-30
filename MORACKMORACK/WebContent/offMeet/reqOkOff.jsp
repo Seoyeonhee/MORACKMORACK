@@ -45,7 +45,7 @@ $(function() {
 	});
 	
 	$("#list").click(function (){
-		self.location = "/offmeet/getOffPayList";
+		self.location = "/offmeet/getPayList";
 	})
 	
 });	
@@ -58,8 +58,8 @@ $(function() {
 <body>
 <form>
 <input type="hidden" name="offNo" value="${offMeet.offNo}" />
-<div class="container">
 
+<div class="container">
 	<div class="page-header">
 	     <h3 class=" text-info">오프라인모임 참여 신청 완료</h3>
 	     

@@ -158,25 +158,25 @@ public void testBusinessPay() throws Exception {
 }	
 
 
-       @Test
-		public void testGetOffList() throws Exception{
-			 
-			Search search = new Search();
-		 	search.setCurrentPage(1);
-		 	search.setPageSize(3);
-		 	Map<String,Object> map = offMeetService.getOffList2(search, "user01");
-		 	List<Object> list = (List<Object>) map.get("list");
-		 	
-			//==> console 확인
-		 	System.out.println(list);
-		 	
-		 	Integer totalCount = (Integer)map.get("totalCount");
-		 	System.out.println(totalCount);
-		 	
-		 	System.out.println("=======================================");
-		 	
-		 }
-		 	
-		
+//       @Test
+////		public void testGetOffList() throws Exception{
+////			 
+////			Search search = new Search();
+////		 	search.setCurrentPage(1);
+////		 	search.setPageSize(3);
+////		 	Map<String,Object> map = offMeetService.getOffList2(search, "user01");
+////		 	List<Object> list = (List<Object>) map.get("list");
+////		 	
+////			//==> console 확인
+////		 	System.out.println(list);
+////		 	
+//		 	Integer totalCount = (Integer)map.get("totalCount");
+//		 	System.out.println(totalCount);
+//		 	
+//		 	System.out.println("=======================================");
+//		 	
+//		 }
+//		 	
+//		
 		
 }

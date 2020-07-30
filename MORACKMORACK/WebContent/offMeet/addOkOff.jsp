@@ -50,6 +50,12 @@ $(function() {
 </head>
 
 <body>
+
+
+<header>
+<jsp:include page="/toolbar.jsp" />
+</header>
+
 <div class="container">
 	
 
