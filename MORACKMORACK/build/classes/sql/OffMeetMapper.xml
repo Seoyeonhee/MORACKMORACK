@@ -41,6 +41,7 @@
   		<result property="payMethod" 			column="PAY_METHOD" 		jdbcType="CHAR"/> 
   		<result property="reserveAbleNo" 			column="RESERVE_ABLE_NO" 		jdbcType="INTEGER"/>
   		
+  		<result property="businessName" column="business_name"  jdbcType="VARCHAR"/>
   		<result property="meetName" column="meet_name"  jdbcType="VARCHAR"/> 
   		<result property="bank" column="bank"           jdbcType="VARCHAR"/>		 
   		<result property="accNum" column="accNum"        jdbcType="VARCHAR"/>
@@ -112,14 +113,17 @@
 	
 	
 	<select  id="getOffList"  parameterType="String"	resultMap="offmeetSelectMap">
+		SELECT * FROM (
 		SELECT o.off_no, u.user_id, m.meet_id, o.off_name, o.off_loc, o.off_max, o.off_mem, o.amount, o.off_date, o.off_time, o.image_File, o.reg_date
 		FROM offmeet o, meet m, users u
 		WHERE
 		u.user_id(+) = o.user_id
 		AND m.meet_id(+) = o.meet_id
-		AND m.meet_id = #{meet.meetId}
+		AND m.meet_id = #{meet.meetId} )
+		WHERE SYSDATE -7 &lt;  reg_date 
 		order by off_no desc
 	 </select>
+	
 	
 	 
 	<select id="getOffMeetList" parameterType="map" resultMap="offmeetSelectMap">
@@ -184,9 +188,34 @@
   	</select>
   	
 	
-									
+											
+		 
+	<select id="listOffPay" parameterType="map" resultMap="offmeetSelectMap">
+  		SELECT *
+  		FROM ( SELECT inner_table.*, ROWNUM AS row_seq
+  			FROM (  SELECT o.off_no, p.user_id, m.meet_id, m.meet_name, o.off_name, o.off_loc, o.off_max, o.off_mem, o.amount, o.off_date, o.off_time, o.image_File, o.reg_date, p.pay_no
+				FROM offmeet o, meet m, users u, pay p
+					WHERE  	
+					o.off_no(+) = p.off_no	
+					AND	u.user_id(+) = p.user_id
+					AND m.meet_id(+) = p.meet_id
+					AND u.user_id = #{userId}
+					order by pay_no desc ) inner_table
+  						WHERE ROWNUM <![CDATA[<=]]> #{search.currentPage}*#{search.pageSize} )
+  		WHERE row_seq BETWEEN (#{search.currentPage}-1)*#{search.pageSize}+1
+  		AND #{search.currentPage}*#{search.pageSize}
+	</select>
 	
-	  <insert id="addBusinessPay" parameterType ="pay">
+	
+  	 <select  id="getOffPayTotalCount"  parameterType="search"	 resultType="int">
+	  	SELECT COUNT(*)
+		FROM ( SELECT pay_no, user_id, meet_id, off_no, business_id, total_amount, pay_date, pay_method, reserve_date, reserve_start_time, reserve_end_time, reserve_mem_num, pay_status, reserve_able_no
+				FROM pay
+				WHERE user_id = #{userId}
+			 ) countTable						
+	 </select>  		 	
+	 
+	   <insert id="addBusinessPay" parameterType ="pay">
 	 	INSERT 
 		INTO pay(pay_no, user_id, meet_id, off_no, business_id, total_amount, pay_date, pay_method, reserve_date, reserve_start_time, reserve_end_time, reserve_mem_num, pay_status, reserve_able_no )
 		VALUES (
@@ -210,43 +239,21 @@
 	 
 	 <select id="getBusinessPay" parameterType="int" resultMap="paySelectMap">
   		SELECT 
-		pay_no, pay_date, user_id, business_id, total_amount, reserve_mem_num, reserve_start_time, reserve_end_time, reserve_date, pay_method, pay_status, reserve_able_no
-		FROM pay p
+		p.pay_no, p.pay_date, p.user_id, p.meet_id, b.business_id, b.business_name, p.total_amount, p.reserve_mem_num, p.reserve_start_time, p.reserve_end_time, p.reserve_date, p.pay_method, p.pay_status, p.reserve_able_no
+		FROM pay p , business b, meet m, offmeet o, users u
 		WHERE
-		pay_no = #{payNo}
+		p.user_id = u.user_id(+)
+		AND p.off_no = o.off_no(+)
+     	AND p.meet_id = m.meet_id(+)
+		AND p.business_id = b.business_id(+)
+		AND p.pay_no = #{payNo}
   	</select>
-  	
-  	 		
-  	   <select id="getBusinessPayList" parameterType="map" resultMap="paySelectMap">
-	  		SELECT *
-	  		FROM ( SELECT inner_table.*, ROWNUM AS row_seq
-	  						FROM ( SELECT  p.user_id, o.off_no, m.meet_id, p.reserve_date , p.total_amount ,  p.pay_no , p.reserve_mem_num, p.reserve_start_time
-	  								 p.pay_method
-											FROM offmeet o, users u , pay p, meet m 
-											WHERE p.off_no  = o.off_no(+)
-											AND p.meet_id = o.meet_id(+)
-											AND p.user_id = u.user_id(+)
-											AND u.user_id = #{userId}
-											ORDER BY pay_no  ) inner_table
-	  						WHERE ROWNUM <![CDATA[<=]]> #{search.currentPage}*#{search.pageSize} )
-	  		WHERE row_seq BETWEEN (#{search.currentPage}-1)*#{search.pageSize}+1
-	  		AND #{search.currentPage}*#{search.pageSize}
-	</select>
-			
-	
-  	 <select  id="getPayTotalCount"  parameterType="search"	 resultType="int">
-	  	SELECT COUNT(*)
-		FROM ( SELECT pay_no, user_id, meet_id, off_no, business_id, total_amount, pay_date, pay_method, reserve_date, reserve_start_time, reserve_end_time, reserve_mem_num, pay_status, reserve_able_no
-				FROM pay
-				WHERE user_id = #{userId}
-				
-			 ) countTable						
-	 </select>  		 	
+  	 	 		
 	 
-	   	  <select id="getPayList" parameterType="map" resultMap="paySelectMap">
+	   	  <select id="listBusinessPay" parameterType="map" resultMap="paySelectMap">
 	  		SELECT *
 	  		FROM ( SELECT inner_table.*, ROWNUM AS row_seq
-	  						FROM (  SELECT p.pay_no, p.meet_id, p.user_id, o.off_no, b.business_id,   p.total_amount  , p.reserve_mem_num, p.reserve_start_time, p.reserve_end_time,  p.pay_date, p.pay_status, p.reserve_able_no,
+	  						FROM (  SELECT p.pay_no, p.meet_id, m.meet_name, p.user_id, o.off_no, b.business_id, b.business_name, p.reserve_date,  p.total_amount,  p.reserve_mem_num, p.reserve_start_time, p.reserve_end_time,  p.pay_date, p.pay_status, p.reserve_able_no,
 	  								 p.pay_method
 											FROM pay p , offmeet o, meet m, users u, business b
 											WHERE 
@@ -254,12 +261,32 @@
 											AND p.off_no = o.off_no(+)
 											AND p.meet_id = m.meet_id(+)
 											AND p.business_id = b.business_id(+)
-											AND u.user_id = #{userId}
-											ORDER BY pay_no  ) inner_table
+											AND p.meet_id = #{meetId}
+											AND p.pay_status = 1
+											ORDER BY p.pay_no DESC ) inner_table
 	  						WHERE ROWNUM <![CDATA[<=]]> #{search.currentPage}*#{search.pageSize} )
 	  		WHERE row_seq BETWEEN (#{search.currentPage}-1)*#{search.pageSize}+1
 	  		AND #{search.currentPage}*#{search.pageSize}
 	</select>
+	
+	
+	  	 <select  id="getBusinessPayTotalCount"  parameterType="search"	 resultType="int">
+	  	SELECT COUNT(*)
+		FROM ( SELECT p.pay_no, p.meet_id, p.user_id, o.off_no, b.business_id,   p.total_amount  , p.reserve_mem_num, p.reserve_start_time, p.reserve_end_time,  p.pay_date, p.pay_status, p.reserve_able_no,
+	  								 p.pay_method
+											FROM pay p , offmeet o, meet m, users u, business b
+											WHERE 
+											p.user_id = u.user_id(+)
+											AND p.off_no = o.off_no(+)
+											AND p.meet_id = m.meet_id(+)
+											AND p.business_id = b.business_id(+)
+											AND p.meet_Id = #{meetId}
+											AND p.pay_status = 1
+											ORDER BY p.pay_no
+			 ) countTable						
+	 </select>  	
+	
+
 	
 	<select id="listOffMem"		parameterType="search"	resultMap="paySelectMap">
 		SELECT p.pay_no, p.off_no, p.meet_id, p.user_id
@@ -313,7 +340,7 @@
 	<select id="listReserveBusiness"		parameterType="search"	resultMap="paySelectMap">
 		SELECT *
 	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
-	  			FROM (SELECT p.pay_no , p.user_id , m.meet_id, m.meet_name, b.business_id, p.reserve_start_time, p. reserve_end_time, p.reserve_date, p.reserve_able_no
+	  			FROM (SELECT p.pay_no , p.user_id , m.meet_id, m.meet_name, b.business_id, p.reserve_start_time, p.reserve_date, reserve_end_time, p.reserve_date, p.reserve_able_no
 		FROM pay p, meet m , users u , business b
 		WHERE
 		u.user_id(+) = p.user_id

@@ -1,10 +1,10 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="EUC-KR">
-<title>¸ðÀÓ »ý¼º</title>
+<title>ëª¨ìž„ ìƒì„±</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
@@ -17,12 +17,12 @@
 .selectbox {
 
     position: relative;
-    width: 200px;  /* ³Êºñ¼³Á¤ */
-    border: 1px solid #999;  /* Å×µÎ¸® ¼³Á¤ */
+    width: 200px;  /* ë„ˆë¹„ì„¤ì • */
+    border: 1px solid #999;  /* í…Œë‘ë¦¬ ì„¤ì • */
     z-index: 1;
 }
 
-/* °¡»ó ¼±ÅÃÀÚ¸¦ È°¿ë È­»ìÇ¥ ´ëÃ¼ */
+/* ê°€ìƒ ì„ íƒìžë¥¼ í™œìš© í™”ì‚´í‘œ ëŒ€ì²´ */
 .selectbox:before {
     content: "";
     position: absolute;
@@ -38,23 +38,23 @@
 
 .selectbox label {
     position: absolute;
-    top: 1px;  /* À§Ä¡Á¤·Ä */
-    left: 5px;  /* À§Ä¡Á¤·Ä */
-    padding: .8em .5em;  /* selectÀÇ ¿©¹é Å©±â ¸¸Å­ */
+    top: 1px;  /* ìœ„ì¹˜ì •ë ¬ */
+    left: 5px;  /* ìœ„ì¹˜ì •ë ¬ */
+    padding: .8em .5em;  /* selectì˜ ì—¬ë°± í¬ê¸° ë§Œí¼ */
     color: #999;
-    z-index: -1;  /* IE8¿¡¼­ labelÀÌ À§Ä¡ÇÑ °÷ÀÌ Å¬¸¯µÇÁö ¾Ê´Â °Í ÇØ°á */
+    z-index: -1;  /* IE8ì—ì„œ labelì´ ìœ„ì¹˜í•œ ê³³ì´ í´ë¦­ë˜ì§€ ì•ŠëŠ” ê²ƒ í•´ê²° */
 }
 
 .selectbox select {
     width: 100%;
-    height: auto;  /* ³ôÀÌ ÃÊ±âÈ­ */
-    line-height: normal;  /* line-height ÃÊ±âÈ­ */
-    font-family: inherit;  /* ÆùÆ® »ó¼Ó */
-    padding: .8em .5em;  /* ¿©¹é°ú ³ôÀÌ °áÁ¤ */
+    height: auto;  /* ë†’ì´ ì´ˆê¸°í™” */
+    line-height: normal;  /* line-height ì´ˆê¸°í™” */
+    font-family: inherit;  /* í°íŠ¸ ìƒì† */
+    padding: .8em .5em;  /* ì—¬ë°±ê³¼ ë†’ì´ ê²°ì • */
     border: 0;
-    opacity: 0;  /* ¼û±â±â */
-    filter:alpha(opacity=0);  /* IE8 ¼û±â±â */
-    -webkit-appearance: none; /* ³×ÀÌÆ¼ºê ¿ÜÇü °¨Ãß±â */
+    opacity: 0;  /* ìˆ¨ê¸°ê¸° */
+    filter:alpha(opacity=0);  /* IE8 ìˆ¨ê¸°ê¸° */
+    -webkit-appearance: none; /* ë„¤ì´í‹°ë¸Œ ì™¸í˜• ê°ì¶”ê¸° */
     -moz-appearance: none;
     appearance: none;
 }
@@ -75,13 +75,13 @@
 
 $(function(){
 	
-	 $("input[type='file']").change(function(e){//div ³»¿ë ºñ¿öÁÖ±â
+	 $("input[type='file']").change(function(e){//div ë‚´ìš© ë¹„ì›Œì£¼ê¸°
 	      $('#meetImgPrev').empty();
 
 	      var files = e.target.files;
 	      var arr =Array.prototype.slice.call(files);
 	      
-	      //¾÷·Îµå °¡´É ÆÄÀÏÀÎÁö Ã¼Å©
+	      //ì—…ë¡œë“œ ê°€ëŠ¥ íŒŒì¼ì¸ì§€ ì²´í¬
 	      for(var i=0;i<files.length;i++){
 	        if(!checkExtension(files[i].name,files[i].size)){
 	          return false;
@@ -99,14 +99,14 @@ $(function(){
 	      var maxSize = 20971520;  //20MB
 	      
 	      if(fileSize >= maxSize){
-	        alert('ÆÄÀÏ »çÀÌÁî ÃÊ°ú');
-	        $("input[type='file']").val("");  //ÆÄÀÏ ÃÊ±âÈ­
+	        alert('íŒŒì¼ ì‚¬ì´ì¦ˆ ì´ˆê³¼');
+	        $("input[type='file']").val("");  //íŒŒì¼ ì´ˆê¸°í™”
 	        return false;
 	      }
 	      
 	      if(regex.test(fileName)){
-	        alert('¾÷·Îµå ºÒ°¡´ÉÇÑ ÆÄÀÏÀÌ ÀÖ½À´Ï´Ù.');
-	        $("input[type='file']").val("");  //ÆÄÀÏ ÃÊ±âÈ­
+	        alert('ì—…ë¡œë“œ ë¶ˆê°€ëŠ¥í•œ íŒŒì¼ì´ ìžˆìŠµë‹ˆë‹¤.');
+	        $("input[type='file']").val("");  //íŒŒì¼ ì´ˆê¸°í™”
 	        return false;
 	      }
 	      return true;
@@ -115,20 +115,20 @@ $(function(){
 	    function preview(arr){
 	      arr.forEach(function(f){
 	        
-	        //ÆÄÀÏ¸íÀÌ ±æ¸é ÆÄÀÏ¸í...À¸·Î Ã³¸®
+	        //íŒŒì¼ëª…ì´ ê¸¸ë©´ íŒŒì¼ëª…...ìœ¼ë¡œ ì²˜ë¦¬
 	        var fileName = f.name;
 	        if(fileName.length > 10){
 	          fileName = fileName.substring(0,7)+"...";
 	        }
 	        
-	        //div¿¡ ÀÌ¹ÌÁö Ãß°¡
+	        //divì— ì´ë¯¸ì§€ ì¶”ê°€
 	        var str = '<div style="display: inline-flex; padding: 10px;">';
 	        
 	        
-	        //ÀÌ¹ÌÁö ÆÄÀÏ ¹Ì¸®º¸±â
+	        //ì´ë¯¸ì§€ íŒŒì¼ ë¯¸ë¦¬ë³´ê¸°
 	        if(f.type.match('image.*')){
-	          var reader = new FileReader(); //ÆÄÀÏÀ» ÀÐ±â À§ÇÑ FileReader°´Ã¼ »ý¼º
-	          reader.onload = function (e) { //ÆÄÀÏ ÀÐ¾îµéÀÌ±â¸¦ ¼º°øÇßÀ»¶§ È£ÃâµÇ´Â ÀÌº¥Æ® ÇÚµé·¯
+	          var reader = new FileReader(); //íŒŒì¼ì„ ì½ê¸° ìœ„í•œ FileReaderê°ì²´ ìƒì„±
+	          reader.onload = function (e) { //íŒŒì¼ ì½ì–´ë“¤ì´ê¸°ë¥¼ ì„±ê³µí–ˆì„ë•Œ í˜¸ì¶œë˜ëŠ” ì´ë²¤íŠ¸ í•¸ë“¤ëŸ¬
 	            //str += '<button type="button" class="delBtn" value="'+f.name+'" style="background: red">x</button><br>';
 	            str += '<img src="'+e.target.result+'" title="'+f.name+'" width=480px height=280px />';
 	            str += '</li></div>';
@@ -196,47 +196,47 @@ $(function(){
 	})
 	
 
-	 var area0 = ["½Ã/µµ ¼±ÅÃ","¼­¿ïÆ¯º°½Ã","ÀÎÃµ±¤¿ª½Ã","´ëÀü±¤¿ª½Ã","±¤ÁÖ±¤¿ª½Ã","´ë±¸±¤¿ª½Ã","¿ï»ê±¤¿ª½Ã","ºÎ»ê±¤¿ª½Ã","°æ±âµµ","°­¿øµµ","ÃæÃ»ºÏµµ","ÃæÃ»³²µµ","Àü¶óºÏµµ","Àü¶ó³²µµ","°æ»óºÏµµ","°æ»ó³²µµ","Á¦ÁÖµµ"];
-	  var area1 = ["°­³²±¸","°­µ¿±¸","°­ºÏ±¸","°­¼­±¸","°ü¾Ç±¸","±¤Áø±¸","±¸·Î±¸","±ÝÃµ±¸","³ë¿ø±¸","µµºÀ±¸","µ¿´ë¹®±¸","µ¿ÀÛ±¸","¸¶Æ÷±¸","¼­´ë¹®±¸","¼­ÃÊ±¸","¼ºµ¿±¸","¼ººÏ±¸","¼ÛÆÄ±¸","¾çÃµ±¸","¿µµîÆ÷±¸","¿ë»ê±¸","ÀºÆò±¸","Á¾·Î±¸","Áß±¸","Áß¶û±¸"];
-	   var area2 = ["°è¾ç±¸","³²±¸","³²µ¿±¸","µ¿±¸","ºÎÆò±¸","¼­±¸","¿¬¼ö±¸","Áß±¸","°­È­±º","¿ËÁø±º"];
-	   var area3 = ["´ë´ö±¸","µ¿±¸","¼­±¸","À¯¼º±¸","Áß±¸"];
-	   var area4 = ["±¤»ê±¸","³²±¸","µ¿±¸",     "ºÏ±¸","¼­±¸"];
-	   var area5 = ["³²±¸","´Þ¼­±¸","µ¿±¸","ºÏ±¸","¼­±¸","¼ö¼º±¸","Áß±¸","´Þ¼º±º"];
-	   var area6 = ["³²±¸","µ¿±¸","ºÏ±¸","Áß±¸","¿ïÁÖ±º"];
-	   var area7 = ["°­¼­±¸","±ÝÁ¤±¸","³²±¸","µ¿±¸","µ¿·¡±¸","ºÎ»êÁø±¸","ºÏ±¸","»ç»ó±¸","»çÇÏ±¸","¼­±¸","¼ö¿µ±¸","¿¬Á¦±¸","¿µµµ±¸","Áß±¸","ÇØ¿î´ë±¸","±âÀå±º"];
-	   var area8 = ["°í¾ç½Ã","°úÃµ½Ã","±¤¸í½Ã","±¤ÁÖ½Ã","±¸¸®½Ã","±ºÆ÷½Ã","±èÆ÷½Ã","³²¾çÁÖ½Ã","µ¿µÎÃµ½Ã","ºÎÃµ½Ã","¼º³²½Ã","¼ö¿ø½Ã","½ÃÈï½Ã","¾È»ê½Ã","¾È¼º½Ã","¾È¾ç½Ã","¾çÁÖ½Ã","¿À»ê½Ã","¿ëÀÎ½Ã","ÀÇ¿Õ½Ã","ÀÇÁ¤ºÎ½Ã","ÀÌÃµ½Ã","ÆÄÁÖ½Ã","ÆòÅÃ½Ã","Æ÷Ãµ½Ã","ÇÏ³²½Ã","È­¼º½Ã","°¡Æò±º","¾çÆò±º","¿©ÁÖ±º","¿¬Ãµ±º"];
-	   var area9 = ["°­¸ª½Ã","µ¿ÇØ½Ã","»ïÃ´½Ã","¼ÓÃÊ½Ã","¿øÁÖ½Ã","ÃáÃµ½Ã","ÅÂ¹é½Ã","°í¼º±º","¾ç±¸±º","¾ç¾ç±º","¿µ¿ù±º","ÀÎÁ¦±º","Á¤¼±±º","Ã¶¿ø±º","ÆòÃ¢±º","È«Ãµ±º","È­Ãµ±º","È¾¼º±º"];
-	   var area10 = ["Á¦Ãµ½Ã","Ã»ÁÖ½Ã","ÃæÁÖ½Ã","±«»ê±º","´Ü¾ç±º","º¸Àº±º","¿µµ¿±º","¿ÁÃµ±º","À½¼º±º","ÁõÆò±º","ÁøÃµ±º","Ã»¿ø±º"];
-	   var area11 = ["°è·æ½Ã","°øÁÖ½Ã","³í»ê½Ã","º¸·É½Ã","¼­»ê½Ã","¾Æ»ê½Ã","Ãµ¾È½Ã","±Ý»ê±º","´çÁø±º","ºÎ¿©±º","¼­Ãµ±º","¿¬±â±º","¿¹»ê±º","Ã»¾ç±º","ÅÂ¾È±º","È«¼º±º"];
-	   var area12 = ["±º»ê½Ã","±èÁ¦½Ã","³²¿ø½Ã","ÀÍ»ê½Ã","ÀüÁÖ½Ã","Á¤À¾½Ã","°íÃ¢±º","¹«ÁÖ±º","ºÎ¾È±º","¼øÃ¢±º","¿ÏÁÖ±º","ÀÓ½Ç±º","Àå¼ö±º","Áø¾È±º"];
-	   var area13 = ["±¤¾ç½Ã","³ªÁÖ½Ã","¸ñÆ÷½Ã","¼øÃµ½Ã","¿©¼ö½Ã","°­Áø±º","°íÈï±º","°î¼º±º","±¸·Ê±º","´ã¾ç±º","¹«¾È±º","º¸¼º±º","½Å¾È±º","¿µ±¤±º","¿µ¾Ï±º","¿Ïµµ±º","Àå¼º±º","ÀåÈï±º","Áøµµ±º","ÇÔÆò±º","ÇØ³²±º","È­¼ø±º"];
-	   var area14 = ["°æ»ê½Ã","°æÁÖ½Ã","±¸¹Ì½Ã","±èÃµ½Ã","¹®°æ½Ã","»óÁÖ½Ã","¾Èµ¿½Ã","¿µÁÖ½Ã","¿µÃµ½Ã","Æ÷Ç×½Ã","°í·É±º","±ºÀ§±º","ºÀÈ­±º","¼ºÁÖ±º","¿µ´ö±º","¿µ¾ç±º","¿¹Ãµ±º","¿ï¸ª±º","¿ïÁø±º","ÀÇ¼º±º","Ã»µµ±º","Ã»¼Û±º","Ä¥°î±º"];
-	   var area15 = ["°ÅÁ¦½Ã","±èÇØ½Ã","¸¶»ê½Ã","¹Ð¾ç½Ã","»çÃµ½Ã","¾ç»ê½Ã","ÁøÁÖ½Ã","ÁøÇØ½Ã","Ã¢¿ø½Ã","Åë¿µ½Ã","°ÅÃ¢±º","°í¼º±º","³²ÇØ±º","»êÃ»±º","ÀÇ·É±º","Ã¢³ç±º","ÇÏµ¿±º","ÇÔ¾È±º","ÇÔ¾ç±º","ÇÕÃµ±º"];
-	   var area16 = ["¼­±ÍÆ÷½Ã","Á¦ÁÖ½Ã","³²Á¦ÁÖ±º","ºÏÁ¦ÁÖ±º"];
+	 var area0 = ["ì‹œ/ë„ ì„ íƒ","ì„œìš¸íŠ¹ë³„ì‹œ","ì¸ì²œê´‘ì—­ì‹œ","ëŒ€ì „ê´‘ì—­ì‹œ","ê´‘ì£¼ê´‘ì—­ì‹œ","ëŒ€êµ¬ê´‘ì—­ì‹œ","ìš¸ì‚°ê´‘ì—­ì‹œ","ë¶€ì‚°ê´‘ì—­ì‹œ","ê²½ê¸°ë„","ê°•ì›ë„","ì¶©ì²­ë¶ë„","ì¶©ì²­ë‚¨ë„","ì „ë¼ë¶ë„","ì „ë¼ë‚¨ë„","ê²½ìƒë¶ë„","ê²½ìƒë‚¨ë„","ì œì£¼ë„"];
+	  var area1 = ["ê°•ë‚¨êµ¬","ê°•ë™êµ¬","ê°•ë¶êµ¬","ê°•ì„œêµ¬","ê´€ì•…êµ¬","ê´‘ì§„êµ¬","êµ¬ë¡œêµ¬","ê¸ˆì²œêµ¬","ë…¸ì›êµ¬","ë„ë´‰êµ¬","ë™ëŒ€ë¬¸êµ¬","ë™ìž‘êµ¬","ë§ˆí¬êµ¬","ì„œëŒ€ë¬¸êµ¬","ì„œì´ˆêµ¬","ì„±ë™êµ¬","ì„±ë¶êµ¬","ì†¡íŒŒêµ¬","ì–‘ì²œêµ¬","ì˜ë“±í¬êµ¬","ìš©ì‚°êµ¬","ì€í‰êµ¬","ì¢…ë¡œêµ¬","ì¤‘êµ¬","ì¤‘ëž‘êµ¬"];
+	   var area2 = ["ê³„ì–‘êµ¬","ë‚¨êµ¬","ë‚¨ë™êµ¬","ë™êµ¬","ë¶€í‰êµ¬","ì„œêµ¬","ì—°ìˆ˜êµ¬","ì¤‘êµ¬","ê°•í™”êµ°","ì˜¹ì§„êµ°"];
+	   var area3 = ["ëŒ€ë•êµ¬","ë™êµ¬","ì„œêµ¬","ìœ ì„±êµ¬","ì¤‘êµ¬"];
+	   var area4 = ["ê´‘ì‚°êµ¬","ë‚¨êµ¬","ë™êµ¬",     "ë¶êµ¬","ì„œêµ¬"];
+	   var area5 = ["ë‚¨êµ¬","ë‹¬ì„œêµ¬","ë™êµ¬","ë¶êµ¬","ì„œêµ¬","ìˆ˜ì„±êµ¬","ì¤‘êµ¬","ë‹¬ì„±êµ°"];
+	   var area6 = ["ë‚¨êµ¬","ë™êµ¬","ë¶êµ¬","ì¤‘êµ¬","ìš¸ì£¼êµ°"];
+	   var area7 = ["ê°•ì„œêµ¬","ê¸ˆì •êµ¬","ë‚¨êµ¬","ë™êµ¬","ë™ëž˜êµ¬","ë¶€ì‚°ì§„êµ¬","ë¶êµ¬","ì‚¬ìƒêµ¬","ì‚¬í•˜êµ¬","ì„œêµ¬","ìˆ˜ì˜êµ¬","ì—°ì œêµ¬","ì˜ë„êµ¬","ì¤‘êµ¬","í•´ìš´ëŒ€êµ¬","ê¸°ìž¥êµ°"];
+	   var area8 = ["ê³ ì–‘ì‹œ","ê³¼ì²œì‹œ","ê´‘ëª…ì‹œ","ê´‘ì£¼ì‹œ","êµ¬ë¦¬ì‹œ","êµ°í¬ì‹œ","ê¹€í¬ì‹œ","ë‚¨ì–‘ì£¼ì‹œ","ë™ë‘ì²œì‹œ","ë¶€ì²œì‹œ","ì„±ë‚¨ì‹œ","ìˆ˜ì›ì‹œ","ì‹œí¥ì‹œ","ì•ˆì‚°ì‹œ","ì•ˆì„±ì‹œ","ì•ˆì–‘ì‹œ","ì–‘ì£¼ì‹œ","ì˜¤ì‚°ì‹œ","ìš©ì¸ì‹œ","ì˜ì™•ì‹œ","ì˜ì •ë¶€ì‹œ","ì´ì²œì‹œ","íŒŒì£¼ì‹œ","í‰íƒì‹œ","í¬ì²œì‹œ","í•˜ë‚¨ì‹œ","í™”ì„±ì‹œ","ê°€í‰êµ°","ì–‘í‰êµ°","ì—¬ì£¼êµ°","ì—°ì²œêµ°"];
+	   var area9 = ["ê°•ë¦‰ì‹œ","ë™í•´ì‹œ","ì‚¼ì²™ì‹œ","ì†ì´ˆì‹œ","ì›ì£¼ì‹œ","ì¶˜ì²œì‹œ","íƒœë°±ì‹œ","ê³ ì„±êµ°","ì–‘êµ¬êµ°","ì–‘ì–‘êµ°","ì˜ì›”êµ°","ì¸ì œêµ°","ì •ì„ êµ°","ì² ì›êµ°","í‰ì°½êµ°","í™ì²œêµ°","í™”ì²œêµ°","íš¡ì„±êµ°"];
+	   var area10 = ["ì œì²œì‹œ","ì²­ì£¼ì‹œ","ì¶©ì£¼ì‹œ","ê´´ì‚°êµ°","ë‹¨ì–‘êµ°","ë³´ì€êµ°","ì˜ë™êµ°","ì˜¥ì²œêµ°","ìŒì„±êµ°","ì¦í‰êµ°","ì§„ì²œêµ°","ì²­ì›êµ°"];
+	   var area11 = ["ê³„ë£¡ì‹œ","ê³µì£¼ì‹œ","ë…¼ì‚°ì‹œ","ë³´ë ¹ì‹œ","ì„œì‚°ì‹œ","ì•„ì‚°ì‹œ","ì²œì•ˆì‹œ","ê¸ˆì‚°êµ°","ë‹¹ì§„êµ°","ë¶€ì—¬êµ°","ì„œì²œêµ°","ì—°ê¸°êµ°","ì˜ˆì‚°êµ°","ì²­ì–‘êµ°","íƒœì•ˆêµ°","í™ì„±êµ°"];
+	   var area12 = ["êµ°ì‚°ì‹œ","ê¹€ì œì‹œ","ë‚¨ì›ì‹œ","ìµì‚°ì‹œ","ì „ì£¼ì‹œ","ì •ìì‹œ","ê³ ì°½êµ°","ë¬´ì£¼êµ°","ë¶€ì•ˆêµ°","ìˆœì°½êµ°","ì™„ì£¼êµ°","ìž„ì‹¤êµ°","ìž¥ìˆ˜êµ°","ì§„ì•ˆêµ°"];
+	   var area13 = ["ê´‘ì–‘ì‹œ","ë‚˜ì£¼ì‹œ","ëª©í¬ì‹œ","ìˆœì²œì‹œ","ì—¬ìˆ˜ì‹œ","ê°•ì§„êµ°","ê³ í¥êµ°","ê³¡ì„±êµ°","êµ¬ë¡€êµ°","ë‹´ì–‘êµ°","ë¬´ì•ˆêµ°","ë³´ì„±êµ°","ì‹ ì•ˆêµ°","ì˜ê´‘êµ°","ì˜ì•”êµ°","ì™„ë„êµ°","ìž¥ì„±êµ°","ìž¥í¥êµ°","ì§„ë„êµ°","í•¨í‰êµ°","í•´ë‚¨êµ°","í™”ìˆœêµ°"];
+	   var area14 = ["ê²½ì‚°ì‹œ","ê²½ì£¼ì‹œ","êµ¬ë¯¸ì‹œ","ê¹€ì²œì‹œ","ë¬¸ê²½ì‹œ","ìƒì£¼ì‹œ","ì•ˆë™ì‹œ","ì˜ì£¼ì‹œ","ì˜ì²œì‹œ","í¬í•­ì‹œ","ê³ ë ¹êµ°","êµ°ìœ„êµ°","ë´‰í™”êµ°","ì„±ì£¼êµ°","ì˜ë•êµ°","ì˜ì–‘êµ°","ì˜ˆì²œêµ°","ìš¸ë¦‰êµ°","ìš¸ì§„êµ°","ì˜ì„±êµ°","ì²­ë„êµ°","ì²­ì†¡êµ°","ì¹ ê³¡êµ°"];
+	   var area15 = ["ê±°ì œì‹œ","ê¹€í•´ì‹œ","ë§ˆì‚°ì‹œ","ë°€ì–‘ì‹œ","ì‚¬ì²œì‹œ","ì–‘ì‚°ì‹œ","ì§„ì£¼ì‹œ","ì§„í•´ì‹œ","ì°½ì›ì‹œ","í†µì˜ì‹œ","ê±°ì°½êµ°","ê³ ì„±êµ°","ë‚¨í•´êµ°","ì‚°ì²­êµ°","ì˜ë ¹êµ°","ì°½ë…•êµ°","í•˜ë™êµ°","í•¨ì•ˆêµ°","í•¨ì–‘êµ°","í•©ì²œêµ°"];
+	   var area16 = ["ì„œê·€í¬ì‹œ","ì œì£¼ì‹œ","ë‚¨ì œì£¼êµ°","ë¶ì œì£¼êµ°"];
 
 	 
 
-	 // ½Ã/µµ ¼±ÅÃ ¹Ú½º ÃÊ±âÈ­
+	 // ì‹œ/ë„ ì„ íƒ ë°•ìŠ¤ ì´ˆê¸°í™”
 
 	 $("select[name^=sido]").each(function() {
 	  $selsido = $(this);
 	  $.each(eval(area0), function() {
 	   $selsido.append("<option value='"+this+"'>"+this+"</option>");
 	  });
-	  $selsido.next().append("<option value=''>±¸/±º ¼±ÅÃ</option>");
+	  $selsido.next().append("<option value=''>êµ¬/êµ° ì„ íƒ</option>");
 	 });
 
 	 
 
-	 // ½Ã/µµ ¼±ÅÃ½Ã ±¸/±º ¼³Á¤
+	 // ì‹œ/ë„ ì„ íƒì‹œ êµ¬/êµ° ì„¤ì •
 
 	 $("select[name^=sido]").change(function() {
-	  var area = "area"+$("option",$(this)).index($("option:selected",$(this))); // ¼±ÅÃÁö¿ªÀÇ ±¸±º Array
-	  var $gugun = $(this).next(); // ¼±ÅÃ¿µ¿ª ±º±¸ °´Ã¼
-	  $("option",$gugun).remove(); // ±¸±º ÃÊ±âÈ­
+	  var area = "area"+$("option",$(this)).index($("option:selected",$(this))); // ì„ íƒì§€ì—­ì˜ êµ¬êµ° Array
+	  var $gugun = $(this).next(); // ì„ íƒì˜ì—­ êµ°êµ¬ ê°ì²´
+	  $("option",$gugun).remove(); // êµ¬êµ° ì´ˆê¸°í™”
 
 	  if(area == "area0")
-	   $gugun.append("<option value=''>±¸/±º ¼±ÅÃ</option>");
+	   $gugun.append("<option value=''>êµ¬/êµ° ì„ íƒ</option>");
 	  else {
 	   $.each(eval(area), function() {
 	    $gugun.append("<option value='"+this+"'>"+this+"</option>");
@@ -256,10 +256,10 @@ $(function(){
 			success:function(mav){	
 				var n = new Array(mav);
 	
-				values = mav.listHash ; //java¿¡¼­ Á¤ÀÇÇÑ ArrayList¸íÀ» Àû¾îÁØ´Ù.
+				values = mav.listHash ; //javaì—ì„œ ì •ì˜í•œ ArrayListëª…ì„ ì ì–´ì¤€ë‹¤.
                 
                 $.each(values, function( index, value ) {
-                   console.log( index + " : " + value.name ); //Book.java ÀÇ º¯¼ö¸íÀ» ½áÁÖ¸é µÈ´Ù.
+                   console.log( index + " : " + value.name ); //Book.java ì˜ ë³€ìˆ˜ëª…ì„ ì¨ì£¼ë©´ ëœë‹¤.
                 });
 				
 				//$("#getHash").val(getHash);
@@ -285,7 +285,7 @@ $(function(){
 <div class="col-xs-6 col-md-6">
   		
 	<div class="form-group">
-		<label for="meetImg">¸ðÀÓ ´ëÇ¥ ÀÌ¹ÌÁö ¼±ÅÃ</label>
+		<label for="meetImg">ëª¨ìž„ ëŒ€í‘œ ì´ë¯¸ì§€ ì„ íƒ</label>
 			<a href="#" class="thumbnail" id="meetImgThum" style="height:300px; width:500px">
 			<input multiple="multiple" type="file" name="file" id="meetImg" style="display: none;" multiple/>  
 			<div id="meetImgPrev"></div>
@@ -293,9 +293,9 @@ $(function(){
   
 	<div>
 		<p style="text-align:left;">
-		<label for="exampleInputFile" style="text-align:left">¸ðÀÓ »ó¼¼ ¼Ò°³ ÀÔ·Â</label>   
+		<label for="exampleInputFile" style="text-align:left">ëª¨ìž„ ìƒì„¸ ì†Œê°œ ìž…ë ¥</label>   
 		<span style="float:right;">
-		 <input class="btn btn-default" type="button" id="addImg" name="addImg" value="ÀÌ¹ÌÁö Ãß°¡" style="margin-right:50px"> </span>
+		 <input class="btn btn-default" type="button" id="addImg" name="addImg" value="ì´ë¯¸ì§€ ì¶”ê°€" style="margin-right:50px"> </span>
 	</div>
 	
 	<div id="addDiv">
@@ -323,81 +323,81 @@ $(function(){
     	
 <div class="col-xs-6 col-md-6">
 
-	<p><strong>¸ðÀÓ¸í</strong></p>
-	<input type="text" class="form-control" id="meetName" name="meetName" placeholder="¸ðÀÓ¸í" style="height:50px; width:300px" />
+	<p><strong>ëª¨ìž„ëª…</strong></p>
+	<input type="text" class="form-control" id="meetName" name="meetName" placeholder="ëª¨ìž„ëª…" style="height:50px; width:300px" />
 
-	<p style="margin-top:20px"><strong>ÀºÇà ¼±ÅÃ</strong></p>
+	<p style="margin-top:20px"><strong>ì€í–‰ ì„ íƒ</strong></p>
 	<div class="selectbox">
-		<label for="select">ÀºÇà</label>
+		<label for="select">ì€í–‰</label>
 		<select id="bank" name="bank">
-		<option value="">ÀºÇà</option>
-		<option value="±â¾÷">±â¾÷ÀºÇà</option>
-		<option value="³óÇù">³óÇùÀºÇà</option>
-		<option value="±¹¹Î">±¹¹ÎÀºÇà</option>
-		<option value="¿ì¸®">¿ì¸®ÀºÇà</option>
-		<option value="SCÁ¦ÀÏ">SCÁ¦ÀÏÀºÇà</option>
-		<option value="ÇÑ±¹¾¾Æ¼">ÇÑ±¹¾¾Æ¼ÀºÇà</option>
-		<option value="½ÅÇÑ">½ÅÇÑÀºÇà</option>
+		<option value="">ì€í–‰</option>
+		<option value="ê¸°ì—…">ê¸°ì—…ì€í–‰</option>
+		<option value="ë†í˜‘">ë†í˜‘ì€í–‰</option>
+		<option value="êµ­ë¯¼">êµ­ë¯¼ì€í–‰</option>
+		<option value="ìš°ë¦¬">ìš°ë¦¬ì€í–‰</option>
+		<option value="SCì œì¼">SCì œì¼ì€í–‰</option>
+		<option value="í•œêµ­ì”¨í‹°">í•œêµ­ì”¨í‹°ì€í–‰</option>
+		<option value="ì‹ í•œ">ì‹ í•œì€í–‰</option>
 		</select>
 	</div>
    		 
-	<p style="margin-top:20px"><strong>Ä«Å×°í¸® ¼±ÅÃ</strong></p>
+	<p style="margin-top:20px"><strong>ì¹´í…Œê³ ë¦¬ ì„ íƒ</strong></p>
 	<div class="selectbox">
-    	<label for="select">Ä«Å×°í¸®</label>
+    	<label for="select">ì¹´í…Œê³ ë¦¬</label>
 		<select id="category" name="category">	
-		<option value="">Ä«Å×°í¸®</option>
-        <option value="0">¿©Çà</option>
-        <option value="1">°ÔÀÓ</option>
-        <option value="2">À½¾Ç</option>
-        <option value="3">¿µÈ­</option>
-        <option value="4">°ø¿¬</option>
-        <option value="5">¸ÀÁý</option>
-        <option value="6">Ãë¾÷/ÀÚ±â°è¹ß</option>
-        <option value="7">¾×Æ¼ºñÆ¼</option>
-        <option value="8">µ¶¼­/¸¸È­</option>
-        <option value="9">´í½º</option>
-        <option value="10">»çÁø</option>
-        <option value="11">¹Ý·Áµ¿¹°</option>
-        <option value="12">¿ä¸®</option>
-        <option value="13">Â÷</option>
-        <option value="14">½ºÆ÷Ã÷</option>
-        <option value="15">°ø¿¹</option>
-        <option value="16">±âÅ¸</option>
+		<option value="">ì¹´í…Œê³ ë¦¬</option>
+        <option value="0">ì—¬í–‰</option>
+        <option value="1">ê²Œìž„</option>
+        <option value="2">ìŒì•…</option>
+        <option value="3">ì˜í™”</option>
+        <option value="4">ê³µì—°</option>
+        <option value="5">ë§›ì§‘</option>
+        <option value="6">ì·¨ì—…/ìžê¸°ê³„ë°œ</option>
+        <option value="7">ì•¡í‹°ë¹„í‹°</option>
+        <option value="8">ë…ì„œ/ë§Œí™”</option>
+        <option value="9">ëŒ„ìŠ¤</option>
+        <option value="10">ì‚¬ì§„</option>
+        <option value="11">ë°˜ë ¤ë™ë¬¼</option>
+        <option value="12">ìš”ë¦¬</option>
+        <option value="13">ì°¨</option>
+        <option value="14">ìŠ¤í¬ì¸ </option>
+        <option value="15">ê³µì˜ˆ</option>
+        <option value="16">ê¸°íƒ€</option>
 		</select>
 	</div>
 		
 		
-    <p style="margin-top:20px"><strong>¸ðÀÓ À¯Çü ¼±ÅÃ</strong></p>
+    <p style="margin-top:20px"><strong>ëª¨ìž„ ìœ í˜• ì„ íƒ</strong></p>
     <div class="selectbox">
-    	<label for="select">¸ðÀÓ À¯Çü</label>
+    	<label for="select">ëª¨ìž„ ìœ í˜•</label>
 		<select id="meetType" name="meetType">
-		<option value="">¸ðÀÓ À¯Çü</option>
-       	 <option value="0">2ÀÎ ¸ðÀÓ</option>
-      	 <option value="1">´Ù¼öÀÎ ¸ðÀÓ</option>
+		<option value="">ëª¨ìž„ ìœ í˜•</option>
+       	 <option value="0">2ì¸ ëª¨ìž„</option>
+      	 <option value="1">ë‹¤ìˆ˜ì¸ ëª¨ìž„</option>
       	 </select>
 	</div>
       	 
-	<p style="margin-top:20px"><strong>¸ðÀÓ Á¤¿ø</strong></p>
+	<p style="margin-top:20px"><strong>ëª¨ìž„ ì •ì›</strong></p>
 	<input type="number" id="max" name="max" class="form-control" style="height:30px; width:80px"/>
       	  
-    <p style="margin-top:20px"><strong>°¡ÀÔ ½ÂÀÎ ÇÊ¿ä ¿©ºÎ</strong></p>
+    <p style="margin-top:20px"><strong>ê°€ìž… ìŠ¹ì¸ í•„ìš” ì—¬ë¶€</strong></p>
     <label class="radio-inline">
-		<input type="radio" id="meetAppr" name="meetAppr" value="1" checked="true" />ÇÊ¿ä <br><br/>
-		<input type="radio" id="meetAppr" name="meetAppr" value="0" checked="true" />ºÒÇÊ¿ä<br/><br/>
+		<input type="radio" id="meetAppr" name="meetAppr" value="1" checked="true" />í•„ìš” <br><br/>
+		<input type="radio" id="meetAppr" name="meetAppr" value="0" checked="true" />ë¶ˆí•„ìš”<br/><br/>
 	</label>
       	  
-	<p style="margin-top:20px"><strong>ÁÖ¿ä È°µ¿ À§Ä¡ ¼±ÅÃ</strong></p>
+	<p style="margin-top:20px"><strong>ì£¼ìš” í™œë™ ìœ„ì¹˜ ì„ íƒ</strong></p>
     <select name="sido" id="sido"></select>
 	<select name="gugun" id="gugun"></select>
 
 	<input type="hidden" name="meetLoc" id="meetLoc" value=""/>
      	        	  
  
-	<p style="margin-top:20px"><strong>¸ðÀÓ °£·« ¼Ò°³</strong></p>
+	<p style="margin-top:20px"><strong>ëª¨ìž„ ê°„ëžµ ì†Œê°œ</strong></p>
 	<input type="text" id="sIntro" name="sIntro" class="form-control" style="height:100px; width:500px"/><br/>
 
 
-	<p style="margin-top:20px"><strong>ÇØ½ÃÅÂ±× ÀÔ·Â</strong></p> <input type="text" id="getHash" name="getHash" value=""/>
+	<p style="margin-top:20px"><strong>í•´ì‹œíƒœê·¸ ìž…ë ¥</strong></p> <input type="text" id="getHash" name="getHash" value=""/>
 	<textarea form="inform" cols="40" rows="10" wrap="hard" id="hash" name="hash" class="form-control"></textarea>
 	
  </div>    
@@ -406,7 +406,7 @@ $(function(){
 </div>
 
 <div class="text-center" style="margin-top:30px">
-	<input class="btn btn-default" type="button" id="addMeet" name="addMeet" value="¸ðÀÓ »ý¼º">
+	<input class="btn btn-default" type="button" id="addMeet" name="addMeet" value="ëª¨ìž„ ìƒì„±">
 </div>
 </body>
 </html>

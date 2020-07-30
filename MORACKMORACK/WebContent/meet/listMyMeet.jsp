@@ -51,13 +51,11 @@ $(function(){
 	
 	$("button[id^='outMeet']").on("click", function(){
 		var meetId = $(this).next().val();
-		alert("as")
 		self.location="/meet/delMeet/0?meetId="+meetId;
 	})
 	
 	$("button[id^='delMeet']").on("click", function(){
 		var meetId = $(this).next().val();
-		alert("as")
 		self.location="/meet/delMeet/1?meetId="+meetId;
 	})
 	

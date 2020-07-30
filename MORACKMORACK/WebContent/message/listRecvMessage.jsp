@@ -26,7 +26,7 @@
 
 $(function(){
 	
-	$("#getMessage").on("click", function(){
+	$("td[id^='getMessage']").on("click", function(){
 		var messageNo = $(this).next().val();
 		self.location="/message/getMessage/"+ messageNo;
 	});
@@ -57,10 +57,20 @@ $(function(){
 
 <c:forEach var="message" items="${listRecvMessage}">
 <tr>
-<td><img src="/resources/images/uploadFiles/user/${message.sender.profileImg}"/></td>
+<td>
+		<c:if test="${!empty message.sender.profileImg}">
+       	<img class="sidebar-image" src="/resources/images/uploadFiles/user/${message.sender.profileImg}">
+       	</c:if>
+       	<c:if test="${empty message.sender.profileImg and message.sender.gender eq '³²'}">
+       	<img class="sidebar-image" src="/resources/images/uploadFiles/man.png">
+       	</c:if>
+       	<c:if test="${empty message.sender.profileImg and message.sender.gender eq '¿©'}">
+       	<img class="sidebar-image" src="/resources/images/uploadFiles/woman.png">
+       	</c:if>
+</td>
 <td>${message.meetName} <br/>${message.sender.userId}<br/> ${message.sender.nickName}</td>
-<td> ${message.title}</td>
-
+<td id="getMessage"> ${message.title}</td>
+<input type="hidden" value="${message.messageNo}"/>
 <td id="getMessage"> <fmt:formatDate value="${message.sendDate}" pattern="yyyy.MM.dd" /></td>
 <input type="hidden" value="${message.messageNo}"/>
 </tr>

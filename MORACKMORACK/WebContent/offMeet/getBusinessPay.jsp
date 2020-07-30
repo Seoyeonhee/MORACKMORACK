@@ -93,7 +93,7 @@
 		<br/>
 		
 		<div class="row">
-			<div class="h4">결제 완료 내역</div>
+			<div class="h4" style="margin-top:80px;" >결제 완료 내역</div>
 		</div>	
 			<hr/>
 	<div class="row">
@@ -117,7 +117,7 @@
 
 	<div class="row">
 	
-	<div class="h4">예약자 내역</div>
+	<div class="h4" style="margin-top:80px;" >예약자 내역</div>
 	</div>	
 			<hr/>
 	<div class="row">

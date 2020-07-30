@@ -85,11 +85,13 @@
 		</strong>
 	</li>
   <li class="sidebar-li" role="presentation"><a id="sideTool" class="glyphicon glyphicon-home" href="/meet/getMeet/${meetId}" > Home</a></li>
-  <c:if test="${!empty meetMem}">
+  <c:if test="${!empty meetMem && meetMem.joinCode eq '1'.charAt(0)}">
   <li class="sidebar-li" role="presentation"><a id="sideTool" class="glyphicon glyphicon-user" href="/meet/listMeetMem/${meetId}"> 모임 회원</a></li>
   <li class="sidebar-li" role="presentation"><a id="sideTool" class="glyphicon glyphicon-send" href="#"> 채팅</a></li>
   <li class="sidebar-li" role="presentation"><a id="sideTool" class="glyphicon glyphicon-book" href="#"> 모임 커뮤니티</a></li>
   <li class="sidebar-li" role="presentation"><a id="sideTool" class="glyphicon glyphicon-calendar" href="/offmeet/getOffList?meetId=${meetId}"> 오프라인 모임 <span class="badge" style="background-color:#FFD835">4</span></a></li>
+  </c:if>
+  <c:if test="${!empty meetMem && meetMem.meetRole eq '0'.charAt(0)}">
   <li class="sidebar-li" role="presentation"><a id="sideTool" class="glyphicon glyphicon-triangle-bottom" href="/meet/listJoinMeetUser/${meetId}"> 가입 신청 회원 <span class="badge" style="background-color:#FFD835">4</span></a></li>
   <li class="sidebar-li" role="presentation"><a id="sideTool" class="glyphicon glyphicon-triangle-bottom" href="#"> 신고 관리</a></li>
   </c:if>

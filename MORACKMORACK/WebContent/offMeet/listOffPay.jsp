@@ -49,7 +49,7 @@
 
         function fncGetUserList(currentPage) {
             $("#currentPage").val(currentPage)
-            $("form").attr("method", "POST").attr("action", "/offmeet/getPayList").submit();
+            $("form").attr("method", "POST").attr("action", "/offmeet/listOffPay").submit();
         }
 
         $(function() {

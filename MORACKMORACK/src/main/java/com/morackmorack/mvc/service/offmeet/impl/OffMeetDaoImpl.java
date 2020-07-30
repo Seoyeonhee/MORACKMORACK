@@ -70,7 +70,6 @@ public class OffMeetDaoImpl implements OffMeetDao{
 	}
 	
 	
-	
 	public int getOffTotalCount(String userId) throws Exception {
 		
 		return sqlSession.selectOne("OffMeetMapper.getOffTotalCount", userId);
@@ -78,10 +77,10 @@ public class OffMeetDaoImpl implements OffMeetDao{
 	
 	@Override
 	public int getOffPayTotalCount(String userId) throws Exception {
-		return sqlSession.selectOne("OffMeetMapper.getPayTotalCount", userId);
+		return sqlSession.selectOne("OffMeetMapper.getOffPayTotalCount", userId);
 	}
 
-	public List<OffMeet> getOffMeetList(Search search, String userId) throws Exception {
+	public List<OffMeet> listOffPay(Search search, String userId) throws Exception {
 		Map<String, Object> map = new HashMap<String, Object>();
 
 		map.put("search", search);
@@ -89,17 +88,8 @@ public class OffMeetDaoImpl implements OffMeetDao{
 		map.put("userId", userId);
 		
 		System.out.println("map===="+ map);
-		return sqlSession.selectList("OffMeetMapper.getOffMeetList", map);
+		return sqlSession.selectList("OffMeetMapper.listOffPay", map);
 	}
-
-	public List<OffMeet> getPayList(Search search ,String userId ) throws Exception {
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("search", search);
-		map.put("userId",userId);
-		System.out.println("map====="+map);
-		return sqlSession.selectList("OffMeetMapper.getPayList", map);
-	}
-	
 	
 	public List<Pay> listOffMem(Search search) throws Exception {
 		return sqlSession.selectList("OffMeetMapper.getOffMemList", search);
@@ -109,13 +99,17 @@ public class OffMeetDaoImpl implements OffMeetDao{
 		return sqlSession.selectOne("OffMeetMapper.getTotalOffMemCount", search);
 	}
 	
-	public List<Pay> getBusinessPayList(Search search, String userId) throws Exception {
+	public List<Pay> listBusinessPay(Search search, String meetId) throws Exception {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("search", search);
-		map.put("userId",userId);
-		return sqlSession.selectList("OffMeetMapper.getBusinessPayList", map);
+		map.put("meetId",meetId);
+		return sqlSession.selectList("OffMeetMapper.listBusinessPay", map);
 	}
 
+	public int getBusinessPayTotalCount(String meetId) throws Exception {
+		return sqlSession.selectOne("OffMeetMapper.getBusinessPayTotalCount", meetId);
+	}
+	
 	@Override
 	public List<Pay> listReserveBusiness(Search search) throws Exception {
 			
@@ -133,7 +127,6 @@ public class OffMeetDaoImpl implements OffMeetDao{
 	
 		return sqlSession.selectOne("OffMeetMapper.getReserveBusiness", payNo);
 	}
-
 	
 
 }

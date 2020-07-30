@@ -25,6 +25,12 @@ $(function(){
 		self.location("/meet/delWishMeet/"+meetId+"/wish");
 	})
 	
+	$("p[id^=meetName]").on("click", function(){
+		var meetId = $(this).next().val();
+		
+		self.location("/meet/getMeet/"+meetId);
+	})
+	
 })
 
 </script>
@@ -58,7 +64,8 @@ ${wishCount}
         <p>${wishMeet.meet.memNum}/${wishMeet.meet.maxNum}</p>
       	</div>
     	</div>
-    	<a class="glyphicon glyphicon-heart" id="delWishMeet"> 찜 리스트에서 지우기</a>
+    	<img src="/resources/images/uploadFiles/heart.png" width="10px" height="10px"/>
+    	<a id="delWishMeet"> &nbsp; 찜 리스트에서 지우기</a>
     	<input type="hidden" value="${wishMeet.meet.meetId}"/>
   </div>  
   </c:forEach>

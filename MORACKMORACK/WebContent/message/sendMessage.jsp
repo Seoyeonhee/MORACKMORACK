@@ -1,12 +1,12 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
    
 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="EUC-KR">
-<title>ÂÊÁö ¹ß½Å</title>
+<title>ìª½ì§€ ë°œì‹ </title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <script src="https://code.jquery.com/jquery-3.1.1.js"></script>
@@ -72,28 +72,28 @@ $(function(){
 <form>
 <aside>
 <div style="padding:40px; background-color:#dcdcdc; height:900px; width:1200px; margin-left:300px; margin-top:100px; padding:10px">
-	ÂÊÁö º¸³»±â
+	ìª½ì§€ ë³´ë‚´ê¸°
       <div style="padding:30px; background-color:#ffffff; height:25%; width:100%; opacity:0.6; display: inline-block; margin-top:20px">
-     	 ¹Þ´Â »ç¶÷<br/><br/>
+     	 ë°›ëŠ” ì‚¬ëžŒ<br/><br/>
       <span id="friendList" class="glyphicon glyphicon-user" style=" font-size: 60px; float:left;"></span>
 	      	<div style="margin-left:100px; margin-botton:300px;">
-	      	¸ðÀÓ¸í ${meet.meetName}<br/> 
+	      	ëª¨ìž„ëª… ${meet.meetName}<br/> 
 	      	<input type="hidden" id="meetId" name="meetId" value="${meet.meetId}"/>
 	      	<input type="hidden" id="meetName" name="meetName" value="${meet.meetName}"/>
-			¼ö½ÅÀÚ ID ${recvUser.userId}<br/>	
+			ìˆ˜ì‹ ìž ID ${recvUser.userId}<br/>	
 			<input type="hidden" id="recvId" name="recvId" value="${recvUser.userId}"/>
-			¼ö½ÅÀÚ ´Ð³×ÀÓ ${recvUser.nickName}<br/>	
+			ìˆ˜ì‹ ìž ë‹‰ë„¤ìž„ ${recvUser.nickName}<br/>	
 			</div>
 			<br/><br/>
-			ÂÊÁö Á¦¸ñ <input type="text" id="title" name="title" value="" style="height:30px; width:500px; margin-left:10px;"/>		
+			ìª½ì§€ ì œëª© <input type="text" id="title" name="title" value="" style="height:30px; width:500px; margin-left:10px;"/>		
       </div>
 
 <div>
 <textarea rows="30" cols="187" id="content" name="content" style="margin-top:30px;"></textarea>
 </div>
 <div style="float: right; padding:10px">
-<button type="button" id="cancle" style="margin-right:30px">Ãë¼Ò</button>
-<button type="button" id="submitMessage">Àü¼Û</button>
+<button type="button" id="cancle" style="margin-right:30px">ì·¨ì†Œ</button>
+<button type="button" id="submitMessage">ì „ì†¡</button>
 </div>
 </div>
 </aside>

@@ -76,6 +76,7 @@ public class MeetDaoImpl implements MeetDao {
 	
 	public void delMeet(String meetId){	
 		sqlSession.delete("MeetMapper.delHash", meetId);
+		sqlSession.delete("MeetMapper.delMeetWithReqJoinUser", meetId);
 		sqlSession.delete("MeetMapper.delMeet", meetId);
 	}
 	

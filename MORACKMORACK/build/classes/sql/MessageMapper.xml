@@ -22,7 +22,7 @@
 	
 	<insert id="sendMessage" parameterType="message">
 	INSERT INTO message (message_no, message_flag, send_id, recv_id, meet_id, meet_name, off_no, title, content, send_date, read_state)
-	VALUES (seq_message_message_no.nextval, #{messageFlag}, #{sendId}, #{recvId}, #{meetId:VARCHAR}, #{meetName:VARCHAR}, #{offNo:INTEGER}, #{title:VARCHAR}, #{content:VARCHAR}, SYSDATE, '0')
+	VALUES (seq_message_message_no.nextval, #{messageFlag}, #{sender.userId}, #{receiver.userId}, #{meetId:VARCHAR}, #{meetName:VARCHAR}, #{offNo:INTEGER}, #{title:VARCHAR}, #{content:VARCHAR}, SYSDATE, '0')
 	</insert>
 	
 	<select id="getMessage" parameterType="String" resultMap="messageSelectMap">
@@ -45,13 +45,13 @@
 	<select id="listSendMessage" parameterType="String" resultMap="messageSelectMap">
 	SELECT message_no, message_flag, send_id, recv_id, meet_id, meet_name, off_no, title, content, send_date, read_state
 	FROM message
-	WHERE message_flag = '0' AND send_id = #{sendId}
+	WHERE message_flag = '0' AND send_id = #{sender.userId}
 	</select>
 	
 	<select id="listRecvMessage" parameterType="String" resultMap="messageSelectMap">
 	SELECT message_no, message_flag, send_id, recv_id, meet_id, meet_name, off_no, title, content, send_date, read_state
 	FROM message
-	WHERE message_flag = '0' AND recv_id = #{recvId}
+	WHERE message_flag = '0' AND recv_id = #{receiver.userId}
 	</select>
 	
 	

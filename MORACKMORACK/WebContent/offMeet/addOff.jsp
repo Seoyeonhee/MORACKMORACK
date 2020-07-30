@@ -1,11 +1,11 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
     
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
-<title>¿ÀÇÁ¶óÀÎ ¸ğÀÓ »ı¼º</title>
+<title>ì˜¤í”„ë¼ì¸ ëª¨ì„ ìƒì„±</title>
 
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -42,23 +42,23 @@ function fncAddOffMeet(){
 
 	
 	if(name == null || name.length<1){
-		alert("¿ÀÇÁ¶óÀÎ¸íÀº ¹İµå½Ã ÀÔ·ÂÇÏ¿©¾ß ÇÕ´Ï´Ù.");
+		alert("ì˜¤í”„ë¼ì¸ëª…ì€ ë°˜ë“œì‹œ ì…ë ¥í•˜ì—¬ì•¼ í•©ë‹ˆë‹¤.");
 		return;
 	}
 	if(date == null || date.length<1){
-		alert("¸ğÀÓ³¯Â¥´Â ¹İµå½Ã ÀÔ·ÂÇÏ¿©¾ß ÇÕ´Ï´Ù.");
+		alert("ëª¨ì„ë‚ ì§œëŠ” ë°˜ë“œì‹œ ì…ë ¥í•˜ì—¬ì•¼ í•©ë‹ˆë‹¤.");
 		return;
 	}
 	if(time == null || time.length<1){
-		alert("¸ğÀÓ½Ã°£Àº ¹İµå½Ã ÀÔ·ÂÇÏ¼Å¾ß ÇÕ´Ï´Ù.");
+		alert("ëª¨ì„ì‹œê°„ì€ ë°˜ë“œì‹œ ì…ë ¥í•˜ì…”ì•¼ í•©ë‹ˆë‹¤.");
 		return;
 	}
 	if(max == null || max.length < 1){
-		alert("¸ğÀÓÃÖ´ëÀÎ¿øÀº ¹İµå½Ã ÀÔ·ÂÇÏ¼Å¾ß ÇÕ´Ï´Ù.");
+		alert("ëª¨ì„ìµœëŒ€ì¸ì›ì€ ë°˜ë“œì‹œ ì…ë ¥í•˜ì…”ì•¼ í•©ë‹ˆë‹¤.");
 		return;
 	}
 	if(max > 21 ){
-		alert("¸ğÀÓÃÖ´ëÀÎ¿ø ÃÖ´ë 20¸í ÀÔ·ÂÇÏ¼Å¾ß ÇÕ´Ï´Ù.");
+		alert("ëª¨ì„ìµœëŒ€ì¸ì› ìµœëŒ€ 20ëª… ì…ë ¥í•˜ì…”ì•¼ í•©ë‹ˆë‹¤.");
 		return;
 	}
 	
@@ -68,7 +68,7 @@ function fncAddOffMeet(){
 }
 
 $(function() {
-	//==> DOM Object GET 3°¡Áö ¹æ¹ı ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+	//==> DOM Object GET 3ê°€ì§€ ë°©ë²• ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 	$( "button.btn.btn-primary" ).on("click" , function() {
 		fncAddOffMeet();
 	});
@@ -77,7 +77,7 @@ $(function() {
 	
 
 $(function() {
-			//==> DOM Object GET 3°¡Áö ¹æ¹ı ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+			//==> DOM Object GET 3ê°€ì§€ ë°©ë²• ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			$("a[href='#' ]").on("click" , function() {
 				$("form")[0].reset();
 			});
@@ -108,33 +108,33 @@ $( function() {
 <input type="hidden" id="meetId" value="${parm.meetId}"/>
 
  <div class="form-group">
- <label for="offName" class="col-sm-offset-1 col-sm-3 control-label">¿ÀÇÁ¶óÀÎ ¸ğÀÓ¸í</label>
+ <label for="offName" class="col-sm-offset-1 col-sm-3 control-label">ì˜¤í”„ë¼ì¸ ëª¨ì„ëª…</label>
 	<div class="col-sm-4">
-	   <input type="text" class="form-control" id="offName" name="offName" placeholder="¿ÀÇÁ¶óÀÎ ¸ğÀÓ¸í ÀÔ·ÂÇÏ¼¼¿ä">
+	   <input type="text" class="form-control" id="offName" name="offName" placeholder="ì˜¤í”„ë¼ì¸ ëª¨ì„ëª… ì…ë ¥í•˜ì„¸ìš”">
    </div>
   </div>
 
 
 
  <div class="form-group">
- <label for="offDate" class="col-sm-offset-1 col-sm-3 control-label">¸ğÀÓÀå¼Ò</label>
+ <label for="offDate" class="col-sm-offset-1 col-sm-3 control-label">ëª¨ì„ì¥ì†Œ</label>
 	<div class="col-sm-4">
 	   <input type="text" class="form-control" id="offLoc" name="offLoc">
-	   <input type="button" onclick="execDaumPostcode()" value="ÁÖ¼Ò °Ë»ö">
+	   <input type="button" onclick="execDaumPostcode()" value="ì£¼ì†Œ ê²€ìƒ‰">
   <div id="map" style="width:300px;height:300px;margin-top:10px;display:none">
    </div>
   </div>
   <script>
-  var mapContainer = document.getElementById('map'), // Áöµµ¸¦ Ç¥½ÃÇÒ div
+  var mapContainer = document.getElementById('map'), // ì§€ë„ë¥¼ í‘œì‹œí•  div
   mapOption = { 
   		
-      center: new kakao.maps.LatLng(37.537187, 127.005476), // ÁöµµÀÇ Áß½ÉÁÂÇ¥ level: 5 // ÁöµµÀÇ È®´ë ·¹º§ }; //Áöµµ¸¦ ¹Ì¸® »ı¼º 
-      level: 5 // ÁöµµÀÇ È®´ë ·¹º§
+      center: new kakao.maps.LatLng(37.537187, 127.005476), // ì§€ë„ì˜ ì¤‘ì‹¬ì¢Œí‘œ level: 5 // ì§€ë„ì˜ í™•ëŒ€ ë ˆë²¨ }; //ì§€ë„ë¥¼ ë¯¸ë¦¬ ìƒì„± 
+      level: 5 // ì§€ë„ì˜ í™•ëŒ€ ë ˆë²¨
       };
      
-  	var map = new kakao.maps.Map(mapContainer, mapOption); //ÁÖ¼Ò-ÁÂÇ¥ º¯È¯ °´Ã¼¸¦ »ı¼º 
+  	var map = new kakao.maps.Map(mapContainer, mapOption); //ì£¼ì†Œ-ì¢Œí‘œ ë³€í™˜ ê°ì²´ë¥¼ ìƒì„± 
   	
-  	var geocoder = new kakao.maps.services.Geocoder(); //¸¶Ä¿¸¦ ¹Ì¸® »ı¼º 
+  	var geocoder = new kakao.maps.services.Geocoder(); //ë§ˆì»¤ë¥¼ ë¯¸ë¦¬ ìƒì„± 
   	
   	var marker = new kakao.maps.Marker({ 
   	  position: new kakao.maps.LatLng(37.537187, 127.005476)
@@ -202,35 +202,35 @@ $( function() {
   </div> 
     
   <div class="form-group">
-				<label for="fileName"class="col-sm-offset-1 col-sm-3 control-label">¿ÀÇÁ¶óÀÎ ¸ğÀÓ ÀÌ¹ÌÁö</label>
+				<label for="fileName"class="col-sm-offset-1 col-sm-3 control-label">ì˜¤í”„ë¼ì¸ ëª¨ì„ ì´ë¯¸ì§€</label>
 				<div class="col-sm-4">
 			<input type="file" class="form-control" id="image" name="image" accept="image/*">
 			</div>
    </div>
   
  <div class="form-group">
- <label for="offDate" class="col-sm-offset-1 col-sm-3 control-label">¸ğÀÓ³¯Â¥</label>
+ <label for="offDate" class="col-sm-offset-1 col-sm-3 control-label">ëª¨ì„ë‚ ì§œ</label>
 	<div class="col-sm-4">
 	   <input type="text" class="form-control" id="offDate" name="offDate" readonly="readonly">
    </div>
   </div>
 		
  <div class="form-group">
- <label for="offTime" class="col-sm-offset-1 col-sm-3 control-label">¸ğÀÓ½Ã°£</label>
+ <label for="offTime" class="col-sm-offset-1 col-sm-3 control-label">ëª¨ì„ì‹œê°„</label>
 	<div class="col-sm-4">
 	   <input type="text" class="form-control" id="offTime" name="offTime">
    </div>
   </div>
   
   <div class="form-group">
- <label for="offMax" class="col-sm-offset-1 col-sm-3 control-label">ÃÖ´ëÂü¿©ÀÎ¿ø¼ö</label>
+ <label for="offMax" class="col-sm-offset-1 col-sm-3 control-label">ìµœëŒ€ì°¸ì—¬ì¸ì›ìˆ˜</label>
 	<div class="col-sm-4">
 	   <input type="number" class="form-control" id="offMax" name="offMax">
    </div>
   </div>
   
 <div class="form-group">
- <label for="offFee" class="col-sm-offset-1 col-sm-3 control-label">Âü¿©ºñ</label>
+ <label for="offFee" class="col-sm-offset-1 col-sm-3 control-label">ì°¸ì—¬ë¹„</label>
 	<div class="col-sm-4">
 	   <input type="text" class="form-control" id="amount" name="amount">
    </div>
@@ -238,8 +238,8 @@ $( function() {
     	
  <div class="form-group">
 		    <div class="col-sm-offset-4  col-sm-4 text-center">
-		      <button type="button" class="btn btn-primary"  >µî &nbsp;·Ï</button>
-			  <a class="btn btn-primary btn" href="#" role="button">Ãë &nbsp;¼Ò</a>
+		      <button type="button" class="btn btn-primary"  >ë“± &nbsp;ë¡</button>
+			  <a class="btn btn-primary btn" href="#" role="button">ì·¨ &nbsp;ì†Œ</a>
 		    </div>
 		  </div>
 		</form>
