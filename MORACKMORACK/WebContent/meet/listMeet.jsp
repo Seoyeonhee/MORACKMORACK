@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
     
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
 
@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta charset="EUC-KR">
-<title>¸ðÀÓ ¸ñ·Ï Á¶È¸</title>
+<title>ëª¨ìž„ ëª©ë¡ ì¡°íšŒ</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
@@ -300,86 +300,86 @@ $(function (){
 <div class="container">
 <c:if test="${search.searchType eq 0}">
 
-<h4 style="text-align:right">À¯Çü °Ë»ö ¸ñ·Ï</h4>
+<h4 style="text-align:right">ìœ í˜• ê²€ìƒ‰ ëª©ë¡</h4>
 	<div style="text-align:center; margin-top:50px">
-	<h4><a id="meetTypeismul">´Ù¼öÀÎ ¸ðÀÓ</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a id="meetTypeisone">2ÀÎ ¸ðÀÓ</a></h4>
+	<h4><a id="meetTypeismul">ë‹¤ìˆ˜ì¸ ëª¨ìž„</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a id="meetTypeisone">2ì¸ ëª¨ìž„</a></h4>
 	</div>
 	
 </c:if>
 
 <c:if test="${search.searchType eq 1}">
 
-<h4 style="text-align:right">Ä«Å×°í¸® °Ë»ö ¸ñ·Ï</h4>
+<h4 style="text-align:right">ì¹´í…Œê³ ë¦¬ ê²€ìƒ‰ ëª©ë¡</h4>
 
   <fieldset>
     <ul class="list-group">
       <li class="category-li">
         <input type="radio" name="group1" id="r1" class="input" checked>
-        <label for="r1">¿©Çà</label>
+        <label for="r1">ì—¬í–‰</label>
       </li>
       <li class="category-li">
         <input type="radio" name="group1" id="r2" class="input">
-        <label for="r2">°ÔÀÓ</label>
+        <label for="r2">ê²Œìž„</label>
       </li>
       <li class="category-li">
         <input type="radio" name="group1" id="r3" class="input">
-        <label for="r3">À½¾Ç</label>
+        <label for="r3">ìŒì•…</label>
       </li>
       <li class="category-li">
         <input type="radio" name="group1" id="r4" class="input">
-        <label for="r4">¿µÈ­</label>
+        <label for="r4">ì˜í™”</label>
       </li>
       <li class="category-li">
         <input type="radio" name="group1" id="r5" class="input">
-        <label for="r5">°ø¿¬</label>
+        <label for="r5">ê³µì—°</label>
       </li>
       <li class="category-li">
         <input type="radio" name="group1" id="r6" class="input">
-        <label for="r6">¸ÀÁý</label>
+        <label for="r6">ë§›ì§‘</label>
       </li>
       <li class="category-li">
         <input type="radio" name="group1" id="r7" class="input">
-        <label for="r7">ÀÚ±â°è¹ß</label>
+        <label for="r7">ìžê¸°ê³„ë°œ</label>
       </li>
       <li class="category-li">
         <input type="radio" name="group1" id="r8" class="input">
-        <label for="r8">¾×Æ¼ºñÆ¼</label>
+        <label for="r8">ì•¡í‹°ë¹„í‹°</label>
       </li>
       <li class="category-li">
         <input type="radio" name="group1" id="r9" class="input">
-        <label for="r9">µ¶¼­/¸¸È­</label>
+        <label for="r9">ë…ì„œ/ë§Œí™”</label>
       </li>
       <li class="category-li">
         <input type="radio" name="group1" id="r10" class="input">
-        <label for="r10">´í½º</label>
+        <label for="r10">ëŒ„ìŠ¤</label>
       </li>
       <li class="category-li">
         <input type="radio" name="group1" id="r11" class="input">
-        <label for="r11">»çÁø</label>
+        <label for="r11">ì‚¬ì§„</label>
       </li>
       <li class="category-li">
         <input type="radio" name="group1" id="r12" class="input">
-        <label for="r12">¹Ý·Áµ¿¹°</label>
+        <label for="r12">ë°˜ë ¤ë™ë¬¼</label>
       </li>
       <li class="category-li">
         <input type="radio" name="group1" id="r13" class="input">
-        <label for="r13">¿ä¸®</label>
+        <label for="r13">ìš”ë¦¬</label>
       </li>
       <li class="category-li">
         <input type="radio" name="group1" id="r14" class="input">
-        <label for="r14">Â÷</label>
+        <label for="r14">ì°¨</label>
       </li>
       <li class="category-li">
         <input type="radio" name="group1" id="r15" class="input">
-        <label for="r15">½ºÆ÷Ã÷</label>
+        <label for="r15">ìŠ¤í¬ì¸ </label>
       </li>
       <li class="category-li">
         <input type="radio" name="group1" id="r16" class="input">
-        <label for="r16">°ø¿¹</label>
+        <label for="r16">ê³µì˜ˆ</label>
       </li>
       <li class="category-li">
         <input type="radio" name="group1" id="r17" class="input">
-        <label for="r17">±âÅ¸</label>
+        <label for="r17">ê¸°íƒ€</label>
       </li>
     </ul>
     </fieldset>
@@ -388,15 +388,15 @@ $(function (){
 
 <c:if test="${search.searchType eq 2}">
 
-<h4 style="text-align:right">ÇØ½ÃÅÂ±× °Ë»ö ¸ñ·Ï</h4>
+<h4 style="text-align:right">í•´ì‹œíƒœê·¸ ê²€ìƒ‰ ëª©ë¡</h4>
 
 </c:if>
 
 
 	<div class="container__item">
 		<form class="form">
-			<input type="text" id="searchKeyword" name="searchKeyword" class="form__field" placeholder="${search.searchType eq 0 or search.searchType eq 1? '¸ðÀÓ¸í °Ë»ö' :'ÇØ½ÃÅÂ±× °Ë»ö'}" value="${! empty search.searchKeyword ? search.searchKeyword : '' }"/>
-			<button type="button" id="searchMeet" class="btn btn--primary btn--inside uppercase">°Ë»ö</button>
+			<input type="text" id="searchKeyword" name="searchKeyword" class="form__field" placeholder="${search.searchType eq 0 or search.searchType eq 1? 'ëª¨ìž„ëª… ê²€ìƒ‰' :'í•´ì‹œíƒœê·¸ ê²€ìƒ‰'}" value="${! empty search.searchKeyword ? search.searchKeyword : '' }"/>
+			<button type="button" id="searchMeet" class="btn btn--primary btn--inside uppercase">ê²€ìƒ‰</button>
 		</form>
 	</div>
 </div>
