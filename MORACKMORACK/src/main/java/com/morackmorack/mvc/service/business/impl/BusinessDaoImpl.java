@@ -13,6 +13,7 @@ import com.morackmorack.mvc.common.Search;
 import com.morackmorack.mvc.service.business.BusinessDao;
 import com.morackmorack.mvc.service.domain.Business;
 import com.morackmorack.mvc.service.domain.Menu;
+import com.morackmorack.mvc.service.domain.Pay;
 import com.morackmorack.mvc.service.domain.ReserveAble;
 
 //==> 회원관리 DAO CRUD 구현
@@ -106,6 +107,10 @@ public class BusinessDaoImpl implements BusinessDao {
 	
 	public ReserveAble getReservAbleTime(int reserveAbleNo) throws Exception {
 		return sqlSession.selectOne("BusinessMapper.getReservAbleTime", reserveAbleNo);
+	}
+	
+	public List<Pay> getUsedBusinessList(String userId) throws Exception {
+		return sqlSession.selectList("BusinessMapper.getUsedBusinessList", userId);
 	}
 
 }

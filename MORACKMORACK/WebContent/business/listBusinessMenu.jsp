@@ -69,7 +69,9 @@
 
 <body>
 
-	<jsp:include page="/business/businessToolbar.jsp"/>
+	<header>
+		<jsp:include page="/toolbar.jsp" />
+	</header>
 
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">

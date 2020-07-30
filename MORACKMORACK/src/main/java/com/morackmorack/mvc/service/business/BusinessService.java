@@ -6,6 +6,7 @@ import java.util.Map;
 import com.morackmorack.mvc.common.Search;
 import com.morackmorack.mvc.service.domain.Business;
 import com.morackmorack.mvc.service.domain.Menu;
+import com.morackmorack.mvc.service.domain.Pay;
 import com.morackmorack.mvc.service.domain.ReserveAble;
 
 public interface BusinessService {
@@ -63,5 +64,8 @@ public interface BusinessService {
 	
 	// 예약가능시간 번호로 예약 시간 가져오기
 	public ReserveAble getReservAbleTime(int reserveAbleNo) throws Exception;
+	
+	// 이용한 업체 목록
+	public List<Pay> getUsedBusinessList(String userId) throws Exception;
 	
 }

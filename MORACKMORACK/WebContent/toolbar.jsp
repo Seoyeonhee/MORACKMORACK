@@ -228,6 +228,10 @@ article {
     <nav>
       <div class="nav-mobile"><a id="nav-toggle" href="#!"><span></span></a></div>
       <ul class="nav-list">
+      
+      
+      	<!-- 일반 유저 / 비회원 -->
+      	<c:if test="${empty sessionScope.business}">
      	 <li>
           <a href="#!">MEET</a>
           <ul class="nav-dropdown">
@@ -305,7 +309,8 @@ article {
               <a href="/user/login">회원 로그인</a>
             </li>
             <li>
-              <a href="/business/login">업체 로그인</a>
+             <a href="/business/BusinessTestURL.jsp">업체 로그인</a>
+              <%-- <jsp:include page="/business/loginBusiness2.jsp"/> --%>
             </li>
           </ul>
           </li>
@@ -331,6 +336,112 @@ article {
          		<a href="/user/logout">로그아웃</a>
          	</li>
           </c:if>
+         </c:if> 
+         
+         <!-- 업체 -->
+         <c:if test="${!empty sessionScope.business}">
+         <li>
+          <a href="#!">업체목록</a>
+          <ul class="nav-dropdown">
+            <li>
+              <a href="/meet/listMyMeet">가입한 모임</a>
+            </li>
+            <li>
+              <a href="/meet/addMeet">모임 생성</a>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <a href="#!">업체 정보 조회</a>
+          <ul class="nav-dropdown">
+            <li>
+              <a href="/meet/listMeet?searchType2=0">유형 검색</a>
+            </li>
+            <li>
+              <a href="/meet/listMeet?searchType2=1">카테고리 검색</a>
+            </li>
+            <li>
+              <a href="/meet/listMeet?searchType2=2">해시태그 검색</a>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <a href="#!">업체 정보 변경</a>
+          <ul class="nav-dropdown">
+            <li>
+              <a href="/friend/friendList">친구</a>
+            </li>
+            <li>
+              <a href="/message/listRecvMessage">쪽지함</a>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <a href="#!">업체 후기 조회</a>
+          <ul class="nav-dropdown">
+            <li>
+              <a href="/business/listBusiness">업체 목록</a>
+            </li>
+            <li>
+              <a href="/business/listUsedBusiness">이용한 업체 목록</a>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <a href="#!">예약 목록 조회</a>
+          <ul class="nav-dropdown">
+          <li>
+              <a href="/offmeet/addBusinessPay">모임 후기</a>
+            </li>
+            <li>
+              <a href="/community/getBusinessReviewList">업체 후기</a>
+            </li>         
+            <div class="dropdown-divider" style="border-color:white;"></div>
+              <li>
+              <a href="/user/getUser?userId=${user.userId}">내 정보 조회</a>
+            </li>
+            <li>
+              <a href="/user/updateUser?userId=${user.userId}">내 정보 변경</a>
+            </li>
+            <li>
+              <a href="/user/delUser?userId=${user.userId}">회원 탈퇴</a>
+            </li>
+          </ul>
+        </li>
+        
+         <c:if test="${empty sessionScope.user && empty sessionScope.business}">
+         <li>
+		<a href="#!">로그인</a>
+          <ul class="nav-dropdown">
+            <li>
+              <a href="/user/login">회원 로그인</a>
+            </li>
+            <li>
+              <a href="/business/BusinessTestURL.jsp">업체 로그인</a>
+              <%-- <jsp:include page="/business/loginBusiness2.jsp"/> --%>
+            </li>
+          </ul>
+          </li>
+          
+         <li>
+          <a href="#!">회원가입</a>
+           <ul class="nav-dropdown">
+            <li>
+              <a href="/user/addUser">회원가입</a>
+            </li>
+            <li>
+              <a href="/business/addBusiness">업체 회원가입</a>
+            </li>
+          </ul>
+          </li>
+          </c:if>
+ 
+ 		  <c:if test="${!empty sessionScope.business}">
+			<li>
+         		<a href="/user/logout">로그아웃</a>
+         	</li>
+          </c:if>
+        </c:if>  
           
      </ul>
     </nav>
