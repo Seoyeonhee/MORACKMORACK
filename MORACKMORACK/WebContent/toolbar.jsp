@@ -271,7 +271,7 @@ article {
               <a href="/business/listBusiness">업체 목록</a>
             </li>
             <li>
-              <a href="/business/listReserveBusiness">이용한 업체 목록</a>
+              <a href="/business/listUsedBusiness">이용한 업체 목록</a>
             </li>
           </ul>
         </li>
