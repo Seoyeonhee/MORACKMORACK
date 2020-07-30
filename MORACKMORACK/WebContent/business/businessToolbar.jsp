@@ -85,7 +85,7 @@ $(function() {
 			<a href="#">업체 후기 조회</a>
 		</li>
 		<li>
-			<a href="/business/listReserve">예약 목록 조회</a>		
+			<a href="/business/listReserveBusiness">예약 목록 조회</a>		
 		</li>
 		<li>
 			<a href="/business/delBusiness">업체 해지</a>	

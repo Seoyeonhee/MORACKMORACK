@@ -1,5 +1,6 @@
 package com.morackmorack.mvc.service.notify;
 
+import java.util.List;
 import java.util.Map;
 
 import com.morackmorack.mvc.common.Search;
@@ -9,7 +10,7 @@ public interface NotifyService {
 	
 	public void notifyUser(Notify notify) throws Exception;
 	
-	public Map<String,Object> listNotifyUser(Search search) throws Exception;
+	public List<Notify> listNotifyUser(Search search) throws Exception;
 	
 	public Notify getNotifyUser(String recvNotiUser) throws Exception;
 	

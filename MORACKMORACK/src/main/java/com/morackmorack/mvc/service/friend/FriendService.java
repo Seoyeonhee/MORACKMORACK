@@ -10,17 +10,19 @@ public interface FriendService {
 	
 	public void reqFriend(Friend friend) throws Exception;
 	
-	public Map<String,Object> listRecvFriend(Search search, String recvFriendId) throws Exception;
+	public List<Friend> listRecvFriend(String recvFriendId) throws Exception;
 	
-	public Friend getRecvFriend(String reqFriendId) throws Exception;
+	public Friend getRecvFriend(int friendNo) throws Exception;
 	
 	public Friend getFriend(String recvFriendId) throws Exception;	
 	
-	public Map<String,Object> listFriend(Search search, String userId) throws Exception;
+	public List<Friend> listFriend(String reqFriendId) throws Exception;
 	
-	public void mangFriend(int friendNo) throws Exception;
+	public void okFriend(Friend friend) throws Exception;
 	
-	public void delFriend(int friendNo) throws Exception;
+	public void denyFriend(Friend friend) throws Exception;
+	
+	public void delFriend(String reqFriendId, String recvFriendId) throws Exception;
 	
 	public List<Friend> friendList(String reqFriendId) throws Exception;
 	

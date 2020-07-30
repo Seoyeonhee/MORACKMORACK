@@ -257,7 +257,7 @@ article {
           <a href="#!">SOCIAL</a>
           <ul class="nav-dropdown">
             <li>
-              <a href="/friend/friendList">친구</a>
+              <a href="/friend/listRecvFriend">친구</a>
             </li>
             <li>
               <a href="/message/listRecvMessage">쪽지함</a>
@@ -271,7 +271,7 @@ article {
               <a href="/business/listBusiness">업체 목록</a>
             </li>
             <li>
-              <a href="/business/listReserveBusiness">이용한 업체 목록</a>
+              <a href="/business/listUsedBusiness">이용한 업체 목록</a>
             </li>
           </ul>
         </li>

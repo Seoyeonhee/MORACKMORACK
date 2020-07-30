@@ -58,4 +58,11 @@ public interface BusinessDao {
 	
 	
 	
+	
+	// LIST showReserveAble
+	public List<ReserveAble> showReserveAbleTimeList(String businessId, String reserveDate) throws Exception;
+	
+	// LIST reserveAbleTime
+	public ReserveAble getReservAbleTime(int reserveAbleNo) throws Exception;
+	
 }

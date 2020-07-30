@@ -1,6 +1,8 @@
 package com.morackmorack.mvc.service.business.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,6 +54,8 @@ public class BusinessDaoImpl implements BusinessDao {
 		sqlSession.delete("BusinessMapper.delBusiness", businessId);
 	}
 	
+
+	
 	
 	
 	
@@ -88,6 +92,20 @@ public class BusinessDaoImpl implements BusinessDao {
 	
 	public List<ReserveAble> listReserveAbleTime(String businessId) throws Exception {
 		return sqlSession.selectList("BusinessMapper.getReserveAbleTimeList", businessId);
+	}
+	
+	
+	
+	
+	public List<ReserveAble> showReserveAbleTimeList(String businessId, String reserveDate) throws Exception {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("businessId", businessId);
+		map.put("reserveDate", reserveDate);
+		return sqlSession.selectList("BusinessMapper.showReserveAbleTimeList", map);
+	}
+	
+	public ReserveAble getReservAbleTime(int reserveAbleNo) throws Exception {
+		return sqlSession.selectOne("BusinessMapper.getReservAbleTime", reserveAbleNo);
 	}
 
 }

@@ -58,12 +58,15 @@ $(function(){
 	
 	$("button[id^='reqFriend']").on("click", function(){
 		var userId = $(this).next().val();
-		self.location = "/friend/reqFriend?userId="+userId;
+		var meetId = $(this).next().next().val();
+		alert(userId);
+		self.location = "/friend/reqFriend?userId="+userId+"&"+"meetId="+meetId;
 	});
 	
-	$("button[id^='notifyUser']").on("click", function(){
+	$("button[id^='notifyUserView']").on("click", function(){
 		var userId = $(this).next().val();
-		self.location = "/notify/notifyUser?userId="+userId;
+		var meetId = $(this).next().next().val();
+		self.location = "/notify/notifyUserView?userId="+userId+"&"+"meetId="+meetId;
 	});
 	
 	$("button[id^='provideStaff']").on("click", function(){		
@@ -137,11 +140,11 @@ $(function(){
                 <input type="hidden" value="${meetMem.user.userId}"/>
                 <input type="hidden" value="${meetMem.meet.meetId}"/><br/>
                 
-                <button type="button" id="reqFriend${status.count}">친구 신청</button><br/> 
-                <input type="hidden" value="${meetMem.user.userId}"/>
+                <button type="button" id="reqFriend${status.count}">친구 신청</button>
+                <input type="hidden" value="${meetMem.user.userId}"/><input type="hidden" value="${meetMem.meet.meetId}"/><br/> 
                 
-                <button type="button" id="notifyUser${status.count}">회원 신고</button> <br/> 
-                <input type="hidden" value="${meetMem.user.userId}"/>
+                <button type="button" id="notifyUserView${status.count}">회원 신고</button>
+                <input type="hidden" value="${meetMem.user.userId}"/><input type="hidden" value="${meetMem.meet.meetId}"/><br/> 
                 
                 <button type="button" id="provideStaff${status.count}">참모진 임명</button><br/>
                 <input type="hidden" value="${meetMem.user.userId}"/><input type="hidden" value="${meetMem.meet.meetId}"/>
