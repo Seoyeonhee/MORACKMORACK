@@ -38,19 +38,19 @@
 	<select id="listRecvFriend" parameterType="map" resultMap="friendSelectMap">
 		SELECT *
 		FROM friend
-		WHERE recv_friend_id=#{recvFriendId:VARCHAR2}
+		WHERE recv_friend_id=#{recvFriendId:VARCHAR} and friend_code='0'
 	</select>
 	
-	<select id="getRecvFriend" parameterType="String" resultMap="friendSelectMap">
+	<select id="getRecvFriend" parameterType="int" resultMap="friendSelectMap">
 		SELECT *
 		FROM Friend
-		WHERE req_friend_id = #{reqFriendId:VARCHAR}
+		WHERE friend_no = #{friendNo}
 	</select>
 	
-	<select id="listFriend" parameterType="map" resultMap="friendSelectMap">
+	<select id="listFriend" parameterType="String" resultMap="friendSelectMap">
 		SELECT recv_friend_id, friend_date
 		FROM friend
-		WHERE req_friend_id=#{reqFriendId:VARCHAR}
+		WHERE req_friend_id=#{reqFriendId:VARCHAR} and friend_code='1'
 	</select>	
 	
 	<select id="getFriend" parameterType="String" resultMap="friendSelectMap">
@@ -67,8 +67,16 @@
 		WHERE friend_no=#{friendNo:INTEGERE}
 	</update>
 	
+	<update id="okFriend" parameterType="String">
+		UPDATE friend
+		<set>
+			friend_code='1'
+		</set>
+		WHERE req_friend_id=#{reqFriendId:VARCHAR} AND recv_friend_id=#{recvFriendId:VARCHAR}
+	</update>
 
-	<insert id="okFriend" parameterType="friend">
+
+	<insert id="addFriend" parameterType="map">
 		INSERT
 		INTO friend	(		friend_no
 						,	req_friend_id
@@ -77,8 +85,8 @@
 						,	req_friend_date
 						,	friend_date
 						)	VALUES (	seq_friend_friend_no.nextval
-									,	#{recvFriendId.userId:VARCHAR}
-									,	#{reqFriendId.userId:VARCHAR}
+									,	#{recvFriendId:VARCHAR}
+									,	#{reqFriendId:VARCHAR}
 									,	'1'
 									,	sysdate
 									,	sysdate)

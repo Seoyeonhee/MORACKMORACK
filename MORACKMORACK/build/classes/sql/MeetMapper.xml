@@ -91,6 +91,12 @@
 	WHERE hash_name = #{hashtag}
 	</select>
 	
+	<select id="getHashtagFromMain" parameterType="String" resultType="java.util.HashMap">
+	SELECT hash_name 
+	FROM hashtag
+	WHERE hash_name LIKE  #{hashtag} || '%'
+	</select>
+	
 	<insert id="addMeet_Hash" parameterType="map">
 	INSERT INTO meet_hashtag (meet_hash_no, meet_id, hash_no) 
 	VALUES (seq_meet_hashtag_meet_hash_no.nextval, #{meetId}, #{hashNo})
@@ -171,6 +177,17 @@
 	</if>	
 	GROUP BY meet.meet_id, meet.leader_id, meet.meet_name, meet.meet_loc, meet.max_num, meet.mem_num, meet.meet_img, meet.s_intro, meet.l_intro, meet.reg_date, meet.meet_star, meet.bank, meet.accNum, meet.category, meet.meet_appr, meet.meet_type
 	ORDER BY meet.reg_date
+	</select>
+	
+	<select id="listMeetMain" parameterType="Integer" resultMap="meetSelectMap">
+	SELECT * 
+	FROM(SELECT meet.meet_id, meet.leader_id, meet.meet_name, meet.meet_loc, meet.max_num, meet.mem_num, meet.meet_img, meet.s_intro, meet.l_intro, meet.reg_date, meet.meet_star, meet.bank, meet.accNum, meet.category, meet.meet_appr, meet.meet_type
+		FROM meet
+		<if test='category != null'>
+		WHERE category = #{categoryNo}
+		</if>
+		ORDER BY meet.meet_star)
+	<![CDATA[ WHERE ROWNUM <= 5 ]]>
 	</select>
 	
 	<select id="getMeetMain" resultMap="meetSelectMap">

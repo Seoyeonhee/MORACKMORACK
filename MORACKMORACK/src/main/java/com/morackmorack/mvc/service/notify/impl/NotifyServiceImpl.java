@@ -35,16 +35,9 @@ public class NotifyServiceImpl implements NotifyService {
 	}
 
 	@Override
-	public Map<String, Object> listNotifyUser(Search search) throws Exception {
-		// TODO Auto-generated method stub
-		List<Notify> list =  notifyDao.listNotifyUser(search);
-		int totalCount = notifyDao.getTotalCount(search);
-		
-		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("list", list);
-		map.put("totalcCount", new Integer(totalCount));
-		
-		return map;
+	public List<Notify> listNotifyUser(Search search) throws Exception {
+		// TODO Auto-generated method stub	
+		return notifyDao.listNotifyUser(search);
 	}
 
 	@Override

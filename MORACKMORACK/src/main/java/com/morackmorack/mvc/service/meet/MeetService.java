@@ -27,6 +27,10 @@ public interface MeetService {
 	
 	public List<Meet> listMeet(Search search);
 	
+	public List<Meet> listMeetFromMain();
+	
+	public List<Meet> listMeetFromMain(List<Integer> categoryNo);
+	
 	public void outMeet(String userId, String meetId);
 	
 	public void delMeet(String meetId);
@@ -60,6 +64,8 @@ public interface MeetService {
 	public void delWishMeet(String userId, String meetId);
 	
 	public String getHash(String hashtag);
+
+	public List<String> getHashtagFromMain(String hashtag);
 	
 	public void addHash(String hashtag);
 	

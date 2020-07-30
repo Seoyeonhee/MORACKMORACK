@@ -38,25 +38,22 @@ public class FriendDAOImpl implements FriendDAO {
 	}
 
 	@Override
-	public List<Friend> listRecvFriend(Search search, String recvFriendId) throws Exception {
-		// TODO Auto-generated method stub
-		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("recvFriendId",recvFriendId);
-		map.put("search", search);
+	public List<Friend> listRecvFriend(String recvFriendId) throws Exception {
+		// TODO Auto-generated method stu
 		
-		List<Friend> list = sqlSession.selectList("FriendMapper.listRecvFriend",map);
+		List<Friend> listRecvFriend = sqlSession.selectList("FriendMapper.listRecvFriend",recvFriendId);
 		
-		for(int i=0 ; i<list.size() ; i++) {
-			list.get(i).setRecvFriend((User)sqlSession.selectOne("UserMapper.getUser", list.get(i).getRecvFriend().getUserId()));
+		for(int i=0 ; i<listRecvFriend.size() ; i++) {
+			listRecvFriend.get(i).setReqFriend((User)sqlSession.selectOne("UserMapper.getUser", listRecvFriend.get(i).getReqFriend().getUserId()));
 		}
-		return list;
+		return listRecvFriend;
 		
 	}
 
 	@Override
-	public Friend getRecvFriend(String reqFriendId) throws Exception {
+	public Friend getRecvFriend(int friendNo) throws Exception {
 		// TODO Auto-generated method stub
-		return sqlSession.selectOne("FriendMapper.getRecvFriend", reqFriendId);
+		return sqlSession.selectOne("FriendMapper.getRecvFriend", friendNo);
 	}
 
 	@Override
@@ -72,33 +69,49 @@ public class FriendDAOImpl implements FriendDAO {
 	}
 
 	@Override
-	public void mangFriend(int friendNo) throws Exception {
+	public void okFriend(Friend friend) throws Exception {
 		// TODO Auto-generated method stub
 		
-			sqlSession.update("friendMapper.denyFriend", friendNo);
+		String reqFriendId = friend.getReqFriend().getUserId();
+		String recvFriendId = friend.getRecvFriend().getUserId();
+		Map<String, Object> map = new HashMap();
 		
-			sqlSession.update("friendMapper.okFriend",friendNo);
-	}
-
-	@Override
-	public void delFriend(int friendNo) throws Exception {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public List<Friend> listFriend(Search search, String reqFriendId) throws Exception {
-		// TODO Auto-generated method stub
-		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("search", search);
 		map.put("reqFriendId", reqFriendId);
+		map.put("recvFriendId", recvFriendId);
 		
-		List<Friend> list = sqlSession.selectList("FriendMapper.listFriend",map);
+//		sqlSession.insert("FriendMapper.addFriend", map);
 		
-		for(int i=0 ; i<list.size() ; i++) {
-			list.get(i).setReqFriend((User)sqlSession.selectOne("UserMapper.getUser", list.get(i).getReqFriend().getUserId()));
+
+			
+		sqlSession.update("FriendMapper.okFriend", map);
+	}
+
+	@Override
+	public void denyFriend(Friend friend) throws Exception {
+		// TODO Auto-generated method stub
+		sqlSession.update("friendMapper.denyFriend", friend);
+	}
+	
+	@Override
+	public void delFriend(String reqFriendId, String recvFriendId) throws Exception {
+		// TODO Auto-generated method stub
+		Map<String, Object> map = new HashMap<String,Object>();
+		
+		map.put("reqFriendId", reqFriendId);
+		map.put("recvFriendId", recvFriendId);
+		
+		sqlSession.update("friendMapper.delFriend", map);
+	}
+
+	@Override
+	public List<Friend> listFriend(String reqFriendId) throws Exception {
+		// TODO Auto-generated method stub
+		List<Friend> listFriend = sqlSession.selectList("FriendMapper.listFriend",reqFriendId);
+		
+		for(int i=0 ; i<listFriend.size() ; i++) {
+			listFriend.get(i).setRecvFriend((User)sqlSession.selectOne("UserMapper.getUser", listFriend.get(i).getRecvFriend().getUserId()));
 		}
-		return list;
+		return listFriend;
 	}
 
 	@Override
@@ -118,4 +131,5 @@ public class FriendDAOImpl implements FriendDAO {
 		return friendList;
 
 	}
+
 }

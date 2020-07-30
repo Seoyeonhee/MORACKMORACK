@@ -34,19 +34,14 @@ public class FriendServiceImpl implements FriendService {
 		friendDAO.reqFriend(friend);
 	}
 	@Override
-	public Map<String, Object> listRecvFriend(Search search, String recvFriendId) throws Exception {
+	public List<Friend> listRecvFriend(String recvFriendId) throws Exception {
 		// TODO Auto-generated method stub
-		List<Friend> list = friendDAO.listRecvFriend(search, recvFriendId);
-		int totalCount=friendDAO.getTotalCount(recvFriendId);
-		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("list", list);
-		map.put("totalCount", new Integer(totalCount));
-		return map;
+		return friendDAO.listRecvFriend(recvFriendId);
 	}
 	@Override
-	public Friend getRecvFriend(String reqFriendId) throws Exception {
+	public Friend getRecvFriend(int friendNo) throws Exception {
 		// TODO Auto-generated method stub
-		return friendDAO.getRecvFriend(reqFriendId);
+		return friendDAO.getRecvFriend(friendNo);
 	}
 	@Override
 	public Friend getFriend(String recvFriendId) throws Exception {
@@ -54,23 +49,26 @@ public class FriendServiceImpl implements FriendService {
 		return friendDAO.getFriend(recvFriendId);
 	}
 	@Override
-	public Map<String, Object> listFriend(Search search, String userId) throws Exception {
+	public List<Friend> listFriend(String reqFriendId) throws Exception {
 		// TODO Auto-generated method stub
-		List<Friend> list = friendDAO.listFriend(search, userId);
-		int totalCount=friendDAO.getTotalCount(userId);
-		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("totalCount", new Integer(totalCount));
-		return null;
+		return friendDAO.listFriend(reqFriendId);
 	}
 	@Override
-	public void mangFriend(int friendNo) throws Exception {
+	public void okFriend(Friend friend) throws Exception {
 		// TODO Auto-generated method stub
-		friendDAO.mangFriend(friendNo);
+		friendDAO.okFriend(friend);
 	}
+	
 	@Override
-	public void delFriend(int friendNo) throws Exception {
+	public void denyFriend(Friend friend) throws Exception {
 		// TODO Auto-generated method stub
-		friendDAO.delFriend(friendNo);
+		friendDAO.denyFriend(friend);
+	}
+	
+	@Override
+	public void delFriend(String reqFriendId, String recvFriendId) throws Exception {
+		// TODO Auto-generated method stub
+		friendDAO.delFriend(reqFriendId, recvFriendId);
 	}
 	@Override
 	public List<Friend> friendList(String reqFriendId) throws Exception {
@@ -78,4 +76,5 @@ public class FriendServiceImpl implements FriendService {
 		System.out.println(reqFriendId);
 		return friendDAO.friendList(reqFriendId);
 	}
+
 }

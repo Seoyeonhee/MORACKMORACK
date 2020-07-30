@@ -7,7 +7,7 @@ public class Notify {
 	private int notifyNo;
 	private User recvNotiUser;
 	private User reqNotiUser;
-	private String notiType;
+	private char notiType;
 	private String notiDetail;
 	private Date notifyDate;
 	private String prohibit;
@@ -40,11 +40,11 @@ public class Notify {
 		this.reqNotiUser = reqNotiUser;
 	}
 
-	public String getNotiType() {
+	public char getNotiType() {
 		return notiType;
 	}
 
-	public void setNotiType(String notiType) {
+	public void setNotiType(char notiType) {
 		this.notiType = notiType;
 	}
 

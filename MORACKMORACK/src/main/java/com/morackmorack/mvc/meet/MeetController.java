@@ -97,7 +97,7 @@ public class MeetController {
 		List<MultipartFile> fileList = mtf.getFiles("file");
 
 		String root_path = request.getSession().getServletContext().getRealPath("/");
-		String attach_path = "resources/images/uploadFiles/meet/";
+		String attach_path = "resources\\images\\uploadFiles\\meet\\";
 
 		/*
 		 * Path uploadDir = root_path+attach_path;
@@ -286,9 +286,9 @@ public class MeetController {
 		meetMem.setMeetRole('2');
 		
 		mav.setViewName("/meet/getMeet/"+meetId);
+		mav.addObject("meet", meet);
 
 		if (meet.getMaxNum() == meet.getMemNum()) {
-			mav.addObject("meet", meet);
 			mav.addObject("joinMessage", "0"); // 모임 인원 초과
 			return mav;
 		}
@@ -300,7 +300,6 @@ public class MeetController {
 			if (meetService.checkJoinMeetCount(user.getMeetCount())) {
 				if (meet.isMeetAppr()) {
 					mav.addObject("joinMessage", "1"); // 가입 승인 필요
-					mav.addObject("meet", meet);
 					return mav;
 				} else {
 					meetService.joinMeet(meetMem);
@@ -352,8 +351,23 @@ public class MeetController {
 	}
 
 	@RequestMapping(value = "listJoinMeetUser/{meetId}", method = { RequestMethod.GET, RequestMethod.POST })
-	public ModelAndView listJoinMeetUser(@PathVariable("meetId") String meetId) {
+	public ModelAndView listJoinMeetUser(HttpServletRequest request, @PathVariable("meetId") String meetId) {
 		System.out.println("/meet/listJoinMeetUser : POST");
+		
+		ModelAndView mav = new ModelAndView();
+		
+		HttpSession session = request.getSession();
+		User user = (User) session.getAttribute("user");	
+		
+		if(user != null) {
+			String userId = user.getUserId();
+			MeetMem meetMem = meetService.getMeetMem(meetId, userId);
+			Map map = meetService.getWishMeet(meetId, userId);
+			
+			if(meetMem != null) {
+				mav.addObject("meetMem", meetMem);
+			}				
+		}
 
 		List<MeetMem> listJoinMeetUser = new ArrayList<MeetMem>();
 		listJoinMeetUser = meetService.listJoinMeetUser(meetId);
@@ -362,7 +376,6 @@ public class MeetController {
 			// 카테고리 get
 		}
 
-		ModelAndView mav = new ModelAndView();
 		mav.addObject("listJoinMeetUser", listJoinMeetUser);
 		mav.setViewName("/meet/listJoinMeetUser.jsp");
 
@@ -384,13 +397,27 @@ public class MeetController {
 	}
 
 	@RequestMapping(value = "listMeetMem/{meetId}", method = { RequestMethod.GET, RequestMethod.POST })
-	public ModelAndView listMeetMem(@PathVariable("meetId") String meetId) {
+	public ModelAndView listMeetMem(HttpServletRequest request, @PathVariable("meetId") String meetId) {
 		System.out.println("/meet/listMeetMem : GET");
+		
+		ModelAndView mav = new ModelAndView();
+		
+		HttpSession session = request.getSession();
+		User user = (User) session.getAttribute("user");	
+		
+		if(user != null) {
+			String userId = user.getUserId();
+			MeetMem meetMem = meetService.getMeetMem(meetId, userId);
+			Map map = meetService.getWishMeet(meetId, userId);
+			
+			if(meetMem != null) {
+				mav.addObject("meetMem", meetMem);
+			}				
+		}
 
 		List<MeetMem> listMeetMem = new ArrayList<MeetMem>();
 		listMeetMem = meetService.listMeetMem(meetId);
-
-		ModelAndView mav = new ModelAndView();
+	
 		mav.addObject("listMeetMem", listMeetMem);
 		mav.setViewName("/meet/listMeetMem.jsp");
 

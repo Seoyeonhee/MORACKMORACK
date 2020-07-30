@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import com.morackmorack.mvc.common.Search;
 import com.morackmorack.mvc.service.domain.Notify;
+import com.morackmorack.mvc.service.domain.User;
 import com.morackmorack.mvc.service.notify.NotifyDao;
 
 @Repository("notifyDaoImpl")
@@ -37,11 +38,12 @@ public class NotifyDaoImpl implements NotifyDao {
 	@Override
 	public List<Notify> listNotifyUser(Search search) throws Exception {
 		// TODO Auto-generated method stub
-		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("search", search);
+		List<Notify> listNotifyUser = sqlSession.selectList("NotifyMapper.listNotiUser", search);
+		for(int i = 0 ; i<listNotifyUser.size() ; i++) {
+			listNotifyUser.get(i).setRecvNotiUser((User)sqlSession.selectOne("UserMapper.getUser", listNotifyUser.get(i).getRecvNotiUser().getUserId()));
+		}
 		
-		return sqlSession.selectList("NotifyMapper.listNotify",search);
-		
+		return listNotifyUser;
 	}
 
 	@Override

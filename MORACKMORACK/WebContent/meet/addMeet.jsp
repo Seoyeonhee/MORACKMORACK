@@ -243,6 +243,30 @@ $(function(){
 	   });
 	  }
 	 });
+	 
+	 $("#hash").on("keyup", function(){
+		 var hash = $("#hash").val();
+		 
+		$.ajax({
+			url:'/meet/json/getHashtag',
+			method:'POST',
+			dataType:'text',
+			data:JSON.stringify({"hash" : hash}),
+			contentType:'application/json; charset=utf-8',
+			success:function(mav){	
+				var n = new Array(mav);
+	
+				values = mav.listHash ; //java에서 정의한 ArrayList명을 적어준다.
+                
+                $.each(values, function( index, value ) {
+                   console.log( index + " : " + value.name ); //Book.java 의 변수명을 써주면 된다.
+                });
+				
+				//$("#getHash").val(getHash);
+			}
+
+		})
+	 })
 
 
 	});
@@ -373,7 +397,7 @@ $(function(){
 	<input type="text" id="sIntro" name="sIntro" class="form-control" style="height:100px; width:500px"/><br/>
 
 
-	<p style="margin-top:20px"><strong>해시태그 입력</strong></p>
+	<p style="margin-top:20px"><strong>해시태그 입력</strong></p> <input type="text" id="getHash" name="getHash" value=""/>
 	<textarea form="inform" cols="40" rows="10" wrap="hard" id="hash" name="hash" class="form-control"></textarea>
 	
  </div>    
