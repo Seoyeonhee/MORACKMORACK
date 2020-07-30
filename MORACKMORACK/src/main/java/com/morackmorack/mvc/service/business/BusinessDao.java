@@ -5,6 +5,7 @@ import java.util.List;
 import com.morackmorack.mvc.common.Search;
 import com.morackmorack.mvc.service.domain.Business;
 import com.morackmorack.mvc.service.domain.Menu;
+import com.morackmorack.mvc.service.domain.Pay;
 import com.morackmorack.mvc.service.domain.ReserveAble;
 
 public interface BusinessDao {
@@ -64,5 +65,8 @@ public interface BusinessDao {
 	
 	// LIST reserveAbleTime
 	public ReserveAble getReservAbleTime(int reserveAbleNo) throws Exception;
+	
+	// LIST usedBusiness
+	public List<Pay> getUsedBusinessList(String userId) throws Exception;
 	
 }

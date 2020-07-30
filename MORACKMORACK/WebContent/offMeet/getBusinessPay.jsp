@@ -64,9 +64,6 @@
 <div class="container getOrder" >
 <br/>
 
-	<div >
-	  <h3 align="center">${pay.user.userName}님 예약이 정상적으로 완료되었습니다.</h3>
-	</div>
 	
 			<div class="row">
                     <div class="h4">예약 내역</div>
@@ -76,7 +73,6 @@
 					  <thead>
 					    <tr>
 					      <th scope="col">업체명</th>
-					      <th scope="col">업체 전화번호</th>
 					      <th scope="col">예약 날짜</th>
 					      <th scope="col">예약 시작 시간</th>
 					      <th scope="col">예약 끝 시간</th>
@@ -85,9 +81,8 @@
 					  </thead>
 					  <tbody>
 					    <tr>
-					      <th scope="row">${pay.business.businessName}</th>
-					       <td>${pay.business.businessPhone}</td>
-			     		   <td>${pay.reserveDate}</td>
+					      <th scope="row">${pay.businessName}</th>
+			     		  <td>${pay.reserveDate}</td>
 					      <td>${pay.reserveStartTime}</td>
 					      <td>${pay.reserveEndTime}</td>
  					      <td>${pay.reserveMemNum}명</td>
@@ -110,6 +105,13 @@
 	  	<div class="col-xs-4 col-md-2" style="margin-top:20px;"><strong>결제방법</strong></div> 
  		<div class="col-xs-8 col-md-4" style="margin-top:20px;">${pay.payMethod == '0' ? "계좌이체" : "카드결제"}</div> 
 	</div> 
+	
+	
+	 <div class="row"> 
+	  	<div class="col-xs-4 col-md-2" style="margin-top:20px;"><strong>결제날짜</strong></div> 
+ 		<div class="col-xs-8 col-md-4" style="margin-top:20px;">${pay.payDate}</div> 
+	</div> 
+	
 				  
 	<br/>			
 

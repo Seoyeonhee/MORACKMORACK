@@ -28,7 +28,9 @@
 
 <body>
 	
-	<jsp:include page="/business/businessToolbar.jsp"/>
+	<header>
+		<jsp:include page="/toolbar.jsp" />
+	</header>
 	
 	<div class="container">
 	

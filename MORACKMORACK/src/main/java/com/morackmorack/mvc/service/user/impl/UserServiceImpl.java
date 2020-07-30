@@ -59,8 +59,5 @@ public class UserServiceImpl implements UserService{
 		userDao.delUser(user);
 		
 	}
-	public void getUserCategory(String userId) throws Exception{
-		userDao.getUserCategory(userId);
-	}
 
 }

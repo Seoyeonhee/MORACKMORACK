@@ -15,8 +15,6 @@ import com.morackmorack.mvc.service.domain.Pay;
 import com.morackmorack.mvc.service.offmeet.OffMeetDao;
 import com.morackmorack.mvc.service.offmeet.OffMeetService;
 
-
-
 @Service("offMeetServiceImpl")
 public class OffMeetServiceImpl implements OffMeetService{
 	
@@ -41,9 +39,16 @@ public class OffMeetServiceImpl implements OffMeetService{
 		offMeetDao.updateOff(offMeet);
 	}
 	
+
+	public void delOffMeet(int offNo) throws Exception {
+		offMeetDao.delOffMeet(offNo);
+	}
+	
 	
 	public OffMeet getOff(int offNO) throws Exception {
+		System.out.println("시작=-----------------");
 		return offMeetDao.getOff(offNO);
+		
 	}
 
 	
@@ -67,15 +72,44 @@ public class OffMeetServiceImpl implements OffMeetService{
 	}
 
 	public List<OffMeet> getOffList(String meetId) throws Exception {
+	
 		return offMeetDao.getOffList(meetId);
 	}
 
+	public Map<String,Object> getOffMeetList (Search search , String userId) throws Exception {
+		System.out.println("시작");
+	
+		List<OffMeet> list= offMeetDao.getOffMeetList(search, userId);
+		Map<String,Object> map = new HashMap<String,Object>();
+		System.out.println("list====="+list);
+		int totalCount = offMeetDao.getOffPayTotalCount(userId);
+	
+		map.put("list", list);
+		map.put("search", search);
+		map.put("totalCount", new Integer(totalCount));
+		System.out.println("map====="+map);	
+		return map;
+	}
+	
+public Map<String,Object> getPayList(Search search, String userId) throws Exception {
+		
+		Map<String,Object> map = new HashMap<String,Object>();
+		
+		List<OffMeet> list= offMeetDao.getPayList(search, userId);
+		
+		int totalCount = offMeetDao.getOffPayTotalCount(userId);
+	
+		map.put("totalCount", new Integer(totalCount));
+		System.out.println(map);
+		return map;
+	}
+	
 	
 	public Map<String, Object> getBusinessPayList(Search search, String userId) throws Exception {
 		List<Pay> list= (List<Pay>) offMeetDao.getBusinessPayList(search, userId);
 		Map<String, Object> map = new HashMap<String, Object>();
 		
-		int totalCount = offMeetDao.getOffPayTotalCount(search);
+		int totalCount = offMeetDao.getOffPayTotalCount(userId);
 		map.put("list", list);
 		map.put("totalCount", new Integer(totalCount));
 		
@@ -84,42 +118,47 @@ public class OffMeetServiceImpl implements OffMeetService{
 	}
 
 	@Override
-	public void addOff_MeetMem(int memNo, int offNo) {
-		offMeetDao.addOff_MeetMem(memNo, offNo);
+	public Map<String, Object> listOffMem(Search search) throws Exception {
+		
+		List<Pay> list= offMeetDao.listOffMem(search);
+		
+		return null;
 	}
-
-	@Override
-	public Pay getOffPay2(String userId, int offNo) throws Exception {
-		return offMeetDao.getOffPay2(userId, offNo);
-	}
-
-
-	@Override
-	public Map<String, Object> getOffPayList(Search search, String userId) throws Exception {
-		List<Pay> list= (List<Pay>) offMeetDao.getOffPayList(search, userId);
+	
+	//참여자 확인 미완성
+	public Map<String, Object> getJoinMemberList(Search search) throws Exception {
+		
+		List<Pay> list= offMeetDao.listOffMem(search);
+		int totalCount = offMeetDao.getTotalOffMemCount(search);
+		
 		Map<String, Object> map = new HashMap<String, Object>();
-		int totalCount = offMeetDao.getOffPayTotalCount(search);
 		
 		map.put("list", list);
 		map.put("totalCount", new Integer(totalCount));
 		
 		System.out.println(map);
-		return map;
-	}
-	
-	public Map<String,Object> getOffList2 (Search search , String userId) throws Exception {
-		List<OffMeet> list= (List<OffMeet>)offMeetDao.getOffList2(search, userId);
-		System.out.println("list=========="+list);
-		Map<String, Object> map = new HashMap<String, Object>();
 		
-		int totalCount = offMeetDao.getOffTotalCount(search);
-		map.put("list", list);
-		System.out.println("list=========="+list);
-		map.put("totalCount", new Integer(totalCount));
-	
-		System.out.println("map============"+map);
 		return map;
 	}
-	
+
+
+	public Map<String, Object> listReserveBusiness(Search search) throws Exception {
+		
+		List <Pay> list =offMeetDao.listReserveBusiness(search);
+		int totalCount = offMeetDao.getReserveTotalCount(search);
+		
+		Map <String, Object> map = new HashMap <String, Object>();
+		
+		map.put("list", list);
+		map.put("totalCount", new Integer(totalCount));
+		return map;
+	}
+
+	@Override
+	public Pay getReserveBusiness(int payNo) throws Exception {
+		
+		return offMeetDao.getReserveBusiness(payNo);
+	}
+
 	
 }

@@ -13,7 +13,5 @@ public interface UserDao {
 	public void updateUser(User user) throws Exception ;
 	
 	public void delUser(User user) throws Exception ;
-	
-	public void getUserCategory(String userId) throws Exception;
 
 }

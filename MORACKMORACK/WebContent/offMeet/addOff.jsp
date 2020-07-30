@@ -95,7 +95,12 @@ $( function() {
 
 <body>
 
-<div class="container">	
+<header>
+<jsp:include page="/toolbar.jsp" />
+</header>
+
+<div class="container">
+	
 
 
 <form class="form-horizontal" enctype="multipart/form-data">

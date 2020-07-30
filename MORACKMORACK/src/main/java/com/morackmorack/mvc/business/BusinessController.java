@@ -1,6 +1,7 @@
 package com.morackmorack.mvc.business;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -328,6 +329,29 @@ public class BusinessController {
 		User user = (User)session.getAttribute("user");
 		
 		/*List<Pay> reserveList = offMeetService.getBusinessPayList(search, userId);*/
+		
+		return mv;
+	}
+	
+	
+//	2020-07-20 서연희
+//	listUsedBusiness
+//	User가 이용한 업체 목록
+	@RequestMapping( value="listUsedBusiness", method=RequestMethod.GET )
+	public ModelAndView listUsedBusiness( HttpSession session ) throws Exception {
+		
+		System.out.println("/business/listUsedBusiness : GET");
+		
+		ModelAndView mv = new ModelAndView();
+		User user = (User)session.getAttribute("user");
+		
+		List<Pay> usedBusinessList = businessService.getUsedBusinessList(user.getUserId());
+		
+		System.out.println("서연희");
+		System.out.println(usedBusinessList);
+		
+		mv.addObject("usedBusinessList", usedBusinessList);
+		mv.setViewName("forward:/business/listUsedBusiness.jsp");
 		
 		return mv;
 	}

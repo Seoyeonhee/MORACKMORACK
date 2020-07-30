@@ -30,6 +30,8 @@
 
 <script type="text/javascript">
 
+var amount ='${offMeet.amount}';
+
 function fncreqOk() {
 	
 	var meetMemName = '${user.userName}';
@@ -39,13 +41,10 @@ function fncreqOk() {
 	var offMem ='${offMeet.offMem}';
 	var offMax ='${offMeet.offMax}';
 	
-	
 	if(parseInt(offMem) >= parseInt(offMax)){
 		alert("오프라인 모임 참여 정원 수가 가득 찼습니다. ");
 		return;
 	}
-	
-
 	
 	if (pay == '0') {
 		pay = 'trans';
@@ -103,10 +102,15 @@ function fncreqOk() {
 }
 
 $(function() {
-	//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+
+	if(parseInt(amount) == 0){
+		alert("오프라인 참여비가 0원입니다. 결제 없이 참여 가능합니다.") 
+		$("form").attr("method" , "POST").attr("action" , "/offmeet/addOffPay?offNo=${offMeet.offNo}").submit();
+	} else{
 	$( "button.btn.btn-primary" ).on("click" , function() {
 		fncreqOk();
 	});
+	}	
 });	
 
 	

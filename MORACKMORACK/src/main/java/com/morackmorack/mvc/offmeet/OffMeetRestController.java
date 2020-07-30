@@ -6,7 +6,12 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -79,14 +84,41 @@ public class OffMeetRestController {
  	
 // @RequestMapping(value="json/listOff/{page}")
 //	public List<OffMeet> listOff(@PathVariable int page) throws Exception {
-//			
+//	
+//	 List<OffMeet> getOffList = new ArrayList<OffMeet>();
+//
 //		Search search = new Search(); 
-//		
+//
 //		search.setCurrentPage(page);		
 //		search.setPageSize(pageSize);
 //					 
-//	
-//		return (List<OffMeet>) offMeetService.getOffList(search).get("list");
+//
+//		return (List<OffMeet>) offMeetService.getOffList(meetId);
 //	}
-
+ 
+ @RequestMapping(value="json/listOffMem/{offNo}" , method=RequestMethod.GET)
+	public Map listOffMem(@PathVariable int offNo) throws Exception {
+		
+		System.out.println("/join/json/listOffMem");
+		
+		Search search = new Search();
+		search.setSearchKeyword(Integer.toString(offNo));
+		
+		return offMeetService.listOffMem(search);
+	}
+ 
+ 
+//	@RequestMapping(value="/json/delOffMeet/{offNo}", method=RequestMethod.GET )
+//	public void delOffMeet(@PathVariable int offNo, HttpServletResponse response) throws Exception {
+//		
+//		System.out.println("/offmeet/json/delOffMeet : GET");
+//		
+//		PrintWriter out = response.getWriter();
+//		
+//		offMeetService.delOffMeet(offNo);
+//		
+//		JSONObject obj = new JSONObject();
+//		obj.put("msg", "삭제 성공!");
+//		out.println(obj);
+//	}	
 }

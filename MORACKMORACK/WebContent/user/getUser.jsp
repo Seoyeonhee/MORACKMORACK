@@ -1,6 +1,6 @@
 <%@ page contentType="text/html; charset=EUC-KR" %>
 <%@ page pageEncoding="EUC-KR"%>
-
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html>
 
@@ -38,10 +38,11 @@
 		//============= 회원정보수정 Event  처리 =============	
 		 $(function() {
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-			 $( "button" ).on("click" , function() {
+			 $( "button.btn.btn-primary" ).on("click" , function() {
 					self.location = "/user/updateUser?userId=${user.userId}"
 				});
 		});
+		
 		
 	</script>
 	
@@ -105,7 +106,8 @@
 		
 		<div class="row">
 	  		<div class="col-xs-4 col-md-2 "><strong>생년월일</strong></div>
-			<div class="col-xs-8 col-md-4">${user.birthday}</div>
+			<div class="col-xs-8 col-md-4"><fmt:formatDate var="resultRegDt" value="${user.birthday}" pattern="yyyy-MM-dd"/>
+			${resultRegDt}</div>
 		</div>
 		
 		<hr/>
@@ -133,7 +135,9 @@
 		
 		<div class="row">
 	  		<div class="col-md-12 text-center ">
-	  			<button type="button" class="btn btn-primary">회원정보수정</button>
+	  			<button type="button" class="btn btn-primary">내정보수정</button>
+	  			
+	  			<button type="button" onclick="location.href='/index.jsp' ">메인페이지</button>
 	  		</div>
 		</div>
 		

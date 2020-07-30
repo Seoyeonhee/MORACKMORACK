@@ -1,7 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ page pageEncoding="UTF-8"%>
-
-
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 
 <!DOCTYPE html>
@@ -9,7 +8,7 @@
 <html lang="ko">
 	
 <head>
-	<meta charset="EUC-KR">
+	<meta charset="UTF-8">
 	
 	<!-- 참조 : http://getbootstrap.com/css/   참조 -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -26,6 +25,7 @@
         	border: 3px solid #D6CDB7;
             margin-top: 10px;
         }
+        
     </style>
     
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
@@ -65,6 +65,12 @@
 			var addr=$("input[id='sample4_roadAddress']").val();
 			var daddr=$("input[id='sample4_detailAddress']").val();
 			
+			var fullAddr=addr +" "+daddr;
+			
+			$("input[id='sample4_roadAddress']").val(fullAddr);
+			
+			
+			
 			
 			if(id == null || id.length <1){
 				alert("ID는 반드시 입력하셔야 합니다.");
@@ -75,6 +81,10 @@
 				alert("ID는 5-20자의 영문 소문자, 숫자와 특수문자 중 (_),(-)만 사용할 수 있다.")
             return;
         	}
+			if(id == userId){
+				alret("중복된 ID는 가입이 안됩니다.");
+				return;
+			}
 			////////////////////////////////////////
 			if(pw == null || pw.length <1){
 				alert("비밀번호는  반드시 입력하셔야 합니다.");
@@ -182,6 +192,7 @@
 		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		
 		
+
 			///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 
@@ -258,13 +269,14 @@
 																
 																var result = "";
 																if(JSONData.result == false){
-																	result = "불"
+																	result = " 중복된 닉네임입니다."
+																}else {
+																	result = " 중복되지 않은 닉네임입니다."
 																}
 																
 																var displayValue = "<h7>"
-																	+JSONData.nickName+" 닉네임은 사용 "
+																	+JSONData.nickName
 																	+result
-																	+"가능합니다"
 																	+"</h7>";
 																	
 																$("h7").remove();
@@ -357,7 +369,7 @@
 		    <label for="phoneNumber" class="col-sm-offset-1 col-sm-3 control-label">휴대폰 번호</label>
 		     <div class="col-sm-3">
 				<input type="tel" class="form-control" id="phoneNumber" name="phoneNumber" placeholder="000-000(0)-0000"
-					pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}" required>		  	
+					pattern="[0-9]{3}-[0-9]{3,4}-[0-9]{4}" required>		  	
 		  </div>
 		  <div class="col-sm-3">
 		      <button type="button" id ="check" class="btn btn-info">인증</button>
@@ -372,50 +384,43 @@
 		  </div>
 		  
 		  <label for="certificationNumber" class="col-sm-offset-1 col-sm-3 control-label">성별</label>
-			<input type="radio" id="male" name="gender" value="male">
+			<input type="radio" id="male" name="gender" value="남">
   				<label for="male">남</label>
-			<input type="radio" id="female" name="gender" value="female">
+			<input type="radio" id="female" name="gender" value="여">
   				<label for="female">여</label><br><br>
   				
 		<div class="form-group">
 		    <label for="birthday" class="col-sm-offset-1 col-sm-3 control-label">생년월일</label>
 		    <div class="col-sm-4">
-		      <input type="date" class="form-control" id="birthday" name="birthday">
+		      <input type="date" class="form-control" id="birthday" name="birthday" value="yyyy-MM-dd">
 		    </div>
 		 </div>
 		  
-		 <div class="form-group">
-		    <label for="age" class="col-sm-offset-1 col-sm-3 control-label">나이</label>
-		    <div class="col-sm-2">
-		      <input type="number" class="form-control" id="age" name="age">
-		    </div>
-		  </div>
-		  
-		  <label for="certificationNumber" class="col-sm-offset-1 col-sm-3 control-label" name="category">관심 카테고리</label>
-			<input type="checkbox" name="category1" value="Travel"> 여행
-  			<input type="checkbox" name="category2" value="Game"> 게임
-  			<input type="checkbox" name="category3" value="Music"> 음악
-  			<input type="checkbox" name="category4" value="Movie"> 영화
-  			<input type="checkbox" name="category5" value="Show"> 공연
-  			<input type="checkbox" name="category6" value="Restaurant"> 맛집
-  			<input type="checkbox" name="category7" value="Dev"> 취업/자기계발
-  			<input type="checkbox" name="category8" value="Activity"> 액티비티<br>
-  			<input type="checkbox" name="category9" value="Book"> 독서/만화
-  			<input type="checkbox" name="category10" value="Dance"> 댄스
-  			<input type="checkbox" name="category11" value="Picture"> 사진
-  			<input type="checkbox" name="category12" value="Animal"> 반려동물
-  			<input type="checkbox" name="category13" value="Food"> 요리
-  			<input type="checkbox" name="category14" value="Car"> 차
-  			<input type="checkbox" name="category15" value="Sport"> 스포츠
-  			<input type="checkbox" name="category16" value="Crafts"> 공예
-  			<input type="checkbox" name="category17" value="Ect"> 기타<br><br>	 					
+		  <label for="category" class="col-sm-offset-1 col-sm-3 control-label">관심 카테고리</label>
+			<input type="checkbox" name="category" value="0"> 여행
+  			<input type="checkbox" name="category" value="1"> 게임
+  			<input type="checkbox" name="category" value="2"> 음악
+  			<input type="checkbox" name="category" value="3"> 영화
+  			<input type="checkbox" name="category" value="4"> 공연
+  			<input type="checkbox" name="category" value="5"> 맛집
+  			<input type="checkbox" name="category" value="6"> 취업/자기계발
+  			<input type="checkbox" name="category" value="7"> 액티비티<br>
+  			<input type="checkbox" name="category" value="8"> 독서/만화
+  			<input type="checkbox" name="category" value="9"> 댄스
+  			<input type="checkbox" name="category" value="10"> 사진
+  			<input type="checkbox" name="category" value="11"> 반려동물
+  			<input type="checkbox" name="category" value="12"> 요리
+  			<input type="checkbox" name="category" value="13"> 차
+  			<input type="checkbox" name="category" value="14"> 스포츠
+  			<input type="checkbox" name="category" value="15"> 공예
+  			<input type="checkbox" name="category" value="16"> 기타<br><br>					
   						  
 		  <div class="form-group">
-		    <label for="ssn" class="col-sm-offset-1 col-sm-3 control-label" >주소</label>
+		    <label for="address" class="col-sm-offset-1 col-sm-3 control-label" >주소</label>
 		    <div class="col-sm-4">
-				<input type="text" class="form-control" id="sample4_roadAddress" placeholder="도로명주소">
+				<input type="text" class="form-control" id="sample4_roadAddress" placeholder="도로명주소" name="address">
 				<span id="guide" style="color:#999;display:none"></span>
-				<input type="text" class="form-control" id="sample4_detailAddress" placeholder="상세주소">
+				<input type="text" class="form-control" id="sample4_detailAddress" placeholder="상세주소" name="daddress">
 				
 		    </div>
 		    <div class="col-sm-3">
@@ -466,6 +471,7 @@
 		    <div class="col-sm-offset-4  col-sm-4 text-center">
 		      <button type="button" class="btn btn-primary"  >가 &nbsp;입</button>
 			  <a class="btn btn-primary btn" href="#" role="button">취&nbsp;소</a>
+<!-- 			  <button type="button" onclick="location.href='/index.jsp' ">메인페이지</button> -->
 		    </div>
 		  </div>
 		</form>
@@ -473,6 +479,8 @@
 		
  	</div>
 	<!--  화면구성 div end /////////////////////////////////////-->
+	
+	<% request.setCharacterEncoding("UTF-8"); %>
 	
 </body>
 

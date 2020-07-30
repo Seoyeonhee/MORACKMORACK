@@ -29,6 +29,7 @@ import com.morackmorack.mvc.service.domain.User;
 import com.morackmorack.mvc.service.meet.MeetService;
 import com.morackmorack.mvc.service.meet.impl.MeetServiceImpl;
 import com.morackmorack.mvc.service.user.UserService;
+import com.morackmorack.mvc.common.Page;
 import com.morackmorack.mvc.common.Search;
 import com.morackmorack.mvc.service.business.BusinessService;
 import com.morackmorack.mvc.service.domain.Business;
@@ -67,7 +68,11 @@ private BusinessService businessService;
 @Value("#{commonProperties['offmeetfilePath']}")
 String uploadPath;
 
+@Value("#{commonProperties['pageUnit']}")
+int pageUnit;
 
+@Value("#{commonProperties['pageSize']}")
+int pageSize;
 
 public OffMeetController() {
 		
@@ -181,8 +186,6 @@ public String addOffPay (@RequestParam ("meetId") String meetId, @RequestParam (
 	pay.setOffMeet(offMeetService.getOff(offNo));
 	pay.setMeet(meetService.getMeet(meetId));
 
-//	offMeetService.addOff_MeetMem(memNo, offNo);
-	
 	OffMeet offMeet = (OffMeet)offMeetService.getOff(offNo);
 	
 	pay.setPayMethod(payMethod);
@@ -196,6 +199,21 @@ public String addOffPay (@RequestParam ("meetId") String meetId, @RequestParam (
 	return "forward:/offMeet/reqOkOff.jsp";
 }
 
+@RequestMapping (value="getOffPay" , method = RequestMethod.GET)
+public String getOffPay (@RequestParam("payNo") int payNo, Model model, HttpSession session) throws Exception{
+
+	Pay pay = new Pay();
+	
+	pay = offMeetService.getOffPay(payNo);
+
+	User user = (User)session.getAttribute("user");
+	pay.setUser(user);
+	
+	model.addAttribute("pay", pay);
+	
+	return "forward:/offMeet/getOffPay.jsp";
+}
+
 @RequestMapping (value="addBusinessPay", method = RequestMethod.GET)
 public String addBusinessPay (HttpSession session, Model model) throws Exception{
 	Pay pay = new Pay();
@@ -203,20 +221,19 @@ public String addBusinessPay (HttpSession session, Model model) throws Exception
 	Business business = new Business();
 	String businessId ="bus01";
 	Meet meet = new Meet();
-	String meetId ="meet01";
+	String meetId ="a8665c70537944200730";
 	OffMeet offMeet = new OffMeet();
-	int  offNo = 10001;
+	int  offNo = 10002;
 	
 	pay.setMeet(meetService.getMeet(meetId));
 	pay.setUser((User)session.getAttribute("user"));
 	System.out.println("============="+offMeetService.getOff(offNo));
 	pay.setOffMeet(offMeetService.getOff(offNo));
 	pay.setBusiness(businessService.getBusiness(businessId));
-	pay.setReserveDate("2020/07/30");
+	pay.setReserveDate("20-07-30");
 	pay.setReserveStartTime("13:00");
 	pay.setReserveEndTime("15:00");
 	pay.setTotalAmount(10000);
-	pay.setReserveMemNum(13);
 	
 	model.addAttribute("pay", pay);
 	System.out.println("model======"+model);
@@ -229,13 +246,14 @@ public String addBusinessPay (HttpSession session, Model model) throws Exception
 public String payOkBusiness (@ModelAttribute ("pay") Pay pay, @RequestParam ("businessId") String businessId,  @RequestParam ("payMethod") char payMethod, @RequestParam ("reserveDate") String reserveDate, @RequestParam ("reserveStartTime") String reserveStartTime, @RequestParam ("reserveEndTime") String reserveEndTime, @RequestParam("meetId") String meetId, @RequestParam ("offNo") int offNo, @RequestParam ("totalAmount") int totalAmount, HttpSession session, Model model) throws Exception{
 	System.out.println("시작");
 	System.out.println("asaSasAS : "+offNo);
-//	int off_No = Integer.parseInt(offNo);
+
 	
 	pay.setUser((User)session.getAttribute("user"));
 	pay.setBusiness(businessService.getBusiness(businessId));
 	pay.setMeet(meetService.getMeet(meetId));
 	pay.setOffMeet(offMeetService.getOff(offNo));
 	
+	pay.setPayStatus('1');
 	pay.setReserveAbleNo(3);
 	pay.setTotalAmount(totalAmount);
 	pay.setPayMethod(payMethod);
@@ -258,35 +276,41 @@ public String getOffList(@RequestParam("meetId") String meetId, Model model) thr
 	List<OffMeet> getOffList = new ArrayList<OffMeet>();
 	getOffList = offMeetService.getOffList(meetId);
 	
-	model.addAttribute("list", getOffList);
+	Meet meet =meetService.getMeet(meetId);
 
+	model.addAttribute("list", getOffList);
+	model.addAttribute("meet", meet);
+	
 	return "forward:/offMeet/offList.jsp";
 }
 
-@RequestMapping(value = "getOffPayList")
-public String getOffPayList(@ModelAttribute("search") Search search, Model model,
-		HttpSession session) throws Exception {
+@RequestMapping(value = "getPayList")
+public String getPayList(@ModelAttribute("search") Search search, Model model,HttpSession session, User user) throws Exception {
 
-	User user = (User) session.getAttribute("user");
+ System.out.println("컨트롤러 시작 ");
+	user = (User) session.getAttribute("user");
+
 	
-	String userId = user.getUserId();
-
 	if (search.getCurrentPage() == 0) {
 		search.setCurrentPage(1);
 	}
-
-
-	Map<String, Object> map = offMeetService.getOffList2(search, userId);
 	
-	System.out.println("map====="+map);
+	search.setPageSize(pageSize);
 
+	String userId = user.getUserId();
+	System.out.println("UserId ::" +userId);
+	
+	Map<String, Object> map = offMeetService.getOffMeetList(search, userId);
+	
+	 
+	Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")).intValue(), pageUnit,
+			pageSize);
+	System.out.println("ListPurchaseAction ::" + resultPage);
 
-
-	List<Pay>offPayList = (List<Pay>) map.get("list");
+	System.out.println("list ::" +map.get("list"));
 
 	model.addAttribute("list", map.get("list"));
-	model.addAttribute("userId", userId);
-
+	model.addAttribute("resultPage", resultPage);
 	model.addAttribute("search", search);
 	
 	return "forward:/offMeet/getPayList.jsp";

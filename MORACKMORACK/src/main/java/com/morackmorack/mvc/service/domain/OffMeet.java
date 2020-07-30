@@ -35,9 +35,9 @@ public class OffMeet {
 	private String imageFile;
 	private Date regDate;
 	private MultipartFile image;
-	
 	private int payNo;
-
+	private String meetName;
+	
 	public OffMeet() {
 		
 	}
@@ -138,13 +138,26 @@ public class OffMeet {
 	}
 
 
+	public String getMeetName() {
+		return meetName;
+	}
+
+
+	public void setMeetName(String meetName) {
+		this.meetName = meetName;
+	}
+
+
 	@Override
 	public String toString() {
 		return "OffMeet [offNo=" + offNo + ", user=" + user + ", meet=" + meet + ", offName=" + offName + ", offLoc="
 				+ offLoc + ", offMax=" + offMax + ", offMem=" + offMem + ", amount=" + amount + ", offDate=" + offDate
 				+ ", offTime=" + offTime + ", imageFile=" + imageFile + ", regDate=" + regDate + ", image=" + image
-				+ ", payNo=" + payNo + "]";
+				+ ", payNo=" + payNo + ", meetName=" + meetName + "]";
 	}
+
+
+
 
 	
 }

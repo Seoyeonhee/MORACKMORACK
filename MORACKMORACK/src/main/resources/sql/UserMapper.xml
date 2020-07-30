@@ -17,15 +17,14 @@
 		<result property="nickName" 			column="nick_name" 		jdbcType="VARCHAR" />
 		<result property="profileImg" 				column="image_file" 					jdbcType="VARCHAR" />
 		<result property="address" 				column="address" 					jdbcType="VARCHAR" />
-		<result property="gender" 			column="gender" 		jdbcType="CHAR" />
+		<result property="gender" 			column="gender" 		jdbcType="VARCHAR" />
 		<result property="userStateList" 				column="user_state" 					jdbcType="CHAR" />
 		<result property="naverId" 			column="naver_id" 		jdbcType="VARCHAR" />
 		<result property="kakaoId" 			column="kakao_id" 		jdbcType="VARCHAR" />
 		<result property="googleId" 			column="google_id" 		jdbcType="VARCHAR" />
 		<result property="meetCount" 			column="join_meet_count" 		jdbcType="NUMERIC" />
 		<result property="role" 			column="role" 		jdbcType="VARCHAR" />
-		
-		
+		<result property="category" 		column="category" 	jdbcType="INTEGER"/>
 	</resultMap>
 	
 	<!-- SQL : INSERT -->
@@ -35,7 +34,16 @@
 		VALUES	 (	#{userId}, #{password}, #{userName}, #{email}, #{phoneNumber}, #{birthday}, 
 					#{nickName}, #{profileImg:VARCHAR}, #{address}, #{gender}, '0', 
 					#{naverId:VARCHAR}, #{kakaoId:VARCHAR}, #{googleId:VARCHAR}, 0, 'user')
+								
 	 </insert>
+	 
+	 <insert 	id="addCategory"		parameterType="map" >
+	 	INSERT
+		INTO users_category 
+		VALUES	 (	seq_users_category_category_no.nextval, #{userId}, #{categoryNo}  )
+								
+	 </insert>
+	 
 	 
 	 <!-- SQL : SELECT ONE -->
 	 <select 	id="getUser"	parameterType="string"	resultMap="userSelectMap">
@@ -44,6 +52,20 @@
 		FROM users 
 		WHERE user_id = #{value}
 	 </select>
+	 
+	 <select 	id="getCategory"	parameterType="string"	resultType="string">
+		SELECT
+		category.category_name
+		FROM users, users_category , category
+		WHERE users.user_id = #{value} AND users.user_id = users_category.user_id AND users_category.category_no=category.category_no
+	 </select>
+	 
+	 <!-- <select 	id="getCategory"	parameterType="string"	resultMap="userSelectMap">
+		SELECT
+		category.category_no
+		FROM users, users_category
+		WHERE users.user_id = #{value} AND users.user_id = users_category.user_id
+	 </select> -->
 	 
 	 <!-- SQL : UPDATE -->
 	 <update	id="updateUser"	parameterType="user" >
@@ -54,12 +76,25 @@
 	   		nick_name		= #{nickName} ,
 	   		email			= #{email} , 
 			phone_number	= #{phoneNumber} ,
-			address 		= #{address},
-			join_meet_count	= #{meetCount}
+			address 		= #{address}
 			
 	   	</set>
 	   	WHERE user_id = #{userId}
 	 </update>
+	 
+	 <!-- <update	id="updateCategory"	parameterType="user" >
+	   	UPDATE users
+	   	<set>
+	   		image_file		= #{profileImg:VARCHAR} ,
+	   		user_name 		= #{userName} ,
+	   		nick_name		= #{nickName} ,
+	   		email			= #{email} , 
+			phone_number	= #{phoneNumber} ,
+			address 		= #{address}
+			
+	   	</set>
+	   	WHERE user_id = #{userId}
+	 </update> -->
 	 
 	 
 	 <!-- 회원탈퇴 -->

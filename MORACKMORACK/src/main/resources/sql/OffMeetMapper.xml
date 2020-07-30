@@ -14,11 +14,13 @@
   		<result property="offLoc" 		column="OFF_LOC" 	jdbcType="VARCHAR"/>
   		<result property="offMax" 		column="OFF_MAX" jdbcType="INTEGER"/>
   		<result property="offMem" 			column="OFF_MEM" 		jdbcType="INTEGER"/>
-  		<result property="amount" 			column="AMOUNT" 	jdbcType="INTEGER"/>
-  		<result property="offDate" 			column="OFF_DATE" 	jdbcType="VARCHAR"/>
+  		<result property="amount" 			column="AMOUNT" 	    jdbcType="INTEGER"/>
+  		<result property="offDate" 			column="OFF_DATE" 	    jdbcType="VARCHAR"/>
   		<result property="offTime" 			column="OFF_TIME" 		jdbcType="VARCHAR"/>
   		<result property="imageFile"        column="IMAGE_FILE"     jdbcType="VARCHAR"/>
   		<result property="regDate"          column="REG_DATE"       jdbcType="DATE"/>  		 
+ 		
+ 		<result property="meetName" 			column="meet_name" 	jdbcType="VARCHAR"/>
  		<result property="payNo" 				column="PAY_NO" 		jdbcType="INTEGER"/>
  		
   	</resultMap>
@@ -37,7 +39,11 @@
   	    <result property="payStatus" 		column="PAY_STATUS"	jdbcType="CHAR"/>
   		<result property="payDate" 			column="PAY_DATE" 	jdbcType="DATE"/>
   		<result property="payMethod" 			column="PAY_METHOD" 		jdbcType="CHAR"/> 
-  		<result property="reserveAbleNo" 			column="RESERVE_ABLE_NO" 		jdbcType="INTEGER"/> 		 
+  		<result property="reserveAbleNo" 			column="RESERVE_ABLE_NO" 		jdbcType="INTEGER"/>
+  		
+  		<result property="meetName" column="meet_name"  jdbcType="VARCHAR"/> 
+  		<result property="bank" column="bank"           jdbcType="VARCHAR"/>		 
+  		<result property="accNum" column="accNum"        jdbcType="VARCHAR"/>
   	</resultMap>
    	
    	
@@ -99,8 +105,12 @@
 	   	WHERE off_no = #{offNo}
 	 </update>
 
-
-
+	<delete id="delOffMeet" parameterType="String">
+	DELETE FROM offmeet
+	WHERE off_no = #{offNo}
+	</delete>
+	
+	
 	<select  id="getOffList"  parameterType="String"	resultMap="offmeetSelectMap">
 		SELECT o.off_no, u.user_id, m.meet_id, o.off_name, o.off_loc, o.off_max, o.off_mem, o.amount, o.off_date, o.off_time, o.image_File, o.reg_date
 		FROM offmeet o, meet m, users u
@@ -111,22 +121,22 @@
 		order by off_no desc
 	 </select>
 	
-	<select  id="getOffList2"  parameterType="map"	resultMap="offmeetSelectMap">
-	SELECT *
-		FROM ( SELECT inner_table.*, ROWNUM AS row_seq
-		WHERE
-			FROM (  SELECT o.off_no, u.user_id, m.meet_id, o.off_name, o.off_loc, o.off_max, o.off_mem, o.amount, o.off_date, o.off_time, o.image_File, o.reg_date, p.pay_no
+	 
+	<select id="getOffMeetList" parameterType="map" resultMap="offmeetSelectMap">
+  		SELECT *
+  		FROM ( SELECT inner_table.*, ROWNUM AS row_seq
+  			FROM (  SELECT o.off_no, p.user_id, m.meet_id, m.meet_name, o.off_name, o.off_loc, o.off_max, o.off_mem, o.amount, o.off_date, o.off_time, o.image_File, o.reg_date, p.pay_no
 				FROM offmeet o, meet m, users u, pay p
-				WHERE  	
+					WHERE  	
 					o.off_no(+) = p.off_no	
 					AND	u.user_id(+) = p.user_id
-					AND u.user_id = #{user.userId}
+					AND m.meet_id(+) = p.meet_id
+					AND u.user_id = #{userId}
 					order by pay_no desc ) inner_table
-	  				WHERE ROWNUM <![CDATA[<=]]> #{search.currentPage}*#{search.pageSize} )
-	  				WHERE row_seq BETWEEN (#{search.currentPage}-1)*#{search.pageSize}+1
-	  				AND #{search.currentPage}*#{search.pageSize}
-	 </select>
-	 
+  						WHERE ROWNUM <![CDATA[<=]]> #{search.currentPage}*#{search.pageSize} )
+  		WHERE row_seq BETWEEN (#{search.currentPage}-1)*#{search.pageSize}+1
+  		AND #{search.currentPage}*#{search.pageSize}
+	</select>
 	
 	<update id ="updateOffMem" parameterType="pay">
 	UPDATE offmeet
@@ -164,57 +174,17 @@
 	 
 	 <select id="getOffPay" parameterType="int" resultMap="paySelectMap">
   		SELECT 
-		p.pay_no, p.pay_date, u.user_id, m.meet_id, o.off_no, p.total_Amount, p.pay_date, p.pay_method
-		FROM pay p , offmeet o, meet m, user u
-     	off_no= #{offNo}
+		p.pay_no, p.pay_date, p.user_id, p.meet_id, p.off_no, p.total_Amount, p.pay_date, p.pay_method, m.meet_name , m.bank, m.accnum
+		FROM pay p , offmeet o, meet m, users u
+		WHERE
+     	p.user_id = u.user_id(+)
      	AND o.off_no(+) = p.off_no
      	AND m.meet_id(+) = p.meet_id
+        AND p.pay_no= #{payNo}
   	</select>
   	
-  	  <select id="getOffPayList" parameterType="map" resultMap="paySelectMap">
-	  		SELECT *
-	  		FROM ( SELECT inner_table.*, ROWNUM AS row_seq
-	  						FROM (  SELECT b.business_id , b.businessName, p.reserve_date , p.total_amount ,  p.pay_no , p.reserve_mem_num, p.reserve_start_time, p.reserve_end_time,  p.pay_date, p.pay_status , p.user_id,
-	  								 p.pay_method
-											FROM pay p , offmeet o, meet m, user u
-											WHERE 
-											AND p.user_id = u.user_id(+)
-											AND p.off_no = o.off_no(+)
-											AND p.meet_id = m.meet_id(+)
-											AND u.user_id = #{userId}
-											ORDER BY pay_id  ) inner_table
-	  						WHERE ROWNUM <![CDATA[<=]]> #{search.currentPage}*#{search.pageSize} )
-	  		WHERE row_seq BETWEEN (#{search.currentPage}-1)*#{search.pageSize}+1
-	  		AND #{search.currentPage}*#{search.pageSize}
-	</select>
 	
-										
-     <select id="getOffPay2" parameterType="map" resultMap="paySelectMap">
-  		SELECT 
-		pay_no, pay_date, user_id, meet_id, off_no, total_Amount, pay_date, pay_method
-		FROM pay
-     	WHERE user_id = #{user.userId}
-		AND off_no = #{offMeet.offNo}
-  	</select>
-	
-	
-	
-	
-   <select id="getBusinessPayList" parameterType="map" resultMap="paySelectMap">
-	  		SELECT *
-	  		FROM ( SELECT inner_table.*, ROWNUM AS row_seq
-	  						FROM ( SELECT  u.user_id, o.off_no, m.meet_id, p.reserve_date , p.total_amount ,  p.pay_no , p.reserve_mem_num, p.reserve_start_time, p.reserve_end_time,  p.pay_date, p.pay_status , u.user_id,
-	  								 p.pay_method
-											FROM offmeet o, users u , pay p, meet m 
-											WHERE p.off_no  = o.off_no(+)
-											AND p.meet_id = o.meet_id(+)
-											AND p.user_id = u.user_id(+)
-											AND u.user_id = #{userId}
-											ORDER BY pay_no  ) inner_table
-	  						WHERE ROWNUM <![CDATA[<=]]> #{search.currentPage}*#{search.pageSize} )
-	  		WHERE row_seq BETWEEN (#{search.currentPage}-1)*#{search.pageSize}+1
-	  		AND #{search.currentPage}*#{search.pageSize}
-	</select>
+									
 	
 	  <insert id="addBusinessPay" parameterType ="pay">
 	 	INSERT 
@@ -232,7 +202,7 @@
 					#{reserveStartTime:VARCHAR},
 					#{reserveEndTime:VARCHAR},
 					#{reserveMemNum:INTEGER},
-				    #{payStatus:CHAR}
+				    #{payStatus:CHAR},
 				    #{reserveAbleNo:INTEGER}
 					)
 	</insert>
@@ -246,23 +216,136 @@
 		pay_no = #{payNo}
   	</select>
   	
-  	
-  	
-  	  	
-  	 <select  id="getOffTotalCount"  parameterType="search"	 resultType="int">
-	  	SELECT COUNT(*)
-		FROM ( SELECT off_no, user_id, meet_id, off_name, off_loc, off_max, off_mem, amount, off_date, off_time, image_File, reg_date
-				FROM offmeet			
-			 ) countTable			
-	 </select>    			
-  	 	
-  	
+  	 		
+  	   <select id="getBusinessPayList" parameterType="map" resultMap="paySelectMap">
+	  		SELECT *
+	  		FROM ( SELECT inner_table.*, ROWNUM AS row_seq
+	  						FROM ( SELECT  p.user_id, o.off_no, m.meet_id, p.reserve_date , p.total_amount ,  p.pay_no , p.reserve_mem_num, p.reserve_start_time
+	  								 p.pay_method
+											FROM offmeet o, users u , pay p, meet m 
+											WHERE p.off_no  = o.off_no(+)
+											AND p.meet_id = o.meet_id(+)
+											AND p.user_id = u.user_id(+)
+											AND u.user_id = #{userId}
+											ORDER BY pay_no  ) inner_table
+	  						WHERE ROWNUM <![CDATA[<=]]> #{search.currentPage}*#{search.pageSize} )
+	  		WHERE row_seq BETWEEN (#{search.currentPage}-1)*#{search.pageSize}+1
+	  		AND #{search.currentPage}*#{search.pageSize}
+	</select>
+			
+	
   	 <select  id="getPayTotalCount"  parameterType="search"	 resultType="int">
 	  	SELECT COUNT(*)
-		FROM ( SELECT pay_no, user_id, meet_id, off_no, business_id, total_amount, pay_date, pay_method, reserve_date, reserve_start_time, reserve_end_time, reserve_mem_num, pay_status
+		FROM ( SELECT pay_no, user_id, meet_id, off_no, business_id, total_amount, pay_date, pay_method, reserve_date, reserve_start_time, reserve_end_time, reserve_mem_num, pay_status, reserve_able_no
 				FROM pay
+				WHERE user_id = #{userId}
+				
 			 ) countTable						
 	 </select>  		 	
+	 
+	   	  <select id="getPayList" parameterType="map" resultMap="paySelectMap">
+	  		SELECT *
+	  		FROM ( SELECT inner_table.*, ROWNUM AS row_seq
+	  						FROM (  SELECT p.pay_no, p.meet_id, p.user_id, o.off_no, b.business_id,   p.total_amount  , p.reserve_mem_num, p.reserve_start_time, p.reserve_end_time,  p.pay_date, p.pay_status, p.reserve_able_no,
+	  								 p.pay_method
+											FROM pay p , offmeet o, meet m, users u, business b
+											WHERE 
+											p.user_id = u.user_id(+)
+											AND p.off_no = o.off_no(+)
+											AND p.meet_id = m.meet_id(+)
+											AND p.business_id = b.business_id(+)
+											AND u.user_id = #{userId}
+											ORDER BY pay_no  ) inner_table
+	  						WHERE ROWNUM <![CDATA[<=]]> #{search.currentPage}*#{search.pageSize} )
+	  		WHERE row_seq BETWEEN (#{search.currentPage}-1)*#{search.pageSize}+1
+	  		AND #{search.currentPage}*#{search.pageSize}
+	</select>
+	
+	<select id="listOffMem"		parameterType="search"	resultMap="paySelectMap">
+		SELECT p.pay_no, p.off_no, p.meet_id, p.user_id
+		FROM pay p, meet m, offmeet o, users u
+		WHERE p.off_no = #{offNo}
+		AND p.off_no  = o.off_no(+)
+		AND p.meet_id = m.meet_id(+)
+		AND p.user_id = u.user_id(+)
+		ORDER BY pay_no ASC
+	</select>
+	
+	 <select  id="getTotalOffMemCount"  parameterType="search"	 resultType="int">
+	  	SELECT COUNT(*)
+	  	FROM  (	SELECT p.pay_no, p.off_no, p.meet_id, p.user_id
+					FROM  pay p, meet m, offmeet o, users u
+					WHERE o.off_no = #{searchKeyword}
+					AND p.off_no  = o.off_no(+)
+					AND p.meet_id = m.meet_id(+)
+					AND p.user_id = u.user_id(+)
+					ORDER BY pay_no ASC
+					 ) countTable		
+	 </select>
+	 
+
+<select  id="getReserveTotalCount"  parameterType="search"	 resultType="int">
+	SELECT COUNT(*)
+		FROM(SELECT p.pay_no , p.user_id , m.meet_id, m.meet_name, b.business_id, p.reserve_start_time, p. reserve_end_time, p.reserve_date, p.reserve_able_no
+		FROM pay p, meet m , users u , business b
+		WHERE
+		u.user_id(+) = p.user_id
+		AND m.meet_id(+) = p.meet_id
+		AND b.business_id(+)  = p.business_id
+		AND p.pay_status = 1
+		<if test="searchCondition != null">
+		<where>
+			<if test="searchCondition == 0 and searchKeyword !='' ">
+				p.pay_no LIKE '%' || ${searchKeyword} || '%'
+	       </if>
+			<if test="searchCondition == 1 and searchKeyword !='' ">
+				m.meet_name LIKE '%' || ${searchKeyword} || '%'
+		  	</if>
+			<if test="searchCondition == 2 and searchKeyword !='' ">
+				p.user_id LIKE '%' || ${searchKeyword} || '%'
+		 </if>
+		</where>
+		</if> ) countTable
+		</select>
+		
+	
+		
+	<select id="listReserveBusiness"		parameterType="search"	resultMap="paySelectMap">
+		SELECT *
+	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
+	  			FROM (SELECT p.pay_no , p.user_id , m.meet_id, m.meet_name, b.business_id, p.reserve_start_time, p. reserve_end_time, p.reserve_date, p.reserve_able_no
+		FROM pay p, meet m , users u , business b
+		WHERE
+		u.user_id(+) = p.user_id
+		AND m.meet_id(+) = p.meet_id
+		AND b.business_id(+)  = p.business_id
+		AND p.pay_status = 1
+		<if test="searchCondition != null">
+		<where>
+			<if test="searchCondition == 0 and searchKeyword !='' ">
+				p.pay_no LIKE '%' || ${searchKeyword} || '%'
+	       </if>
+			<if test="searchCondition == 1 and searchKeyword !='' ">
+				m.meet_name LIKE '%' || ${searchKeyword} || '%'
+		  	</if>
+			<if test="searchCondition == 2 and searchKeyword !='' ">
+				p.user_id LIKE '%' || ${searchKeyword} || '%'
+			 </if>
+		</where>
+	</if>
+						ORDER BY p.pay_no ) inner_table
+				WHERE ROWNUM &lt;= #{endRowNum} )
+		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} 
+	</select>
+	
+	
+		<select id="getReserveBusiness"		parameterType="int"	resultMap="paySelectMap">
+		SELECT p.pay_no , m.meetId, m.meet_name, b.business_id, p.user_id, p.reserve_mem_num, p.reserve_start_time, p.reserve_end_time, p.total_amount, p.pay_date
+		FROM pay p , meet m , business b
+		WHERE p.pay_no = #{payNo}
+		AND m.meet_Id(+) = p.meet_Id
+		AND b.business_Id(+) = p.business_Id
+		</select>
 </mapper>
 
 

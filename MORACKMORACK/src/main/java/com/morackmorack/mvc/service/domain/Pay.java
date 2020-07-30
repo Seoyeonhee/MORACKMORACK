@@ -18,9 +18,10 @@ public class Pay {
 	private int reserveMemNum;
 	private char payStatus;
 	private int reserveAbleNo;
+	private String meetName;
+	private String bank;
+	private String accNum;
 	
-
-
 	public Pay() {
 		
 	}
@@ -162,14 +163,39 @@ public class Pay {
 		this.offMeet = offMeet;
 	}
 
+	public String getMeetName() {
+		return meetName;
+	}
+
+	public void setMeetName(String meetName) {
+		this.meetName = meetName;
+	}
+
+	public String getBank() {
+		return bank;
+	}
+
+	public void setBank(String bank) {
+		this.bank = bank;
+	}
+
+	public String getAccNum() {
+		return accNum;
+	}
+
+	public void setAccNum(String accNum) {
+		this.accNum = accNum;
+	}
+
 	@Override
 	public String toString() {
 		return "Pay [payNo=" + payNo + ", user=" + user + ", meet=" + meet + ", offMeet=" + offMeet + ", business="
 				+ business + ", totalAmount=" + totalAmount + ", payDate=" + payDate + ", payMethod=" + payMethod
 				+ ", reserveStartTime=" + reserveStartTime + ", reserveEndTime=" + reserveEndTime + ", reserveDate="
 				+ reserveDate + ", reserveMemNum=" + reserveMemNum + ", payStatus=" + payStatus + ", reserveAbleNo="
-				+ reserveAbleNo + "]";
+				+ reserveAbleNo + ", meetName=" + meetName + ", bank=" + bank + ", accNum=" + accNum + "]";
 	}
+
 
 
 }

@@ -1,6 +1,8 @@
 package com.morackmorack.mvc.service.user.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,11 +27,24 @@ public class UserDaoImpl implements UserDao{
 	}
 	
 	public void addUser(User user) throws Exception {
-		sqlSession.insert("UserMapper.addUser", user);
+		sqlSession.insert("UserMapper.addUser", user); // 유저 정보 insert
+		
+		List<String> listCategory = user.getCategory();
+		
+		Map map = new HashMap();
+		map.put("userId",user.getUserId());
+		
+		for(int i=0; i<listCategory.size(); i++) {
+			map.put("categoryNo",listCategory.get(i));
+			sqlSession.insert("UserMapper.addCategory",map); //카테고리 insert
+		}
 	}
 
 	public User getUser(String userId) throws Exception {
-		return sqlSession.selectOne("UserMapper.getUser", userId);
+		User user = sqlSession.selectOne("UserMapper.getUser", userId);
+		user.setCategory(sqlSession.selectList("UserMapper.getCategory", userId));
+		
+		return user;
 	}
 
 	public void updateUser(User user) throws Exception {
@@ -40,7 +55,5 @@ public class UserDaoImpl implements UserDao{
 		sqlSession.delete("UserMapper.delUser", user);
 		
 	}
-	public void getUserCategory(String userId) throws Exception{
-		sqlSession.selectList("Usermapper.getUserCategory", userId);
-	}
+	
 }

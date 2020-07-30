@@ -8,6 +8,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,6 +54,7 @@ public class UserController {
 	public String addUser( @ModelAttribute("user") User user, HttpServletRequest request) throws Exception {
 
 		System.out.println("/user/adduser : POST");
+		System.out.println("들어온 객체:"+ user);
 		
 		@Component class StringToDateConverter
 		  implements Converter<String, Date> {
@@ -83,6 +85,7 @@ public class UserController {
 		System.out.println("/user/getUser : GET");
 		//Business Logic
 		User user = userService.getUser(userId);
+		
 		// Model 과 View 연결
 		model.addAttribute("user", user);
 		
@@ -192,6 +195,8 @@ public class UserController {
 		System.out.println(123);
 		return "redirect:/index.jsp";
 	}
+	
+	
 	
 	
 }

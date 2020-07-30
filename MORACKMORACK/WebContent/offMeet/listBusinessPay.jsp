@@ -49,7 +49,7 @@
 
         function fncGetUserList(currentPage) {
             $("#currentPage").val(currentPage)
-            $("form").attr("method", "POST").attr("action", "/offmeet/getPayList").submit();
+            $("form").attr("method", "POST").attr("action", "/offmeet/listBusinessPay").submit();
         }
 
         $(function() {
@@ -59,8 +59,8 @@
         });
         
         $(function() {
-        	$(".ct_list_pop td:nth-child(4)" ).on("click" , function() {
-        		self.location ="/offmeet/getOffPay?payNo="+$(this).attr("value")
+        	$(".ct_list_pop td:nth-child(3)" ).on("click" , function() {
+        		self.location ="/offmeet/getBusinessPay?payNo="+$(this).attr("value")
         	});
         });
         
@@ -81,7 +81,7 @@
             <div class="container">
 
             <div class="h4 offList" style="font-family:'NIXGONM-Vb';display:inline-block;font-weight: bold; margin-top: 30px;margin-bottom:20px; ">
-        		   오프라인 참여 내역
+        		제휴 업체 예약 내역
             </div>
      
       </div>
@@ -96,35 +96,31 @@
         <table class="table table-hover" id="offMeet">
             <thead>
                 <tr>
-                	 <th scope="col">모임명</th>
-                    <th scope="col">오프라인 모임명</th>
-                    <th scope="col">모임 장소</th>
-                    <th scope="col">모임 날짜</th>
-                    <th scope="col">모임 시간</th>
-                    <th scope="col">참여비</th>
-                    <th scope="col">인원수</th>
+                	<th scope="col">예약번호</th>
+                	<th scope="col">업체명</th>
+                    <th scope="col">예약 날짜</th>
+                    <th scope="col">예약 시간</th>
+                    <th scope="col">예약 인원</th>
+                    <th scope="col">총 금액</th>
                 </tr>
             </thead>
 
             <tbody>
 					
                  <c:set var="i" value="0" /> 
-                <c:forEach var="offMeet" items="${list}"> 
+                <c:forEach var="pay" items="${list}"> 
                     <c:set var="i" value="${i+1}" /> 
                         
                
-                        <tr class="ct_list_pop">
-			     <input type="hidden" name="offNo" id="offNo" value="${offMeet.offNo}" />
-  				 <input type="hidden" name="payNo" id="payNo" value="${offMeet.payNo}" /> 
-   			               
-                    	<td>${offMeet.meetName}</td>
-                        <td value ="${offMeet.payNo }">${offMeet.offName}</td>
-                        <td>${offMeet.offLoc}</td>
-                        <td>${offMeet.offDate}</td>   
-                        <td>${offMeet.offTime}</td>   
+                  <tr class="ct_list_pop">
+			     <input type="hidden" name="offNo" id="offNo" value="${pay.payNo}" />
+  				  		<td>${pay.payNo}</td>
+                    	<td value ="${pay.payNo}">${pay.businessName}</td>                
+                        <td>${pay.reserveDate}</td>
+                        <td>${pay.reserveStartTime}/${pay.reserveEndTime}</td>   
+                        <td>${pay.reserveMemNum}</td>   
                          <td>            
-                         <fmt:formatNumber value="${offMeet.amount}" pattern="###,###" />원</td>
-                        <td>${offMeet.offMem}/${offMeet.offMax}</td>     
+                         <fmt:formatNumber value="${pay.totalAmount}" pattern="###,###" />원</td>     
                      </tr> 
                  </c:forEach>
             </tbody>
