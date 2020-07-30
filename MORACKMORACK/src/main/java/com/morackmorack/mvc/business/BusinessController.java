@@ -18,7 +18,10 @@ import com.morackmorack.mvc.common.Search;
 import com.morackmorack.mvc.service.business.BusinessService;
 import com.morackmorack.mvc.service.domain.Business;
 import com.morackmorack.mvc.service.domain.Menu;
+import com.morackmorack.mvc.service.domain.Pay;
 import com.morackmorack.mvc.service.domain.ReserveAble;
+import com.morackmorack.mvc.service.domain.User;
+import com.morackmorack.mvc.service.offmeet.OffMeetService;
 
 //==> 업체관리 Controller
 @Controller
@@ -29,6 +32,9 @@ public class BusinessController {
 	@Autowired
 	@Qualifier("businessServiceImpl")
 	private BusinessService businessService;
+	@Autowired
+	@Qualifier("offMeetServiceImpl")
+	private OffMeetService offMeetService;
 		
 	public BusinessController(){
 		System.out.println(this.getClass());
@@ -103,6 +109,29 @@ public class BusinessController {
 		
 		mv.addObject("businessList", businessList);
 		mv.setViewName("/business/listBusiness.jsp");
+		
+		return mv;
+	}
+
+	
+//	2020-07-27 서연희
+//	getBusiness
+//	업체 상세(예약을 위한)
+	@RequestMapping( value="getBusiness", method=RequestMethod.GET )
+	public ModelAndView getBusiness( @RequestParam("businessId") String businessId ) throws Exception {
+
+		System.out.println("/business/getBusiness : GET");
+		
+		ModelAndView mv = new ModelAndView();
+		Business business = businessService.getBusiness(businessId);
+		business.setMenu(businessService.listBusinessMenu(businessId));
+		
+		System.out.println("서연희");
+		System.out.println(business);
+
+		mv.addObject("business", business);
+		mv.addObject("menu", business.getMenu());
+		mv.setViewName("/business/getBusiness.jsp");
 		
 		return mv;
 	}
@@ -282,6 +311,23 @@ public class BusinessController {
 		
 		mv.addObject("reserveAbleTimeList", reserveAbleTimeList);
 		mv.setViewName("forward:/business/listReserveAbleTime.jsp");
+		
+		return mv;
+	}
+	
+	
+//	2020-07-29 서연희
+//	listReserveBusiness
+//	업체 에약 목록 조회
+	@RequestMapping( value="listReserveBusiness" )
+	public ModelAndView listReserveBusiness( HttpSession session, @ModelAttribute("search") Search search ) throws Exception {
+		
+		System.out.println("/business/listReserveBusiness : GET/POST");
+		
+		ModelAndView mv = new ModelAndView();
+		User user = (User)session.getAttribute("user");
+		
+		/*List<Pay> reserveList = offMeetService.getBusinessPayList(search, userId);*/
 		
 		return mv;
 	}

@@ -53,7 +53,13 @@
 	<br>
 	
 	<a href="/business/listBusiness?businessId=bus01">업체 정보 변경</a>
-	<br>
+	<br><br><br><br><br><br><br><br>
+	
+	
+	
+	
+	<jsp:include page="/business/getReserveBusiness.jsp"/>
+	<br><br><br><br><br><br><br><br>
 	
 
 </body>

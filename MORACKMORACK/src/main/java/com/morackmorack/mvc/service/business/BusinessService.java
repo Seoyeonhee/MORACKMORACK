@@ -55,4 +55,13 @@ public interface BusinessService {
 	// 예약 가능 시간 목록
 	public List<ReserveAble> listReserveAbleTime(String businessId) throws Exception;
 	
+	
+	
+	
+	// 예약 화면을 위한 예약 가능 시간 목록
+	public List<ReserveAble> showReserveAbleTimeList(String businessId, String reserveDate) throws Exception;
+	
+	// 예약가능시간 번호로 예약 시간 가져오기
+	public ReserveAble getReservAbleTime(int reserveAbleNo) throws Exception;
+	
 }

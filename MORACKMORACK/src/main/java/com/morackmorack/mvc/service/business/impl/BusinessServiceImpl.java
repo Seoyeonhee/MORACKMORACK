@@ -96,5 +96,18 @@ public class BusinessServiceImpl implements BusinessService {
 	public List<ReserveAble> listReserveAbleTime(String businessId) throws Exception {
 		return businessDao.listReserveAbleTime(businessId);
 	}
+	
+	
+	
+	
+	
+	
+	public List<ReserveAble> showReserveAbleTimeList(String businessId, String reserveDate) throws Exception {
+		return businessDao.showReserveAbleTimeList(businessId, reserveDate);
+	}
+	
+	public ReserveAble getReservAbleTime(int reserveAbleNo) throws Exception {
+		return businessDao.getReservAbleTime(reserveAbleNo);
+	}
 
 }
