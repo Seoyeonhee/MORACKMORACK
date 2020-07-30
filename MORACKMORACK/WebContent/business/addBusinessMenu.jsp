@@ -48,99 +48,40 @@
 		var addedFormDiv = document.getElementById("addedFormDiv");
 		var str="";
 		
-		// 추가할 폼(에 들어갈 HTML)
-		/* str += 
-				"<form name='form' class='form-horizontal'>" +
-				"<br>" +
-				"<div class='form-group'>"; */
 		str +=
-				"<form name='form' class='form-horizontal'>" +
+				"<form name='form' class='form-horizontal' enctype='multipart/form-data'>" +
 				"<br><div class='form-group'>" +
 				"<label for='menu' class='col-sm-1' style='padding-top:9px; font-weight:700;'>메뉴  " +
 				count +
 				"</label>";
-		
-		
-		
-		
-		/* str+="<br>사진-"+count+" <input type='text' name='businessMenuImgList'><BR>"; */
-		/* str +=
-				"<div class='page-header text-info'>" +
-				"<span>" +
-				"<label for='menu' class='col-sm-2' style='float:left;'>메뉴 " +
-				count +
-				"&nbsp;&nbsp;<input type='button' value='-' onclick='delForm()'>" +
-				"</label>" +
-				"</span>" +
-				"<img id='businessMenuImgList' style='float:left; height:200px; width:200px; margin:5px' src='../../resources/images/down-arrow.png' alt='메뉴 이미지'>"; */
+
 		str +=
 			"<div>" +
 			"<div class='row'>" +
 			"<input type='button' value='-' onclick='delForm()'>" +
-			/* "<div class='col-xs-3'>" + */
-			/* "<input type='text' class='form-control' name='businessMenuImgList' placeholder='시작시간 (09:00 형식으로 입력)'>" + */
-			"<img id='businessMenuImgList' name='businessMenuImgList' style='float:left; height:200px; width:200px; margin:5px' src='../../resources/images/down-arrow.png' alt='@@@@@@@@@@@@@@@@@@@@@@@@ 메뉴 이미지 @@@@@@@@@@@@@@@@@@@@@@@@'>";
-			/* "</div>"; */
-		
-		
-		
-		
-		
-		
-		
-		/* str+="<br>메뉴명-"+count+" <input type='text' name='businessMenuList'>"; */
-		<%-- str +=
-				<h2>${business.businessName}</h2>
-				"<h1> 메뉴명 </h1>"; --%>
+			/* "<img id='businessMenuImgList' name='businessMenuImgList' style='float:left; height:200px; width:200px; margin:5px' src='../../resources/images/down-arrow.png' alt='@@@@@@@@@@@@@@@@@@@@@@@@ 메뉴 이미지 @@@@@@@@@@@@@@@@@@@@@@@@'>"; */
+			"<div class='thumbnail' id='businessMenuImgThum' style='float:left; height:200px; width:300px; margin:5px;'>" +
+			"<input multiple='multiple' type='file' name='file' id='businessMenuImg' multiple/>" +  
+			"<div id='preview'></div>" +
+			"</div>";
+
 		str+=
 			"<div class='col-xs-4'>" +
 			"<input type='text' class='form-control' name='businessMenuList' placeholder=' 메 뉴 명 '>" +
 			"</div><br><br>";
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		/* str+="<br>가격-"+count+" <input type='text' name='businessMenuFeeList'>"; */
-		/* str +=
-				"<p> </p>" +
-				"<h3> 가격 </h3>"
-				"<br><br>"; */
+
 		str +=
 				"<div class='col-xs-3'>" +
 				"<input type='text' class='form-control' name='businessMenuFeeList' placeholder=' 가 격 '>" +
-						"<input type='text' class='form-control' name='businessMenuImgList' placeholder='사진(사진 첨부 기능으로 수정할 예정)'>" +
+						/* "<input type='text' class='form-control' name='businessMenuImgList' placeholder='사진(사진 첨부 기능으로 수정할 예정)'>" + */
 				"</div>";
-				
-				
-				
-				
-		/* str +=
-				"<p> ~~~~~~~~~~~~~~~~~~~~~~~~~~~메뉴 간략 소개~~~~~~~~~~~~~~~~~~~~~ </p>" +
-				"</div>" +
-				"</form>"; */
-				
-		/* str +=
-				"<div class='col-xs-3'>" +
-				"<input type='text' class='form-control' name='businessMenuFeeList'>" +
-				"</div>"; */
-		
-		
-		
+
 		str +=
 				"</div>" +
 				"</div>" +
 				"</div>" +
 				"</form>";
-		
-		
-		
-		
-		
+
 		
 		// 폼 생성
 		var addedDiv = document.createElement("div");
@@ -183,10 +124,87 @@
 	
 	
 	$(function() {
+		
+		
+		
+		
+		$("input[type='file']").change(function(e){
+
+		      //div 내용 비워주기
+		      $('#preview').empty();
+
+		      var files = e.target.files;
+		      var arr =Array.prototype.slice.call(files);
+		      
+		      //업로드 가능 파일인지 체크
+		      for(var i=0;i<files.length;i++){
+		        if(!checkExtension(files[i].name,files[i].size)){
+		          return false;
+		        }
+		      }
+		      
+		      preview(arr);
+		      
+		      
+		    });//file change
+		    
+		    function checkExtension(fileName,fileSize){
+
+		      var regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$");
+		      var maxSize = 20971520;  //20MB
+		      
+		      if(fileSize >= maxSize){
+		        alert('파일 사이즈 초과');
+		        $("input[type='file']").val("");  //파일 초기화
+		        return false;
+		      }
+		      
+		      if(regex.test(fileName)){
+		        alert('업로드 불가능한 파일이 있습니다.');
+		        $("input[type='file']").val("");  //파일 초기화
+		        return false;
+		      }
+		      return true;
+		    }
+		    
+		    function preview(arr){
+		      arr.forEach(function(f){
+		        
+		        //파일명이 길면 파일명...으로 처리
+		        var fileName = f.name;
+		        if(fileName.length > 10){
+		          fileName = fileName.substring(0,7)+"...";
+		        }
+		        
+		        //div에 이미지 추가
+		        var str2 = '<div style="display: inline-flex; padding: 10px;"><li>';
+		        str2 += '<span>'+fileName+'</span><br>';
+		        
+		        //이미지 파일 미리보기
+		        if(f.type.match('image.*')){
+		          var reader = new FileReader(); //파일을 읽기 위한 FileReader객체 생성
+		          reader.onload = function (e) { //파일 읽어들이기를 성공했을때 호출되는 이벤트 핸들러
+		            //str2 += '<button type="button" class="delBtn" value="'+f.name+'" style="background: red">x</button><br>';
+		            str2 += '<img src="'+e.target.result+'" title="'+f.name+'" width=100 height=100 />';
+		            str2 += '</li></div>';
+		            $(str2).appendTo('#preview');
+		          } 
+		          reader.readAsDataURL(f);
+		        }else{
+		          str2 += '<img src="/resources/img/fileImg.png" title="'+f.name+'" width=100 height=100 />';
+		          $(str2).appendTo('#preview');
+		        }
+		      });//arr.forEach
+		    };
+		
+		
+		
+		
+		
 	
 		$("#addBusinessMenu").on("click", function() {
 			$("form").attr("method", "POST").attr("action", "/business/addBusinessMenu").submit();
-		})
+		});
 	   	   
 	});
            
@@ -207,7 +225,6 @@
 		<div class="page-header text-info">
 			<img id="businessImg" style="float:left; height:100px; width:100px; margin:5px" src="../../resources/images/down-arrow.png" alt="@@업체 대표 이미지@@">
 			<h2 style="padding-top:10px;">${business.businessName}</h2>
-			<!-- <h2 style="padding-top:10px;">업체명</h2> -->
 			<h5>메뉴 등록</h5>
 	    </div>
 
@@ -222,7 +239,7 @@
 		</div>
 
 
-		<form name="baseForm">
+		<form name="baseForm" enctype="multipart/form-data">
 		
 			<input type="hidden" name="count" value="0">
 			

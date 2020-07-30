@@ -341,72 +341,23 @@ article {
          <!-- 업체 -->
          <c:if test="${!empty sessionScope.business}">
          <li>
-          <a href="#!">업체목록</a>
+          <a href="/business/listBusiness">업체목록</a>
           <ul class="nav-dropdown">
-            <li>
-              <a href="/meet/listMyMeet">가입한 모임</a>
-            </li>
-            <li>
-              <a href="/meet/addMeet">모임 생성</a>
-            </li>
           </ul>
         </li>
         <li>
-          <a href="#!">업체 정보 조회</a>
+          <a href="/business/listBusinessMenu">업체 메뉴 목록</a>
           <ul class="nav-dropdown">
-            <li>
-              <a href="/meet/listMeet?searchType2=0">유형 검색</a>
-            </li>
-            <li>
-              <a href="/meet/listMeet?searchType2=1">카테고리 검색</a>
-            </li>
-            <li>
-              <a href="/meet/listMeet?searchType2=2">해시태그 검색</a>
-            </li>
           </ul>
         </li>
         <li>
-          <a href="#!">업체 정보 변경</a>
-          <ul class="nav-dropdown">
-            <li>
-              <a href="/friend/friendList">친구</a>
-            </li>
-            <li>
-              <a href="/message/listRecvMessage">쪽지함</a>
-            </li>
-          </ul>
+          <a href="/business/listReserveAbleTime">업체 예약 가능 시간 목록</a>
         </li>
         <li>
           <a href="#!">업체 후기 조회</a>
-          <ul class="nav-dropdown">
-            <li>
-              <a href="/business/listBusiness">업체 목록</a>
-            </li>
-            <li>
-              <a href="/business/listUsedBusiness">이용한 업체 목록</a>
-            </li>
-          </ul>
         </li>
         <li>
-          <a href="#!">예약 목록 조회</a>
-          <ul class="nav-dropdown">
-          <li>
-              <a href="/offmeet/addBusinessPay">모임 후기</a>
-            </li>
-            <li>
-              <a href="/community/getBusinessReviewList">업체 후기</a>
-            </li>         
-            <div class="dropdown-divider" style="border-color:white;"></div>
-              <li>
-              <a href="/user/getUser?userId=${user.userId}">내 정보 조회</a>
-            </li>
-            <li>
-              <a href="/user/updateUser?userId=${user.userId}">내 정보 변경</a>
-            </li>
-            <li>
-              <a href="/user/delUser?userId=${user.userId}">회원 탈퇴</a>
-            </li>
-          </ul>
+          <a href="/business/listReserveBusiness">예약 목록 조회</a>
         </li>
         
          <c:if test="${empty sessionScope.user && empty sessionScope.business}">
@@ -438,7 +389,7 @@ article {
  
  		  <c:if test="${!empty sessionScope.business}">
 			<li>
-         		<a href="/user/logout">로그아웃</a>
+         		<a href="/business/logout">로그아웃</a>
          	</li>
           </c:if>
         </c:if>  
