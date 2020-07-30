@@ -62,8 +62,8 @@ public class MeetDaoImpl implements MeetDao {
 		return sqlSession.selectList("MeetMapper.listMeetMain", categoryNo);
 	}
 	
-	public List<Meet> listMeetFromMain(List<Integer> categoryNo){
-		return sqlSession.selectList("MeetMapper.listMeetMain", categoryNo);
+	public List<Meet> listMeetFromMain(List<String> categoryName){
+		return sqlSession.selectList("MeetMapper.listMeetMain", categoryName);
 	}
 	
 	public void outMeet(String userId, String meetId){

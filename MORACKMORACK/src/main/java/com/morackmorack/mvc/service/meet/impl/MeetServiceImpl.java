@@ -58,8 +58,8 @@ public class MeetServiceImpl implements MeetService{
 		return meetDao.listMeetFromMain();
 	}
 	
-	public List<Meet> listMeetFromMain(List<Integer> categoryNo){
-		return meetDao.listMeetFromMain(categoryNo);
+	public List<Meet> listMeetFromMain(List<String> categoryName){
+		return meetDao.listMeetFromMain(categoryName);
 	}
 	
 	public void outMeet(String userId, String meetId){

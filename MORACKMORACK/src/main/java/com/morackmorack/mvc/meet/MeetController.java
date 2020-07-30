@@ -608,7 +608,7 @@ public class MeetController {
 			Date convBirthday = (Date) transFormat.parse(birthday);
 			user.setBirthday(convBirthday);
 			user.setAddress("서울시");
-			user.setGender('남');
+			user.setGender("남");
 
 			userService.addUser(user);
 		}

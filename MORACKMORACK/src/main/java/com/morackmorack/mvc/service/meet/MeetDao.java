@@ -26,7 +26,7 @@ public interface MeetDao {
 	
 	public List<Meet> listMeetFromMain();
 	
-	public List<Meet> listMeetFromMain(List<Integer> categoryNo);
+	public List<Meet> listMeetFromMain(List<String> categoryName);
 	
 	public void outMeet(String userId, String meetId);
 	
