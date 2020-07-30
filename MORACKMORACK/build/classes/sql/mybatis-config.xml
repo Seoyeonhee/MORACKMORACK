@@ -19,6 +19,7 @@
 		<typeAlias alias="menu" type="com.morackmorack.mvc.service.domain.Menu"/>
 		<typeAlias alias="reserveAble" type="com.morackmorack.mvc.service.domain.ReserveAble"/>
 		<typeAlias alias="friend" type="com.morackmorack.mvc.service.domain.Friend"/>
+		<typeAlias alias="notify" type="com.morackmorack.mvc.service.domain.Notify"/>
 		<typeAlias alias="community" type="com.morackmorack.mvc.service.domain.Community"/>
 		<typeAlias alias="files" type="com.morackmorack.mvc.service.domain.Files"/>
 		<typeAlias alias="offMeet" type="com.morackmorack.mvc.service.domain.OffMeet"/>
@@ -34,6 +35,7 @@
 		 <mapper resource="sql/MeetMapper.xml"/> 
 		 <mapper resource="sql/BusinessMapper.xml"/> 
 		 <mapper resource="sql/FriendMapper.xml"/> 
+		 <mapper resource="sql/NotifyMapper.xml"/>
 		 <mapper resource="sql/CommunityMapper.xml"/> 
 		 <mapper resource="sql/OffMeetMapper.xml"/> 
 		 <mapper resource="sql/MessageMapper.xml"/> 

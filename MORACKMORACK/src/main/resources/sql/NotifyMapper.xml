@@ -20,15 +20,16 @@
 	<!-- SQL : INSERT -->
 	<insert 	id="notifyUser"		parameterType="notify" >
 	 	INSERT
-	 	INTO	Notify(		notify_no)
+	 	INTO	Notify(		notify_no
 	 					,	notify_user
 	 					,	req_notify_user
 	 					,	notify_type
 	 					,	notify_detail
+	 					,	notify_date
 	 					,	notify_mang
-	 					) VALUES (	seq_friend_friend_no.nextval
-	 							  ,	#{recvNotiUser.userId:VARCHAR2}
-	 							  ,	#{reqNotiUser.userId:VARCHAR2}
+	 					) VALUES (	seq_notify_notify_no.nextval
+	 							  ,	#{recvNotiUser.userId:VARCHAR}
+	 							  ,	#{reqNotiUser.userId:VARCHAR}
 	 							  ,	#{notiType:CHAR}
 	 							  ,	#{notiDetail:VARCHAR}
 	 							  ,	SYSDATE
@@ -43,12 +44,10 @@
 		WHERE notify_user=#{recvNotiUser.userId:VARCHAR}
 	</select>
 	
-	<select id="listNotiUser" parameterType="map" resultMap="notifySelectMap">
-		SELECT*
-		FROM( SELECT ROWNUM AS row_seq, inner_table.*
-				FROM (SELECT notify_user, notify_date, notify_type
+	<select id="listNotiUser" resultMap="notifySelectMap">
+		SELECT *
 					  FROM notify
-					  ORDER BY notify_user) inner_table);	
+					  ORDER BY notify_user	
 	</select>
 	
 	<update id="prohibit" parameterType="notify">

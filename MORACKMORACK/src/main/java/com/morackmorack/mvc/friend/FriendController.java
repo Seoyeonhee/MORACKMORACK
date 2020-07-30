@@ -43,14 +43,13 @@ public class FriendController {
 	
 	
 	@RequestMapping(value="reqFriend")
-	public ModelAndView reqFriend(@RequestParam("userId") String userId, HttpServletRequest request) throws Exception {
+	public ModelAndView reqFriend(@RequestParam("userId") String userId, @RequestParam("meetId") String meetId, HttpSession session) throws Exception {
 		
 		System.out.println("reqFriendController");
 		System.out.println(1234+userId);
 		
 		ModelAndView modelAndView = new ModelAndView();
 		
-		HttpSession session = request.getSession(true);
 		
 		User reqFriend = (User)session.getAttribute("user");
 		User recvFriend = userService.getUser(userId);
@@ -59,47 +58,79 @@ public class FriendController {
 		System.out.println("101:"+recvFriend);
 		
 		Friend friend = new Friend();
-		
 		friend.setReqFriend(reqFriend);
 		friend.setRecvFriend(recvFriend);
 		
 		friendService.reqFriend(friend);
 		
-		modelAndView.setViewName("/meet/listMeetMem.jsp");
+		modelAndView.setViewName("/meet/listMeetMem/"+meetId);
 		modelAndView.addObject("friend", friend);
 		
 		return modelAndView;
 	}
 	
 	@RequestMapping(value="listRecvFriend")
-	public ModelAndView listRecvFriend(@ModelAttribute("search") Search search, HttpServletRequest request, Model model) throws Exception {
+	public ModelAndView listRecvFriend(HttpServletRequest request, Model model) throws Exception {
 		
-		if(search.getCurrentPage()==0) {
-			search.setCurrentPage(1);
-		}
 		
 		ModelAndView modelAndView = new ModelAndView();
-		
-		search.setPageSize(3);
+
+		List<Friend> listRecvFriend = new ArrayList<Friend>();
 		
 		HttpSession session = request.getSession(true);
 		
 		String recvFriendId = ((User)session.getAttribute("user")).getUserId();
-		Map<String,Object> map = friendService.listRecvFriend(search,  recvFriendId);
+		listRecvFriend = friendService.listRecvFriend(recvFriendId);
 		
 	
 		
-		modelAndView.addObject("list", map.get("list"));
-		modelAndView.addObject("search", search);
-		modelAndView.setViewName("/friend/listRecvFrien.jsp");
+		modelAndView.addObject("listRecvFriend", listRecvFriend);
+		modelAndView.setViewName("/friend/listRecvFriend.jsp");
 		
 		return modelAndView;
 	}
 	
-	@RequestMapping(value="getRecvFriend", method=RequestMethod.GET)
-	public ModelAndView getRecvFriend(@RequestParam("userId") String userId, Model model)throws Exception {
+	@RequestMapping(value="okFriend")
+	public String okFriend(@RequestParam("friendNo") int friendNo, HttpSession session) throws Exception {
 		
-		Friend friend = friendService.getRecvFriend(userId);
+		System.out.println("13213"+friendNo);
+		
+		User reqFriendId = (User)session.getAttribute("user");
+		
+		
+		Friend friend = new Friend();
+		
+		friend = friendService.getRecvFriend(friendNo);
+		
+		friendService.okFriend(friend);
+		
+		return "/friend/listRecvFriend.jsp";
+
+	}
+	
+	@RequestMapping(value="denyFriend")
+	public String denyFriend(@RequestParam("userId") String userId, HttpSession session) throws Exception {
+		
+		System.out.println("13213"+userId);
+		
+		User reqFriendId = (User)session.getAttribute("user");
+		User recvFriendId = userService.getUser(userId);
+		
+		Friend friend = new Friend();
+		
+		friend.setReqFriend(reqFriendId);
+		friend.setRecvFriend(recvFriendId);
+		
+		friendService.denyFriend(friend);
+		
+		return "/friend/listRecvFriend.jsp";
+
+	}
+	
+	@RequestMapping(value="getRecvFriend", method=RequestMethod.GET)
+	public ModelAndView getRecvFriend(@RequestParam("friendNo") int friendNo, Model model)throws Exception {
+		
+		Friend friend = friendService.getRecvFriend(friendNo);
 		
 		ModelAndView modelAndView = new ModelAndView();
 		
@@ -109,22 +140,27 @@ public class FriendController {
 		return modelAndView;
 	}
 	
-	//@RequestMapping(value="listFriend")
-	//public ModelAndView listFriend(@ModelAttribute("search") Search search, HttpServletRequest request, Model model) throws Exception {
+	@RequestMapping(value="listFriend")
+	public ModelAndView listFriend(HttpServletRequest request, Model model) throws Exception {
 		
-//		System.out.println("/listFriend.do");
-//		
+		System.out.println("/listFriend.do");
+		
 //		if(search.getCurrentPage()==0) {
 //			search.setCurrentPage(1);
 //		}
-//		
-//		ModelAndView modelAndView = new ModelAndView();
-//		
-//		search.setPageSize(3);
-//		
-//		HttpSession session = request.getSession(true);
+		
+		ModelAndView mav = new ModelAndView();
 
-	//}
+		HttpSession session = request.getSession(true);
+		String reqFriendId= ((User)session.getAttribute("user")).getUserId();
+		List<Friend> listFriend = new ArrayList<Friend>();
+		listFriend = friendService.listFriend(reqFriendId);
+		
+		mav.addObject("listFriend", listFriend);
+		mav.setViewName("/friend/listFriend.jsp");
+		
+		return mav;
+	}
 	
 	@RequestMapping(value="friendList", method=RequestMethod.GET)
 	public ModelAndView friendList(HttpServletRequest request, Model model) throws Exception{
@@ -144,6 +180,22 @@ public class FriendController {
 		modelAndView.setViewName("/friend/friendList.jsp");
 		
 		return modelAndView;
+	}
+	
+	@RequestMapping(value="delFriend")
+	public ModelAndView delFriend(@RequestParam("userId") String userId, HttpServletRequest request)throws Exception{
+		
+		ModelAndView mav = new ModelAndView();
+	
+		HttpSession session = request.getSession(true);
+		System.out.println(userId);
+		String reqFriendId = ((User)session.getAttribute("user")).getUserId();
+		
+		String recvFriendId = userId;
+		
+		friendService.delFriend(reqFriendId,recvFriendId);
+		
+		return mav;
 	}
 
 }
