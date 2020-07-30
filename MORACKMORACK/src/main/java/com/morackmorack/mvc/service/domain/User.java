@@ -3,6 +3,8 @@ package com.morackmorack.mvc.service.domain;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 public class User {
 	private String userId;
 	private String password;
@@ -20,12 +22,80 @@ public class User {
     private String googleId;
     private int meetCount;
     private String role;
+    private List<Integer> category;
+    private List<String> meetList;
+    
+    
+    public String getUserId() {
+        return userId;
+    }
+   
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+    
+    public String getPassword() {
+        return password;
+    }
+   
+    public void setPassword(String password) {
+        this.password = password;
+    }
+    
     public String getUserName() {
 		return userName;
 	}
 
 	public void setUserName(String userName) {
 		this.userName = userName;
+	}
+	
+	public String getEmail() {
+        return email;
+    }
+   
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+	
+	public Date getBirthday() {
+		return birthday;
+	}
+
+	public void setBirthday(Date birthday) {
+		this.birthday = birthday;
+	}
+	
+	public String getNickName() {
+		return nickName;
+	}
+
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
+	}
+	
+	public String getProfileImg() {
+		return profileImg;
+	}
+
+	public void setProfileImg(String profileImg) {
+		this.profileImg = profileImg;
+	}
+	
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
 	}
 
 	public char getGender() {
@@ -34,6 +104,14 @@ public class User {
 
 	public void setGender(char gender) {
 		this.gender = gender;
+	}
+	
+	public char getUserStateList() {
+		return userStateList;
+	}
+
+	public void setUserStateList(char userStateList) {
+		this.userStateList = userStateList;
 	}
 
 	public String getNaverId() {
@@ -59,6 +137,14 @@ public class User {
 	public void setGoogleId(String googleId) {
 		this.googleId = googleId;
 	}
+	
+	public int getMeetCount() {
+		return meetCount;
+	}
+
+	public void setMeetCount(int meetCount) {
+		this.meetCount = meetCount;
+	}
 
 	public String getRole() {
 		return role;
@@ -68,105 +154,14 @@ public class User {
 		this.role = role;
 	}
 
-	public void setUserStateList(char userStateList) {
-		this.userStateList = userStateList;
-	}
-
-	private List<String> category;
-    private List<String> meetList;
-    
-   
-    public User(){
-    }
- 
-    public String getUserId() {
-        return userId;
-    }
-   
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
- 
-    public String getPassword() {
-        return password;
-    }
-   
-    public void setPassword(String password) {
-        this.password = password;
-    }
-   
-    public String getName() {
-        return userName;
-    }
-   
-    public void setName(String name) {
-        this.userName = name;
-    }
-   
-    public String getEmail() {
-        return email;
-    }
-   
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-	public String getPhoneNumber() {
-		return phoneNumber;
-	}
-
-	public void setPhoneNumber(String phoneNumber) {
-		this.phoneNumber = phoneNumber;
-	}
-
-	public String getNickName() {
-		return nickName;
-	}
-
-	public void setNickName(String nickName) {
-		this.nickName = nickName;
-	}
-
-	public Date getBirthday() {
-		return birthday;
-	}
-
-	public void setBirthday(Date birthday) {
-		this.birthday = birthday;
-	}
-
-	public List<String> getCategory() {
+	public List<Integer> getCategory() {
 		return category;
 	}
 
-	public void setCategory(List<String> category) {
+	public void setCategory(List<Integer> category) {
 		this.category = category;
 	}
-
-	public String getAddress() {
-		return address;
-	}
-
-	public void setAddress(String address) {
-		this.address = address;
-	}
-
-	public String getProfileImg() {
-		return profileImg;
-	}
-
-	public void setProfileImg(String profileImg) {
-		this.profileImg = profileImg;
-	}
-
-	public char getUserStateList() {
-		return userStateList;
-	}
-
-	public void setUserstateList(char userStateList) {
-		this.userStateList = userStateList;
-	}
-
+	
 	public List<String> getMeetList() {
 		return meetList;
 	}
@@ -175,13 +170,7 @@ public class User {
 		this.meetList = meetList;
 	}
 
-	public int getMeetCount() {
-		return meetCount;
-	}
-
-	public void setMeetCount(int meetCount) {
-		this.meetCount = meetCount;
-	}
+	
 
 	@Override
 	public String toString() {

@@ -2,7 +2,6 @@
     pageEncoding="EUC-KR"%>
     
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
-<%@ include file="/webSocket.jsp" %>
 
 <!DOCTYPE html>
 <html>
@@ -38,6 +37,7 @@
 <article>
   <h2>Navigation</h2>
   <p><a href="/meet/test">회원 데이터 INSERT</a></p>
+  <p><a href="/message/sendMessage.jsp">메세지 send</a></p>
  	
 
 <div class="row" style="margin-top:180px"> <!-- 모임 순위 -->

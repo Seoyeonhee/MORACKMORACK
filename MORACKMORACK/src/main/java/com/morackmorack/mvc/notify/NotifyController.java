@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.morackmorack.mvc.common.Page;
 import com.morackmorack.mvc.common.Search;
 import com.morackmorack.mvc.service.domain.Notify;
 import com.morackmorack.mvc.service.domain.User;
@@ -35,16 +34,11 @@ public class NotifyController {
 	@Autowired
 	@Qualifier("userServiceImpl")
 	private UserService userService;
-	
-	@Value("#{commonProperties['pageUnit']}")
-	int pageUnit;
-	@Value("#{commonProperties['pageSize']}")
-	int pageSize;
-	
+
 	public NotifyController() {
 	}
 	
-	@RequestMapping(value="notifyUser", method=RequestMethod.GET)
+	@RequestMapping(value="notifyUserView", method=RequestMethod.GET)
 	public ModelAndView notifyUserView(@RequestParam("userId") String userId, HttpServletRequest request) throws Exception{
 		
 		System.out.println("/notifyUserView.do");
@@ -68,6 +62,20 @@ public class NotifyController {
 		return modelAndView;
 	}
 	
+	@RequestMapping(value="notifyUser", method=RequestMethod.POST)
+	public ModelAndView notifyUser(@ModelAttribute("notify") Notify notify) throws Exception {
+		
+		System.out.println(notify);
+		
+		notifyService.notifyUser(notify);
+		
+		ModelAndView modelAndView = new ModelAndView();
+		
+		modelAndView.setViewName("/notify/notifyUser.jsp");
+		
+		return modelAndView;
+	}
+	
 	@RequestMapping(value="listNotifyUser")
 	public String listNotifyUser(@ModelAttribute("search") Search search, HttpServletRequest request, Model model) throws Exception{
 		
@@ -81,13 +89,37 @@ public class NotifyController {
 		
 		Map<String,Object> map = notifyService.listNotifyUser(search);
 		
-		Page resultPage = new Page(search.getCurrentPage(),((Integer)map.get("totalCount")).intValue(),pageUnit,pageSize);
 		
 		model.addAttribute("list", map.get("list"));
-		model.addAttribute("resultPage", resultPage);
 		model.addAttribute("search", search);
 		
 		return "forward:/notify/listNotifyUser.jsp";
+	}
+	
+	@RequestMapping(value="getNotifyUser", method=RequestMethod.GET)
+	public String getNotifyUser(@RequestParam("notifyNo") int notifyNo, Model model) throws Exception {
+		
+		//Notify notify = notifyService.getNotifyUser(notifyNo);
+		
+		//model.addAttribute("notify", notify);
+		//System.out.println(notify);
+		
+		return "forward:/notify/getNotifyUser.jsp";
+	
+	}
+	
+	@RequestMapping(value="prohibit")
+	public ModelAndView prohibit(@ModelAttribute("notify") Notify notify, @ModelAttribute("user") User userA, Model model) throws Exception {
+		
+		ModelAndView modelAndView = new ModelAndView();
+		
+		notify.setRecvNotiUser(userA);
+		//notify.setProhibit('1');
+		
+		modelAndView.addObject("notify", notify);
+		modelAndView.setViewName("listNotify");
+		
+		return modelAndView;
 	}
 
 }

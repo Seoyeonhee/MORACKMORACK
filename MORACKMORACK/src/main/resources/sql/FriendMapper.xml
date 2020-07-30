@@ -26,8 +26,8 @@
 	 					,	req_friend_date
 	 					,	friend_date
 	 					) VALUES (	seq_friend_friend_no.nextval
-	 							  ,	#{reqFriend.userId:VARCHAR2}
-	 							  ,	#{recvFriend.userId:VARCHAR2}
+	 							  ,	#{reqFriend.userId:VARCHAR}
+	 							  ,	#{recvFriend.userId:VARCHAR}
 	 							  ,	'0'
 	 							  ,	sysdate
 	 							  ,	null
@@ -41,26 +41,66 @@
 		WHERE recv_friend_id=#{recvFriendId:VARCHAR2}
 	</select>
 	
-	<select id="getRecvFriend" parameterType="int" resultMap="friendSelectMap">
+	<select id="getRecvFriend" parameterType="String" resultMap="friendSelectMap">
 		SELECT *
 		FROM Friend
-		WHERE friend_no=#{friendNo}
+		WHERE req_friend_id = #{reqFriendId:VARCHAR}
+	</select>
+	
+	<select id="listFriend" parameterType="map" resultMap="friendSelectMap">
+		SELECT recv_friend_id, friend_date
+		FROM friend
+		WHERE req_friend_id=#{reqFriendId:VARCHAR}
+	</select>	
+	
+	<select id="getFriend" parameterType="String" resultMap="friendSelectMap">
+		SELECT *
+		FROM friend
+		WHERE recv_friend_id=#{recvFriendId:VARCHAR}
 	</select>
 	
 	<update id="denyFriend" parameterType="friend">
 		UPDATE friend
 		<set>
-			friend_code='1'
+			friend_code='2'
 		</set>
 		WHERE friend_no=#{friendNo:INTEGERE}
 	</update>
 	
-	<update id="okFriend" parameterType="friend">
-		UPDATE friend
-		<set>
-			friend_code='2'
-		</set>
-		WHERE friend_no=#{friendNo:INTEGER}
-	</update>
+
+	<insert id="okFriend" parameterType="friend">
+		INSERT
+		INTO friend	(		friend_no
+						,	req_friend_id
+						,	recv_friend_id
+						,	friend_code
+						,	req_friend_date
+						,	friend_date
+						)	VALUES (	seq_friend_friend_no.nextval
+									,	#{recvFriendId.userId:VARCHAR}
+									,	#{reqFriendId.userId:VARCHAR}
+									,	'1'
+									,	sysdate
+									,	sysdate)
+	
+	</insert>
+	
+	<select id="getTotalCount"  parameterType="String"		resultType="int">
+		SELECT COUNT(*)
+		FROM (	
+				SELECT *
+				FROM	friend
+				WHERE 	req_friend_id=#{reqFriendId}
+				)
+	</select>
+	
+	<select id="friendList"  parameterType="String"	resultMap="friendSelectMap">
+		SELECT	*
+		FROM	friend
+		WHERE	req_friend_id=#{reqFriendId} and friend_code='1'
+	</select>
 	
 </mapper>
+		
+		
+		

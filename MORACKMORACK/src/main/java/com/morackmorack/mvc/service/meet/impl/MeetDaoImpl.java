@@ -1,5 +1,6 @@
 package com.morackmorack.mvc.service.meet.impl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import com.morackmorack.mvc.common.Search;
+import com.morackmorack.mvc.service.domain.Files;
 import com.morackmorack.mvc.service.domain.Meet;
 import com.morackmorack.mvc.service.domain.MeetMem;
 import com.morackmorack.mvc.service.domain.User;
@@ -27,6 +29,10 @@ public class MeetDaoImpl implements MeetDao {
 		this.sqlSession = sqlSession;
 	}
 	
+	public void addLimg(Files file) {
+		sqlSession.insert("MeetMapper.addLimg", file);
+	}
+	
 	public  List<Meet> getMeetMain(){
 		return sqlSession.selectList("MeetMapper.getMeetMain");
 	}
@@ -37,15 +43,10 @@ public class MeetDaoImpl implements MeetDao {
 	
 	public Meet getMeet(String meetId) {
 		Meet meet = sqlSession.selectOne("MeetMapper.getMeet", meetId);	
-		meet.setHashtag(getMeetHashtag(meetId));
-		
-		System.out.println(meet.getHashtag());
+		meet.setHashtag(sqlSession.selectList("MeetMapper.getMeetHashtag", meetId));
+		meet.setlImg(sqlSession.selectList("MeetMapper.getLimg", meetId));
 		
 		return meet;
-	}
-	
-	public List<String> getMeetHashtag(String meetId){
-		return sqlSession.selectList("MeetMapper.getMeetHashtag", meetId);	
 	}
 	
 	public void updateMeet(Meet meet) {
@@ -77,10 +78,12 @@ public class MeetDaoImpl implements MeetDao {
 		sqlSession.update("MeetMapper.addMemNum", meetId);
 	}
 	
-	public User getMeetMem(String meetId){
-		return null;
+	public MeetMem getMeetMem(String meetId, String userId){
+		Map map = new HashMap();
+		map.put("meetId", meetId);
+		map.put("userId", userId);
 		
-		
+		return sqlSession.selectOne("MeetMapper.getMeetMem", map);				
 	}
 	
 	public List<MeetMem> listMeetMem(String meetId){
@@ -151,13 +154,36 @@ public class MeetDaoImpl implements MeetDao {
 		sqlSession.insert("MeetMapper.addWishMeet", map);
 	}
 	
-	public List<WishMeet> listWishMeet(String userId){
+	public Map getWishMeet(String meetId, String userId) {
+		Map map = new HashMap();
+		map.put("meetId", meetId);
+		map.put("userId", userId);
+		
+		WishMeet wishMeet = sqlSession.selectOne("MeetMapper.getWishMeet", map);
+		int wishCount = sqlSession.selectOne("MeetMapper.getWishMeetCount", userId);
+		
+		map = new HashMap();
+		
+		map.put("wishMeet", wishMeet);
+		map.put("wishCount", wishCount);
+				
+		return map;
+	}
+	
+	public Map listWishMeet(String userId){
 		List<WishMeet> listWishMeet = sqlSession.selectList("MeetMapper.listWishMeet", userId);
 		
 		for(int i=0; i<listWishMeet.size(); i++) {
 			listWishMeet.get(i).setMeet(sqlSession.selectOne("MeetMapper.getMeet", listWishMeet.get(i).getMeet().getMeetId()));
 		}
-		return listWishMeet;
+		
+		int wishCount = sqlSession.selectOne("MeetMapper.getWishMeetCount", userId);
+		
+		Map map = new HashMap();
+		map.put("listWishMeet", listWishMeet);
+		map.put("wishCount", wishCount);
+				
+		return map;
 	}
 	
 	public void delWishMeet(String userId, String meetId){

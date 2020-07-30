@@ -1,8 +1,10 @@
 package com.morackmorack.mvc.service.meet;
 
 import java.util.List;
+import java.util.Map;
 
 import com.morackmorack.mvc.common.Search;
+import com.morackmorack.mvc.service.domain.Files;
 import com.morackmorack.mvc.service.domain.Meet;
 import com.morackmorack.mvc.service.domain.MeetMem;
 import com.morackmorack.mvc.service.domain.User;
@@ -10,13 +12,13 @@ import com.morackmorack.mvc.service.domain.WishMeet;
 
 public interface MeetDao {
 	
+	public void addLimg(Files file);
+	
 	public  List<Meet> getMeetMain();
 	
 	public void addMeet(Meet meet);
 	
 	public Meet getMeet(String meetId);
-	
-	public List<String> getMeetHashtag(String meetId);
 	
 	public void updateMeet(Meet meet);
 	
@@ -30,7 +32,7 @@ public interface MeetDao {
 	
 	public void addMemNum(String meetId); 
 	
-	public User getMeetMem(String meetId);
+	public MeetMem getMeetMem(String meetId, String userId);
 	
 	public List<MeetMem> listMeetMem(String meetId);
 	
@@ -48,7 +50,9 @@ public interface MeetDao {
 	
 	public void addWishMeet(String userId, String meetId);
 	
-	public List<WishMeet> listWishMeet(String userId);
+	public Map getWishMeet(String meetId, String userId);
+	
+	public Map listWishMeet(String userId);
 	
 	public void delWishMeet(String userId, String meetId);
 	

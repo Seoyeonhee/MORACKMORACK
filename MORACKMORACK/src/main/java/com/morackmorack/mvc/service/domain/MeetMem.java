@@ -10,6 +10,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 public class MeetMem implements Serializable{
 	private int memNo;
 	private User user;

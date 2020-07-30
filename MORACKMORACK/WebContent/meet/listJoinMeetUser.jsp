@@ -45,17 +45,18 @@ button:hover {
 
 $(function (){
 	
-	$("#okJoinMeetUser").on("click", function(){
+	
+	$("button[id^=okJoinMeetUser]").on("click", function(){
 		var userId = $(this).next().val();
-		alert($("#meetId").val())
-		$("form").attr("method", "POST").attr("action", "/meet/mangJoinMeetUser/"+userId+"/1");
+		var meetId = $(this).next().next().val();
+		$("form").attr("method", "POST").attr("action", "/meet/mangJoinMeetUser/"+userId+"/1?meetId="+meetId).submit();
 		
 	})
 	
-	$("#refuseJoinMeetUser").on("click", function(){
+	$("button[id^=refuseJoinMeetUser]").on("click", function(){
 		var userId = $(this).next().val();
-		
-		$("form").attr("method", "POST").attr("action", "/meet/mangJoinMeetUser/"+userId+"/0");
+		var meetId = $(this).next().next().val();
+		$("form").attr("method", "POST").attr("action", "/meet/mangJoinMeetUser/"+userId+"/0?meetId="+meetId).submit();
 		
 	})
 })
@@ -63,7 +64,9 @@ $(function (){
 </script>
 
 </head>
+
 <body>
+<form>
 
 <header>
 <jsp:include page="/toolbar.jsp" />
@@ -73,10 +76,7 @@ $(function (){
 <jsp:include page="/meet/sidebar.jsp" />
 </section>
 
-<form>
-
-<input type="hidden" id="meetId" name="meetId" value="${meetId}"/>
-
+<section style="float: left; margin-left:100px">
 <div style="text-align: center;">
 <section id="container" style="text-align: center;">
     <div id="title">
@@ -111,13 +111,20 @@ $(function (){
                 <td><c:forEach var="category" items="${joinMeetUser.user.category}"> ${category} </c:forEach></td>
                 <td><c:forEach var="blacklist" items="${joinMeetUser.blackList}"> ${blacklist} </c:forEach></td> 
                 <td>${joinMeetUser.intro}</td>
-                <td><button id="okJoinMeetUser">가입 승인</button><input type="hidden" value="${joinMeetUser.user.userId}"/> &nbsp; 
-                <button id="refuseJoinMeetUser">가입 거절</button><input type="hidden" value="${joinMeetUser.user.userId}"/></td>
+                <td><button type="button" id="okJoinMeetUser">가입 승인</button>
+                <input type="hidden" value="${joinMeetUser.user.userId}"/>
+                <input type="hidden" value="${joinMeetUser.meet.meetId}"/>
+                 &nbsp; 
+                <button type="button" id="refuseJoinMeetUser">가입 거절</button>
+                <input type="hidden" value="${joinMeetUser.user.userId}"/>
+                <input type="hidden" value="${joinMeetUser.meet.meetId}"/>
+                </td>
             </tr>
         </c:forEach>
     </table>
     </section>
     </div>
+</section>
 </form>
 </body>
 </html>

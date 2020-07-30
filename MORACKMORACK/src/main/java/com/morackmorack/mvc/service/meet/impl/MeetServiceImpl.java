@@ -1,6 +1,7 @@
 package com.morackmorack.mvc.service.meet.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.morackmorack.mvc.common.Search;
+import com.morackmorack.mvc.service.domain.Files;
 import com.morackmorack.mvc.service.domain.Meet;
 import com.morackmorack.mvc.service.domain.MeetMem;
 import com.morackmorack.mvc.service.domain.User;
@@ -28,6 +30,10 @@ public class MeetServiceImpl implements MeetService{
 	@Qualifier("meetDaoImpl")
 	private MeetDao meetDao;
 	
+	public void addLimg(Files file) {
+		meetDao.addLimg(file);
+	}
+	
 	public  List<Meet> getMeetMain(){
 		return meetDao.getMeetMain();
 	}
@@ -38,10 +44,6 @@ public class MeetServiceImpl implements MeetService{
 	
 	public Meet getMeet(String meetId){
 		return meetDao.getMeet(meetId);
-	}
-	
-	public List<String> getMeetHashtag(String meetId){
-		return meetDao.getMeetHashtag(meetId);
 	}
 	
 	public void updateMeet(Meet meet){
@@ -68,8 +70,8 @@ public class MeetServiceImpl implements MeetService{
 		meetDao.addMemNum(meetId);
 	}
 	
-	public User getMeetMem(String meetId){
-		return meetDao.getMeetMem(meetId);
+	public MeetMem getMeetMem(String meetId, String userId){
+		return meetDao.getMeetMem(meetId, userId);
 	}
 	
 	public List<MeetMem> listMeetMem(String meetId){
@@ -104,7 +106,11 @@ public class MeetServiceImpl implements MeetService{
 		meetDao.addWishMeet(userId, meetId);
 	}
 	
-	public List<WishMeet> listWishMeet(String userId){
+	public Map getWishMeet(String meetId, String userId) {
+		return meetDao.getWishMeet(meetId, userId);
+	}
+	
+	public Map listWishMeet(String userId){
 		return meetDao.listWishMeet(userId);
 	}
 	

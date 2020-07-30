@@ -2,16 +2,6 @@
     pageEncoding="EUC-KR"%>
     
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
-<%@ include file="/webSocket.jsp" %>
-
-<DOCTYPE html>
-<html>
-<head>
-<meta charset="EUC-KR">
-<title>index</title>
-
-<script src="https://code.jquery.com/jquery-3.1.1.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
@@ -21,6 +11,13 @@
 
 <style>
 @charset "UTF-8";
+@font-face { font-family: 'TmoneyRoundWindExtraBold'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/TmoneyRoundWindExtraBold.woff') format('woff'); font-weight: normal; font-style: normal; }
+
+#logo{
+	font-family: 'TmoneyRoundWindExtraBold';
+	font-size : 28px;
+}
+
 .navigation {
   height: 80px;
   background: #4d5f78;
@@ -226,7 +223,7 @@ article {
 <section class="navigation">
   <div class="nav-container">
     <div class="brand">
-      <a href="/">MORACKMORACK</a>
+      <a href="/" id="logo">MORACKMORACK</a>
     </div>
     <nav>
       <div class="nav-mobile"><a id="nav-toggle" href="#!"><span></span></a></div>
@@ -260,10 +257,10 @@ article {
           <a href="#!">SOCIAL</a>
           <ul class="nav-dropdown">
             <li>
-              <a href="/friend/listFriend">친구</a>
+              <a href="/friend/friendList">친구</a>
             </li>
             <li>
-              <a href="/message/listRecMessage">쪽지함</a>
+              <a href="/message/listRecvMessage">쪽지함</a>
             </li>
           </ul>
         </li>
@@ -282,7 +279,7 @@ article {
           <a href="#!">MY PAGE</a>
           <ul class="nav-dropdown">
           <li>
-              <a href="/community/getOffReviewList">모임 후기</a>
+              <a href="/offmeet/addBusinessPay">모임 후기</a>
             </li>
             <li>
               <a href="/community/getBusinessReviewList">업체 후기</a>

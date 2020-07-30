@@ -37,15 +37,27 @@
 
 
 $(function() {
-
-	$( "button.btn.btn-primary" ).on("click" , function() {
-		self.location =  "/meet/getMeet?meetId=${meet.meetId}"
-		}); 
+	//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+	$("a[href='#' ]").on("click" , function() {
+		var meetId = $(this).next().val();
+		self.location="/meet/getMeet/"+meetId
+	
 	});
+	
+	$("#list").click(function (){
+		self.location = "/offmeet/getOffPayList";
+	})
+	
+});	
+
+
+
 </script>
 </head>
 
 <body>
+<form>
+<input type="hidden" name="offNo" value="${offMeet.offNo}" />
 <div class="container">
 
 	<div class="page-header">
@@ -57,7 +69,7 @@ $(function() {
 	
     <div class="row">
 	  	<div class="col-xs-4 col-md-2 "><strong>참여 신청자 명</strong></div>
-		<div class="col-xs-8 col-md-4">${user.name}</div>
+		<div class="col-xs-8 col-md-4">${user.userName}</div>
 	</div>
 	
 	
@@ -74,14 +86,14 @@ $(function() {
 	
 	<div class="row"> 
  		<div class="col-xs-4 col-md-2 "><strong>모임명</strong></div> 
- 		<div class="col-xs-8 col-md-4">${meet.meetName }</div> 
+ 		<div class="col-xs-8 col-md-4">${pay.meet.meetName }</div> 
  	</div> 
  
  <hr/>
 	
 	<div class="row"> 
 	  	<div class="col-xs-4 col-md-2 "><strong>입금은행</strong></div> 
-		<div class="col-xs-8 col-md-4">${meet.bank }</div> 
+		<div class="col-xs-8 col-md-4">${pay.meet.bank }</div> 
  	</div> 
 
 
@@ -89,7 +101,7 @@ $(function() {
 
     <div class="row"> 
 	  	<div class="col-xs-4 col-md-2 "><strong>입금가상계좌</strong></div> 
-		<div class="col-xs-8 col-md-4">${meet.accNum}</div> 
+		<div class="col-xs-8 col-md-4">${pay.meet.accNum}</div> 
  	</div> 
  	
  	
@@ -110,10 +122,12 @@ $(function() {
 <div class="row"> 
  		<div class="col-md-12 text-center"> 
  		 	  <div class="col-sm-offset-4  col-sm-4 text-center">
-		      <button type="button" class="btn btn-primary"  >확인</button> 
+		         <a class="btn btn-primary btn" href="#" role="button">확 &nbsp;인</a>
+		      <input type="hidden" id="meetId" value="${pay.meet.meetId}"/> 
+		      <button type="button" class="btn btn-outline-info" id="list" >참여비 내역 조회 바로가기</button>
  		</div> 
 	</div>
 </div>
-
+</form>
 </body>
 </html>

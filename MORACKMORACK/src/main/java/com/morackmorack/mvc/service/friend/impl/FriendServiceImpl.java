@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import com.morackmorack.mvc.common.Search;
 import com.morackmorack.mvc.service.domain.Friend;
 import com.morackmorack.mvc.service.friend.FriendDAO;
 import com.morackmorack.mvc.service.friend.FriendService;
@@ -29,12 +30,13 @@ public class FriendServiceImpl implements FriendService {
 	@Override
 	public void reqFriend(Friend friend) throws Exception {
 		// TODO Auto-generated method stub
+		System.out.println(friend);
 		friendDAO.reqFriend(friend);
 	}
 	@Override
-	public Map<String, Object> listRecvFriend(String recvFriendId) throws Exception {
+	public Map<String, Object> listRecvFriend(Search search, String recvFriendId) throws Exception {
 		// TODO Auto-generated method stub
-		List<Friend> list = friendDAO.listRecvFriend(recvFriendId);
+		List<Friend> list = friendDAO.listRecvFriend(search, recvFriendId);
 		int totalCount=friendDAO.getTotalCount(recvFriendId);
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("list", list);
@@ -42,19 +44,19 @@ public class FriendServiceImpl implements FriendService {
 		return map;
 	}
 	@Override
-	public Friend getRecvFriend(int friendNo) throws Exception {
+	public Friend getRecvFriend(String reqFriendId) throws Exception {
 		// TODO Auto-generated method stub
-		return friendDAO.getRecvFriend(friendNo);
+		return friendDAO.getRecvFriend(reqFriendId);
 	}
 	@Override
-	public Friend getFriend(int friendNo) throws Exception {
+	public Friend getFriend(String recvFriendId) throws Exception {
 		// TODO Auto-generated method stub
-		return friendDAO.getFriend(friendNo);
+		return friendDAO.getFriend(recvFriendId);
 	}
 	@Override
-	public Map<String, Object> listFriend(String userId) throws Exception {
+	public Map<String, Object> listFriend(Search search, String userId) throws Exception {
 		// TODO Auto-generated method stub
-		List<Friend> list = friendDAO.listFriend(userId);
+		List<Friend> list = friendDAO.listFriend(search, userId);
 		int totalCount=friendDAO.getTotalCount(userId);
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("totalCount", new Integer(totalCount));
@@ -70,5 +72,10 @@ public class FriendServiceImpl implements FriendService {
 		// TODO Auto-generated method stub
 		friendDAO.delFriend(friendNo);
 	}
-
+	@Override
+	public List<Friend> friendList(String reqFriendId) throws Exception {
+		// TODO Auto-generated method stub
+		System.out.println(reqFriendId);
+		return friendDAO.friendList(reqFriendId);
+	}
 }

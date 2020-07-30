@@ -28,5 +28,12 @@ public interface OffMeetService {
     public List<OffMeet> getOffList(String meetId) throws Exception;
   
 	public Map<String,Object> getBusinessPayList(Search search, String userId) throws Exception;
-    
+	
+	public void addOff_MeetMem(int memNo, int offNo);
+	
+	public Pay getOffPay2(String userId, int offNo) throws Exception;
+	
+	public Map<String,Object> getOffPayList(Search search, String userId) throws Exception;
+	
+	public Map<String,Object> getOffList2(Search search,String UserId) throws Exception;
 }

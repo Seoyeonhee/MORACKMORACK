@@ -3,6 +3,8 @@ package com.morackmorack.mvc.service.domain;
 import java.io.Serializable;
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 public class WishMeet  implements Serializable{
 	private String userId;
 	private Meet meet;

@@ -83,5 +83,43 @@ public class OffMeetServiceImpl implements OffMeetService{
 		return map;
 	}
 
+	@Override
+	public void addOff_MeetMem(int memNo, int offNo) {
+		offMeetDao.addOff_MeetMem(memNo, offNo);
+	}
+
+	@Override
+	public Pay getOffPay2(String userId, int offNo) throws Exception {
+		return offMeetDao.getOffPay2(userId, offNo);
+	}
+
+
+	@Override
+	public Map<String, Object> getOffPayList(Search search, String userId) throws Exception {
+		List<Pay> list= (List<Pay>) offMeetDao.getOffPayList(search, userId);
+		Map<String, Object> map = new HashMap<String, Object>();
+		int totalCount = offMeetDao.getOffPayTotalCount(search);
+		
+		map.put("list", list);
+		map.put("totalCount", new Integer(totalCount));
+		
+		System.out.println(map);
+		return map;
+	}
+	
+	public Map<String,Object> getOffList2 (Search search , String userId) throws Exception {
+		List<OffMeet> list= (List<OffMeet>)offMeetDao.getOffList2(search, userId);
+		System.out.println("list=========="+list);
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		int totalCount = offMeetDao.getOffTotalCount(search);
+		map.put("list", list);
+		System.out.println("list=========="+list);
+		map.put("totalCount", new Integer(totalCount));
+	
+		System.out.println("map============"+map);
+		return map;
+	}
+	
 	
 }

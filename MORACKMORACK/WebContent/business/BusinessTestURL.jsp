@@ -20,7 +20,7 @@
 <body>
 
 	<!-- Button HTML (to Trigger Modal) -->
-	<jsp:include page="/business/loginBusiness2.jsp"/>
+<%-- 	<jsp:include page="/business/loginBusiness2.jsp"/> --%>
 	<br><br><br><br><br><br><br><br>
 
 
