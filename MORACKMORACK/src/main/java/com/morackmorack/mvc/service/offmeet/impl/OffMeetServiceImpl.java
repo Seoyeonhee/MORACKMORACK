@@ -76,10 +76,10 @@ public class OffMeetServiceImpl implements OffMeetService{
 		return offMeetDao.getOffList(meetId);
 	}
 
-	public Map<String,Object> getOffMeetList (Search search , String userId) throws Exception {
+	public Map<String,Object> listOffPay (Search search , String userId) throws Exception {
 		System.out.println("Ω√¿€");
 	
-		List<OffMeet> list= offMeetDao.getOffMeetList(search, userId);
+		List<OffMeet> list= offMeetDao.listOffPay(search, userId);
 		Map<String,Object> map = new HashMap<String,Object>();
 		System.out.println("list====="+list);
 		int totalCount = offMeetDao.getOffPayTotalCount(userId);
@@ -91,25 +91,12 @@ public class OffMeetServiceImpl implements OffMeetService{
 		return map;
 	}
 	
-public Map<String,Object> getPayList(Search search, String userId) throws Exception {
-		
-		Map<String,Object> map = new HashMap<String,Object>();
-		
-		List<OffMeet> list= offMeetDao.getPayList(search, userId);
-		
-		int totalCount = offMeetDao.getOffPayTotalCount(userId);
-	
-		map.put("totalCount", new Integer(totalCount));
-		System.out.println(map);
-		return map;
-	}
-	
-	
-	public Map<String, Object> getBusinessPayList(Search search, String userId) throws Exception {
-		List<Pay> list= (List<Pay>) offMeetDao.getBusinessPayList(search, userId);
+
+	public Map<String, Object> listBusinessPay(Search search, String meetId) throws Exception {
+		List<Pay> list= (List<Pay>) offMeetDao.listBusinessPay(search, meetId);
 		Map<String, Object> map = new HashMap<String, Object>();
-		
-		int totalCount = offMeetDao.getOffPayTotalCount(userId);
+		System.out.println("list====="+list);
+		int totalCount = offMeetDao.getBusinessPayTotalCount(meetId);
 		map.put("list", list);
 		map.put("totalCount", new Integer(totalCount));
 		

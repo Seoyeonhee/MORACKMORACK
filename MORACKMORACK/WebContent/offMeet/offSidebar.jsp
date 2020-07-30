@@ -74,10 +74,10 @@
        	<c:if test="${!empty sessionScope.user and !empty user.profileImg}">
        	<img class="sidebar-image" src="/resources/images/uploadFiles/user/${user.profileImg}">
        	</c:if>
-       	<c:if test="${!empty sessionScope.user and empty user.profileImg and user.gender eq '남'.charAt(0)}">
+       	<c:if test="${!empty sessionScope.user and empty user.profileImg and user.gender eq '남'}">
        	<img class="sidebar-image" src="/resources/images/uploadFiles/man.png">
        	</c:if>
-       	<c:if test="${!empty sessionScope.user and empty user.profileImg and user.gender eq '여'.charAt(0)}">
+       	<c:if test="${!empty sessionScope.user and empty user.profileImg and user.gender eq '여'}">
        	<img class="sidebar-image" src="/resources/images/uploadFiles/woman.png">
        	</c:if>
        	<strong id="sideNickName">
@@ -87,6 +87,7 @@
 	
   <li class="sidebar-li" role="presentation"><a id="sideTool" class="glyphicon glyphicon-home" href="/meet/getMeet/${meet.meetId}" > Home</a></li>
 	<ul class="nav nav-pills nav-stacked">
-  <li class="sidebar-li" role="presentation"><a id="sideTool" class="glyphicon glyphicon-home" href="/offmeet/getPayList" > 참여비 결제 리스트</a></li>
+  <li class="sidebar-li" role="presentation"><a id="sideTool" class="glyphicon glyphicon-home" href="/offmeet/listOffPay" > 참여비 결제 리스트</a></li>
+   <li class="sidebar-li" role="presentation"><a id="sideTool" class="glyphicon glyphicon-home" href="/offmeet/listBusinessPay?meetId=${meet.meetId}" >제휴업체 결제 리스트</a></li>
 </ul>
 

@@ -21,6 +21,7 @@ public class Pay {
 	private String meetName;
 	private String bank;
 	private String accNum;
+	private String businessName;
 	
 	public Pay() {
 		
@@ -187,15 +188,22 @@ public class Pay {
 		this.accNum = accNum;
 	}
 
+	public String getBusinessName() {
+		return businessName;
+	}
+
+	public void setBusinessName(String businessName) {
+		this.businessName = businessName;
+	}
+
 	@Override
 	public String toString() {
 		return "Pay [payNo=" + payNo + ", user=" + user + ", meet=" + meet + ", offMeet=" + offMeet + ", business="
 				+ business + ", totalAmount=" + totalAmount + ", payDate=" + payDate + ", payMethod=" + payMethod
 				+ ", reserveStartTime=" + reserveStartTime + ", reserveEndTime=" + reserveEndTime + ", reserveDate="
 				+ reserveDate + ", reserveMemNum=" + reserveMemNum + ", payStatus=" + payStatus + ", reserveAbleNo="
-				+ reserveAbleNo + ", meetName=" + meetName + ", bank=" + bank + ", accNum=" + accNum + "]";
+				+ reserveAbleNo + ", meetName=" + meetName + ", bank=" + bank + ", accNum=" + accNum + ", businessName="
+				+ businessName + "]";
 	}
-
-
 
 }
