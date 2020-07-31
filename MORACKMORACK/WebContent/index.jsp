@@ -9,7 +9,7 @@
 <meta charset="EUC-KR">
 <title>index</title>
 
-<script src="https://code.jquery.com/jquery-3.1.1.js"></script>
+<!-- <script src="https://code.jquery.com/jquery-3.1.1.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
@@ -20,7 +20,7 @@
 
 <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
 <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-
+ -->
 	
 <script type ="text/javascript">
 $(function(){

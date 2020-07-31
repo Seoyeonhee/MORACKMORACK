@@ -399,21 +399,21 @@ $(function(){
 	}
 	
 	$("#joinMeet").on("click", function(){	
-		self.location = "/meet/joinMeet?meetId="+meetId;	
+		window.location.href = "/meet/joinMeet?meetId="+meetId;	
 	});
 	
 	$("#inviteToMessage").on("click", function(){			
-		self.location = "/message/sendMessage?meetId="+meetId;	
+		window.location.href = "/message/sendMessage?meetId="+meetId;	
 	});
 	
 	
 	$("#inviteToKakao").on("click", function(){
-		self.location = "#";
+		window.location.href = "#";
 	});
 	
 	
 	$("#addOffMeet").on("click", function(){
-		self.location("/offmeet/addOffView?meetId="+meetId);
+		window.location.href = "/offmeet/addOffView?meetId="+meetId;
 	});
 	
 	
@@ -449,7 +449,7 @@ $(function(){
 			$("a.add-to-cart").removeClass("size");
 		}, 600);
 		event.preventDefault();
-		self.location("/meet/addWishMeet?meetId="+meetId);
+		window.location.hre = "/meet/addWishMeet?meetId="+meetId;
 		}else if($("#wishMeet").val() != ''){
 			$("a.add-to-cart").addClass("size");
 			setTimeout(function() {
@@ -464,7 +464,7 @@ $(function(){
 				$("a.add-to-cart").removeClass("size");
 			}, 600);
 			event.preventDefault();
-			self.location("/meet/delWishMeet/"+meetId+"/get");
+			window.location.href = "/meet/delWishMeet/"+meetId+"/get";
 		}
 	}); 
 })
