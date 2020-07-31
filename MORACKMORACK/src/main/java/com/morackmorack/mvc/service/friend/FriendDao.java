@@ -6,9 +6,9 @@ import java.util.Map;
 import com.morackmorack.mvc.common.Search;
 import com.morackmorack.mvc.service.domain.Friend;
 
-public interface FriendService {
+public interface FriendDao {
 	
-public void reqFriend(Friend friend) throws Exception;
+	public void reqFriend(Friend friend) throws Exception;
 	
 	public List<Friend> listRecvFriend(String receiverId) throws Exception;
 	
@@ -19,4 +19,6 @@ public void reqFriend(Friend friend) throws Exception;
 	public void okFriend(int friendNo) throws Exception;
 	
 	public void delFriend(int friendNo) throws Exception;
+	
+	//public int getTotalCount(String userId) throws Exception;
 }

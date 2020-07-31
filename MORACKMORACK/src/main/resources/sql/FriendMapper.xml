@@ -8,104 +8,54 @@
  	
  	
 	<resultMap id="friendSelectMap" type="friend">
-		<result property="friendNo" 			column="friend_no" 			jdbcType="INTEGER"/>
-		<result property="reqFriend.userId" 				column="req_friend_id" 					jdbcType="VARCHAR" />
-		<result property="recvFriend.userId" 			column="recv_friend_id" 		jdbcType="VARCHAR" />
-		<result property="friendCode" 				column="friend_code" 					jdbcType="CHAR" />
-		<result property="reqFriendDate" 		column="req_friend_date" 			jdbcType="DATE" />
-		<result property="friendDate"			column="friend_date"			jdbcType="DATE"/>
+		<result property="friendNo" column="friend_no" jdbcType="INTEGER"/>
+		<result property="reqFriend.userId" column="req_friend_id" jdbcType="VARCHAR" />
+		<result property="recvFriend.userId" column="recv_friend_id" jdbcType="VARCHAR" />
+		<result property="friendCode" column="friend_code" jdbcType="CHAR" />
+		<result property="reqFriendDate" column="req_friend_date" jdbcType="DATE" />
+		<result property="friendDate" column="friend_date" jdbcType="DATE"/>
 	</resultMap>
 	
-	<!-- SQL : INSERT -->
-	<insert 	id="reqFriend"		parameterType="friend" >
-	 	INSERT
-	 	INTO	friend(		friend_no
-	 					,	req_friend_id
-	 					,	recv_friend_id
-	 					,	friend_code
-	 					,	req_friend_date
-	 					,	friend_date
-	 					) VALUES (	seq_friend_friend_no.nextval
-	 							  ,	#{reqFriend.userId:VARCHAR}
-	 							  ,	#{recvFriend.userId:VARCHAR}
-	 							  ,	'0'
-	 							  ,	sysdate
-	 							  ,	null
-	 							  )
-	 					
+
+	<insert id="reqFriend" parameterType="friend" >
+	 	INSERT INTO	friend(friend_no, req_friend_id, recv_friend_id, friend_code, req_friend_date, friend_date) 
+	 	VALUES (seq_friend_friend_no.nextval, #{reqFriend.userId},	#{recvFriend.userId}, '0', sysdate, #{friendDate:DATE})	 					
 	</insert>
 	
-	<select id="listRecvFriend" parameterType="map" resultMap="friendSelectMap">
-		SELECT *
+	<select id="listRecvFriend" parameterType="String" resultMap="friendSelectMap">
+		SELECT friend_no, req_friend_id, recv_friend_id, friend_code, req_friend_date, friend_date
 		FROM friend
-		WHERE recv_friend_id=#{recvFriendId:VARCHAR} and friend_code='0'
-	</select>
-	
-	<select id="getRecvFriend" parameterType="int" resultMap="friendSelectMap">
-		SELECT *
-		FROM Friend
-		WHERE friend_no = #{friendNo}
+		WHERE recv_friend_id = #{recvFriend.userId} and friend_code='0'
 	</select>
 	
 	<select id="listFriend" parameterType="String" resultMap="friendSelectMap">
-		SELECT recv_friend_id, friend_date
+		SELECT friend_no, req_friend_id, recv_friend_id, friend_code, req_friend_date, friend_date
 		FROM friend
-		WHERE req_friend_id=#{reqFriendId:VARCHAR} and friend_code='1'
-	</select>	
+		WHERE recv_friend_id = #{value} or req_friend_id = #{value} and friend_code='1'
+	</select>
 	
 	<select id="getFriend" parameterType="String" resultMap="friendSelectMap">
-		SELECT *
+		SELECT friend_no, req_friend_id, recv_friend_id, friend_code, req_friend_date, friend_date
 		FROM friend
-		WHERE recv_friend_id=#{recvFriendId:VARCHAR}
+		WHERE friend_no = #{friendNo}
 	</select>
 	
-	<update id="denyFriend" parameterType="friend">
+	<update id="okFriend" parameterType="integer">
 		UPDATE friend
-		<set>
-			friend_code='2'
-		</set>
-		WHERE friend_no=#{friendNo:INTEGERE}
+		SET friend_code='1', friend_Date = sysdate
+		WHERE friend_no = #{friendNo}
 	</update>
 	
-	<update id="okFriend" parameterType="String">
-		UPDATE friend
-		<set>
-			friend_code='1'
-		</set>
-		WHERE req_friend_id=#{reqFriendId:VARCHAR} AND recv_friend_id=#{recvFriendId:VARCHAR}
+	<update id="delFriend" parameterType="integer">
+		DELETE FROM friend 
+		WHERE friend_no = #{friendNo}
 	</update>
-
-
-	<insert id="addFriend" parameterType="map">
-		INSERT
-		INTO friend	(		friend_no
-						,	req_friend_id
-						,	recv_friend_id
-						,	friend_code
-						,	req_friend_date
-						,	friend_date
-						)	VALUES (	seq_friend_friend_no.nextval
-									,	#{recvFriendId:VARCHAR}
-									,	#{reqFriendId:VARCHAR}
-									,	'1'
-									,	sysdate
-									,	sysdate)
 	
-	</insert>
-	
-	<select id="getTotalCount"  parameterType="String"		resultType="int">
+	<select id="getTotalCount" parameterType="String" resultType="integer">
 		SELECT COUNT(*)
-		FROM (	
-				SELECT *
-				FROM	friend
-				WHERE 	req_friend_id=#{reqFriendId}
-				)
-	</select>
-	
-	<select id="friendList"  parameterType="String"	resultMap="friendSelectMap">
-		SELECT	*
-		FROM	friend
-		WHERE	req_friend_id=#{reqFriendId} and friend_code='1'
+		FROM ( SELECT friend_no, req_friend_id, recv_friend_id, friend_code, req_friend_date, friend_date
+				FROM friend
+				WHERE recv_friend_id = #{value} or req_friend_id = #{value} and friend_code='1')
 	</select>
 	
 </mapper>

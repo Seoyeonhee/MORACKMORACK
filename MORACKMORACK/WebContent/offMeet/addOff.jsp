@@ -235,6 +235,7 @@ $( function() {
 	   <input type="text" class="form-control" id="amount" name="amount">
    </div>
   </div>
+  
     	
  <div class="form-group">
 		    <div class="col-sm-offset-4  col-sm-4 text-center">
