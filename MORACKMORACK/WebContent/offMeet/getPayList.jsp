@@ -10,8 +10,29 @@
 <head>
     <title>구매 목록조회</title>
     <meta charset="EUC-KR">
-<jsp:include page="/common/listCdn.jsp" />
-  
+    <!-- 참조 : http://getbootstrap.com/css/   참조 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.4/examples/carousel/">
+
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <!--<script src="https://code.jquery.com/jquery-1.12.4.js"></script>-->
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+
+
+
+    <!-- Bootstrap Dropdown Hover CSS -->
+    <link href="/css/animate.min.css" rel="stylesheet">
+    <link href="/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
+    <!-- Bootstrap Dropdown Hover JS -->
+    <script src="/javascript/bootstrap-dropdownhover.min.js"></script>
+
+
+   
     <style>
     
 
@@ -28,7 +49,7 @@
 
         function fncGetUserList(currentPage) {
             $("#currentPage").val(currentPage)
-            $("form").attr("method", "POST").attr("action", "/offmeet/listOffPay").submit();
+            $("form").attr("method", "POST").attr("action", "/offmeet/getPayList").submit();
         }
 
         $(function() {
@@ -39,7 +60,7 @@
         
         $(function() {
         	$(".ct_list_pop td:nth-child(4)" ).on("click" , function() {
-        		window.location.href ="/offmeet/getOffPay?payNo="+$(this).attr("value")
+        		self.location ="/offmeet/getOffPay?payNo="+$(this).attr("value")
         	});
         });
         

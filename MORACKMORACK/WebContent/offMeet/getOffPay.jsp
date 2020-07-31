@@ -10,22 +10,7 @@
 
 <head>
 	<meta charset="EUC-KR">
-
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	
-	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
-	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
-	
-
-   <link href="/css/animate.min.css" rel="stylesheet">
-   <link href="/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
-   
-
-   <script src="/javascript/bootstrap-dropdownhover.min.js"></script>
-	
+	<jsp:include page="/common/listCdn.jsp" />
 
 	<style>
  		body {
@@ -40,7 +25,7 @@ $(function() {
 	//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 	$("a[href='#' ]").on("click" , function() {
 		var meetId = $(this).next().val();
-		self.location="/meet/getMeet/"+meetId
+		window.location.href="/meet/getMeet/"+meetId
 		});	
 	});
 $(function() {
@@ -48,7 +33,7 @@ $(function() {
 		history.go(-1);
 		});
 	$($("a:contains('참여비목록')")[1]).on("click" , function() {
-		self.location = "/offmeet/getPayList";
+		window.location.href = "/offmeet/getPayList";
 		});
 });	
 

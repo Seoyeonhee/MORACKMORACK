@@ -7,21 +7,9 @@
 <html>
 <head>
 <meta charset="EUC-KR">
-	<!-- 참조 : http://getbootstrap.com/css/   참조 -->
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	
-	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" >
-	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" ></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" ></script>
-	
-  	<!-- jQuery UI toolTip 사용 CSS-->
-	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<jsp:include page="/common/listCdn.jsp" />
 
-	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-	
-	<!--  ///////////////////////// CSS ////////////////////////// -->
+
 	<style>
 	
  
@@ -43,7 +31,7 @@
     	//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
     	$("a[href='#' ]").on("click" , function() {
     		var meetId = $(this).next().val();
-    		self.location="/meet/getMeet/"+meetId
+    		window.location.href="/meet/getMeet/"+meetId
     
     	});
     	

@@ -72,17 +72,18 @@
 				"Accept" : "application/json",
 				"Content-Type" : "application/json"
 			},
+			
 			success : function(JSONData, status) {
 				
 				var listSelectedTime = [];
-									
+				
 				var displayValue ="<div>";
 									
 									
 				for(var i=0 ; i<JSONData.length ; i++) {
 					
 					displayValue += "<span>" +
-									"<form name='form' action='/offmeet' method='POST'>" +
+									"<form name='form' action='/offmeet/getBusinessPay' method='POST'>" +
 									"<span class='selectTime' style='width:80px; height:80px; margin:20px; float:left; border:1px solid black;'>" +
 									"<input type='checkbox' style='float:left; margin:10px; margin-top:30px;' id='selected_"+JSONData[i].reserveAbleNo+"' name=selected_'"+JSONData[i].reserveAbleNo+"' value='"+JSONData[i].reserveAbleNo+"'/>" +
 									"<input type='hidden' value='"+JSONData[i].reserveAbleNo+"'/>" +
@@ -117,24 +118,17 @@
 				});
 				
 				$("#addReserve").on("click", function() {
-					
+				
 					if(listSelectedTime.length==0) {
 						alert("시간이 선택되지 않았습니다.");
 					} else {
 						alert("선택된 예약시간 번호 : " + listSelectedTime);
 						
-						$.ajax({
-							url : "/business/json/reserve",
-							type : "POST",
-							dataType : "text",
-							data : {
-								listSelectedTime: listSelectedTime,
-								reserveDate : reserveDate
-							}
-						});
+						$("#listSelectedTime").val(listSelectedTime)
+						$("#reserveDate").val(reserveDate)
 						
-						/*  이 주소는 나중에 예약하기 위한 화면으로 이동하는 컨트롤러 태우는 url로 이동하도록 수정할것!!!!!  */
-						/* self.location="#"; */
+					//	$("form").attr("method", "POST").attr("action", "/offmeet/addBusinessPay").submit();
+ 						$("form").attr("method", "POST").attr("action", "/offmeet/addBusinessPay?listSelectedTime="+listSelectedTime+"&reserveDate="+reserveDate).submit();
 					}
 					
 				})
@@ -150,10 +144,10 @@
 </head>
 <body>
 
-	<header>
+<%-- 	<header>
 		<jsp:include page="/toolbar.jsp" />
-	</header>
-	
+	</header
+	 --%>
 	
 	<div class="container">
 	
@@ -183,7 +177,7 @@
 						<span class='form-group' style="float:left; padding:15px;">
 							<span class='page-header text-info'>
 								<input type="hidden" class="menuNo" value="${menu.menuNo}">
-								<input type="hidden" class="businessId" value="${menu.businessId}">
+								<input type="hidden" class="businessId"  value="${menu.businessId}">
 								
 								<p style="float:left">&nbsp;&nbsp;&nbsp;&nbsp;</p>
 								<img class='businessMenuImg' style='float:left; height:50px; width:50px; margin:5px' src='../../resources/images/down-arrow.png' alt='@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 메뉴 이미지 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@'>
