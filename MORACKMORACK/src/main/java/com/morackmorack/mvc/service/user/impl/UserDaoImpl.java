@@ -42,7 +42,7 @@ public class UserDaoImpl implements UserDao{
 
 	public User getUser(String userId) throws Exception {
 		User user = sqlSession.selectOne("UserMapper.getUser", userId);
-		user.setCategory(sqlSession.selectList("UserMapper.getCategory", userId));
+		//user.setCategory(sqlSession.selectList("UserMapper.getCategory", userId));
 		
 		return user;
 	}
