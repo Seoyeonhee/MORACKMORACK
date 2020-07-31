@@ -372,9 +372,11 @@ font-family: 'MapoGoldenPier'
 <script type ="text/javascript">
 
 $(function(){
-	
+
 	var meetId = $("#meetId").val();
 	var joinMessage = $("#joinMessage").val();
+	var isModal = $('#isModal').val();
+
 	
 	if(joinMessage == '1'){
 		$('#modalBox').modal('show');
@@ -383,6 +385,8 @@ $(function(){
 		alert("모임 인원 초과")
 	}else if(joinMessage == '3'){
 		alert("가입 가능한 모임은 5개")
+	}else if(isModal == '2'){		
+		$('#modalBox2').modal('show');
 	}
 	
 	$("#joinMeet").on("click", function(){	
@@ -390,7 +394,7 @@ $(function(){
 	});
 	
 	$("#inviteToMessage").on("click", function(){			
-		window.location.href = "/message/sendMessage?meetId="+meetId;	
+		window.location.href = "/friend/listFriend/1?isModal=2&meetId="+meetId;
 	});
 	
 	
@@ -403,8 +407,16 @@ $(function(){
 		window.location.href = "/offmeet/addOffView?meetId="+meetId;
 	});
 	
+	$("a[id^='invMeet']").on("click", function(){
+		var userId = $(this).next().val();
+		var nickName = $(this).next().next().val();
+		
+		alert(userId+" "+nickName+" "+vv);
+		
+	});
 	
-	$('#myModal').on('show.bs.modal', function (event) { // myModal 윈도우가 오픈할때 아래의 옵션을 적용
+	
+	$('#myModal,#myModal2').on('show.bs.modal', function (event) { // myModal 윈도우가 오픈할때 아래의 옵션을 적용
 	  var button = $(event.relatedTarget) // 모달 윈도우를 오픈하는 버튼
 	  var titleTxt = button.data('title') // 버튼에서 data-title 값을 titleTxt 변수에 저장
 	  var modal = $(this)
@@ -477,6 +489,7 @@ $(function(){
 <input type="hidden" id="meetId" name="meetId" value="${meet.meetId}"/>
 <input type="hidden" id="wishMeet" name="wishMeet" value="${wishMeet}"/>
 <input type="hidden" id="wishCount" name="wishCount" value="${wishCount}"/>
+<input type="hidden" id="isModal" name="isModal" value="${isModal}"/>
 
 <aside >
 <section>
@@ -563,6 +576,61 @@ $(function(){
 <div class="modal-footer">
 <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
             <button type="button" class="btn btn-primary" id="inputIntro">가입</button>
+</div>
+</div>
+</div>
+</div>
+
+<!-- 모달 영역 -->
+<div id="modalBox2" class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal-dialog" role="document">
+<div class="modal-content">
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+<h4 class="modal-title" id="myModalLabel">초대할 친구 리스트</h4>
+</div>
+<div class="modal-body">
+    	<div class="col-xs-6 col-md-5">
+    		<c:forEach var="friend" items="${listFriend}" varStatus="status">
+			<c:if test="${user.userId eq friend.reqFriend.userId}"> 
+			${friend.recvFriend.profileImg} <a id="invMeet${status.count}"> ${friend.recvFriend.userId}</a> <input type="hidden"  value="${friend.recvFriend.userId}"/><input type="hidden" value="${friend.recvFriend.nickName}"/>
+			</c:if> 
+			<c:if test="${user.userId eq friend.recvFriend.userId}"> 
+			${friend.reqFriend.profileImg} <a id="invMeet${status.count}"> ${friend.reqFriend.userId}</a> <input type="hidden" value="${friend.reqFriend.userId}"/><input type="hidden" value="${friend.reqFriend.nickName}"/>
+			</c:if>
+			
+			<br/><br/>
+			</c:forEach>
+</div>
+<div class="modal-footer">
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+<!-- 모달 영역 -->
+<div id="modalBox3" class="modal fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal-dialog" role="document">
+<div class="modal-content">
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+<h4 class="modal-title" id="myModalLabel">모임 초대</h4>
+</div>
+<div class="modal-body">
+    	<div class="col-xs-6 col-md-5">
+    		${meet.meetName}
+    		${meet.category}
+    		${meet.meetLoc}
+    		${meet.meetType}
+    		${meet.meetAppr}
+    		${meet.sIntro}
+    		${meet.meetAppr}
+    		<strong>초대 문구</strong> <input type="text" id="intro" name="intro" class="form__field" placeholder="초대문구 입력" value=""/>
+</div>
+<div class="modal-footer">
+</div>
 </div>
 </div>
 </div>
