@@ -296,27 +296,22 @@ public class MeetController {
 		if (meet.getMeetType() == '0') { //2인 모임
 			meetService.joinMeet(meetMem);
 			meetService.addMemNum(meetId);
-			System.out.println("!1111111111111111111111111111111111111111111111");
 		} else{ //다수인 모임
 			if (meetService.checkJoinMeetCount(user.getMeetCount())) {
 						if (meet.isMeetAppr()) { // 가입 승인 필요
 							mav.addObject("joinMessage", "1"); 
-							System.out.println("222222222222222222222222222222222222222222222");
 							return mav;
 						} else {
 							meetService.joinMeet(meetMem);
 							meetService.addMemNum(meetId);
 							user.setMeetCount(user.getMeetCount() + 1);
 							userService.updateUser(user);
-							System.out.println("3333333333333333333333333333333333333333333333");
 							return mav;
 						}
 			} else {
-				System.out.println("44444444444444444444444444444444444444444444444");
 				mav.addObject("joinMessage", "3"); // 가입한 모임 5개 초과
 			}
 		}
-System.out.println("555555555555555555555555555555555555555555");
 		meet = meetService.getMeet(meetId);
 		mav.addObject("meet", meet);
 		return mav;

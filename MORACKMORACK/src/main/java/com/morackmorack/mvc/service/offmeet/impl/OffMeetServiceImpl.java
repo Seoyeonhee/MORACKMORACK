@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.morackmorack.mvc.common.Search;
+import com.morackmorack.mvc.service.domain.MeetMem;
 import com.morackmorack.mvc.service.domain.OffMeet;
 import com.morackmorack.mvc.service.domain.Pay;
 import com.morackmorack.mvc.service.offmeet.OffMeetDao;

@@ -35,6 +35,7 @@ import com.morackmorack.mvc.service.business.BusinessService;
 import com.morackmorack.mvc.service.domain.Business;
 import com.morackmorack.mvc.service.domain.Meet;
 import com.morackmorack.mvc.service.domain.MeetMem;
+import com.morackmorack.mvc.service.domain.Meetmemoffmeet;
 import com.morackmorack.mvc.service.domain.OffMeet;
 import com.morackmorack.mvc.service.domain.Pay;
 import com.morackmorack.mvc.service.offmeet.OffMeetService;
@@ -163,30 +164,33 @@ public String getOff(@RequestParam("offNo") int offNo, Model model ) throws Exce
 	}
 
 @RequestMapping(value="reqOff", method =RequestMethod.GET)
-public String reqOff (@ModelAttribute ("offMeet") OffMeet offMeet, @RequestParam("offNo") int offNo, Model model, HttpSession session) throws Exception{
+public String reqOff (@RequestParam("offNo") int offNo, Model model, HttpSession session) throws Exception{
 	
 
 	User user = ((User)session.getAttribute("user"));
-	
-	
-    offMeet = (OffMeet)offMeetService.getOff(offNo);
+	String userId = user.getUserId();
+    OffMeet offMeet = (OffMeet)offMeetService.getOff(offNo);
 	
 	model.addAttribute("offMeet", offMeet);
 	model.addAttribute("user", user);
 	
 	return "forward:/offMeet/reqOff.jsp";
+ 
 }
 
 @RequestMapping (value="addOffPay", method = RequestMethod.POST)
 public String addOffPay (@RequestParam ("meetId") String meetId, @RequestParam ("offNo") int offNo, @RequestParam("payMethod") char payMethod, @RequestParam("amount") int amount,  Model model,HttpSession session) throws Exception{
 
+	User user = ((User)session.getAttribute("user"));
+    OffMeet offMeet = (OffMeet)offMeetService.getOff(offNo);
+    
 	Pay pay = new Pay();
-	User user = (User)session.getAttribute("user");
+	user = (User)session.getAttribute("user");
 	pay.setUser(user);
 	pay.setOffMeet(offMeetService.getOff(offNo));
 	pay.setMeet(meetService.getMeet(meetId));
 
-	OffMeet offMeet = (OffMeet)offMeetService.getOff(offNo);
+	offMeet = (OffMeet)offMeetService.getOff(offNo);
 	
 	pay.setPayMethod(payMethod);
 	pay.setTotalAmount(amount);
