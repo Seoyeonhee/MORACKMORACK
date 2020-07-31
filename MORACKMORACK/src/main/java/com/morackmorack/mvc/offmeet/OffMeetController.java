@@ -38,6 +38,7 @@ import com.morackmorack.mvc.service.domain.MeetMem;
 import com.morackmorack.mvc.service.domain.Meetmemoffmeet;
 import com.morackmorack.mvc.service.domain.OffMeet;
 import com.morackmorack.mvc.service.domain.Pay;
+import com.morackmorack.mvc.service.domain.ReserveAble;
 import com.morackmorack.mvc.service.offmeet.OffMeetService;
 import com.morackmorack.mvc.service.meet.MeetService;
 
@@ -233,32 +234,60 @@ public String getBusinessPay (@RequestParam("payNo") int payNo, Model model, Htt
 	return "forward:/offMeet/getBusinessPay.jsp";
 }
 
-@RequestMapping (value="addBusinessPay", method = RequestMethod.GET)
-public String addBusinessPay (HttpSession session, Model model) throws Exception{
+
+@RequestMapping( value="addBusinessPay", method = RequestMethod.POST)
+public String addBusinessPay( @RequestParam("listSelectedTime") List<String> listSelectedTime, @RequestParam("reserveDate") String reserveDate , Model model, HttpSession session) throws Exception {
+	
 	Pay pay = new Pay();
 	
-	Business business = new Business();
-	String businessId ="bus02";
-	Meet meet = new Meet();
-	String meetId ="a8665c70537944200730";
-	OffMeet offMeet = new OffMeet();
-	int  offNo = 10004;
+	User user = (User)session.getAttribute("user");
+	System.out.println("/json/getBusinessPay : POST");
+	System.out.println("listSelectedTime======="+listSelectedTime);
 	
-	pay.setMeet(meetService.getMeet(meetId));
-	pay.setUser((User)session.getAttribute("user"));
-	System.out.println("============="+offMeetService.getOff(offNo));
-	pay.setOffMeet(offMeetService.getOff(offNo));
-	pay.setBusiness(businessService.getBusiness(businessId));
-	pay.setReserveDate("20-07-30");
-	pay.setReserveStartTime("13:00");
-	pay.setReserveEndTime("15:00");
-	pay.setTotalAmount(10000);
+	List<ReserveAble> reserveAbleList = new ArrayList<ReserveAble>();
+
 	
-	model.addAttribute("pay", pay);
-	System.out.println("model======"+model);
-	System.out.println("pay========"+pay);
-	return "forward:/offMeet/reserveBusiness.jsp";
+	for(int i=0 ; i<listSelectedTime.size() ; i++) {
+		int reserveAbleNo = Integer.parseInt(listSelectedTime.get(i));
+		ReserveAble reserveAble = businessService.getReservAbleTime(reserveAbleNo);
+		reserveAbleList.add(reserveAble);
+	}
+	
+	model.addAttribute("user", user);
+	model.addAttribute("list", reserveAbleList);
+	model.addAttribute("reserveDate", reserveDate);
+	
+	System.out.println("model============"+model);
+	return "forward:/offMeet/addBusinessPay.jsp";
+	
 }
+
+//@RequestMapping (value="addBusinessPay", method = RequestMethod.GET)
+//public String addBusinessPay (HttpSession session, Model model) throws Exception{
+//	Pay pay = new Pay();
+//	
+//	Business business = new Business();
+//	String businessId ="bus02";
+//	Meet meet = new Meet();
+//	String meetId ="a8665c70537944200730";
+//	OffMeet offMeet = new OffMeet();
+//	int  offNo = 10004;
+//	
+//	pay.setMeet(meetService.getMeet(meetId));
+//	pay.setUser((User)session.getAttribute("user"));
+//	System.out.println("============="+offMeetService.getOff(offNo));
+//	pay.setOffMeet(offMeetService.getOff(offNo));
+//	pay.setBusiness(businessService.getBusiness(businessId));
+//	pay.setReserveDate("20-07-30");
+//	pay.setReserveStartTime("13:00");
+//	pay.setReserveEndTime("15:00");
+//	pay.setTotalAmount(10000);
+//	
+//	model.addAttribute("pay", pay);
+//	System.out.println("model======"+model);
+//	System.out.println("pay========"+pay);
+//	return "forward:/offMeet/reserveBusiness.jsp";
+//}
 
 
 @RequestMapping (value="payOkBusiness", method = RequestMethod.POST)
