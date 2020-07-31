@@ -145,13 +145,6 @@
 	}
 
 
-/* 	function check(id){ //next버튼(submit)을 눌렀을 경우 실행되는 함수
-		if(!document.form1.reserveDate.value){ //날짜 선택을 하지 않고 버튼을 눌렀을 시 못넘어가도록
-			alert("날짜를 선택하세요.");
-			return false;
-		}
-	}  */
-
 </script>
 
 </head>
