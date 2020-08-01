@@ -44,14 +44,19 @@ A:hover {text-decoration:none; color:#646464;}
 $(function(){
 
 	$("button[id^='sendMessage']").on("click", function(){	
-		var userId = $("#userIdforMessage").val();
-		var meetId = $("#meetIdforMessage").val();
+		var userId = $(this).next().val();
+		var meetId = $(this).next().next().val();
+		
 		self.location="/message/sendMessage?userId="+userId+"&meetId="+meetId;
 	});
 	
 	$("button[id^='reqFriend']").on("click", function(){
+		
+		alert("친구 신청 !");
+			
 		var userId = $(this).next().val();
 		var meetId = $(this).next().next().val();
+
 		self.location = "/friend/reqFriend?userId="+userId+"&"+"meetId="+meetId;
 	});
 	
@@ -132,13 +137,14 @@ $(function(){
                 <td><c:forEach var="blacklist" items="${listMeetMem.blackList}"> ${blacklist} </c:forEach></td> 
                 </c:if>
                 <td>
-                <button type="button" id="sendMessage${status.count}">쪽지 보내기</button>
-                <input type="hidden" id="userIdforMessage" value="${listMeetMem.user.userId}"/>
-                <input type="hidden" id="meetIdforMessage" value="${listMeetMem.meet.meetId}"/>
-                
+                <c:if test="${sessionScope.user.userId ne listMeetMem.user.userId}">
                 <button type="button" id="reqFriend${status.count}">친구 신청</button>
                 <input type="hidden" value="${listMeetMem.user.userId}"/><input type="hidden" value="${listMeetMem.meet.meetId}"/>
                 
+                <button type="button" id="sendMessage${status.count}">쪽지 보내기</button>
+                <input type="hidden" id="userIdforMessage" value="${listMeetMem.user.userId}"/>
+                <input type="hidden" id="meetIdforMessage" value="${listMeetMem.meet.meetId}"/>
+                                             
                 <button type="button" id="notifyUserView${status.count}">회원 신고</button>
                 <input type="hidden" value="${listMeetMem.user.userId}"/><input type="hidden" value="${listMeetMem.meet.meetId}"/><br/> <br/>
                 
@@ -149,6 +155,7 @@ $(function(){
                 <button type="button" id="provideLeader${status.count}">모임장 위임</button>
                 <input type="hidden" value="${meetMem.user.userId}"/>
                 <input type="hidden" value="${meetMem.meet.meetId}"/><br/>   
+                </c:if>
                 </c:if>       
                 </td>
             </tr>

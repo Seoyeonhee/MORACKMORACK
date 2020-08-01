@@ -18,7 +18,9 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,6 +31,8 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.morackmorack.mvc.common.Search;
+import com.morackmorack.mvc.service.community.CommunityService;
+import com.morackmorack.mvc.service.domain.Category;
 import com.morackmorack.mvc.service.domain.Files;
 import com.morackmorack.mvc.service.domain.Meet;
 import com.morackmorack.mvc.service.domain.MeetMem;
@@ -48,13 +52,23 @@ public class MeetController {
 	@Autowired
 	@Qualifier("userServiceImpl")
 	private UserService userService;
+	
+	@Autowired
+	@Qualifier("communityServiceImpl")
+	private CommunityService communityService;
+	
+	@Value("#{commonProperties['attachPath']}")
+	String attach_path;
+	
+	@Value("#{commonProperties['meetFilePath']}")
+	String uploadPath;
 
 	public MeetController() {
 
 	}
 
 	@RequestMapping(value = "addMeet", method = RequestMethod.GET)
-	public String addMeet(HttpServletRequest request) throws Exception {
+	public ModelAndView addMeet(HttpServletRequest request) throws Exception {
 		System.out.println("/meet/addMeet : GET");
 
 		ModelAndView mav = new ModelAndView();
@@ -65,16 +79,21 @@ public class MeetController {
 		String message = "";
 
 		if (user == null) {
-			return "/user/loginView.jsp";
+			mav.setViewName("/user/loginView.jsp");
+			return mav;
 		}
 
 		Boolean checkMeetCount = meetService.checkJoinMeetCount(user.getMeetCount());
 
 		if (checkMeetCount == true) {
-			return "/meet/addMeet.jsp";
+			List<Category> category = meetService.listCategory();
+			mav.addObject("category", category);
+			mav.setViewName("/meet/addMeet.jsp");
+			return mav;
 		} else {
 			message = "2";
-			return "/meet/listMyMeet?message=" + message;
+			mav.setViewName("/meet/listMyMeet?message=" + message);
+			return mav;
 		}
 	}
 
@@ -96,34 +115,31 @@ public class MeetController {
 
 		List<MultipartFile> fileList = mtf.getFiles("file");
 
-		String root_path = request.getSession().getServletContext().getRealPath("/");
-		String attach_path = "resources\\images\\uploadFiles\\meet\\";
-
-		/*
-		 * Path uploadDir = root_path+attach_path;
-		 * 
-		 * if(!Files.isDirectory(uploadDir)) { Files.createDirectories(uploadDir); }
-		 */
+		String root_path = request.getSession().getServletContext().getRealPath("/"); 
+		//String attach_path ="resources\\images\\uploadFiles\\meet\\";
+		
+		//String uploadPath = "C:\\Users\\LG\\git\\MORACKMORACK\\MORACKMORACK\\WebContent\\resources\\images\\uploadFiles\\meet";
 
 		if (fileList != null) {
 			int imgIndex = -1;
 
 			for (MultipartFile mf : fileList) {
 				imgIndex++;
-
-				String originFileName = mf.getOriginalFilename();
-				long fileSize = mf.getSize();
-
-				String safeFile = System.currentTimeMillis() + originFileName;
-
+				
 				try {
-					mf.transferTo(new File(root_path + attach_path + safeFile));
+					String fileName = mf.getOriginalFilename();
+					
+					fileName = communityService.uploadFile(uploadPath, fileName, mf.getBytes());
+
+					long fileSize = mf.getSize();
+					
 					if (imgIndex == 0) {
-						meet.setMeetImg(safeFile);
+						meet.setMeetImg(fileName);
+						mf.transferTo(new File(root_path+attach_path+fileName));
 					} else {
 						Files file = new Files();
-						file.setFileName(safeFile);
-						file.setFileExtension(safeFile.substring(safeFile.lastIndexOf(".")));
+						file.setFileName(fileName);
+						file.setFileExtension(fileName.substring(fileName.lastIndexOf(".")));
 						file.setFileSize(fileSize);
 						file.setMeetId(meetId);
 						meetService.addLimg(file);

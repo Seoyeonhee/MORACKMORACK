@@ -3,6 +3,7 @@
     
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html>
 <html>
@@ -411,7 +412,9 @@ $(function(){
 		var userId = $(this).next().val();
 		var nickName = $(this).next().next().val();
 		
-		alert(userId+" 1 "+nickName+" 2 "+vv);
+		alert(userId+" 1 "+nickName+" 2 ");
+		
+		$('#modalBox3').modal('show');
 		
 	});
 	
@@ -499,7 +502,7 @@ $(function(){
 	<a href="#" class="add-to-cart">add to cart</a>
 	</c:if>
 	<c:if test="${!empty wishMeet}">
-	<a href="#" class="add-to-cart">Delete to cart</a>
+	<a href="#" class="add-to-cart">Delete from cart</a>
 	</c:if>
 	<a href="#" class="cart"><span></span></a>
 </div>
@@ -520,7 +523,7 @@ $(function(){
 
 <section style="float: left; margin-bottom:10px; margin-top:100px;">
 <div class="grid12-6">
-<img src="/resources/images/uploadFiles/meet/${meet.meetImg}" width="1250" height="1100">
+<img src="/resources/images/uploadFiles/meet/${meet.meetImg}" width="1150" height="1000">
 <div class="inner_box">
      <h2 id="mainMeetName">${meet.meetName}</h2>
      <br/><br/>
@@ -541,7 +544,7 @@ $(function(){
 <h4 class="modal-title" id="myModalLabel">모임 가입 신청</h4>
 </div>
 <div class="modal-body">
-    	<div class="col-xs-6 col-md-5">
+    	<div class="col-xs-6 col-md-12">
     		<a href="#" class="thumbnail">
      		 <img src="/resources/images/uploadFiles/meet/${meet.meetImg}" width="100" height="100" alt="MORACK MORACK"/> 
     		</a>
@@ -550,26 +553,7 @@ $(function(){
 		${meet.meetName} <br/>
 		<strong>모임유형</strong>
     	<c:if test="${meet.meetType eq '0'.charAt(0)}">2인모임</c:if><c:if test="${meet.meetType eq '1'.charAt(0)}">다수인모임</c:if> <br/>
-    	<strong>모임명</strong>
-    	<c:choose>
-		<c:when test="${meet.category eq 0}">여행</c:when>
-		<c:when test="${meet.category eq 1}">게임</c:when>
-		<c:when test="${meet.category eq 2}">음악</c:when>
-		<c:when test="${meet.category eq 3}">영화</c:when>
-		<c:when test="${meet.category eq 4}">공연</c:when>
-		<c:when test="${meet.category eq 5}">맛집</c:when>
-		<c:when test="${meet.category eq 6}">취업/자기계발</c:when>
-		<c:when test="${meet.category eq 7}">액티비티</c:when>
-		<c:when test="${meet.category eq 8}">독서/만화</c:when>
-		<c:when test="${meet.category eq 9}">댄스</c:when>
-		<c:when test="${meet.category eq 10}">사진</c:when>
-		<c:when test="${meet.category eq 11}">반려동물</c:when>
-		<c:when test="${meet.category eq 12}">요리</c:when>
-		<c:when test="${meet.category eq 13}">차</c:when>
-		<c:when test="${meet.category eq 14}">스포츠</c:when>
-		<c:when test="${meet.category eq 15}">공예</c:when>
-		<c:when test="${meet.category eq 16}">기타</c:when>
-	</c:choose> <br/>
+    	<strong>카테고리</strong> ${meet.category}
 		${meet.lIntro} <br/>
 		<strong>한줄 자기소개</strong> <input type="text" id="intro" name="intro" class="form__field" placeholder="자기소개 입력" value=""/>
 </div>
@@ -590,10 +574,10 @@ $(function(){
 <h4 class="modal-title" id="myModalLabel">초대할 친구 리스트</h4>
 </div>
 <div class="modal-body">
-    	<div class="col-xs-6 col-md-5">
+    	<div class="col-xs-6 col-md-12">
     		<c:forEach var="friend" items="${listFriend}" varStatus="status">
 			<c:if test="${user.userId eq friend.reqFriend.userId}"> 
-			${friend.recvFriend.profileImg} <a id="invMeet${status.count}"> ${friend.recvFriend.userId}</a> <input type="text"  value="${friend.recvFriend.userId}"/><input type="text" value="${friend.recvFriend.nickName}"/>
+			${friend.recvFriend.profileImg} <a id="invMeet${status.count}"> ${friend.recvFriend.userId}</a> <input type="hidden"  value="${friend.recvFriend.userId}"/><input type="hidden" value="${friend.recvFriend.nickName}"/>
 			</c:if> 
 			<c:if test="${user.userId eq friend.recvFriend.userId}"> 
 			${friend.reqFriend.profileImg} <a id="invMeet${status.count}"> ${friend.reqFriend.userId}</a> <input type="hidden" value="${friend.reqFriend.userId}"/><input type="hidden" value="${friend.reqFriend.nickName}"/>
@@ -619,17 +603,28 @@ $(function(){
 <h4 class="modal-title" id="myModalLabel">모임 초대</h4>
 </div>
 <div class="modal-body">
-    	<div class="col-xs-6 col-md-5">
-    		${meet.meetName}
-    		${meet.category}
-    		${meet.meetLoc}
-    		${meet.meetType}
-    		${meet.meetAppr}
-    		${meet.sIntro}
-    		${meet.meetAppr}
-    		<strong>초대 문구</strong> <input type="text" id="intro" name="intro" class="form__field" placeholder="초대문구 입력" value=""/>
+    	<div class="col-xs-6 col-md-12">
+    		모임명 ${meet.meetName} <br/>
+    		모임생성일 <fmt:formatDate value="${meet.regDate}" pattern="yyyy.MM.dd" /> <br/><br/>
+    		
+    		카테고리 ${meet.category} <br/>
+    		주요 활동 위치 ${meet.meetLoc} <br/>
+    		모임 유형 
+    		<c:if test="${meet.meetType eq '0'.charAt(0)}">2인 모임</c:if>
+    		<c:if test="${meet.meetType eq '1'.charAt(0)}">다수인 모임</c:if>
+    		 <br/> 
+    		가입 승인 필요 여부 
+    		<c:if test="${meet.meetAppr eq true}">가입 승인 필요</c:if>
+    		<c:if test="${meet.meetAppr eq false}">가입 승인 불필요</c:if>
+    		 <br/>
+    		모임 간략 소개 ${meet.sIntro} <br/><br/>
+    		
+    		<strong>초대 문구</strong> 
+    		<input type="text" id="invMessage" name="intro" class="form__field" placeholder="초대문구 입력" value=""/>
 </div>
 <div class="modal-footer">
+<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+            <button type="button" class="btn btn-primary" id="inputInvMessage">초대</button>
 </div>
 </div>
 </div>

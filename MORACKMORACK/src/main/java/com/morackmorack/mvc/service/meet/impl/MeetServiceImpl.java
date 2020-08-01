@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.morackmorack.mvc.common.Search;
+import com.morackmorack.mvc.service.domain.Category;
 import com.morackmorack.mvc.service.domain.Files;
 import com.morackmorack.mvc.service.domain.Meet;
 import com.morackmorack.mvc.service.domain.MeetMem;
@@ -36,6 +37,10 @@ public class MeetServiceImpl implements MeetService{
 	
 	public  List<Meet> getMeetMain(){
 		return meetDao.getMeetMain();
+	}
+	
+	public List<Category> listCategory() {
+		return meetDao.listCategory();
 	}
 	
 	public void addMeet(Meet meet) {

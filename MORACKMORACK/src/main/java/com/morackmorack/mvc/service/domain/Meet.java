@@ -11,7 +11,7 @@ public class Meet implements Serializable {
 	private String leaderId;
 	private String meetImg;
 	private String meetName;
-	private int category;	
+	private String category;	
 	private int maxNum;
 	private int memNum;
 	private String meetLoc; 
@@ -54,10 +54,11 @@ public class Meet implements Serializable {
 	public void setMeetName(String meetName) {
 		this.meetName = meetName;
 	}
-	public int getCategory() {
+	public String getCategory() {
 		return category;
 	}
-	public void setCategory(int category) {
+	 
+	public void setCategory(String category) {
 		this.category = category;
 	}
 	public int getMaxNum() {

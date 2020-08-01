@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import com.morackmorack.mvc.common.Search;
+import com.morackmorack.mvc.service.domain.Category;
 import com.morackmorack.mvc.service.domain.Files;
 import com.morackmorack.mvc.service.domain.Meet;
 import com.morackmorack.mvc.service.domain.MeetMem;
@@ -35,6 +36,10 @@ public class MeetDaoImpl implements MeetDao {
 	
 	public  List<Meet> getMeetMain(){
 		return sqlSession.selectList("MeetMapper.getMeetMain");
+	}
+	
+	public List<Category> listCategory() {
+		return sqlSession.selectList("MeetMapper.listCategory");
 	}
 	
 	public void addMeet(Meet meet) {
