@@ -81,13 +81,26 @@
 				alert("ID는 5-20자의 영문 소문자, 숫자와 특수문자 중 (_),(-)만 사용할 수 있다.")
             return;
         	}
-			if(id == userId){
-				alret("중복된 ID는 가입이 안됩니다.");
-				return;
-			}
+			$.ajax(
+					{
+						url : "/user/json/checkDuplication/"+userId ,
+						method : "GET" ,
+						dataType : "json" ,
+						headers : {
+							"Accept" : "application/json",
+							"Content-Type" : "application/json"
+						},
+						success : function(JSONData, status){
+							alert("중복된 ID는 가입이 불가합니다.")
+							//var JSONdata = JSON.stringify(JSONData);
+							//alert(JSONdata);
+							//alert(JSONData)
+							//alert(JSONData.result)
+						}	
+					})
 			////////////////////////////////////////
 			if(pw == null || pw.length <1){
-				alert("비밀번호는  반드시 입력하셔야 합니다.");
+				alert("비밀번호는 반드시 입력하셔야 합니다.");
 			return;
 			}
 			////////////////////////////////////////
@@ -124,6 +137,23 @@
 				alert("닉네임이 너무 길어요 ㅠㅠ")
             return;
         	}
+			$.ajax(
+					{
+						url : "/user/json/checkDuplication2/"+nickName ,
+						method : "GET" ,
+						dataType : "json" ,
+						headers : {
+							"Accept" : "application/json",
+							"Content-Type" : "application/json"
+						},
+						success : function(JSONData, status){
+							alert("중복된 닉네임은 가입이 불가합니다.")
+							//var JSONdata = JSON.stringify(JSONData);
+							//alert(JSONdata);
+							//alert(JSONData)
+							//alert(JSONData.result)
+						}
+					});
 			////////////////////////////////////////////////////
 			if(em == null || em.length <1){
 				alert("이메일은 반드시 입력하셔야 합니다.");
@@ -471,7 +501,6 @@
 		    <div class="col-sm-offset-4  col-sm-4 text-center">
 		      <button type="button" class="btn btn-primary"  >가 &nbsp;입</button>
 			  <a class="btn btn-primary btn" href="#" role="button">취&nbsp;소</a>
-<!-- 			  <button type="button" onclick="location.href='/index.jsp' ">메인페이지</button> -->
 		    </div>
 		  </div>
 		</form>

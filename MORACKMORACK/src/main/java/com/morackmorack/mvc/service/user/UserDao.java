@@ -10,6 +10,8 @@ public interface UserDao {
 	
 	public User getUser(String userId) throws Exception ;
 	
+	public User getNickName(String nickName) throws Exception ;
+	
 	public void updateUser(User user) throws Exception ;
 	
 	public void delUser(User user) throws Exception ;

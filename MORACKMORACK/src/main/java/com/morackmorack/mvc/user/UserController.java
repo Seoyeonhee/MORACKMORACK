@@ -54,7 +54,7 @@ public class UserController {
 	public String addUser( @ModelAttribute("user") User user, HttpServletRequest request) throws Exception {
 
 		System.out.println("/user/adduser : POST");
-		System.out.println("µé¾î¿Â °´Ã¼:"+ user);
+		/* System.out.println("µé¾î¿Â °´Ã¼:"+ user); */
 		
 		@Component class StringToDateConverter
 		  implements Converter<String, Date> {

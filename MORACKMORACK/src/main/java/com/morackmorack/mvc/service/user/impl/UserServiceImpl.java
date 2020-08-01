@@ -32,6 +32,10 @@ public class UserServiceImpl implements UserService{
 	public User getUser(String userId) throws Exception {
 		return userDao.getUser(userId);
 	}
+	
+	public User getNickName(String nickName) throws Exception {
+		return userDao.getNickName(nickName);
+	}
 
 	public void updateUser(User user) throws Exception {
 		userDao.updateUser(user);
@@ -48,7 +52,7 @@ public class UserServiceImpl implements UserService{
 	
 	public boolean checkDuplication2(String nickName) throws Exception {
 		boolean result=true;
-		User user=userDao.getUser(nickName);
+		User user=userDao.getNickName(nickName);
 		if(user != null) {
 			result=false;
 		}

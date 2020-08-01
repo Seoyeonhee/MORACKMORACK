@@ -10,6 +10,8 @@ public interface UserService {
 	
 	public User getUser(String userId) throws Exception ;
 	
+	public User getNickName(String nickName) throws Exception ;
+	
 	public void updateUser(User user) throws Exception ;
 	
 	public boolean checkDuplication(String userId) throws Exception;

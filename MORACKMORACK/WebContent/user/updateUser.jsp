@@ -201,52 +201,13 @@ var fullAddr=addr +" "+daddr;
 	    
 	    <!-- form Start /////////////////////////////////////-->
 		<form class="form-horizontal">
-		
-		<section id="wrapper">
-    <!-- <header>
-      <h1>File API (simple)</h1>
-    </header> -->
 
-<article>
-  <!-- <p id="status">File API &amp; FileReader API not supported</p> -->
-  <p id="status">
-  <p><input type=file></p>
-  <!-- <p>Select an image from your machine to read the contents of the file without using a server</p> -->
-  <div id="holder"></div>
-</article>
-<script>
-var upload = document.getElementsByTagName('input')[0],
-    holder = document.getElementById('holder'),
-    state = document.getElementById('status');
-
-if (typeof window.FileReader === 'undefined') {
-  state.className = 'fail';
-} else {
-  state.className = 'success';
-  /* state.innerHTML = 'File API & FileReader available'; */
-}
- 
-upload.onchange = function (e) {
-  e.preventDefault();
-
-  var file = upload.files[0],
-      reader = new FileReader();
-  reader.onload = function (event) {
-    var img = new Image();
-    img.src = event.target.result;
-    // note: no onload required since we've got the dataurl...I think! :)
-    if (img.width > 200) { // holder width
-      img.width = 200;
-    }
-    holder.innerHTML = '';
-    holder.appendChild(img);
-  };
-  reader.readAsDataURL(file);
-
-  return false;
-};	
-
-</script>
+		<div class="form-group">
+		    <label for="profileImg" class="col-sm-offset-1 col-sm-3 control-label">프로필사진</label>
+		    <div class="col-sm-4">
+		      <input type="file" class="form-control" id="profileImg" name="profileImg" value= {user.profileImg}>
+		    </div>
+		  </div>
 		
 		  <div class="form-group">
 		    <label for="userId" class="col-sm-offset-1 col-sm-3 control-label">ID</label>
