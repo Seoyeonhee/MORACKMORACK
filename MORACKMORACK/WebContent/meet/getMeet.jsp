@@ -411,7 +411,7 @@ $(function(){
 		var userId = $(this).next().val();
 		var nickName = $(this).next().next().val();
 		
-		alert(userId+" "+nickName+" "+vv);
+		alert(userId+" 1 "+nickName+" 2 "+vv);
 		
 	});
 	
@@ -520,7 +520,7 @@ $(function(){
 
 <section style="float: left; margin-bottom:10px; margin-top:100px;">
 <div class="grid12-6">
-<img src="/resources/images/uploadFiles/meet/${meet.meetImg}" width="1350" height="1100">
+<img src="/resources/images/uploadFiles/meet/${meet.meetImg}" width="1250" height="1100">
 <div class="inner_box">
      <h2 id="mainMeetName">${meet.meetName}</h2>
      <br/><br/>
@@ -593,7 +593,7 @@ $(function(){
     	<div class="col-xs-6 col-md-5">
     		<c:forEach var="friend" items="${listFriend}" varStatus="status">
 			<c:if test="${user.userId eq friend.reqFriend.userId}"> 
-			${friend.recvFriend.profileImg} <a id="invMeet${status.count}"> ${friend.recvFriend.userId}</a> <input type="hidden"  value="${friend.recvFriend.userId}"/><input type="hidden" value="${friend.recvFriend.nickName}"/>
+			${friend.recvFriend.profileImg} <a id="invMeet${status.count}"> ${friend.recvFriend.userId}</a> <input type="text"  value="${friend.recvFriend.userId}"/><input type="text" value="${friend.recvFriend.nickName}"/>
 			</c:if> 
 			<c:if test="${user.userId eq friend.recvFriend.userId}"> 
 			${friend.reqFriend.profileImg} <a id="invMeet${status.count}"> ${friend.reqFriend.userId}</a> <input type="hidden" value="${friend.reqFriend.userId}"/><input type="hidden" value="${friend.reqFriend.nickName}"/>

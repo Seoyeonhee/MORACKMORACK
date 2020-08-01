@@ -37,6 +37,12 @@ public class FriendDaoImpl implements FriendDao {
 
 	public Map<String, Object> listFriend(String userId) throws Exception{
 		List<Friend> listFriend = sqlSession.selectList("FriendMapper.listFriend", userId);
+		
+		for(int i=0; i<listFriend.size(); i++) {
+			listFriend.get(i).setReqFriend(sqlSession.selectOne("UserMapper.getUser", listFriend.get(i).getReqFriend().getUserId()));
+			listFriend.get(i).setRecvFriend(sqlSession.selectOne("UserMapper.getUser", listFriend.get(i).getRecvFriend().getUserId()));		
+		}
+		
 		int friendCount = sqlSession.selectOne("FriendMapper.getTotalCount", userId);
 		
 		Map<String, Object> map = new HashMap<String, Object>();

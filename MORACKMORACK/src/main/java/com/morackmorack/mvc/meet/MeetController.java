@@ -167,20 +167,24 @@ public class MeetController {
 		meet.setAccNum(accNum);
 
 		meetService.addMeet(meet);
-
+		
 		String hash = (String) request.getParameter("hash");
-		String[] hashSplit = hash.split("#");
+		
+		if (hash != null) {
 
-		for (int i = 1; i < hashSplit.length; i++) {
-			String hashtag = hashSplit[i].trim();
+			String[] hashSplit = hash.split("#");
 
-			String hash_no = meetService.getHash(hashtag);
-			if (hash_no == null) {
-				meetService.addHash(hashtag);
-				hash_no = meetService.getHash(hashtag);
-				meetService.addMeet_Hash(meetId, hash_no);
-			} else {
-				meetService.addMeet_Hash(meetId, hash_no);
+			for (int i = 1; i < hashSplit.length; i++) {
+				String hashtag = hashSplit[i].trim();
+
+				String hash_no = meetService.getHash(hashtag);
+				if (hash_no == null) {
+					meetService.addHash(hashtag);
+					hash_no = meetService.getHash(hashtag);
+					meetService.addMeet_Hash(meetId, hash_no);
+				} else {
+					meetService.addMeet_Hash(meetId, hash_no);
+				}
 			}
 		}
 

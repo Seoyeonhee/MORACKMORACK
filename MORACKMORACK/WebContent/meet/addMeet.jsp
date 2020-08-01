@@ -6,11 +6,7 @@
 <meta charset="EUC-KR">
 <title>모임 생성</title>
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<jsp:include page="/common/listCdn.jsp" />
 
 
 <style>
@@ -190,7 +186,7 @@ $(function(){
 		var sido = $("#sido").val();
 		var gugun = $("#gugun").val();
 		
-		$("#meetLoc").val(sido+' '+gugun)
+		$("#meetLoc").val(sido+' '+gugun);
 	
 		$("form").attr("method", "POST").attr("action", "/meet/addMeet/"+maxNum).submit();
 	})
@@ -244,7 +240,7 @@ $(function(){
 	  }
 	 });
 	 
-	 $("#hash").on("keyup", function(){
+	 /* $("#hash").on("keyup", function(){
 		 var hash = $("#hash").val();
 		 
 		$.ajax({
@@ -266,7 +262,7 @@ $(function(){
 			}
 
 		})
-	 })
+	 }) */
 
 
 	});
@@ -397,8 +393,9 @@ $(function(){
 	<input type="text" id="sIntro" name="sIntro" class="form-control" style="height:100px; width:500px"/><br/>
 
 
-	<p style="margin-top:20px"><strong>해시태그 입력</strong></p> <input type="text" id="getHash" name="getHash" value=""/>
-	<textarea form="inform" cols="40" rows="10" wrap="hard" id="hash" name="hash" class="form-control"></textarea>
+	<p style="margin-top:20px"><strong>해시태그 입력</strong></p> <!-- <input type="text" id="getHash" name="getHash" value=""/> -->
+	<!-- <textarea form="inform" cols="40" rows="10" wrap="hard" id="beforeHash" name="beforeHash" class="form-control" required></textarea> -->
+	<textarea cols="40" rows="10" wrap="hard" id="hash" name="hash" class="form-control"></textarea>
 	
  </div>    
   	  
