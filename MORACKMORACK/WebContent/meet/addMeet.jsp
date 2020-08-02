@@ -1,16 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="EUC-KR">
 <title>모임 생성</title>
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<jsp:include page="/common/listCdn.jsp" />
 
 
 <style>
@@ -190,7 +188,7 @@ $(function(){
 		var sido = $("#sido").val();
 		var gugun = $("#gugun").val();
 		
-		$("#meetLoc").val(sido+' '+gugun)
+		$("#meetLoc").val(sido+' '+gugun);
 	
 		$("form").attr("method", "POST").attr("action", "/meet/addMeet/"+maxNum).submit();
 	})
@@ -244,7 +242,7 @@ $(function(){
 	  }
 	 });
 	 
-	 $("#hash").on("keyup", function(){
+	 /* $("#hash").on("keyup", function(){
 		 var hash = $("#hash").val();
 		 
 		$.ajax({
@@ -266,7 +264,7 @@ $(function(){
 			}
 
 		})
-	 })
+	 }) */
 
 
 	});
@@ -346,23 +344,9 @@ $(function(){
     	<label for="select">카테고리</label>
 		<select id="category" name="category">	
 		<option value="">카테고리</option>
-        <option value="0">여행</option>
-        <option value="1">게임</option>
-        <option value="2">음악</option>
-        <option value="3">영화</option>
-        <option value="4">공연</option>
-        <option value="5">맛집</option>
-        <option value="6">취업/자기계발</option>
-        <option value="7">액티비티</option>
-        <option value="8">독서/만화</option>
-        <option value="9">댄스</option>
-        <option value="10">사진</option>
-        <option value="11">반려동물</option>
-        <option value="12">요리</option>
-        <option value="13">차</option>
-        <option value="14">스포츠</option>
-        <option value="15">공예</option>
-        <option value="16">기타</option>
+		<c:forEach var="category" items="${category}">
+		<option value="${category.categoryName}">${category.categoryName}</option>
+		</c:forEach>
 		</select>
 	</div>
 		
@@ -382,8 +366,8 @@ $(function(){
       	  
     <p style="margin-top:20px"><strong>가입 승인 필요 여부</strong></p>
     <label class="radio-inline">
-		<input type="radio" id="meetAppr" name="meetAppr" value="1" checked="true" />필요 <br><br/>
-		<input type="radio" id="meetAppr" name="meetAppr" value="0" checked="true" />불필요<br/><br/>
+		<input type="radio" id="meetAppr" name="meetAppr" value="1" />필요 <br><br/>
+		<input type="radio" id="meetAppr" name="meetAppr" value="0" />불필요<br/><br/>
 	</label>
       	  
 	<p style="margin-top:20px"><strong>주요 활동 위치 선택</strong></p>
@@ -397,8 +381,9 @@ $(function(){
 	<input type="text" id="sIntro" name="sIntro" class="form-control" style="height:100px; width:500px"/><br/>
 
 
-	<p style="margin-top:20px"><strong>해시태그 입력</strong></p> <input type="text" id="getHash" name="getHash" value=""/>
-	<textarea form="inform" cols="40" rows="10" wrap="hard" id="hash" name="hash" class="form-control"></textarea>
+	<p style="margin-top:20px"><strong>해시태그 입력</strong></p> <!-- <input type="text" id="getHash" name="getHash" value=""/> -->
+	<!-- <textarea form="inform" cols="40" rows="10" wrap="hard" id="beforeHash" name="beforeHash" class="form-control" required></textarea> -->
+	<textarea cols="40" rows="10" wrap="hard" id="hash" name="hash" class="form-control"></textarea>
 	
  </div>    
   	  

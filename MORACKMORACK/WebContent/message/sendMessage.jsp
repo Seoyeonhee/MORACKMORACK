@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-   
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>  
 
 <!DOCTYPE html>
 <html>
@@ -8,13 +8,8 @@
 <meta charset="EUC-KR">
 <title>쪽지 발신</title>
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<script src="https://code.jquery.com/jquery-3.1.1.js"></script>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-
 <jsp:useBean id="today" class="java.util.Date"/>
+<jsp:include page="/common/listCdn.jsp" />
 
 <style>
 button {
@@ -47,13 +42,29 @@ A:hover {text-decoration:none; color:#646464;}
 <script type="text/javascript">
 
 $(function(){
+	
+	var isModal = $('#isModal').val();
+	if(isModal == '1'){
+		
+		$('#modalBox').modal('show');
+	}
+	
+	
 	$("#submitMessage").on("click", function(){
 		$("form").attr("method", "POST").attr("action", "/message/sendMessage").submit();
 	});
 	
-	$("#friendList").on("click", function(){
-		self.location="/friend/friendList";
-	})
+	$("#listFriendOn").on("click", function(){
+		window.location.href = "/friend/listFriend/1?isModal=1";
+	})	
+			
+	
+	$('#myModal').on('show.bs.modal', function (event) { // myModal 윈도우가 오픈할때 아래의 옵션을 적용
+		  var button = $(event.relatedTarget) // 모달 윈도우를 오픈하는 버튼
+		  var titleTxt = button.data('title') // 버튼에서 data-title 값을 titleTxt 변수에 저장
+		  var modal = $(this)
+		  modal.find('.modal-title').text('Title : ' + titleTxt) // 모달위도우에서 .modal-title을 찾아 titleTxt 값을 치환
+		});
 })
 
 </script>
@@ -69,13 +80,16 @@ $(function(){
 <section style="float: left; margin-top:100px;">
 <jsp:include page="/message/sidebar.jsp" />
 </section>
+
+<input type="hidden" id="isModal" value="${isModal}"/>
+
 <form>
 <aside>
 <div style="padding:40px; background-color:#dcdcdc; height:900px; width:1200px; margin-left:300px; margin-top:100px; padding:10px">
 	쪽지 보내기
       <div style="padding:30px; background-color:#ffffff; height:25%; width:100%; opacity:0.6; display: inline-block; margin-top:20px">
      	 받는 사람<br/><br/>
-      <span id="friendList" class="glyphicon glyphicon-user" style=" font-size: 60px; float:left;"></span>
+      <span id="listFriendOn" class="glyphicon glyphicon-user" style=" font-size: 60px; float:left;"></span>
 	      	<div style="margin-left:100px; margin-botton:300px;">
 	      	모임명 ${meet.meetName}<br/> 
 	      	<input type="hidden" id="meetId" name="meetId" value="${meet.meetId}"/>
@@ -96,6 +110,34 @@ $(function(){
 <button type="button" id="submitMessage">전송</button>
 </div>
 </div>
+
+
+<!-- 모달 영역 -->
+<div id="modalBox" class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal-dialog" role="document">
+<div class="modal-content">
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+<h4 class="modal-title" id="myModalLabel">친구 리스트</h4>
+</div>
+<div class="modal-body">
+    	<div class="col-xs-6 col-md-5">
+    		<c:forEach var="friend" items="${listFriend}">
+			친구 이름 : 
+			<c:if test="${user.userId eq friend.reqFriend.userId}"><a href="/message/sendMessage?userId=${friend.recvFriend.userId}"> ${friend.recvFriend.userId}</c:if> 
+			<c:if test="${user.userId eq friend.recvFriend.userId}"><a href="/message/sendMessage?userId=${friend.reqFriend.userId}"> ${friend.reqFriend.userId}</c:if>
+			<input type="hidden" value="${friend.friendNo}"/>
+			</a>
+			</c:forEach>
+</div>
+<div class="modal-footer">
+
+</div>
+</div>
+</div>
+</div>
+</div>
+
 </aside>
 </form>
 </body>

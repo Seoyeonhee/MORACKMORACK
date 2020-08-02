@@ -29,5 +29,6 @@ public interface CommunityService {
 	
 	public void deleteBusinessReview(int postNo) throws Exception;
 	
+	public String uploadFile(String uploadPath, String originalName, byte[] fileData) throws Exception;
 }
 

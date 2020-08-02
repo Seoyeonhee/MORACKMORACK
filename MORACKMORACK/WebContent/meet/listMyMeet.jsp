@@ -9,11 +9,7 @@
 <meta charset="EUC-KR">
 <title>나의 모임 목록 조회</title>
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<jsp:include page="/common/listCdn.jsp" />
 
 <style>
 
@@ -114,25 +110,7 @@ $(function(){
                 <td><fmt:formatDate value="${meetMem.joinDate}" pattern="yyyy.MM.dd" /></td>
                 <td>${meetMem.meet.memNum}/${meetMem.meet.maxNum}</td>
                 <td>
-                <c:choose>
-					<c:when test="${meetMem.meet.category eq 0}">여행</c:when>
-					<c:when test="${meetMem.meet.category eq 1}">게임</c:when>
-					<c:when test="${meetMem.meet.category eq 2}">음악</c:when>
-					<c:when test="${meetMem.meet.category eq 3}">영화</c:when>
-					<c:when test="${meetMem.meet.category eq 4}">공연</c:when>
-					<c:when test="${meetMem.meet.category eq 5}">맛집</c:when>
-					<c:when test="${meetMem.meet.category eq 6}">취업/자기계발</c:when>
-					<c:when test="${meetMem.meet.category eq 7}">액티비티</c:when>
-					<c:when test="${meetMem.meet.category eq 8}">독서/만화</c:when>
-					<c:when test="${meetMem.meet.category eq 9}">댄스</c:when>
-					<c:when test="${meetMem.meet.category eq 10}">사진</c:when>
-					<c:when test="${meetMem.meet.category eq 11}">반려동물</c:when>
-					<c:when test="${meetMem.meet.category eq 12}">요리</c:when>
-					<c:when test="${meetMem.meet.category eq 13}">차</c:when>
-					<c:when test="${meetMem.meet.category eq 14}">스포츠</c:when>
-					<c:when test="${meetMem.meet.category eq 15}">공예</c:when>
-					<c:when test="${meetMem.meet.category eq 16}">기타</c:when>
-				</c:choose>
+                ${category.categoryName}
                 </td>
                 <td>
                 <button type="button" id="outMeet${status.count}">모임 탈퇴</button> 

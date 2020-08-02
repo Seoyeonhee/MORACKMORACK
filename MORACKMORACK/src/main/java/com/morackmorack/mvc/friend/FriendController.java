@@ -66,7 +66,7 @@ public class FriendController {
 	}
 	
 	@RequestMapping(value="listFriend/{listFlag}" , method = RequestMethod.GET) //模备 府胶飘
-	public ModelAndView listFriend(HttpServletRequest request, @PathVariable("listFlag") String listFlag) throws Exception {	
+	public ModelAndView listFriend(HttpServletRequest request, @PathVariable("listFlag") String listFlag, @RequestParam(value = "isModal", required = false) String isModal, @RequestParam(value = "meetId", required = false) String meetId) throws Exception {	
 		System.out.println("/friend/listFriend : GET");
 		
 		ModelAndView mav = new ModelAndView();
@@ -92,7 +92,16 @@ public class FriendController {
 			map = friendService.listFriend(userId);
 			mav.addObject("listFriend", map.get("listFriend"));
 			mav.addObject("friendCount",map.get("friendCount"));
-			mav.setViewName("/friend/listFriend.jsp"); //郴 模备 格废
+			
+			 if (isModal== null)  {
+					mav.setViewName("/friend/listFriend.jsp"); // 郴 模备 格废
+			 }else if (isModal.equals("1")) {
+				mav.addObject("isModal", "1");
+				mav.setViewName("/message/sendMessage.jsp");
+			} else if(isModal.equals("2")) {
+				mav.addObject("isModal", "2");
+				mav.setViewName("/meet/getMeet/"+meetId);
+			}
 		}
 
 		return mav;

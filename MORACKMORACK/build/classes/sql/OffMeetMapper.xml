@@ -65,8 +65,8 @@
 	<select id="getOff_MeetMem" parameterType="map" resultMap="meetmemoffmeetSelectMap">
 		SELECT meetmem_offmeet_no, mem_no, off_no 
 		FROM meetmemoffmeet 
-		WHERE mem_no = #{meetMem.memNo}
-		AND off_no = #{offMeet.offNo}
+		WHERE mem_no = #{memNo}
+		AND off_no = #{offNo}
 	</select>
 	
 	

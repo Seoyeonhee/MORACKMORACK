@@ -9,11 +9,7 @@
 <meta charset="EUC-KR">
 <title>모임 목록 조회</title>
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<jsp:include page="/common/listCdn.jsp" />t>
 
 
 <style>
@@ -574,8 +570,8 @@ function myButton() {
       	</div>
     	</div> --%>
     	 <!--Effect: Open Down -->
-            <div class="pic pic-3d">
-                <img src="/resources/images/uploadFiles/meet/${meet.meetImg}" class="pic-image" style="hight:550px; width:550px">
+            <div class="pic pic-3d" style="padding: 10px 10px 10px 10px;">
+                <img src="/resources/images/uploadFiles/meet/${meet.meetImg}" class="pic-image" style="hight:500px; width:500px;">
                  <div class="caption">
                  
                  <br/><p id="meetName">${meet.meetName}</p>

@@ -3,6 +3,7 @@
     
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html>
 <html>
@@ -10,20 +11,7 @@
 <meta charset="EUC-KR">
 <title>모임 상세 조회</title>
 
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
-<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-
-<!-- Optional theme -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
-
-<!-- Latest compiled and minified JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+<jsp:include page="/common/listCdn.jsp" />
 
 <style>
 @font-face { font-family: 'yg-jalnan'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.2/JalnanOTF00.woff') format('woff'); font-weight: normal; font-style: normal; }
@@ -385,9 +373,11 @@ font-family: 'MapoGoldenPier'
 <script type ="text/javascript">
 
 $(function(){
-	
+
 	var meetId = $("#meetId").val();
 	var joinMessage = $("#joinMessage").val();
+	var isModal = $('#isModal').val();
+
 	
 	if(joinMessage == '1'){
 		$('#modalBox').modal('show');
@@ -396,6 +386,8 @@ $(function(){
 		alert("모임 인원 초과")
 	}else if(joinMessage == '3'){
 		alert("가입 가능한 모임은 5개")
+	}else if(isModal == '2'){		
+		$('#modalBox2').modal('show');
 	}
 	
 	$("#joinMeet").on("click", function(){	
@@ -403,7 +395,7 @@ $(function(){
 	});
 	
 	$("#inviteToMessage").on("click", function(){			
-		window.location.href = "/message/sendMessage?meetId="+meetId;	
+		window.location.href = "/friend/listFriend/1?isModal=2&meetId="+meetId;
 	});
 	
 	
@@ -416,8 +408,18 @@ $(function(){
 		window.location.href = "/offmeet/addOffView?meetId="+meetId;
 	});
 	
+	$("a[id^='invMeet']").on("click", function(){
+		var userId = $(this).next().val();
+		var nickName = $(this).next().next().val();
+		
+		alert(userId+" 1 "+nickName+" 2 ");
+		
+		$('#modalBox3').modal('show');
+		
+	});
 	
-	$('#myModal').on('show.bs.modal', function (event) { // myModal 윈도우가 오픈할때 아래의 옵션을 적용
+	
+	$('#myModal,#myModal2').on('show.bs.modal', function (event) { // myModal 윈도우가 오픈할때 아래의 옵션을 적용
 	  var button = $(event.relatedTarget) // 모달 윈도우를 오픈하는 버튼
 	  var titleTxt = button.data('title') // 버튼에서 data-title 값을 titleTxt 변수에 저장
 	  var modal = $(this)
@@ -449,7 +451,7 @@ $(function(){
 			$("a.add-to-cart").removeClass("size");
 		}, 600);
 		event.preventDefault();
-		window.location.hre = "/meet/addWishMeet?meetId="+meetId;
+		window.location.href = "/meet/addWishMeet?meetId="+meetId;
 		}else if($("#wishMeet").val() != ''){
 			$("a.add-to-cart").addClass("size");
 			setTimeout(function() {
@@ -490,6 +492,7 @@ $(function(){
 <input type="hidden" id="meetId" name="meetId" value="${meet.meetId}"/>
 <input type="hidden" id="wishMeet" name="wishMeet" value="${wishMeet}"/>
 <input type="hidden" id="wishCount" name="wishCount" value="${wishCount}"/>
+<input type="hidden" id="isModal" name="isModal" value="${isModal}"/>
 
 <aside >
 <section>
@@ -499,7 +502,7 @@ $(function(){
 	<a href="#" class="add-to-cart">add to cart</a>
 	</c:if>
 	<c:if test="${!empty wishMeet}">
-	<a href="#" class="add-to-cart">Delete to cart</a>
+	<a href="#" class="add-to-cart">Delete from cart</a>
 	</c:if>
 	<a href="#" class="cart"><span></span></a>
 </div>
@@ -520,7 +523,7 @@ $(function(){
 
 <section style="float: left; margin-bottom:10px; margin-top:100px;">
 <div class="grid12-6">
-<img src="/resources/images/uploadFiles/meet/${meet.meetImg}" width="1350" height="1100">
+<img src="/resources/images/uploadFiles/meet/${meet.meetImg}" width="1150" height="1000">
 <div class="inner_box">
      <h2 id="mainMeetName">${meet.meetName}</h2>
      <br/><br/>
@@ -541,7 +544,7 @@ $(function(){
 <h4 class="modal-title" id="myModalLabel">모임 가입 신청</h4>
 </div>
 <div class="modal-body">
-    	<div class="col-xs-6 col-md-5">
+    	<div class="col-xs-6 col-md-12">
     		<a href="#" class="thumbnail">
      		 <img src="/resources/images/uploadFiles/meet/${meet.meetImg}" width="100" height="100" alt="MORACK MORACK"/> 
     		</a>
@@ -550,32 +553,79 @@ $(function(){
 		${meet.meetName} <br/>
 		<strong>모임유형</strong>
     	<c:if test="${meet.meetType eq '0'.charAt(0)}">2인모임</c:if><c:if test="${meet.meetType eq '1'.charAt(0)}">다수인모임</c:if> <br/>
-    	<strong>모임명</strong>
-    	<c:choose>
-		<c:when test="${meet.category eq 0}">여행</c:when>
-		<c:when test="${meet.category eq 1}">게임</c:when>
-		<c:when test="${meet.category eq 2}">음악</c:when>
-		<c:when test="${meet.category eq 3}">영화</c:when>
-		<c:when test="${meet.category eq 4}">공연</c:when>
-		<c:when test="${meet.category eq 5}">맛집</c:when>
-		<c:when test="${meet.category eq 6}">취업/자기계발</c:when>
-		<c:when test="${meet.category eq 7}">액티비티</c:when>
-		<c:when test="${meet.category eq 8}">독서/만화</c:when>
-		<c:when test="${meet.category eq 9}">댄스</c:when>
-		<c:when test="${meet.category eq 10}">사진</c:when>
-		<c:when test="${meet.category eq 11}">반려동물</c:when>
-		<c:when test="${meet.category eq 12}">요리</c:when>
-		<c:when test="${meet.category eq 13}">차</c:when>
-		<c:when test="${meet.category eq 14}">스포츠</c:when>
-		<c:when test="${meet.category eq 15}">공예</c:when>
-		<c:when test="${meet.category eq 16}">기타</c:when>
-	</c:choose> <br/>
+    	<strong>카테고리</strong> ${meet.category}
 		${meet.lIntro} <br/>
 		<strong>한줄 자기소개</strong> <input type="text" id="intro" name="intro" class="form__field" placeholder="자기소개 입력" value=""/>
 </div>
 <div class="modal-footer">
 <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
             <button type="button" class="btn btn-primary" id="inputIntro">가입</button>
+</div>
+</div>
+</div>
+</div>
+
+<!-- 모달 영역 -->
+<div id="modalBox2" class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal-dialog" role="document">
+<div class="modal-content">
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+<h4 class="modal-title" id="myModalLabel">초대할 친구 리스트</h4>
+</div>
+<div class="modal-body">
+    	<div class="col-xs-6 col-md-12">
+    		<c:forEach var="friend" items="${listFriend}" varStatus="status">
+			<c:if test="${user.userId eq friend.reqFriend.userId}"> 
+			${friend.recvFriend.profileImg} <a id="invMeet${status.count}"> ${friend.recvFriend.userId}</a> <input type="hidden"  value="${friend.recvFriend.userId}"/><input type="hidden" value="${friend.recvFriend.nickName}"/>
+			</c:if> 
+			<c:if test="${user.userId eq friend.recvFriend.userId}"> 
+			${friend.reqFriend.profileImg} <a id="invMeet${status.count}"> ${friend.reqFriend.userId}</a> <input type="hidden" value="${friend.reqFriend.userId}"/><input type="hidden" value="${friend.reqFriend.nickName}"/>
+			</c:if>
+			
+			<br/><br/>
+			</c:forEach>
+</div>
+<div class="modal-footer">
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+<!-- 모달 영역 -->
+<div id="modalBox3" class="modal fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal-dialog" role="document">
+<div class="modal-content">
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+<h4 class="modal-title" id="myModalLabel">모임 초대</h4>
+</div>
+<div class="modal-body">
+    	<div class="col-xs-6 col-md-12">
+    		모임명 ${meet.meetName} <br/>
+    		모임생성일 <fmt:formatDate value="${meet.regDate}" pattern="yyyy.MM.dd" /> <br/><br/>
+    		
+    		카테고리 ${meet.category} <br/>
+    		주요 활동 위치 ${meet.meetLoc} <br/>
+    		모임 유형 
+    		<c:if test="${meet.meetType eq '0'.charAt(0)}">2인 모임</c:if>
+    		<c:if test="${meet.meetType eq '1'.charAt(0)}">다수인 모임</c:if>
+    		 <br/> 
+    		가입 승인 필요 여부 
+    		<c:if test="${meet.meetAppr eq true}">가입 승인 필요</c:if>
+    		<c:if test="${meet.meetAppr eq false}">가입 승인 불필요</c:if>
+    		 <br/>
+    		모임 간략 소개 ${meet.sIntro} <br/><br/>
+    		
+    		<strong>초대 문구</strong> 
+    		<input type="text" id="invMessage" name="intro" class="form__field" placeholder="초대문구 입력" value=""/>
+</div>
+<div class="modal-footer">
+<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+            <button type="button" class="btn btn-primary" id="inputInvMessage">초대</button>
+</div>
 </div>
 </div>
 </div>

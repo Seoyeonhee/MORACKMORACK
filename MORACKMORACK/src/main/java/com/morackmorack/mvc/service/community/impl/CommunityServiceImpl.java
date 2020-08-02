@@ -1,12 +1,15 @@
 package com.morackmorack.mvc.service.community.impl;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.util.FileCopyUtils;
 
 import com.morackmorack.mvc.common.Search;
 import com.morackmorack.mvc.service.community.CommunityDao;
@@ -84,6 +87,18 @@ import com.morackmorack.mvc.service.domain.Community;
 
 		public Community getRecentOffReview(String MeetId) throws Exception {
 			return communityDao.getRecentOffReview(MeetId);
+		}
+		
+		public String uploadFile(String uploadPath, String originalName, byte[] fileData) throws Exception{
+
+			UUID uuid = UUID.randomUUID();
+			
+			String savedName = uuid.toString()+"_"+originalName;
+			File target = new File(uploadPath, savedName);
+
+			FileCopyUtils.copy(fileData, target);
+			
+			return savedName;
 		}
 
 }

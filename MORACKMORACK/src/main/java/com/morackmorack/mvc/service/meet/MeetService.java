@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.morackmorack.mvc.common.Search;
+import com.morackmorack.mvc.service.domain.Category;
 import com.morackmorack.mvc.service.domain.Files;
 import com.morackmorack.mvc.service.domain.Meet;
 import com.morackmorack.mvc.service.domain.MeetMem;
@@ -18,6 +19,8 @@ public interface MeetService {
 	public void addLimg(Files file);
 	
 	public  List<Meet> getMeetMain();
+	
+	public List<Category> listCategory();
 
 	public void addMeet(Meet meet);
 	
