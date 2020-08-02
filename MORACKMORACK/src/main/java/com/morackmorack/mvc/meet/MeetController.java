@@ -34,10 +34,12 @@ import com.morackmorack.mvc.common.Search;
 import com.morackmorack.mvc.service.community.CommunityService;
 import com.morackmorack.mvc.service.domain.Category;
 import com.morackmorack.mvc.service.domain.Files;
+import com.morackmorack.mvc.service.domain.Friend;
 import com.morackmorack.mvc.service.domain.Meet;
 import com.morackmorack.mvc.service.domain.MeetMem;
 import com.morackmorack.mvc.service.domain.User;
 import com.morackmorack.mvc.service.domain.WishMeet;
+import com.morackmorack.mvc.service.friend.FriendService;
 import com.morackmorack.mvc.service.meet.MeetService;
 import com.morackmorack.mvc.service.user.UserService;
 
@@ -52,6 +54,10 @@ public class MeetController {
 	@Autowired
 	@Qualifier("userServiceImpl")
 	private UserService userService;
+	
+	@Autowired
+	@Qualifier("friendServiceImpl")
+	private FriendService friendService;
 	
 	@Autowired
 	@Qualifier("communityServiceImpl")
@@ -116,9 +122,6 @@ public class MeetController {
 		List<MultipartFile> fileList = mtf.getFiles("file");
 
 		String root_path = request.getSession().getServletContext().getRealPath("/"); 
-		//String attach_path ="resources\\images\\uploadFiles\\meet\\";
-		
-		//String uploadPath = "C:\\Users\\LG\\git\\MORACKMORACK\\MORACKMORACK\\WebContent\\resources\\images\\uploadFiles\\meet";
 
 		if (fileList != null) {
 			int imgIndex = -1;
@@ -222,7 +225,6 @@ public class MeetController {
 		meet = meetService.getMeet(meetId);
 
 		ModelAndView mav = new ModelAndView();
-		// mav.addObject("meet", meet);
 		mav.setViewName("/meet/getMeet/" + meetId);
 		return mav;
 	}
@@ -237,10 +239,12 @@ public class MeetController {
 		}
 
 		List<Meet> listMeet = meetService.listMeet(search);
+		List<Category> listCategory = meetService.listCategory();
 
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("listMeet", listMeet);
 		mav.addObject("search", search);
+		mav.addObject("listCategory", listCategory);
 		mav.setViewName("/meet/listMeet.jsp");
 
 		return mav;
@@ -417,7 +421,7 @@ public class MeetController {
 	}
 
 	@RequestMapping(value = "listMeetMem/{meetId}", method = { RequestMethod.GET, RequestMethod.POST })
-	public ModelAndView listMeetMem(HttpServletRequest request, @PathVariable("meetId") String meetId) {
+	public ModelAndView listMeetMem(HttpServletRequest request, @PathVariable("meetId") String meetId) throws Exception {
 		System.out.println("/meet/listMeetMem : GET");
 		
 		ModelAndView mav = new ModelAndView();
@@ -425,19 +429,30 @@ public class MeetController {
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");	
 		
+		List<MeetMem> listMeetMem = new ArrayList<MeetMem>();
+		listMeetMem = meetService.listMeetMem(meetId);
+		
 		if(user != null) {
 			String userId = user.getUserId();
 			MeetMem meetMem = meetService.getMeetMem(meetId, userId);
-			Map map = meetService.getWishMeet(meetId, userId);
 			
 			if(meetMem != null) {
 				mav.addObject("meetMem", meetMem);
-			}				
+			}	
+		
+		if(listMeetMem != null) {
+			for(int i=0; i<listMeetMem.size(); i++) {
+				if(!listMeetMem.get(i).getUser().getUserId().equals(userId)) {
+				if(friendService.isFriend(userId, listMeetMem.get(i).getUser().getUserId())){
+				listMeetMem.get(i).setFriendFlag(true);
+				}else {
+					listMeetMem.get(i).setFriendFlag(false);
+						}
+					}
+				}
+			}
 		}
-
-		List<MeetMem> listMeetMem = new ArrayList<MeetMem>();
-		listMeetMem = meetService.listMeetMem(meetId);
-	
+		
 		mav.addObject("listMeetMem", listMeetMem);
 		mav.setViewName("/meet/listMeetMem.jsp");
 

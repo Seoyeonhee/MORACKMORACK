@@ -19,4 +19,7 @@ public void reqFriend(Friend friend) throws Exception;
 	public void okFriend(int friendNo) throws Exception;
 	
 	public void delFriend(int friendNo) throws Exception;
+	
+	public boolean isFriend(String userId, String meetMemId) throws Exception;
+	
 }

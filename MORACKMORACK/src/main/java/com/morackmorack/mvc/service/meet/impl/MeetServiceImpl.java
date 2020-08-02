@@ -17,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.morackmorack.mvc.common.Search;
 import com.morackmorack.mvc.service.domain.Category;
 import com.morackmorack.mvc.service.domain.Files;
+import com.morackmorack.mvc.service.domain.Hashtag;
 import com.morackmorack.mvc.service.domain.Meet;
 import com.morackmorack.mvc.service.domain.MeetMem;
 import com.morackmorack.mvc.service.domain.User;
@@ -65,6 +66,10 @@ public class MeetServiceImpl implements MeetService{
 	
 	public List<Meet> listMeetFromMain(List<String> categoryName){
 		return meetDao.listMeetFromMain(categoryName);
+	}
+	
+	public List<Meet> listMeetRank(){
+		return meetDao.listMeetRank();
 	}
 	
 	public void outMeet(String userId, String meetId){

@@ -120,6 +120,7 @@ $(function(){
             </c:if>
             <td></td>
         </tr>
+        
         <c:forEach var="listMeetMem" items="${listMeetMem}" varStatus="status"> 
             <tr>
             	<td>
@@ -137,9 +138,14 @@ $(function(){
                 <td><c:forEach var="blacklist" items="${listMeetMem.blackList}"> ${blacklist} </c:forEach></td> 
                 </c:if>
                 <td>
-                <c:if test="${sessionScope.user.userId ne listMeetMem.user.userId}">
+                
+                
+                <c:if test="${sessionScope.user.userId ne listMeetMem.user.userId}">               
+                <c:if test="${listMeetMem.friendFlag eq false}">
                 <button type="button" id="reqFriend${status.count}">친구 신청</button>
                 <input type="hidden" value="${listMeetMem.user.userId}"/><input type="hidden" value="${listMeetMem.meet.meetId}"/>
+                </c:if>
+                
                 
                 <button type="button" id="sendMessage${status.count}">쪽지 보내기</button>
                 <input type="hidden" id="userIdforMessage" value="${listMeetMem.user.userId}"/>
@@ -159,7 +165,8 @@ $(function(){
                 </c:if>       
                 </td>
             </tr>
-        </c:forEach>
+            </c:forEach>
+        
     </table>
     </section>
     </div>

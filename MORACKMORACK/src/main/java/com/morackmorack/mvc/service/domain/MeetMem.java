@@ -22,6 +22,7 @@ public class MeetMem implements Serializable{
 	private Date joinDate;
 	private String intro;
 	private int notifyCount;
+	private boolean friendFlag;
 	private Map<String, String> blackList;
 	
 	  @ManyToMany
@@ -98,6 +99,12 @@ public class MeetMem implements Serializable{
 	}
 	public void setOffMeet(List<OffMeet> offMeet) {
 		this.offMeet = offMeet;
+	}
+	public boolean isFriendFlag() {
+		return friendFlag;
+	}
+	public void setFriendFlag(boolean friendFlag) {
+		this.friendFlag = friendFlag;
 	}
 	@Override
 	public String toString() {

@@ -41,8 +41,7 @@ $(function(){
 
 <c:forEach var="friend" items="${listFriend}">
 친구 이름 : 
-<c:if test="${user.userId eq friend.reqFriend.userId}">${friend.recvFriend.userId}</c:if> 
-<c:if test="${user.userId eq friend.recvFriend.userId}">${friend.reqFriend.userId}</c:if>
+${friend.myFriend.userId}
 <input type="button" id="delFriend" value="친구 삭제"/>
 <input type="hidden" value="${friend.friendNo}"/>
 <br/><br/>

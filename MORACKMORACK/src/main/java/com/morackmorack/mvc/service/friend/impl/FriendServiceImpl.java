@@ -1,5 +1,6 @@
 package com.morackmorack.mvc.service.friend.impl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -50,5 +51,9 @@ public class FriendServiceImpl implements FriendService {
 
 	public void delFriend(int friendNo) throws Exception{
 		friendDao.delFriend(friendNo);
+	}
+	
+	public boolean isFriend(String userId, String meetMemId) throws Exception{
+		return friendDao.isFriend(userId, meetMemId);
 	}
 }

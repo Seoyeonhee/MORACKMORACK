@@ -26,7 +26,11 @@ public class MessageDaoImpl implements MessageDao{
 	}
 	
 	public Message getMessage(int messageNo){
-		return sqlSession.selectOne("MessageMapper.getMessage", messageNo);
+		Message message =  sqlSession.selectOne("MessageMapper.getMessage", messageNo);
+		 message.setSender(sqlSession.selectOne("UserMapper.getUser", message.getSender().getUserId()));
+		 message.setReceiver(sqlSession.selectOne("UserMapper.getUser", message.getReceiver().getUserId()));		
+		 
+		 return message;
 	}
 	
 	public void readMessage(int messageNo){

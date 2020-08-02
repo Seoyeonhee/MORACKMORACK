@@ -430,6 +430,12 @@ $(function (){
 		$("form").attr("method", "POST").attr("action", "/meet/listMeet").submit();
 	})
 	
+	$("input[id^='category']").on("click", function(){
+		$("#searchCondition").val($(this).val());
+		$("form").attr("method", "POST").attr("action", "/meet/listMeet").submit();
+	})
+	
+	
 function myButton() {
   var aaa = document.getElementById("box")
   aaa.style.fontSize = "25px"; 
@@ -466,79 +472,15 @@ function myButton() {
 
 <h4 style="text-align:right">카테고리 검색 목록</h4>
 
-  <fieldset>
-    <ul class="list-group">
-      <li class="category-li">
-        <input type="radio" name="group1" id="r1" class="input" checked>
-        <label for="r1">여행</label>
-      </li>
-      <li class="category-li">
-        <input type="radio" name="group1" id="r2" class="input">
-        <label for="r2">게임</label>
-      </li>
-      <li class="category-li">
-        <input type="radio" name="group1" id="r3" class="input">
-        <label for="r3">음악</label>
-      </li>
-      <li class="category-li">
-        <input type="radio" name="group1" id="r4" class="input">
-        <label for="r4">영화</label>
-      </li>
-      <li class="category-li">
-        <input type="radio" name="group1" id="r5" class="input">
-        <label for="r5">공연</label>
-      </li>
-      <li class="category-li">
-        <input type="radio" name="group1" id="r6" class="input">
-        <label for="r6">맛집</label>
-      </li>
-      <li class="category-li">
-        <input type="radio" name="group1" id="r7" class="input">
-        <label for="r7">자기계발</label>
-      </li>
-      <li class="category-li">
-        <input type="radio" name="group1" id="r8" class="input">
-        <label for="r8">액티비티</label>
-      </li>
-      <li class="category-li">
-        <input type="radio" name="group1" id="r9" class="input">
-        <label for="r9">독서/만화</label>
-      </li>
-      <li class="category-li">
-        <input type="radio" name="group1" id="r10" class="input">
-        <label for="r10">댄스</label>
-      </li>
-      <li class="category-li">
-        <input type="radio" name="group1" id="r11" class="input">
-        <label for="r11">사진</label>
-      </li>
-      <li class="category-li">
-        <input type="radio" name="group1" id="r12" class="input">
-        <label for="r12">반려동물</label>
-      </li>
-      <li class="category-li">
-        <input type="radio" name="group1" id="r13" class="input">
-        <label for="r13">요리</label>
-      </li>
-      <li class="category-li">
-        <input type="radio" name="group1" id="r14" class="input">
-        <label for="r14">차</label>
-      </li>
-      <li class="category-li">
-        <input type="radio" name="group1" id="r15" class="input">
-        <label for="r15">스포츠</label>
-      </li>
-      <li class="category-li">
-        <input type="radio" name="group1" id="r16" class="input">
-        <label for="r16">공예</label>
-      </li>
-      <li class="category-li">
-        <input type="radio" name="group1" id="r17" class="input">
-        <label for="r17">기타</label>
-      </li>
-    </ul>
-    </fieldset>
+<div style="text-align:center">
 
+<c:forEach var="category" items="${listCategory}">
+ <input type="radio" id="category" name="category" value="${category.categoryName}" ${ ! empty search.searchCondition && search.searchCondition eq category.categoryName ? "checked" : "" }/>${category.categoryName} &nbsp;&nbsp;
+ 
+</c:forEach>
+ </div>
+ 
+ 
 </c:if>
 
 <c:if test="${search.searchType eq 2}">

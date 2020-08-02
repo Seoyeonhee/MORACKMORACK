@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.morackmorack.mvc.service.domain.Hashtag;
 import com.morackmorack.mvc.service.meet.MeetService;
 
 @RestController
@@ -24,13 +25,14 @@ public class MeetRestController {
 	
 	@ResponseBody
 	@RequestMapping(value  = "/json/getHashtag")
-	public List<String> getHashtag(@RequestBody Map<String, Object>params ) {
+	public List<String>getHashtag(@RequestBody Map<String, Object>params ) {
 		System.out.println("meet/json/getHashtag");
 		
 		List<String> listHash = meetService.getHashtagFromMain((String) params.get("hash"));
-		System.out.println(listHash);
+		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+listHash);
 		
 		return listHash;
+	
 	}
 
 }

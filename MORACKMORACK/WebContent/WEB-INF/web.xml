@@ -45,7 +45,6 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns
   <servlet-mapping>
     <servlet-name>action</servlet-name>
     <url-pattern>/</url-pattern>
-  </servlet-mapping>
-  
+  </servlet-mapping> 
   
 </web-app>

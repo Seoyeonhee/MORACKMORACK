@@ -6,8 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
-<script type="text/javascript" src="<c:url value="/static/js/jquery/jquery-1.11.2.js"/>"></script>
-<script type="text/javascript" src="<c:url value="/static/js/sockjs-0.3.4.js"/>"></script>
+
 <script type="text/javascript">
  
     $(document).ready(function(){

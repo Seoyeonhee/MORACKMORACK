@@ -84,7 +84,7 @@ public class MessageController {
 	
 	message.setSender(user);
 	message.setReceiver(userService.getUser(request.getParameter("recvId")));
-	message.setMessageFlag('0'); //0쪽지 1알림
+	message.setMessageFlag('0'); //0쪽지 1초대
 	
 	messageService.sendMessage(message);
 	
@@ -164,10 +164,59 @@ public class MessageController {
 			messageService.readMessage(messageNo);
 		}
 		
+		Meet meet = new Meet();
+		
+		if(message.getMessageFlag() == '1' && message.getMeetId() != null) {
+			meet = meetService.getMeet(message.getMeetId());
+		}
+		
+		mav.addObject("meet", meet);
 		mav.addObject("message", message);
 		mav.setViewName("/message/getMessage.jsp");
 		
 		return mav;
+	}
+	
+	@RequestMapping(value="invMeet", method = RequestMethod.POST)
+	public ModelAndView invMeet(HttpServletRequest request) throws Exception{
+	System.out.println("/message/sendMessage : POST");
+	
+ModelAndView mav = new ModelAndView();
+	
+	HttpSession session = request.getSession(true);
+	User user = (User) session.getAttribute("user");
+	
+	 if(user == null) {
+		 	mav.setViewName("/user/loginView.jsp");
+			return mav;
+		 }
+	
+	 Message message = new Message();
+	 
+	message.setMessageFlag('1'); //0쪽지 1초대
+	message.setSender(user);
+	message.setReceiver(userService.getUser(request.getParameter("invUserId")));	
+	message.setMeetId(request.getParameter("meetId"));
+	message.setTitle("<모임 초대장>");
+	message.setContent(request.getParameter("invMessage"));
+	
+	messageService.sendMessage(message);
+	
+	mav.setViewName("/meet/getMeet/"+request.getParameter("meetId"));
+	
+	return mav;
+	}
+	
+	@RequestMapping(value="delMessage/{messageNo}", method = RequestMethod.GET)
+	public ModelAndView delMessage(HttpServletRequest request, @PathVariable("messageNo") int messageNo) throws Exception{
+	System.out.println("/message/delMessage : GET");
+	
+	ModelAndView mav = new ModelAndView();
+	
+	messageService.delMessage(messageNo);
+	
+	mav.setViewName("/message/listRecvMessage");
+	return mav;
 	}
 	
 	

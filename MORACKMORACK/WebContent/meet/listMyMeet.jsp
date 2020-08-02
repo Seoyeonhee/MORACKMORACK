@@ -110,7 +110,7 @@ $(function(){
                 <td><fmt:formatDate value="${meetMem.joinDate}" pattern="yyyy.MM.dd" /></td>
                 <td>${meetMem.meet.memNum}/${meetMem.meet.maxNum}</td>
                 <td>
-                ${category.categoryName}
+                ${meetMem.meet.category}
                 </td>
                 <td>
                 <button type="button" id="outMeet${status.count}">¸ðÀÓ Å»Åð</button> 

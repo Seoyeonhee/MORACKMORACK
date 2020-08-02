@@ -12,11 +12,12 @@
 <jsp:include page="/common/listCdn.jsp" />
 
 <style>
+@font-face { font-family: 'MapoGoldenPier'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/MapoGoldenPierA.woff') format('woff'); font-weight: normal; font-style: normal; }
 button {
     width:100px;
-    background-color: #8cafb9;
+    background-color: #E7D5BD;
     border: none;
-    color:#fff;
+    color:#E7D5BD;
     padding: 15px 0;
     text-align: center;
     text-decoration: none;
@@ -28,14 +29,14 @@ button {
 
 }
 button:hover {
-    background-color: #FFFFFF;
-    color:#8cafb9;
+    background-color: #ffffff;
+     border: 2px #E7D5BD;
+    color:#000000;
 }
 
-A:link {text-decoration:none; color:#646464;}
-A:visited {text-decoration:none; color:#646464;}
-A:active {text-decoration:none; color:#646464;}
-A:hover {text-decoration:none; color:#646464;}
+#messageDetail{
+font-family: 'MapoGoldenPier'; 
+}
 </style>
 
 
@@ -49,6 +50,9 @@ $(function(){
 		$('#modalBox').modal('show');
 	}
 	
+	$("#ok").on("click", function(){
+		window.history.back();
+	})
 	
 	$("#submitMessage").on("click", function(){
 		$("form").attr("method", "POST").attr("action", "/message/sendMessage").submit();
@@ -85,28 +89,27 @@ $(function(){
 
 <form>
 <aside>
-<div style="padding:40px; background-color:#dcdcdc; height:900px; width:1200px; margin-left:300px; margin-top:100px; padding:10px">
-	쪽지 보내기
-      <div style="padding:30px; background-color:#ffffff; height:25%; width:100%; opacity:0.6; display: inline-block; margin-top:20px">
+<div style="padding:40px; background-color:#E7D5BD; height:900px; width:1200px; margin-left:300px; margin-top:150px; padding:10px">
+      <div id="messageDetail" style="padding:30px; background-color:#ffffff; height:25%; width:100%; opacity:0.8; display: inline-block; margin-top:20px">
      	 받는 사람<br/><br/>
       <span id="listFriendOn" class="glyphicon glyphicon-user" style=" font-size: 60px; float:left;"></span>
-	      	<div style="margin-left:100px; margin-botton:300px;">
-	      	모임명 ${meet.meetName}<br/> 
+	      	<div id="messageDetail" style="margin-left:100px; margin-botton:300px;">
+	      	모임명 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ${meet.meetName}<br/> 
 	      	<input type="hidden" id="meetId" name="meetId" value="${meet.meetId}"/>
 	      	<input type="hidden" id="meetName" name="meetName" value="${meet.meetName}"/>
-			수신자 ID ${recvUser.userId}<br/>	
+			수신자 ID &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ${recvUser.userId}<br/>	
 			<input type="hidden" id="recvId" name="recvId" value="${recvUser.userId}"/>
-			수신자 닉네임 ${recvUser.nickName}<br/>	
+			수신자 닉네임 &nbsp; ${recvUser.nickName}<br/>	
 			</div>
 			<br/><br/>
 			쪽지 제목 <input type="text" id="title" name="title" value="" style="height:30px; width:500px; margin-left:10px;"/>		
       </div>
 
 <div>
-<textarea rows="30" cols="187" id="content" name="content" style="margin-top:30px;"></textarea>
+<textarea rows="25" cols="160" id="content" name="content" style="margin-top:30px; opacity:0.8;"></textarea>
 </div>
 <div style="float: right; padding:10px">
-<button type="button" id="cancle" style="margin-right:30px">취소</button>
+<button type="button" id="ok" style="margin-right:30px">취소</button>
 <button type="button" id="submitMessage">전송</button>
 </div>
 </div>
@@ -122,12 +125,12 @@ $(function(){
 </div>
 <div class="modal-body">
     	<div class="col-xs-6 col-md-5">
+    		쪽지 보내고 싶은 사람 선택<br/><br/>
     		<c:forEach var="friend" items="${listFriend}">
-			친구 이름 : 
 			<c:if test="${user.userId eq friend.reqFriend.userId}"><a href="/message/sendMessage?userId=${friend.recvFriend.userId}"> ${friend.recvFriend.userId}</c:if> 
 			<c:if test="${user.userId eq friend.recvFriend.userId}"><a href="/message/sendMessage?userId=${friend.reqFriend.userId}"> ${friend.reqFriend.userId}</c:if>
 			<input type="hidden" value="${friend.friendNo}"/>
-			</a>
+			</a><br/>
 			</c:forEach>
 </div>
 <div class="modal-footer">

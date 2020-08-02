@@ -40,7 +40,11 @@ public class MainController {
 		}else {
 			listMeetMain = meetService.listMeetFromMain();
 		}
-
+		
+		List<Meet> listMeetRank = new ArrayList<Meet>();
+		listMeetRank = meetService.listMeetRank();
+		
+		mav.addObject("listMeetRank", listMeetRank);
 		mav.addObject("listMeetMain", listMeetMain);
 		mav.setViewName("/index.jsp");
 		return mav;		

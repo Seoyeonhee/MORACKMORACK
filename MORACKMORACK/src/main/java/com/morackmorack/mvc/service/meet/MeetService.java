@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.morackmorack.mvc.common.Search;
 import com.morackmorack.mvc.service.domain.Category;
 import com.morackmorack.mvc.service.domain.Files;
+import com.morackmorack.mvc.service.domain.Hashtag;
 import com.morackmorack.mvc.service.domain.Meet;
 import com.morackmorack.mvc.service.domain.MeetMem;
 import com.morackmorack.mvc.service.domain.User;
@@ -33,6 +34,8 @@ public interface MeetService {
 	public List<Meet> listMeetFromMain();
 	
 	public List<Meet> listMeetFromMain(List<String> categoryName);
+	
+	public List<Meet> listMeetRank();
 	
 	public void outMeet(String userId, String meetId);
 	

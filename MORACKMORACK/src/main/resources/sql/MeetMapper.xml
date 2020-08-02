@@ -101,7 +101,7 @@
 	WHERE hash_name = #{hashtag}
 	</select>
 	
-	<select id="getHashtagFromMain" parameterType="String" resultType="java.util.HashMap">
+	<select id="getHashtagFromMain" parameterType="String" resultType="java.util.Map">
 	SELECT hash_name 
 	FROM hashtag
 	WHERE hash_name LIKE  #{hashtag} || '%'
@@ -197,6 +197,14 @@
 		</if>
 		ORDER BY meet.meet_star)
 	<![CDATA[ WHERE ROWNUM <= 5 ]]>
+	</select>
+	
+	<select id="listMeetRank" resultMap="meetSelectMap">
+	SELECT * 
+	FROM(SELECT meet.meet_id, meet.leader_id, meet.meet_name, meet.meet_loc, meet.max_num, meet.mem_num, meet.meet_img, meet.s_intro, meet.l_intro, meet.reg_date, meet.meet_star, meet.bank, meet.accNum, meet.category, meet.meet_appr, meet.meet_type
+		FROM meet
+		ORDER BY meet.meet_star)
+	<![CDATA[ WHERE ROWNUM <= 3 ]]>
 	</select>
 	
 	<select id="getMeetMain" resultMap="meetSelectMap">

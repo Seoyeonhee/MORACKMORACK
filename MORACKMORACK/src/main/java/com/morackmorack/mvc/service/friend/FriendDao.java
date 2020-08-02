@@ -20,5 +20,5 @@ public interface FriendDao {
 	
 	public void delFriend(int friendNo) throws Exception;
 	
-	//public int getTotalCount(String userId) throws Exception;
+	public boolean isFriend(String userId, String meetMemId) throws Exception;
 }

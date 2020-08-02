@@ -92,15 +92,17 @@ h2 {
 </div>
 </div>
 
-
+ddd
+<c:forEach var="meet" items="${listMeetRank}">
+eees
 <div class="row" style="margin-top:180px"> <!-- 모임 순위 -->
   <div class="col-xs-6 col-md-4">
     <a href="#" class="thumbnail">
-      <img src="..." alt="IMAGE">
+      <img src="/resources/images/uploadFiles/meet/${meet.meetImg}" alt="IMAGE">
     </a>
   </div>
   
-  <div class="col-xs-6 col-md-4">
+ <!--  <div class="col-xs-6 col-md-4">
     <a href="#" class="thumbnail">
       <img src="..." alt="IMAGE">
     </a>
@@ -111,8 +113,9 @@ h2 {
       <img src="..." alt="IMAGE">
     </a>
   </div>
- 
-</div>   
+  -->
+</div> 
+</c:forEach>  
 
 <div class="row" style="margin-top:180px"> <!-- 업체 추천 -->
   <div class="col-xs-6 col-md-3"> 

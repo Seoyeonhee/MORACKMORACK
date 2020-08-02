@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 import com.morackmorack.mvc.common.Search;
 import com.morackmorack.mvc.service.domain.Category;
 import com.morackmorack.mvc.service.domain.Files;
+import com.morackmorack.mvc.service.domain.Hashtag;
 import com.morackmorack.mvc.service.domain.Meet;
 import com.morackmorack.mvc.service.domain.MeetMem;
 import com.morackmorack.mvc.service.domain.User;
@@ -69,6 +70,10 @@ public class MeetDaoImpl implements MeetDao {
 	
 	public List<Meet> listMeetFromMain(List<String> categoryName){
 		return sqlSession.selectList("MeetMapper.listMeetMain", categoryName);
+	}
+	
+	public List<Meet> listMeetRank(){
+		return sqlSession.selectList("MeetMapper.listMeetRank");
 	}
 	
 	public void outMeet(String userId, String meetId){
@@ -213,7 +218,16 @@ public class MeetDaoImpl implements MeetDao {
 	}
 	
 	public List<String> getHashtagFromMain(String hashtag) {
-		 return sqlSession.selectList("MeetMapper.getHashtagFromMain", hashtag);
+		List<String> listHash = sqlSession.selectList("MeetMapper.getHashtagFromMain", hashtag);
+		 
+		/*
+		 * for(int i=0; i<listHash.size(); i++) {
+		 * System.out.println(">>>>>>>>>>>>>>>>>"+ listHash); String subHash =
+		 * listHash.get(i).toString(); listHash.set(i, subHash.substring(11));
+		 * System.out.println(">>>>>>>>>>>>>>>>>"+ listHash); }
+		 */
+	 
+		 return listHash;
 	}
 	
 	public void addHash(String hashtag) {

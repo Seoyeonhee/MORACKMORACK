@@ -198,8 +198,8 @@ button::before, button::after {
 .grid12-6 .inner_box{
      position:absolute;
      background:rgba(255,255,255,0.7);
-     width: 40%;
-     height: 40%;
+     width: 55%;
+     height: 55%;
      top:50%;
      left:50%;
      transform:translate(-50%,-50%);
@@ -412,7 +412,8 @@ $(function(){
 		var userId = $(this).next().val();
 		var nickName = $(this).next().next().val();
 		
-		alert(userId+" 1 "+nickName+" 2 ");
+		$("#invUserId").val(userId);
+		$("#invUserNickName").val(nickName);
 		
 		$('#modalBox3').modal('show');
 		
@@ -429,7 +430,12 @@ $(function(){
 	$("#inputIntro").on("click", function(){
 		var intro = $("#intro").val();
 		$("form").attr("method", "POST").attr("action", "/meet/joinMeet").submit();
-});
+	});
+	
+	$("#inputInvMessage").on("click", function(){
+		var invMessage = $("#invMessage").val();
+		$("form").attr("method", "POST").attr("action", "/message/invMeet").submit();
+	});
 
 	//var count = 0;
 	var count = $("#wishCount").val();
@@ -528,6 +534,14 @@ $(function(){
      <h2 id="mainMeetName">${meet.meetName}</h2>
      <br/><br/>
      <h4 id="mainHashtag"><c:forEach var="hashtag" items="${meet.hashtag}">#${hashtag.HASH_NAME} </c:forEach></h4>
+    <br/><br/>
+     <h4 id="mainHashtag">${meet.category}</h4>
+     <br/><br/>
+     <h4 id="mainHashtag">${meet.meetLoc}</h4>
+     <br/><br/>
+     <h4 id="mainHashtag">${meet.sIntro}</h4>
+     <br/><br/>
+     <h4 id="mainHashtag">${meet.memNum} / ${meet.maxNum}</h4>
      <!-- <button>See More</button> -->
 </div>
 
@@ -545,21 +559,24 @@ $(function(){
 </div>
 <div class="modal-body">
     	<div class="col-xs-6 col-md-12">
-    		<a href="#" class="thumbnail">
-     		 <img src="/resources/images/uploadFiles/meet/${meet.meetImg}" width="100" height="100" alt="MORACK MORACK"/> 
-    		</a>
+    	<div class="col-xs-6 col-md-5" style="margin-top:20px">
+     		 <img src="/resources/images/uploadFiles/meet/${meet.meetImg}" width="250" height="250" alt="MORACK MORACK" class="img-circle"/> 
  		 </div>
+ 		 <div class="col-xs-6 col-md-7" style="margin-top:30px">
   		<strong>모임명</strong>
-		${meet.meetName} <br/>
+		${meet.meetName} <br/><br/>
 		<strong>모임유형</strong>
-    	<c:if test="${meet.meetType eq '0'.charAt(0)}">2인모임</c:if><c:if test="${meet.meetType eq '1'.charAt(0)}">다수인모임</c:if> <br/>
-    	<strong>카테고리</strong> ${meet.category}
+    	<c:if test="${meet.meetType eq '0'.charAt(0)}">2인모임</c:if><c:if test="${meet.meetType eq '1'.charAt(0)}">다수인모임</c:if> <br/><br/>
+    	<strong>카테고리</strong> 
+    	${meet.category}<br/><br/>
 		${meet.lIntro} <br/>
 		<strong>한줄 자기소개</strong> <input type="text" id="intro" name="intro" class="form__field" placeholder="자기소개 입력" value=""/>
+	</div>
 </div>
 <div class="modal-footer">
 <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
             <button type="button" class="btn btn-primary" id="inputIntro">가입</button>
+</div>
 </div>
 </div>
 </div>
@@ -576,13 +593,7 @@ $(function(){
 <div class="modal-body">
     	<div class="col-xs-6 col-md-12">
     		<c:forEach var="friend" items="${listFriend}" varStatus="status">
-			<c:if test="${user.userId eq friend.reqFriend.userId}"> 
-			${friend.recvFriend.profileImg} <a id="invMeet${status.count}"> ${friend.recvFriend.userId}</a> <input type="hidden"  value="${friend.recvFriend.userId}"/><input type="hidden" value="${friend.recvFriend.nickName}"/>
-			</c:if> 
-			<c:if test="${user.userId eq friend.recvFriend.userId}"> 
-			${friend.reqFriend.profileImg} <a id="invMeet${status.count}"> ${friend.reqFriend.userId}</a> <input type="hidden" value="${friend.reqFriend.userId}"/><input type="hidden" value="${friend.reqFriend.nickName}"/>
-			</c:if>
-			
+    		${friend.myFriend.profileImg} <a id="invMeet${status.count}"> ${friend.myFriend.userId} </a> <input type="hidden"  value="${friend.myFriend.userId}"/><input type="hidden" value="${friend.myFriend.nickName}"/>
 			<br/><br/>
 			</c:forEach>
 </div>
@@ -593,6 +604,8 @@ $(function(){
 </div>
 </div>
 
+<!-- <input type="hidden" id="invUserId" name="invUserId" value=""/>
+<input type="hidden" id="invUserNickName" name="invUserNickName" value=""/> -->
 
 <!-- 모달 영역 -->
 <div id="modalBox3" class="modal fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -602,30 +615,53 @@ $(function(){
 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
 <h4 class="modal-title" id="myModalLabel">모임 초대</h4>
 </div>
-<div class="modal-body">
-    	<div class="col-xs-6 col-md-12">
-    		모임명 ${meet.meetName} <br/>
-    		모임생성일 <fmt:formatDate value="${meet.regDate}" pattern="yyyy.MM.dd" /> <br/><br/>
+<div class="modal-body">	
+			<input type="hidden" id="invUserId" name="invUserId" value=""/>
+			<input type="hidden" id="invUserNickName" name="invUserNickName" value=""/>
+			
+			<div class="col-xs-6 col-md-12">	
+ 			
+    		<div class="col-xs-6 col-md-6">	
+    		<strong>모임명</strong> <br/>
+    		${meet.meetName} <br/><br/>
     		
-    		카테고리 ${meet.category} <br/>
-    		주요 활동 위치 ${meet.meetLoc} <br/>
-    		모임 유형 
+    		<strong>모임생성일</strong><br/>
+    		 <fmt:formatDate value="${meet.regDate}" pattern="yyyy.MM.dd" /> <br/><br/>
+    		 
+    		 <strong>주요 활동 위치</strong><br/>
+    		 ${meet.meetLoc} <br/><br/>
+    		
+    		<strong>카테고리</strong><br/>
+    		 ${meet.category} <br/><br/>
+    		   		   		 
+    		<strong>모임 유형 </strong><br/>
     		<c:if test="${meet.meetType eq '0'.charAt(0)}">2인 모임</c:if>
     		<c:if test="${meet.meetType eq '1'.charAt(0)}">다수인 모임</c:if>
-    		 <br/> 
-    		가입 승인 필요 여부 
-    		<c:if test="${meet.meetAppr eq true}">가입 승인 필요</c:if>
-    		<c:if test="${meet.meetAppr eq false}">가입 승인 불필요</c:if>
-    		 <br/>
-    		모임 간략 소개 ${meet.sIntro} <br/><br/>
+    		 <br/> <br/>
+    		 
+    		<strong>가입 승인 필요 여부 </strong><br/>
+    		<c:if test="${meet.meetAppr eq true}">승인 필요</c:if>
+    		<c:if test="${meet.meetAppr eq false}">승인 불필요</c:if>
+    		 <br/><br/>
+    		 
+    		<strong>모임 간략 소개</strong><br/>
+    		 ${meet.sIntro} <br/><br/>
     		
     		<strong>초대 문구</strong> 
-    		<input type="text" id="invMessage" name="intro" class="form__field" placeholder="초대문구 입력" value=""/>
+    		<input type="text" id="invMessage" name="invMessage" class="form__field" placeholder="초대문구 입력" value=""/>
+    		</div>
+    		
+    		<div class="col-xs-6 col-md-6">	
+			<img src="/resources/images/uploadFiles/meet/${meet.meetImg}" alt="MORACKMORACK" class="img-circle" width="150px" height="150px" style="margin:20px; margin-right:0px;">
+    		</div>
+    		</div>
+			
+			
+    		
 </div>
 <div class="modal-footer">
 <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
             <button type="button" class="btn btn-primary" id="inputInvMessage">초대</button>
-</div>
 </div>
 </div>
 </div>

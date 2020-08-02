@@ -10,6 +10,7 @@ public class Friend {
 	private Date reqFriendDate;
 	private Date friendDate;
 	private String friendCode;
+	private User myFriend;
 	
 	public Friend() {
 	}
@@ -50,15 +51,19 @@ public class Friend {
 	public void setFriendCode(String friendCode) {
 		this.friendCode = friendCode;
 	}
+	public User getMyFriend() {
+		return myFriend;
+	}
+
+	public void setMyFriend(User myFriend) {
+		this.myFriend = myFriend;
+	}
 
 	@Override
 	public String toString() {
 		return "Friend [friendNo=" + friendNo + ", reqFriend=" + reqFriend + ", recvFriend=" + recvFriend
 				+ ", reqFriendDate=" + reqFriendDate + ", friendDate=" + friendDate + ", friendCode=" + friendCode
-				+ "]";
-	}
-	
-
-	
+				+ ", myFriend=" + myFriend + "]";
+	}	
 
 }

@@ -51,7 +51,7 @@
 	<select id="listRecvMessage" parameterType="String" resultMap="messageSelectMap">
 	SELECT message_no, message_flag, send_id, recv_id, meet_id, meet_name, off_no, title, content, send_date, read_state
 	FROM message
-	WHERE message_flag = '0' AND recv_id = #{receiver.userId}
+	WHERE recv_id = #{receiver.userId}
 	</select>
 	
 	

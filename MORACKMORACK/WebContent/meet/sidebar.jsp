@@ -7,8 +7,13 @@
 <jsp:include page="/common/listCdn.jsp" />
 
 <style>
-@font-face { font-family: 'TmoneyRoundWindExtraBold'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/TmoneyRoundWindExtraBold.woff') format('woff'); font-weight: normal; font-style: normal; }
+@import url("//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css")
 @font-face { font-family: 'BBTreeGB'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_nine_@1.1/BBTreeGB.woff') format('woff'); font-weight: normal; font-style: normal; }
+@font-face {
+font-family: 'Glyphicons Halflings';
+src: url('https://netdna.bootstrapcdn.com/bootstrap/3.0.0/fonts/glyphicons-halflings-regular.eot');  src: url('https://netdna.bootstrapcdn.com/bootstrap/3.0.0/fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('https://netdna.bootstrapcdn.com/bootstrap/3.0.0/fonts/glyphicons-halflings-regular.woff') format('woff'), url('https://netdna.bootstrapcdn.com/bootstrap/3.0.0/fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('https://netdna.bootstrapcdn.com/bootstrap/3.0.0/fonts/glyphicons-halflings-regular.svg#glyphicons-halflingsregular') format('svg');
+}
+
 
 .sidebar-image{
   width: 54px;
@@ -50,19 +55,17 @@
   font-size:15px;
 }
 
-#sideTool{
-	font-family: 'TmoneyRoundWindExtraBold';
-	font-size : 15px;
-}
-
 #sideNickName{
 	font-family: 'BBTreeGB';
 	font-size : 20px;
 }
+.glyphicon{
+	font-size: 12px;
+}
 </style>
 
 
-<ul class="nav nav-pills nav-stacked">
+<ul class="nav nav-pills">
 	<li>
 	<c:if test="${empty sessionScope.user}">
        	<img class="sidebar-image" src="/resources/images/uploadFiles/meet/notUser.jpg">
@@ -80,16 +83,16 @@
 	<c:if test="${empty sessionScope.user}">비회원</c:if> <c:if test="${!empty sessionScope.user}">${user.nickName}</c:if>
 		</strong>
 	</li>
-  <li class="sidebar-li" role="presentation"><a id="sideTool" class="glyphicon glyphicon-home" href="/meet/getMeet/${meetId}" > Home</a></li>
+  <li class="sidebar-li" role="presentation"><a class="glyphicon glyphicon-home" href="/meet/getMeet/${meetId}" > Home</a></li>
   <c:if test="${!empty meetMem && meetMem.joinCode eq '1'.charAt(0)}">
-  <li class="sidebar-li" role="presentation"><a id="sideTool" class="glyphicon glyphicon-user" href="/meet/listMeetMem/${meetId}"> 모임 회원</a></li>
-  <li class="sidebar-li" role="presentation"><a id="sideTool" class="glyphicon glyphicon-send" href="#"> 채팅</a></li>
-  <li class="sidebar-li" role="presentation"><a id="sideTool" class="glyphicon glyphicon-book" href="#"> 모임 커뮤니티</a></li>
-  <li class="sidebar-li" role="presentation"><a id="sideTool" class="glyphicon glyphicon-calendar" href="/offmeet/getOffList?meetId=${meetId}"> 오프라인 모임 <span class="badge" style="background-color:#FFD835">4</span></a></li>
+  <li class="sidebar-li" role="presentation"><a class="glyphicon glyphicon-user" href="/meet/listMeetMem/${meetId}"> 모임 회원</a></li>
+  <li class="sidebar-li" role="presentation"><a class="glyphicon glyphicon-send" href="#"> 채팅</a></li>
+  <li class="sidebar-li" role="presentation"><a class="glyphicon glyphicon-book" href="#"> 모임 커뮤니티</a></li>
+  <li class="sidebar-li" role="presentation"><a class="glyphicon glyphicon-calendar" href="/offmeet/getOffList?meetId=${meetId}"> 오프라인 모임 <span class="badge" style="background-color:#FFD835">4</span></a></li>
   </c:if>
   <c:if test="${!empty meetMem && meetMem.meetRole eq '0'.charAt(0)}">
-  <li class="sidebar-li" role="presentation"><a id="sideTool" class="glyphicon glyphicon-triangle-bottom" href="/meet/listJoinMeetUser/${meetId}"> 가입 신청 회원 <span class="badge" style="background-color:#FFD835">4</span></a></li>
-  <li class="sidebar-li" role="presentation"><a id="sideTool" class="glyphicon glyphicon-triangle-bottom" href="#"> 신고 관리</a></li>
+  <li class="sidebar-li" role="presentation"><a class="glyphicon glyphicon-triangle-bottom" href="/meet/listJoinMeetUser/${meetId}"> 가입 신청 회원 <span class="badge" style="background-color:#FFD835">4</span></a></li>
+  <li class="sidebar-li" role="presentation"><a class="glyphicon glyphicon-triangle-bottom" href="#"> 신고 관리</a></li>
   </c:if>
 </ul>
 

@@ -18,40 +18,14 @@
   transition: all 0.2s ease-in-out;
 }
 
-
-.sidebar-li{
-  position: relative;
-  cursor: pointer;
-  user-select: none;
-  display: block;
-  height: 80px;
-  line-height: 48px;
-  padding: 0;
-  padding-left: 16px;
-  padding-right: 56px;
-  text-decoration: none;
-  clear: both;
-  font-weight: 500;
-  overflow: hidden;
-  -o-text-overflow: ellipsis;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  -webkit-transition: all 0.2s ease-in-out;
-  -o-transition: all 0.2s ease-in-out;
-  transition: all 0.2s ease-in-out;
-  position: absolute;
-  right: 16px;
-  top: 0px;
-  background-color: #fff !important;
-  text-align : left;
-  font-color:#000000;
-  font-size:15px;
-}
+A:link {text-decoration:none; color:#000000;}
+A:visited {text-decoration:none; color:#000000;}
+A:active {text-decoration:none; color:#000000;}
+A:hover {text-decoration:none; color:#000000;}
 
 </style>
 
-
-<ul class="nav nav-pills nav-stacked">
+<ul class="nav nav-pills" style="float:center; margin-bottom:70px">
   <li class="sidebar-li" role="presentation"><a class="glyphicon glyphicon-envelope" href="/message/sendMessage.jsp" > 쪽지 보내기</a></li>
   <li class="sidebar-li" role="presentation"><a class="glyphicon glyphicon-triangle-bottom" href="/message/listSendMessage"> 보낸 쪽지함</a></li>
   <li class="sidebar-li" role="presentation"><a class="glyphicon glyphicon-triangle-bottom" href="/message/listRecvMessage"> 받은 쪽지함</a></li>

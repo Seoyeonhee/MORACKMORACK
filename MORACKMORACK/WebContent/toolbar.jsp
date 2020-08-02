@@ -3,17 +3,9 @@
     
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
 
-<script src="https://code.jquery.com/jquery-3.1.1.js"></script>
+<jsp:include page="/common/listCdn.jsp" />
+<script src="/resources/js/sockjs.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
-
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
-<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
-<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 
 <style>
 @charset "UTF-8";
@@ -201,6 +193,11 @@ article {
 </style>
 
 <script type ="text/javascript">
+
+var ws;
+var userId = "${sessionScope.user.userId}"; //sender
+
+
 (function($) { // Begin jQuery
 	  $(function() { // DOM ready
 		    // If a link has a dropdown, add sub menu toggle.
@@ -223,7 +220,68 @@ article {
 		      this.classList.toggle('active');
 		    });
 		  }); // end DOM ready
+		  
+		  connect();
+			$("#btnSend").on("click", function(){
+				var chat = $("#msgArea").val();
+				chat = chat + "\나 : "+ $("#chatMsg").val();
+				$("#msgArea").val(chat);
+				sendMsg();
+				$("#chatMsg").val("");
+				
+			})
+			
 		})(jQuery); // end jQuery
+		
+		function connect(){ 
+			
+			//웹소켓 객체 생성하는 부분
+			//핸들러 등록(연결 생성, 메세지 수신, 연결 종료)
+			
+			//url 연결할 서버의 경로
+			ws = new SockJS("<c:url value="/echo"/>");
+			
+			ws.onopen = function(){
+				console.log('연결 생성');
+			};
+			ws.onmessage = function(e){
+				console.log('메세지 받음');
+				var data = e.data;
+				alert("받은 메세지 : "+ data);
+				addMsg(data);
+			};
+			ws.onclose = function(){
+				console.log('연결 끊김');
+			};
+			
+		}
+
+		function addMsg(msg){ //원래 채팅 메세지에 방금 받은 메세지 더해서 set
+			var chat = $("#msgArea").val();
+			chat = chat + "\n 상대방 : "+ msg;
+			$("#msgArea").val(chat);
+		}
+
+		function sender(){ //메세지 수신을 위한 서버에 id 등록
+			var msg = {
+					type : "senderId", //메세지 구분하는 구분자 - 상대방 아이디와 메세지 포함
+					sendId : "${sessionScope.user.userId}"
+			
+			};
+			
+			ws.send(JSON.stringify(msg));
+		}
+
+		function sendMsg(){
+			var msg = {
+					type : "message", //메세지 구분하는 구분자 - 상대방 아이디와 메세지 포함
+					sendId : "${sessionScope.user.userId}",
+					recvId : $("#targetUser").val(),
+					content : $("#chatMsg").val()
+			};
+			ws.send(JSON.stringify(msg));
+		};
+		
 </script>
 
 <section class="navigation">

@@ -32,7 +32,7 @@ public class EchoHandler extends TextWebSocketHandler{
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception{
 		
-		System.out.println("afterConnectionEstablished : 楷搬 积己");
+		System.out.println("# WEBSOCKET afterConnectionEstablished : 楷搬 积己");
 		users.add(session);
 	}
 	

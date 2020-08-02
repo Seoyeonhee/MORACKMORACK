@@ -41,7 +41,14 @@ public class FriendDaoImpl implements FriendDao {
 		for(int i=0; i<listFriend.size(); i++) {
 			listFriend.get(i).setReqFriend(sqlSession.selectOne("UserMapper.getUser", listFriend.get(i).getReqFriend().getUserId()));
 			listFriend.get(i).setRecvFriend(sqlSession.selectOne("UserMapper.getUser", listFriend.get(i).getRecvFriend().getUserId()));		
+			
+			if(! userId.equals(listFriend.get(i).getReqFriend().getUserId())) {
+				listFriend.get(i).setMyFriend(listFriend.get(i).getReqFriend());
+			}else {
+				listFriend.get(i).setMyFriend(listFriend.get(i).getRecvFriend());
+			}	
 		}
+
 		
 		int friendCount = sqlSession.selectOne("FriendMapper.getTotalCount", userId);
 		
@@ -64,4 +71,15 @@ public class FriendDaoImpl implements FriendDao {
 		sqlSession.selectOne("FriendMapper.delFriend", friendNo);
 	}
 
+	public boolean isFriend(String userId, String meetMemId) throws Exception{
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("userId", userId);
+		map.put("meetMemId", meetMemId);
+
+		if( sqlSession.selectOne("FriendMapper.isFriend", map) != null) {
+			return true;
+		}else {
+			return false;
+		}
+	}
 }
