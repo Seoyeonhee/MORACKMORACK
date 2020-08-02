@@ -86,7 +86,7 @@
 	<!-- SQL : Business_UPDATE -->
 	<update  id="updateBusiness"	parameterType="business">
 	   	UPDATE business
-	   	<set>
+	   	SET
 	   		business_pass			=		#{businessPass},
 	   		business_name			=		#{businessName},
 	   		business_loc			=		#{businessLoc},
@@ -97,7 +97,6 @@
 	   		deposit_acc_num			=		#{depositAccNum},
 	   		business_start_time		=		#{businessStartTime:VARCHAR},
 	   		business_end_time		=		#{businessEndTime:VARCHAR}
-	   	</set>
 	   	WHERE business_id = #{businessId}
 	</update>
 	
@@ -147,11 +146,10 @@
 	<!-- SQL : MENU_UPDATE -->
 	<update	id="updateBusinessMenu"	parameterType="menu" >
 		UPDATE menu
-			<set>
+		SET
 				business_menu			=		#{businessMenu} ,
 				business_menu_fee		=		#{businessMenuFee} ,
 				business_menu_img		=		#{businessMenuImg}
-			</set>
 		WHERE menu_no = #{menuNo}
 	</update>
 	 

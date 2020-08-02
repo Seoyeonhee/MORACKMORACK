@@ -1,9 +1,15 @@
 package com.morackmorack.mvc.business;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,11 +19,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.morackmorack.mvc.common.Search;
 import com.morackmorack.mvc.service.business.BusinessService;
 import com.morackmorack.mvc.service.domain.Business;
+import com.morackmorack.mvc.service.domain.Files;
 import com.morackmorack.mvc.service.domain.Menu;
 import com.morackmorack.mvc.service.domain.Pay;
 import com.morackmorack.mvc.service.domain.ReserveAble;
@@ -138,24 +147,55 @@ public class BusinessController {
 	}
 
 	
-//	2020-07-21 서연희
+//	2020-08-01 서연희
 //	addBusinessMenu
-//	업체 메뉴 등록
+//	업체 메뉴 등록_파일업로드까지
 	@RequestMapping( value="addBusinessMenu", method=RequestMethod.POST )
 	public ModelAndView addBusinessMenu( @RequestParam(value="businessMenuList", required=true) List<String> businessMenuList,
 										@RequestParam(value="businessMenuFeeList", required=true) List<Integer> businessMenuFeeList,
-										@RequestParam(value="businessMenuImgList" ) List<String> businessMenuImgList,
+										@RequestParam(value="businessMenuImgList" ) List<MultipartFile> businessMenuImgList,
+										MultipartHttpServletRequest mtf,
+										HttpServletRequest request,
 										HttpSession session) throws Exception {
 
 		System.out.println("/business/addBusinessMenu : POST");
 		
 		ModelAndView mv = new ModelAndView();
-		Business business = (Business)session.getAttribute("business");
+
+		List<MultipartFile> fileList = mtf.getFiles("businessMenuImgList");
 		
-		for(int i=0 ; i<businessMenuList.size() ; i++) {
-			Menu menu = new Menu(business.getBusinessId(), businessMenuList.get(i), businessMenuFeeList.get(i), businessMenuImgList.get(i));
-			System.out.println("businessService.addBusinessMenu(menu) 실행 전 메뉴\n" + menu);
-			businessService.addBusinessMenu(menu);
+		String root_path = request.getSession().getServletContext().getRealPath("/");
+		String attach_path = "resources\\images\\uploadFiles\\business\\";
+		
+		Menu menu = new Menu();
+		menu.setBusinessId(((Business)session.getAttribute("business")).getBusinessId());
+		int index = 0;
+		
+		if(fileList != null) {
+			for(MultipartFile mf : fileList) {
+				
+				String originFileName = mf.getOriginalFilename();
+				long fileSize = mf.getSize();
+				
+				String safeFile = System.currentTimeMillis() + originFileName;
+				
+				try {
+					mf.transferTo(new File(root_path + attach_path + safeFile));
+					menu.setBusinessMenuImg(safeFile);
+					menu.setBusinessMenu(businessMenuList.get(index));
+					menu.setBusinessMenuFee(businessMenuFeeList.get(index));
+					
+					businessService.addBusinessMenu(menu);
+					
+					index++;
+				} catch (IllegalStateException e) {
+					e.printStackTrace();
+				} catch(IOException e) {
+					e.printStackTrace();
+				}
+			}
+		} else {
+			menu.setBusinessMenuImg("empty_Img.png");
 		}
 		
 		mv.setViewName("redirect:/business/listBusinessMenu");

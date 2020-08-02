@@ -73,14 +73,12 @@
 		<jsp:include page="/toolbar.jsp" />
 	</header>
 
-	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">
 	
 		<div class="page-header text-info">
-			<img id="businessImg" style="float:left; height:100px; width:100px; margin:5px" src="../../resources/images/down-arrow.png" alt="@@업체 대표 이미지@@">
+			<img id="businessImg" style="float:left; height:100px; width:100px; margin:5px" src="/resources/images/uploadFiles/business/${business.businessImg}" alt="@@업체 대표 이미지@@">
 			<h2 style="padding-top:10px;">${business.businessName}</h2>
-			<!-- <h2 style="padding-top:10px;">업체명</h2> -->
-			<h5>메뉴 등록</h5>
+			<h5>메뉴 목록</h5>
 	    </div>
 	
 	
@@ -101,7 +99,7 @@
 						
 						<input type='button' class="delBusinessMenu" value='-' style='margin-top: 80px; float: left;' class="btn">
 						<p style="float:left">&nbsp;&nbsp;&nbsp;&nbsp;</p>
-						<img class='businessMenuImg' style='float:left; height:200px; width:200px; margin:5px' src='../../resources/images/down-arrow.png' alt='@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 메뉴 이미지 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@'>
+						<img class='businessMenuImg' style='float:left; height:200px; width:200px; margin:5px' src='/resources/images/uploadFiles/business/${menu.businessMenuImg}' alt='@@@@@ 메뉴 이미지 @@@@@'>
 				  		<h2> ${menu.businessMenu} </h2>
 				  		<p> </p>
 				  		<h3> ${menu.businessMenuFee} </h3>
@@ -111,10 +109,7 @@
 			</form>
 	  	</c:forEach>
 	  
-	  
-	  
 	</div>
-	<!--  화면구성 div End /////////////////////////////////////-->
 
 </body>
 </html>
