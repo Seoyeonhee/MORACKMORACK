@@ -8,7 +8,7 @@
 <head>
 <meta charset="EUC-KR">
 <title>제휴업체 상세 조회</title>
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script src='https://fullcalendar.io/releases/fullcalendar/3.9.0/lib/moment.min.js'></script>
 <script type="text/javascript" src="./fullcalendar-3.9.0/gcal.js"></script>
 <link href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.css'rel='stylesheet'/>
@@ -21,21 +21,8 @@
 	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
-	<!-- <script src="https://code.jquery.com/jquery-3.1.1.js"></script> -->
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
-	
-	
-	<!-- Bootstrap Dropdown Hover CSS -->
-	<link href="/css/animate.min.css" rel="stylesheet">
-	<link href="/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
-	<!-- Bootstrap Dropdown Hover JS -->
-	<script src="/javascript/bootstrap-dropdownhover.min.js"></script>
-	
-	
-	<!-- jQuery UI toolTip 사용 CSS-->
-	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-	<!-- jQuery UI toolTip 사용 JS-->
-	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
 
 <script type="text/javascript">
 
@@ -144,10 +131,10 @@
 </head>
 <body>
 
-<%-- 	<header>
-		<jsp:include page="/toolbar.jsp" />
-	</header
-	 --%>
+	<header>
+		<jsp:include page="/business/businessToolbar.jsp" />
+	</header>
+	
 	
 	<div class="container">
 	
@@ -157,15 +144,15 @@
 	    
 	    <div>
 	    	<span style="width:50%; float:left;">
-	    		<input type="hidden" id="businessId" name="businessId" value="${business.businessId }"/>
+	    		<input type="hidden" id="businessId" name="businessId" value="${sessionScope.business.businessId }"/>
 				<img src="resources/images/uploadFiles/${business.businessImg}" alt="업체 대표 이미지" title="${business.businessName}" style="width:100%; height:400px; background-color:yellow;">
-				<p id="businessName" style="font-size:30px;">${business.businessName} &nbsp;&nbsp;&nbsp; 별점 : ${business.businessStar}</p>
+				<p id="businessName" style="font-size:30px;">${sessionScope.business.businessName} &nbsp;&nbsp;&nbsp; 별점 : ${sessionScope.business.businessStar}</p>
 				<h3>업체 위치</h3>
-				<h5 style="padding-bottom:10px;">${business.businessLoc }</h5>
+				<h5 style="padding-bottom:10px;">${sessionScope.business.businessLoc }</h5>
 				<h3>업체 번호</h3>
-				<h5 style="padding-bottom:10px;">${business.businessPhone }</h5>
+				<h5 style="padding-bottom:10px;">${sessionScope.business.businessPhone }</h5>
 				<h3>업체 운영 시간</h3>
-				<h5 style="padding-bottom:10px;">${business.businessStartTime } &nbsp; ~ &nbsp; ${business.businessEndTime }</h5>
+				<h5 style="padding-bottom:10px;">${sessionScope.business.businessStartTime } &nbsp; ~ &nbsp; ${sessionScope.business.businessEndTime }</h5>
 				
 				
 				
@@ -180,9 +167,9 @@
 								<input type="hidden" class="businessId"  value="${menu.businessId}">
 								
 								<p style="float:left">&nbsp;&nbsp;&nbsp;&nbsp;</p>
-								<img class='businessMenuImg' style='float:left; height:50px; width:50px; margin:5px' src='../../resources/images/down-arrow.png' alt='@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 메뉴 이미지 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@'>
+								<img class='businessMenuImg' style='float:left; height:50px; width:50px; margin:5px' src='/resources/images/uploadFiles/business/${menu.businessMenuImg}' alt='@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 메뉴 이미지 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@'>
 						  		<h4> ${menu.businessMenu} </h4>
-						  		<h5> ${menu.businessMenuFee} </h5>
+						  		<h5> ${menu.businessMenuFee} 원 </h5>
 						  		<br><br>
 						  	</span>
 						</span>

@@ -95,7 +95,6 @@ public class BusinessController {
 			session.setAttribute("business", dbBusiness);
 		}
 		
-		/*mv.addObject("userFlag", "business");*/
 		mv.setViewName("redirect:/index.jsp");
 		
 		return mv;
@@ -150,11 +149,7 @@ public class BusinessController {
 		ModelAndView mv = new ModelAndView();
 		Business business = businessService.getBusiness(businessId);
 		business.setMenu(businessService.listBusinessMenu(businessId));
-		
-		System.out.println("¼­¿¬Èñ");
-		System.out.println(business);
 
-		mv.addObject("business", business);
 		mv.addObject("menu", business.getMenu());
 		mv.setViewName("/business/getBusiness.jsp");
 		
@@ -193,9 +188,6 @@ public class BusinessController {
 				long fileSize = mf.getSize();
 				
 				String savedFile = communityService.uploadFile(upload_path, originFileName, mf.getBytes());
-				
-				System.out.println("¼­¿¬Èñ@@@@@@@@@");
-				System.out.println(root_path + attach_path + savedFile);
 				
 				try {
 					/*mf.transferTo(new File(root_path + attach_path + savedFile));*/
@@ -236,7 +228,6 @@ public class BusinessController {
 		
 		business.setMenu(businessService.listBusinessMenu(business.getBusinessId()));
 		
-		mv.addObject(business);
 		mv.addObject("menuList", menuList);
 		mv.setViewName("forward:/business/listBusinessMenu.jsp");
 		
