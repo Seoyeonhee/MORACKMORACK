@@ -71,6 +71,7 @@
 	<select id="listCategory" resultMap="categorySelectMap">
 	SELECT category_no, category_name
 	FROM category
+	ORDER BY category_no
 	</select>
 	
 	<insert id="addMeet" parameterType="meet">
@@ -99,6 +100,7 @@
 	SELECT hash_no 
 	FROM hashtag 
 	WHERE hash_name = #{hashtag}
+	ORDER BY hash_no 
 	</select>
 	
 	<select id="getHashtagFromMain" parameterType="String" resultType="java.util.Map">
@@ -185,7 +187,7 @@
 		WHERE hashtag.hash_name = #{searchKeyword} and hashtag.hash_no = meet_hashtag.hash_no and meet_hashtag.meet_id = meet.meet_id
 	</if>	
 	GROUP BY meet.meet_id, meet.leader_id, meet.meet_name, meet.meet_loc, meet.max_num, meet.mem_num, meet.meet_img, meet.s_intro, meet.l_intro, meet.reg_date, meet.meet_star, meet.bank, meet.accNum, meet.category, meet.meet_appr, meet.meet_type
-	ORDER BY meet.reg_date
+	ORDER BY meet.reg_date DESC
 	</select>
 	
 	<select id="listMeetMain" parameterType="Integer" resultMap="meetSelectMap">
