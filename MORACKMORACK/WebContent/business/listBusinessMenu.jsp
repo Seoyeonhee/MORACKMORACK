@@ -65,7 +65,7 @@
 	
 		<div class="page-header text-info">
 			<%-- <img id="businessImg" style="float:left; height:100px; width:100px; margin:5px" src="/resources/images/uploadFiles/business/${business.businessImg}" alt="@@업체 대표 이미지@@"> --%>
-			<h2 style="padding-top:10px;">${business.businessName}</h2>
+			<h2 style="padding-top:10px;">${sessionScope.business.businessName}</h2>
 			<h5>메뉴 목록</h5>
 	    </div>
 	
