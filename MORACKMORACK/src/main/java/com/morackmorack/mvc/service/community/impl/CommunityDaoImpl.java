@@ -12,6 +12,8 @@ import org.springframework.stereotype.Repository;
 import com.morackmorack.mvc.common.Search;
 import com.morackmorack.mvc.service.community.CommunityDao;
 import com.morackmorack.mvc.service.domain.Community;
+import com.morackmorack.mvc.service.domain.Meet;
+import com.morackmorack.mvc.service.domain.User;
 
 
 
@@ -40,7 +42,14 @@ import com.morackmorack.mvc.service.domain.Community;
 			map.put("search", search);
 			map.put("meetId", meetId);
 			
-			return sqlSession.selectList("CommunityMapper.getPostList", map);
+			List<Community> list= sqlSession.selectList("CommunityMapper.getPostList", map);
+			
+			for(int i=0 ; i<list.size(); i++) {
+				list.get(i).setUser((User)sqlSession.selectOne("UserMapper.getUser", list.get(i).getUser().getUserId()));
+				list.get(i).setMeet((Meet)sqlSession.selectOne("MeetMapper.getMeet", list.get(i).getMeet().getMeetId()));
+			}
+			
+			return list;
 		}
 		@Override
 		public Community getPost(int postNo) throws Exception {

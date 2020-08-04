@@ -97,13 +97,16 @@ public class CommunityController {
 		
 		Map<String,Object> map = communityService.getPostList(search, meetId);
 		
-		Page resultPage = new Page (search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(),pageUnit,pageSize);
+		
+		System.out.println(map.get("list")+"1234");
+		
+//		Page resultPage = new Page (search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(),pageUnit,pageSize);
 		
 		mav.addObject("list", map.get("list"));
-		mav.addObject("resultPage", resultPage);
+//		mav.addObject("resultPage", resultPage);
 		mav.addObject("search", search);
-		mav.addObject("totalCount", map.get("totalCount"));
-		mav.setViewName("/community/getCommunityList.jsp");
+//		mav.addObject("totalCount", map.get("totalCount"));
+		mav.setViewName("/community/getPostList.jsp");
 		
 		return mav;
 	}

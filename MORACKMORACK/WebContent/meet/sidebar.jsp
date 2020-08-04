@@ -57,6 +57,7 @@ src: url('https://netdna.bootstrapcdn.com/bootstrap/3.0.0/fonts/glyphicons-halfl
 
 #sideNickName{
 	font-family: 'BBTreeGB';
+	font-color: '#D2691E'
 	font-size : 20px;
 }
 .glyphicon{
@@ -87,11 +88,11 @@ src: url('https://netdna.bootstrapcdn.com/bootstrap/3.0.0/fonts/glyphicons-halfl
   <c:if test="${!empty meetMem && meetMem.joinCode eq '1'.charAt(0)}">
   <li class="sidebar-li" role="presentation"><a class="glyphicon glyphicon-user" href="/meet/listMeetMem/${meetId}"> 모임 회원</a></li>
   <li class="sidebar-li" role="presentation"><a class="glyphicon glyphicon-send" href="#"> 채팅</a></li>
-  <li class="sidebar-li" role="presentation"><a class="glyphicon glyphicon-book" href="#"> 모임 커뮤니티</a></li>
-  <li class="sidebar-li" role="presentation"><a class="glyphicon glyphicon-calendar" href="/offmeet/getOffList?meetId=${meetId}"> 오프라인 모임 <span class="badge" style="background-color:#FFD835">4</span></a></li>
+  <li class="sidebar-li" role="presentation"><a class="glyphicon glyphicon-book" href="/community/getPostList?meetId=${meetId}"> 모임 커뮤니티</a></li>
+  <li class="sidebar-li" role="presentation"><a class="glyphicon glyphicon-calendar" href="/offmeet/getOffList?meetId=${meetId}"> 오프라인 모임 <span class="badge" style="background-color:#D2691E">4</span></a></li>
   </c:if>
   <c:if test="${!empty meetMem && meetMem.meetRole eq '0'.charAt(0)}">
-  <li class="sidebar-li" role="presentation"><a class="glyphicon glyphicon-triangle-bottom" href="/meet/listJoinMeetUser/${meetId}"> 가입 신청 회원 <span class="badge" style="background-color:#FFD835">4</span></a></li>
+  <li class="sidebar-li" role="presentation"><a class="glyphicon glyphicon-triangle-bottom" href="/meet/listJoinMeetUser/${meetId}"> 가입 신청 회원 <span class="badge" style="background-color:#D2691E">4</span></a></li>
   <li class="sidebar-li" role="presentation"><a class="glyphicon glyphicon-triangle-bottom" href="#"> 신고 관리</a></li>
   </c:if>
 </ul>

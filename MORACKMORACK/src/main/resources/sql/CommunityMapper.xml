@@ -4,22 +4,22 @@
 		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="communityMapper">
+<mapper namespace="CommunityMapper">
 
 	<resultMap type ="community" id="communitySelectMap">
-	<result property="postNo" column="POST_NO" jdbcType="INTEGER" />
-		<result property="user.userId" column="USER_ID" jdbcType="VARCHAR" />
-		<result property="communitesName" column="COMMUNIT_NAME" jdbcType="CHAR" />
-		<result property="meet.meetId" column="MEET_ID" jdbcType="VARCHAR" />
-		<result property="offMeet.offNo" column="OFF_NO" jdbcType="INTEGER" />
-		<result property="business_businessId" column="BUSINESS_Id" jdbcType="VARCHAR"/>
-		<result property="title" column="TITLE" jdbcType="VARCHAR"/>
-		<result property="content" column="CONTENT" jdbcType="VARCHAR"/>
-		<result property="regDate" column="REG_DATE" jdbcType="DATE"/>
-	     <result property="modDate" column="MOD_DATE" jdbcType="DATE"/>
-	    <result property="viewCount" column="VIEW_COUNT" jdbcType="NUMERIC"/>
-	    <result property="likeCount" column="LIKE_COUNT" jdbcType="NUMERIC"/>
-	    <result property="rvstar" column="RVSTAR" jdbcType="INTEGER"/>
+		<result property="postNo" column="post_no" jdbcType="INTEGER" />
+		<result property="user.userId" column="user_id" jdbcType="VARCHAR" />
+		<result property="communityName" column="communites_name" jdbcType="CHAR" />
+		<result property="meet.meetId" column="meet_id" jdbcType="VARCHAR" />
+		<result property="offMeet.offNo" column="off_no" jdbcType="INTEGER" />
+		<result property="business_businessId" column="business_id" jdbcType="VARCHAR"/>
+		<result property="title" column="title" jdbcType="VARCHAR"/>
+		<result property="content" column="content" jdbcType="VARCHAR"/>
+		<result property="regDate" column="reg_date" jdbcType="DATE"/>
+	     <result property="modDate" column="mod_date" jdbcType="DATE"/>
+	    <result property="viewCount" column="view_count" jdbcType="NUMERIC"/>
+	    <result property="likeCount" column="like_count" jdbcType="NUMERIC"/>
+	    <result property="rvstar" column="rvstar" jdbcType="INTEGER"/>
 	    
     </resultMap>
 
@@ -46,15 +46,13 @@
 	<select id="getPostList" parameterType="map" resultMap="communitySelectMap">
   		SELECT *
   		FROM ( SELECT inner_table.*, ROWNUM AS row_seq
-  						FROM ( SELECT  post_no, communites_name, meet_id, user_id, title, content, rvstar, reg_date
-										FROM communites
+  						FROM ( SELECT  post_no, communites_name, meet_id, user_id, title, content,reg_date,mod_date
+										FROM communities
 										WHERE 
 										communites_name  = '0'
 										AND meet_id = #{meetId}
-										ORDER BY reg_date DESC  ) inner_table
-  						WHERE ROWNUM <![CDATA[<=]]> #{search.currentPage}*#{search.pageSize} )
-  		WHERE row_seq BETWEEN (#{search.currentPage}-1)*#{search.pageSize}+1
-  		AND #{search.currentPage}*#{search.pageSize}
+										ORDER BY reg_date DESC ) inner_table)
+
 	</select>
 	
 	<update id="updatePost" parameterType="community" >
