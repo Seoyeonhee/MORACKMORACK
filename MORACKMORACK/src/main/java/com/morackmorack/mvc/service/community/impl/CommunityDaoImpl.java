@@ -27,72 +27,35 @@ import com.morackmorack.mvc.service.domain.Community;
 			System.out.println(this.getClass());
 		}
 		
-		public void addOffReview(Community community) throws Exception {
-			sqlSession.insert("CommunityMapper.addOffReview", community);
-		}
-		
-
-		public void updateOffReview(Community community) throws Exception {
-			sqlSession.update("CommunityMapper.updateOffReview", community);	
-		}
-
-		public List<Community> getOffReviewList(Search search, int offNo) throws Exception {
-			Map<String, Object> map=new HashMap<String, Object>();
-			
-			map.put("search", search);
-			map.put("offNo", offNo);
-			
-			return sqlSession.selectList("CommunityMapper.getOffReviewList", map);
-		}
-	
-			
-		public void deleteOffReview(int postNo) throws Exception {
-			sqlSession.update("CommunityMapper.deleteOffReview", postNo);
-		}
-	
-		public void addBusinessReview(Community community) throws Exception {
-			sqlSession.insert("CommunityMapper.addBusinessReview", community);	
-		}
-	
-		public void updateBusinessReview(Community community) throws Exception {
-			sqlSession.update("CommunityMapper.updateBusinessReview", community);	
-		}
-
-		public List<Community> getBusinessReviewList(Search search, String communityName) throws Exception {
-			Map<String, Object> map=new HashMap<String, Object>();
-			
-			map.put("search", search);
-			map.put("communityName", communityName);
-			
-			return sqlSession.selectList("CommunityMapper.getBusinessReviewList", map);
-		}
-
-		public void deleteBusinessReview(int postNo) throws Exception {
-			sqlSession.update("CommunityMapper.deleteBusinessReview", postNo);
-		}
-		@Override
-		
-		public int getOffReviewListCount(String meetId) throws Exception {
-			return sqlSession.selectOne("CommunityMapper.getOffReviewCount_meetId", meetId);
-		}
-		
-		public int getOffReviewListCount2(int offNo) throws Exception {
-			
-			return sqlSession.selectOne("CommunityMapper.getOffReviewCount_offNo", offNo);
-		}
 		
 		@Override
-		public int getBusinessReviewListCount(Search search, String communityName) throws Exception {
-			Map<String, Object> map=new HashMap<String, Object>();
-			
-			map.put("search", search);
-			map.put("communityName", communityName);
-			
-			return sqlSession.selectOne("CommunityMapper.getBusinessReviewListCount", map);
+		public void addPost(Community community) throws Exception {
+			// TODO Auto-generated method stub
+			sqlSession.insert("CommunityMapper.addPost", community);
 		}
 		@Override
-		public Community getRecentOffReview(String MeetId) throws Exception {
-				return sqlSession.selectOne("CommunityMapper.getRecentOffReview", MeetId);
+		public List<Community> getPostList(Search search, String meetId) throws Exception {
+			// TODO Auto-generated method stub
+			Map<String,Object> map = new HashMap<String,Object>();
+			map.put("search", search);
+			map.put("meetId", meetId);
+			
+			return sqlSession.selectList("CommunityMapper.getPostList", map);
+		}
+		@Override
+		public Community getPost(int postNo) throws Exception {
+			// TODO Auto-generated method stub
+			return sqlSession.selectOne("CommunityMaper.getPost", postNo);
+		}
+		@Override
+		public void updatePost(Community community) throws Exception {
+			// TODO Auto-generated method stub
+			sqlSession.update("CommunityMapper.updatePost", community);
+		}
+		@Override
+		public void deletePost(int postNo) throws Exception {
+			// TODO Auto-generated method stub
+			sqlSession.update("CommunityMapper.deletePost", postNo);
 		}
 			
 }

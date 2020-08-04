@@ -35,60 +35,39 @@ import com.morackmorack.mvc.service.domain.Community;
 			System.out.println(this.getClass());
 		}
 		
-		public void addOffReview(Community community) throws Exception {
-			communityDao.addOffReview(community);
-		}
-		
 
-		public void updateOffReview(Community community) throws Exception {
-			communityDao.updateOffReview(community);
-		}
-
-		public void deleteOffReview(int postNo) throws Exception {
-			communityDao.deleteOffReview(postNo);
-		}
-		
 		@Override
-		public Map<String, Object> getOffReviewList(Search search, int offNo) throws Exception {
-		
-			List<Community> list= communityDao.getOffReviewList(search, offNo);
-			int totalCount = communityDao.getOffReviewListCount2(offNo);
-			
-			Map<String, Object> map = new HashMap<String, Object>();
-			map.put("list", list );
-			map.put("totalCount", new Integer(totalCount));
-		
-			return map;
-		}
-		
-		public void addBusinessReview(Community community) throws Exception {
-			communityDao.addBusinessReview(community);
-		}
-	
-		public void updateBusinessReview(Community community) throws Exception {
-			communityDao.updateBusinessReview(community);
+		public void addPost(Community community) throws Exception {
+			// TODO Auto-generated method stub
+			communityDao.addPost(community);
 		}
 
-		public Map<String, Object> getBusinessReviewList(Search search, String communityName) throws Exception {
-			List<Community> list= communityDao.getBusinessReviewList(search, communityName);
-			int totalCount = communityDao.getBusinessReviewListCount(search, communityName);
-			
-			Map<String, Object> map = new HashMap<String, Object>();
-			map.put("list", list );
-			map.put("totalCount", new Integer(totalCount));
+
+		@Override
+		public Map<String,Object> getPostList(Search search, String meetId) throws Exception {
+			// TODO Auto-generated method stub
+			List<Community> list = communityDao.getPostList(search, meetId);
+			Map <String,Object> map = new HashMap<String,Object>();
+			map.put("list", list);
 			
 			return map;
 		}
 
-		public void deleteBusinessReview(int postNo) throws Exception {
-			communityDao.deleteBusinessReview(postNo);
+
+		@Override
+		public void updatePost(Community community) throws Exception {
+			// TODO Auto-generated method stub
+			communityDao.updatePost(community);
 		}
 
 
-		public Community getRecentOffReview(String MeetId) throws Exception {
-			return communityDao.getRecentOffReview(MeetId);
+		@Override
+		public void deletePost(int postNo) throws Exception {
+			// TODO Auto-generated method stub
+			communityDao.deletePost(postNo);
 		}
 		
+
 		public String uploadFile(String uploadPath, String originalName, byte[] fileData) throws Exception{
 
 			UUID uuid = UUID.randomUUID();
@@ -100,5 +79,14 @@ import com.morackmorack.mvc.service.domain.Community;
 			
 			return savedName;
 		}
+
+
+		@Override
+		public Community getPost(int postNo) throws Exception {
+			// TODO Auto-generated method stub
+			return communityDao.getPost(postNo);
+		}
+
+
 
 }
