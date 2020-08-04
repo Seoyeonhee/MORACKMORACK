@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,7 +14,6 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,7 +25,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.morackmorack.mvc.common.Search;
 import com.morackmorack.mvc.service.business.BusinessService;
-import com.morackmorack.mvc.service.community.CommunityService;
 import com.morackmorack.mvc.service.domain.Business;
 import com.morackmorack.mvc.service.domain.Files;
 import com.morackmorack.mvc.service.domain.Menu;
@@ -48,19 +45,7 @@ public class BusinessController {
 	@Autowired
 	@Qualifier("offMeetServiceImpl")
 	private OffMeetService offMeetService;
-	@Autowired
-	@Qualifier("communityServiceImpl")
-	private CommunityService communityService;
 		
-	
-	@Value("#{commonProperties['pageUnit']}")
-	int pageUnit;
-
-	@Value("#{commonProperties['pageSize']}")
-	int pageSize;
-	
-	
-	
 	public BusinessController(){
 		System.out.println(this.getClass());
 	}
@@ -95,6 +80,7 @@ public class BusinessController {
 			session.setAttribute("business", dbBusiness);
 		}
 		
+		/*mv.addObject("userFlag", "business");*/
 		mv.setViewName("redirect:/index.jsp");
 		
 		return mv;
@@ -149,7 +135,11 @@ public class BusinessController {
 		ModelAndView mv = new ModelAndView();
 		Business business = businessService.getBusiness(businessId);
 		business.setMenu(businessService.listBusinessMenu(businessId));
+		
+		System.out.println("서연희");
+		System.out.println(business);
 
+		mv.addObject("business", business);
 		mv.addObject("menu", business.getMenu());
 		mv.setViewName("/business/getBusiness.jsp");
 		
@@ -163,6 +153,7 @@ public class BusinessController {
 	@RequestMapping( value="addBusinessMenu", method=RequestMethod.POST )
 	public ModelAndView addBusinessMenu( @RequestParam(value="businessMenuList", required=true) List<String> businessMenuList,
 										@RequestParam(value="businessMenuFeeList", required=true) List<Integer> businessMenuFeeList,
+										@RequestParam(value="businessMenuImgList" ) List<MultipartFile> businessMenuImgList,
 										MultipartHttpServletRequest mtf,
 										HttpServletRequest request,
 										HttpSession session) throws Exception {
@@ -174,8 +165,7 @@ public class BusinessController {
 		List<MultipartFile> fileList = mtf.getFiles("businessMenuImgList");
 		
 		String root_path = request.getSession().getServletContext().getRealPath("/");
-		String attach_path = "resources/images/uploadFiles/business/";
-		String upload_path = "C:/Users/a/Git/MORACKMORACK/MORACKMORACK/WebContent/resources/images/uploadFiles/business";
+		String attach_path = "resources\\images\\uploadFiles\\business\\";
 		
 		Menu menu = new Menu();
 		menu.setBusinessId(((Business)session.getAttribute("business")).getBusinessId());
@@ -187,11 +177,11 @@ public class BusinessController {
 				String originFileName = mf.getOriginalFilename();
 				long fileSize = mf.getSize();
 				
-				String savedFile = communityService.uploadFile(upload_path, originFileName, mf.getBytes());
+				String safeFile = System.currentTimeMillis() + originFileName;
 				
 				try {
-					/*mf.transferTo(new File(root_path + attach_path + savedFile));*/
-					menu.setBusinessMenuImg(savedFile);
+					mf.transferTo(new File(root_path + attach_path + safeFile));
+					menu.setBusinessMenuImg(safeFile);
 					menu.setBusinessMenu(businessMenuList.get(index));
 					menu.setBusinessMenuFee(businessMenuFeeList.get(index));
 					
@@ -228,6 +218,7 @@ public class BusinessController {
 		
 		business.setMenu(businessService.listBusinessMenu(business.getBusinessId()));
 		
+		mv.addObject(business);
 		mv.addObject("menuList", menuList);
 		mv.setViewName("forward:/business/listBusinessMenu.jsp");
 		
@@ -366,51 +357,18 @@ public class BusinessController {
 	}
 	
 	
-//	2020-08-03 서연희
+//	2020-07-29 서연희
 //	listReserveBusiness
-//	업체가 _ 에약 목록 조회
+//	업체 에약 목록 조회
 	@RequestMapping( value="listReserveBusiness" )
 	public ModelAndView listReserveBusiness( HttpSession session, @ModelAttribute("search") Search search ) throws Exception {
 		
 		System.out.println("/business/listReserveBusiness : GET/POST");
 		
 		ModelAndView mv = new ModelAndView();
-		Business business = (Business)session.getAttribute("business");
+		User user = (User)session.getAttribute("user");
 		
-		if(search.getCurrentPage() == 0) {
-			search.setCurrentPage(1);
-		}
-		search.setPageSize(pageSize);
-		
-		Map map = offMeetService.listReserveBusiness(search);
-		
-		// 모락모락_서연희
-		// 쿼리 에러때문에 확인 못해봐서 잘 구현된건지 모름
-		mv.addObject("list", map.get("list"));
-		
-		mv.setViewName("forward:/business/listReserveBusiness.jsp");
-		
-		return mv;
-	}
-	
-	
-//	2020-08-03 서연희
-//	getReserveBusiness
-//	업체가 _ 에약 상세 조회
-	@RequestMapping( value="listReserveBusiness", method=RequestMethod.GET )
-	public ModelAndView getReserveBusiness( HttpSession session, @RequestParam("payNo") int payNo ) throws Exception {
-		
-		System.out.println("/business/listReserveBusiness : GET");
-		
-		ModelAndView mv = new ModelAndView();
-		Business business = (Business)session.getAttribute("business");
-		
-		// 모락모락_서연희
-		// getReserveBusiness - businessId, payNo 파라미터 두개 받아야함
-		/*Pay pay = offMeetService.getBusinessPay(business.getBusinessId(), payNo);*/
-		
-		/*mv.addObject("pay", pay)*/
-		mv.setViewName("forward:/business/getReserveBusiness.jsp");
+		/*List<Pay> reserveList = offMeetService.getBusinessPayList(search, userId);*/
 		
 		return mv;
 	}

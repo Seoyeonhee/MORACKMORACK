@@ -1,8 +1,7 @@
 <%@ page language="java"
     pageEncoding="EUC-KR"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+ <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@page import="java.util.*" %>
 
 <html>
@@ -14,23 +13,19 @@
   
     <style>
     
-
 		
 		.page p {
 			height:100px;
 			line-height:100px;
 		}
-
     </style>
 
     <!--  ///////////////////////// JavaScript ////////////////////////// -->
     <script type="text/javascript">
-
         function fncGetUserList(currentPage) {
             $("#currentPage").val(currentPage)
             $("form").attr("method", "POST").attr("action", "/offmeet/listOffPay").submit();
         }
-
         $(function() {
             $("button.btn.btn-default").on("click", function() {
                 fncGetUserList(1);
@@ -43,7 +38,6 @@
         	});
         });
         
-
         	
     </script>
 
@@ -54,7 +48,7 @@
 <header>
 <jsp:include page="/toolbar.jsp" />
 </header>
-        <div class="container" style="width:70%;margin: auto;">
+        <div class="container">
    	<form>
    	
             <div class="container">

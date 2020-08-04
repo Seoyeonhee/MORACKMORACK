@@ -2,6 +2,7 @@
     pageEncoding="EUC-KR"%>
     
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+    <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -85,8 +86,7 @@ function fncreqOk() {
 		        window.location.reload(true);
 		        return;
 		    }
- 		    $("form").attr("method" , "POST").attr("action" , "/offmeet/addOffPay?offNo=${offMeet.offNo}").submit();
-//  		  $("form").attr("method" , "POST").attr("action" , "/offmeet/addOffPay?offNo=10002").submit();	 
+ 		    $("form").attr("method" , "POST").attr("action" , "/offmeet/addOffPay?offNo=${offMeet.offNo}&memNo=${meetMem.memNo}").submit();
 		});
 		
 }
@@ -95,7 +95,7 @@ $(function() {
 
 	if(parseInt(amount) == 0){
 		alert("오프라인 참여비가 0원입니다. 결제 없이 참여 가능합니다.") 
-		$("form").attr("method" , "POST").attr("action" , "/offmeet/addOffPay?offNo=${offMeet.offNo}").submit();
+		$("form").attr("method" , "POST").attr("action" , "/offmeet/addOffPay?offNo=${offMeet.offNo}&memNo=${meetMem.memNo}").submit();
 	} else{
 	$( "button.btn.btn-primary" ).on("click" , function() {
 		fncreqOk();
@@ -122,100 +122,74 @@ $( function() {
 
 <body>
 
-<div class="container"> 
- 	<div class="page-header text-center"> 
- 		<h3 class="text-info">오프라인 모임 참여 신청</h3> 
-</div> 
+<header>
+<jsp:include page="/toolbar.jsp" />
+</header>
 
-	<form class="form-horizontal">
+
+<div class="container getOrder" >
+<br/>
+<form class="form-horizontal">
 	<input type="hidden" name="offNo" value="${offMeet.offNo}" />
 	<input type="hidden" name="meetId" value="${offMeet.meet.meetId}" />
+	<input type="hidden" name="meetMem" value="${meetMem.memNo}" />
+	
+			<div class="row">
+                    <div class="h3">오프라인 모임 정보</div>
+            </div>
+				<br/>
+				<table class="table">
+					  <thead>
+					    <tr>
+					      <th scope="col">오프라인 모임 명</th>
+					      <th scope="col">오프라인 모임 장소</th>
+					      <th scope="col">오프라인 모임 날짜</th>
+					      <th scope="col">오프라인 모임 시간</th>
+					      <th scope="col">현재 인원 수</th>
+					      <th scope="col">최대 인원 수</th>
+					    </tr>
+					  </thead>
+					  <tbody>
+					    <tr>
+					      <th scope="row">${offMeet.offName}</th>
+			     		  <td>${offMeet.offLoc}</td>
+					      <td>${offMeet.offDate}</td>
+					      <td>${offMeet.offTime}</td>
+					  	  <td>${offMeet.offMem}</td>
+ 					     <td>${offMeet.offMax}</td>
+					    </tr>
+					  </tbody>
+				</table>
 		
-			<div class="form-group"> 
- 			<label class="col-sm-offset-1 col-sm-3 control-label">회원 ID</label> 
- 			<div class="col-sm-4"> 
- 				${user.userId}
- 			</div> 
- 		</div> 
+		<br/>
+		
+		<div class="row">
+			<div class="h3" style="margin-top:80px;" >오프라인 모임 참여비 정보 </div>
+		</div>	
+			<hr/>
+	
+	
+	
+	<div class="row">
+	 	<div class="col-xs-4 col-md-2" style="margin-top:10px;"><strong>모임 은행명</strong></div> 
+		<div class="col-xs-8 col-md-4" style="margin-top:20px;">${meet.bank}</div> 
+ 	 </div> 
 
-	<div class="form-group"> 
- 			<label class="col-sm-offset-1 col-sm-3 control-label">이름</label> 
-			<div class="col-sm-4"> 
- 				${user.userName} 
- 			</div> 
-		</div> 
- 		 
- 		 
- 		<div class="form-group"> 
- 			<label class="col-sm-offset-1 col-sm-3 control-label">성별</label> 
- 			<div class="col-sm-4"> 
- 				${user.gender =='0' ? "남":"여"} 
-
- 			</div> 
- 		</div> 
- 		 
- 		<div class="form-group"> 
- 			<label class="col-sm-offset-1 col-sm-3 control-label">생년월일</label> 
- 			<div class="col-sm-4"> 
-			${user.birthday}
- 			</div> 
- 		</div> 
-		 
-		<div class="form-group"> 
- 			<label class="col-sm-offset-1 col-sm-3 control-label">닉네임</label> 
-			<div class="col-sm-4"> 
- 			${user.nickName}
- 			</div> 
- 		</div> 
- 		 	 
- 		 
- 		<div class="form-group"> 
- 			<label class="col-sm-offset-1 col-sm-3 control-label">오프라인모임명</label> 
- 			<div class="col-sm-4"> 
-			${offMeet.offName}
- 			</div> 
-		</div> 
- 		 
- 		<div class="form-group"> 
- 			<label class="col-sm-offset-1 col-sm-3 control-label">오프라인 모임 장소</label> 
- 			<div class="col-sm-4"> 
- 			${offMeet.offLoc}
- 			</div> 
- 		</div> 
- 		 
- 		<div class="form-group"> 
- 			<label class="col-sm-offset-1 col-sm-3 control-label">오프라인 모임 시간</label> 
- 			<div class="col-sm-4"> 
- 			${offMeet.offTime }
- 			</div> 
- 		</div> 
- 		 	
- 		<div class="form-group"> 
- 			<label class="col-sm-offset-1 col-sm-3 control-label">현재 인원 수 </label> 
- 			<div class="col-sm-4"> 
- 			${offMeet.offMem}
- 			</div> 
- 		</div> 
- 		
-			<div class="form-group"> 
- 			<label class="col-sm-offset-1 col-sm-3 control-label">최대 인원 수 </label> 
- 			<div class="col-sm-4"> 
- 			${offMeet.offMax}
- 			</div> 
- 		</div> 
- 		
- 		 		
- 		<div class="form-group"> 
- 			<label class="col-sm-offset-1 col-sm-3 control-label">오프라인 모임 참여비</label> 
- 			<div class="col-sm-4" > 
- 			<input type="hidden" name="amount" value= "	${offMeet.amount}"/>
- 			${offMeet.amount}
- 			</div> 
- 		</div> 
- 		
- 		<div class="form-group"> 
- 			<label for="payMethod" class="col-sm-offset-1 col-sm-3 control-label">구매방법</label> 
- 			<div class="col-sm-4"> 
+	<div class="row">
+	 	<div class="col-xs-4 col-md-2" style="margin-top:20px;"><strong>모임 가상계좌번호</strong></div> 
+		<div class="col-xs-8 col-md-4" style="margin-top:20px;">${meet.accNum}</div> 
+ 	 </div> 
+			
+	<div class="row">
+	 	<div class="col-xs-4 col-md-2" style="margin-top:20px;"><strong>참여비</strong></div> 
+			<input type="hidden" name="amount" value= "	${offMeet.amount}"/>
+		<div class="col-xs-8 col-md-4" style="margin-top:20px;"><fmt:formatNumber value="${offMeet.amount}" pattern="###,###" />원</div>
+ 	 </div> 
+ 	 
+ 	 
+ 	<div class="row">
+ 			<div class="col-xs-4 col-md-2" style="margin-top:20px;"><strong>결제 방법</strong></div>
+ 			<div class="col-xs-8 col-md-4" style="margin-top:20px;">
  				<select name="payMethod" class="form-control"> 
  					<option value="0" selected="selected">계좌이체</option> 
 					<option value="1">신용카드</option> 
@@ -224,19 +198,48 @@ $( function() {
  			</div> 
  		</div> 
  		
- 		
- 
- 		
+				  
+	<br/>			
 
-	 <div class="form-group">
+	<div class="row">
+	
+	<div class="h3" style="margin-top:80px;" >참여자 정보</div>
+	</div>	
+			<hr/>
+			
+	<div class="row">
+	  <div class="col-xs-4 col-md-2"style="margin-top:10px;" ><strong>참여자 ID</strong></div> 
+		<div class="col-xs-8 col-md-4" style="margin-top:20px;">${user.userId}</div> 
+ 	</div> 
+ 	
+	<div class="row">
+	  <div class="col-xs-4 col-md-2" style="margin-top:20px;"><strong>참여자 이름</strong></div> 
+		<div class="col-xs-8 col-md-4" style="margin-top:20px;">${user.userName}</div> 
+ 	</div> 
+ 	
+ 		<div class="row">
+	  <div class="col-xs-4 col-md-2" style="margin-top:20px;"><strong>참여자 닉네임</strong></div> 
+		<div class="col-xs-8 col-md-4" style="margin-top:20px;">${user.nickName}</div> 
+ 	 </div> 			
+ 	 
+	<div class="row">
+	  <div class="col-xs-4 col-md-2" style="margin-top:20px;"><strong>참여자 성별</strong></div> 
+		<div class="col-xs-8 col-md-4" style="margin-top:20px;">${user.gender} </div> 
+ 	 </div> 			
+		
+	
+	
+			</div>
+		<hr/>
+	
+			
+	<div class="form-group">
 		    <div class="col-sm-offset-4  col-sm-4 text-center">
 		      <button type="button" class="btn btn-primary"  >참여비 결제</button>
 			  <a class="btn btn-primary btn" href="#" role="button">취 &nbsp;소</a>
 		    </div>
 		  </div>
-		</form>
-				
-</div>
+		</form>		
 
 </body>
 </html>

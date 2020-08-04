@@ -1,6 +1,7 @@
 package com.morackmorack.mvc.service.domain;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.List;
 
 public class Menu implements Serializable {
@@ -11,6 +12,7 @@ public class Menu implements Serializable {
 	private String businessMenu;
 	private int businessMenuFee;
 	private String businessMenuImg;
+	private int businessMenuCnt;
 	
 	private String[] businessMenuList;
 	private int[] businessMenuFeeList;
@@ -87,11 +89,21 @@ public class Menu implements Serializable {
 	}
 	
 	
+	public int getBusinessMenuCnt() {
+		return businessMenuCnt;
+	}
+	public void setBusinessMenuCnt(int businessMenuCnt) {
+		this.businessMenuCnt = businessMenuCnt;
+	}
 	@Override
+	
 	public String toString() {
 		return "Menu [menuNo=" + menuNo + ", businessId=" + businessId + ", businessMenu=" + businessMenu
-				+ ", businessMenuFee=" + businessMenuFee + ", businessMenuImg=" + businessMenuImg + "]";
+				+ ", businessMenuFee=" + businessMenuFee + ", businessMenuImg=" + businessMenuImg + ", businessMenuCnt="
+				+ businessMenuCnt + ", businessMenuList=" + Arrays.toString(businessMenuList) + ", businessMenuFeeList="
+				+ Arrays.toString(businessMenuFeeList) + ", businessMenuImgList=" + Arrays.toString(businessMenuImgList)
+				+ "]";
 	}
-	
+
 	
 }

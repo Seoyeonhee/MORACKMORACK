@@ -21,8 +21,21 @@
 	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
+	<!-- <script src="https://code.jquery.com/jquery-3.1.1.js"></script> -->
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
-
+	
+	
+	<!-- Bootstrap Dropdown Hover CSS -->
+	<link href="/css/animate.min.css" rel="stylesheet">
+	<link href="/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
+	<!-- Bootstrap Dropdown Hover JS -->
+	<script src="/javascript/bootstrap-dropdownhover.min.js"></script>
+	
+	
+	<!-- jQuery UI toolTip 사용 CSS-->
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<!-- jQuery UI toolTip 사용 JS-->
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 <script type="text/javascript">
 
@@ -50,7 +63,7 @@
 		
 		var reserveDate = year+"-"+month+"-"+j; //"2019-11-04" 형식의  reserveDate
 		var businessId = $("#businessId").val();
-		
+
 		$.ajax({
 			url : "/business/json/showReserveAbleTimeList/"+businessId+"/"+reserveDate,
 			type : 'GET', //GET방식으로
@@ -113,9 +126,10 @@
 						
 						$("#listSelectedTime").val(listSelectedTime)
 						$("#reserveDate").val(reserveDate)
-						
-					//	$("form").attr("method", "POST").attr("action", "/offmeet/addBusinessPay").submit();
- 						$("form").attr("method", "POST").attr("action", "/offmeet/addBusinessPay?listSelectedTime="+listSelectedTime+"&reserveDate="+reserveDate).submit();
+						var businessMenuCnt = $("#businessMenuCnt").val()
+						var menuNo = $("#menuNo").val()
+						alert(menuNo)
+ 						$("form").attr("method", "POST").attr("action", "/offmeet/addBusinessPay?listSelectedTime="+listSelectedTime+"&reserveDate="+reserveDate+"&businessId="+businessId+"&menuNo="+menuNo+"&businessMenuCnt="+businessMenuCnt).submit();
 					}
 					
 				})
@@ -131,30 +145,30 @@
 </head>
 <body>
 
-	<header>
-		<jsp:include page="/business/businessToolbar.jsp" />
-	</header>
-	
+
 	
 	<div class="container">
 	
-		<div class="page-header text-info">
+		<div class="page-header">
 			<h2 style="padding-top:10px;">예약</h2>
-	    </div>
-	    
+	    </div>	
+    
 	    <div>
 	    	<span style="width:50%; float:left;">
-	    		<input type="hidden" id="businessId" name="businessId" value="${sessionScope.business.businessId }"/>
-				<img src="resources/images/uploadFiles/${business.businessImg}" alt="업체 대표 이미지" title="${business.businessName}" style="width:100%; height:400px; background-color:yellow;">
-				<p id="businessName" style="font-size:30px;">${sessionScope.business.businessName} &nbsp;&nbsp;&nbsp; 별점 : ${sessionScope.business.businessStar}</p>
+	    		<input type="hidden" id="businessId" name="businessId" value="${business.businessId }"/>
+				<img src="/resources/images/uploadFiles/business/${business.businessImg}">
+				<p id="businessName" style="font-size:30px;">${business.businessName}</p>
 				<h3>업체 위치</h3>
-				<h5 style="padding-bottom:10px;">${sessionScope.business.businessLoc }</h5>
+				<h5 style="padding-bottom:10px;">${business.businessLoc }</h5>
 				<h3>업체 번호</h3>
-				<h5 style="padding-bottom:10px;">${sessionScope.business.businessPhone }</h5>
+				<h5 style="padding-bottom:10px;">${business.businessPhone }</h5>
 				<h3>업체 운영 시간</h3>
-				<h5 style="padding-bottom:10px;">${sessionScope.business.businessStartTime } &nbsp; ~ &nbsp; ${sessionScope.business.businessEndTime }</h5>
+				<h5 style="padding-bottom:10px;">${business.businessStartTime } &nbsp; ~ &nbsp; ${business.businessEndTime }</h5>
 				
 				
+		
+		
+		
 				
 				
 				
@@ -162,14 +176,13 @@
 				<c:forEach var="menu" items="${menu}">
 					<form name='form' class='form-horizontal'>
 						<span class='form-group' style="float:left; padding:15px;">
-							<span class='page-header text-info'>
-								<input type="hidden" class="menuNo" value="${menu.menuNo}">
-								<input type="hidden" class="businessId"  value="${menu.businessId}">
-								
+							<span class='page-header'>
+								<input type="hidden" class="menuNo" id="menuNo" value="${menu.menuNo}">
 								<p style="float:left">&nbsp;&nbsp;&nbsp;&nbsp;</p>
-								<img class='businessMenuImg' style='float:left; height:50px; width:50px; margin:5px' src='/resources/images/uploadFiles/business/${menu.businessMenuImg}' alt='@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 메뉴 이미지 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@'>
-						  		<h4> ${menu.businessMenu} </h4>
-						  		<h5> ${menu.businessMenuFee} 원 </h5>
+								<img src="/resources/images/uploadFiles/business/${menu.businessMenuImg}" width="175" height="170">
+						  		<div>
+						  		메뉴 가격 : ${menu.businessMenuFee} 
+						  		</div>
 						  		<br><br>
 						  	</span>
 						</span>
@@ -178,10 +191,22 @@
 			  	
 			</span>
 			
+			
+		  
 			<span style="float:right; width:45%;">
 	    		<span id="calendar" style="width:100%; height:500px;"></span>
 	    		
+	    		
+	    		<div class="col-xs-6 col-md-6">
+	    		<p><strong>예약 인원수</strong></p>
+				<input type="number" class="form-control" id="businessMenuCnt" name="businessMenuCnt"  style="height:40px; width:80px">
+ 				</div>
+	  
+
+	  
 	    		<br><br>
+	    		<br><br>
+	    		
 	    		<h1 style="text-align:center;"> [ 예약시간 선택 ] </h1>
 	    		
 	    		<span id="reserveAbleTimeList">
@@ -195,16 +220,6 @@
 	
 	
 	
-	
-	
-	
-	<div class="container">
-			<div style="height:500px; background-color:pink; margin-top:20px;">
-				<h1>~~~업체 후기 목록~~~~~</h1>
-				<c:forEach var="review" items="${reviewList}">
-				</c:forEach>
-			</div>
-	</div>
 
 </body>
 

@@ -2,7 +2,6 @@
     pageEncoding="EUC-KR"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@page import="java.util.*" %>
 
 <html>
@@ -56,7 +55,7 @@
 <header>
 <jsp:include page="/toolbar.jsp" />
 </header>
-        <div class="container" style="width:70%;margin: auto;">
+        <div class="container">
    	<form>
    	
             <div class="container">
@@ -80,7 +79,8 @@
                 	<th scope="col">예약번호</th>
                 	<th scope="col">업체명</th>
                     <th scope="col">예약 날짜</th>
-                    <th scope="col">예약 시간</th>
+                    <th scope="col">예약 시작 시간</th>
+                    <th scope="col">예약 끝 시간</th>
                     <th scope="col">예약 인원</th>
                     <th scope="col">총 금액</th>
                 </tr>
@@ -98,7 +98,8 @@
   				  		<td>${pay.payNo}</td>
                     	<td value ="${pay.payNo}">${pay.businessName}</td>                
                         <td>${pay.reserveDate}</td>
-                        <td>${pay.reserveStartTime}/${pay.reserveEndTime}</td>   
+                        <td>${pay.reserveStartTime}</td>
+                        <td>${pay.reserveEndTime}</td>   
                         <td>${pay.reserveMemNum}</td>   
                          <td>            
                          <fmt:formatNumber value="${pay.totalAmount}" pattern="###,###" />원</td>     

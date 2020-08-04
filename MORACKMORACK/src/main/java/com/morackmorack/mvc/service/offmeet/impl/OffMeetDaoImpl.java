@@ -11,8 +11,10 @@ import org.springframework.stereotype.Repository;
 
 import com.morackmorack.mvc.common.Search;
 import com.morackmorack.mvc.service.domain.MeetMem;
+import com.morackmorack.mvc.service.domain.MeetMemOffMeet;
 import com.morackmorack.mvc.service.domain.OffMeet;
 import com.morackmorack.mvc.service.domain.Pay;
+import com.morackmorack.mvc.service.domain.WishMeet;
 import com.morackmorack.mvc.service.offmeet.OffMeetDao;
 
 @Repository("offMeetDaoImpl")
@@ -100,15 +102,15 @@ public class OffMeetDaoImpl implements OffMeetDao{
 		return sqlSession.selectOne("OffMeetMapper.getTotalOffMemCount", search);
 	}
 	
-	public List<Pay> listBusinessPay(Search search, String meetId) throws Exception {
+	public List<Pay> listBusinessPay(Search search, String userId) throws Exception {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("search", search);
-		map.put("meetId",meetId);
+		map.put("userId",userId);
 		return sqlSession.selectList("OffMeetMapper.listBusinessPay", map);
 	}
 
-	public int getBusinessPayTotalCount(String meetId) throws Exception {
-		return sqlSession.selectOne("OffMeetMapper.getBusinessPayTotalCount", meetId);
+	public int getBusinessPayTotalCount(String userId) throws Exception {
+		return sqlSession.selectOne("OffMeetMapper.getBusinessPayTotalCount", userId);
 	}
 	
 	@Override
@@ -128,6 +130,24 @@ public class OffMeetDaoImpl implements OffMeetDao{
 	
 		return sqlSession.selectOne("OffMeetMapper.getReserveBusiness", payNo);
 	}
-	
 
+	@Override
+	public void addOff_MeetMem(int memNo, int offNo) {
+		Map map = new HashMap();
+		map.put("memNo", memNo);
+		map.put("offNo", offNo);
+		
+		sqlSession.insert("OffMeetMapper.addOff_MeetMem", map);
+	}
+
+	@Override
+	public MeetMemOffMeet getOff_MeetMem(int memNo, int offNo) throws Exception {
+		Map map = new HashMap();
+		map.put("memNo", memNo);
+		map.put("offNo", offNo);
+	
+		return	 sqlSession.selectOne("OffMeetMapper.getOff_MeetMem", map);
+	}
+	
+	
 }

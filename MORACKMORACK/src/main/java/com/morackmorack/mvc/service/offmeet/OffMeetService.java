@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.morackmorack.mvc.common.Search;
 import com.morackmorack.mvc.service.domain.MeetMem;
+import com.morackmorack.mvc.service.domain.MeetMemOffMeet;
 import com.morackmorack.mvc.service.domain.OffMeet;
 import com.morackmorack.mvc.service.domain.Pay;
 
@@ -33,9 +34,16 @@ public interface OffMeetService {
 	
 	public Map<String, Object> listOffMem(Search search) throws Exception;
 	
-	public Map<String,Object> listBusinessPay(Search search, String meetId) throws Exception;
+	public Map<String,Object> listBusinessPay(Search search, String userId) throws Exception;
 	
 	public Map <String, Object> listReserveBusiness(Search search) throws Exception;
 
 	public Pay getReserveBusiness(int payNo) throws Exception;
+	
+	public void addOff_MeetMem(int memNo, int offNo);
+	
+	public MeetMemOffMeet getOff_MeetMem(int memNo, int offNo) throws Exception;
+	
+
+	
 }

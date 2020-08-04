@@ -1,63 +1,48 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
-<!DOCTYPE html>
+    
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+ <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <html>
 <head>
 <meta charset="EUC-KR">
-<title>제휴 업체 결제</title>
-
 <jsp:include page="/common/listCdn.jsp" />
 <script src="http://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
-<style>
 
-
+	<style>
+	
  
- div.h4  {
+        
+        div.h4  {
             font-family: 'NIXGONM-Vb';
             font-weight: bold;
             display: inline-block;
-            background-color: #3e7eff;
-       }
-       
-
-.button {
-  background-color: #3e7eff; /* Green */
-  border: none;
-  color: white;
-  padding: 15px 32px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
-  cursor: pointer;
-}
-
-
-</style>
-
-
+         
+        }
+        
+        table  {
+            font-size: 10pt;
+        }
+   
+    </style>
 <script type ="text/javascript">
 
-$( function () {
-	$("#reserveBusiness").on("click",function(){
+function reserveBusiness() {
 		
 
 var buyerName = '${user.userName}';
 var buyerNumber ='${user.phoneNumber}';
 var businessName = '${business.businessName}';
-
-if (pay == '0') {
-	pay = 'vbank';
-} else {
-	pay = 'card';
-} 
-
+var reserveDate = '${reserveDate}';
+var reserveStartTime = '${reserveStartTime}';
+var reserveEndTime ='${reserveEndTime}'; 
+var amount = '${menu.businessMenuFee* businessMenuCnt}';
 	IMP.init('imp45686118'); 
 
 	IMP.request_pay({
 	    pg : 'inicis',
-	    pay_method : pay,
+	    pay_method : 'vbank',
 	    merchant_uid : 'merchant_' + new Date().getTime(),
 	    name : businessName,
 	    amount : amount,
@@ -78,132 +63,139 @@ if (pay == '0') {
 	    }
 		    $("form").attr("method" , "POST").attr("action" , "/offmeet/payOkBusiness?businessId=${business.businessId}").submit();
 		
-	    });	
-	}); 
-}); 
+		});
+}
+
+
+$(function() {
+	$( "button.btn.btn-primary" ).on("click" , function() {
+		reserveBusiness();
+	});
+});	
+
 
 </script>
+
 </head>
+
 <body>
 
 <header>
 <jsp:include page="/toolbar.jsp" />
 </header>
 
-<div class="container" style="margin-top:150px">
+<form>
 
-<div class="page-header">
-	    <h3 class=" text">제휴업체 결제</h3>     
-</div>
+<div class="container getOrder" >
+<br/>
+
 	
-<form class="form-horizontal">
-
-
-<div class="col-xs-6 col-md-6">
-	
-<!-- 	<div class="form-group"> -->
-<!-- 		<a href="#" class="thumbnail" id="businessImg" style="height:300px; width:500px"> -->
-<%-- 		 <img src="resources/images/uploadFiles/${business.businessImg}" style="width:300px; height:300px;"  onError="this.src='/resources/images/logo.png'" alt="noImage"> --%>
-<!-- 			</a> -->
+			<div class="row">
+                    <div class="h4">업체 정보</div>
+            </div>
+				<br/>
+				<table class="table">
+					  <thead>
+					    <tr>
+					      <th scope="col">업체명</th>
+					      <th scope="col">업체 위치</th>
+					      <th scope="col">업체 번호</th>
+					      <th scope="col">업체 운영 시간</th>
+					    </tr>
+					  </thead>
+					  <tbody>
+					    <tr>
+					      <th scope="row">${business.businessName}</th>
+			     		  <td>${business.businessLoc}</td>
+					      <td>${business.businessPhone}</td>
+					      <td>${business.businessStartTime}/${business.businessEndTime}</td>
+					    </tr>
+					  </tbody>
+				</table>
+		
+		<br/>
+		
+		<div class="row">
+			<div class="h4" style="margin-top:80px;" >예약 정보</div>
+		</div>	
+			<hr/>
 			
-<!-- 	<div> -->
-<!-- 		<p sstyle="margin-top:20px;"> -->
-<%-- 		<label for="exampleInputFile" style="text-align:left; font-size:2em;">${business.businessName}</label>    --%>
-<!-- 		<span style="float:right;"></span> </br> -->
-<!-- 	</div> -->
-	
-	
-<!-- 	<div> -->
-<!-- 		<p style="margin-top:20px;"> -->
-<!-- 		<label for="exampleInputFile" style="text-align:left ">업체 위치</label>    -->
-<!-- 		<span style="float:right;"></span>  </br> -->
-<%-- 			${business.businessName} --%>
-<!-- 	</div> -->
-	
-	
-<!-- 	<div> -->
-<!-- 		<p style="margin-top:20px;"> -->
-<!-- 		<label for="exampleInputFile" style="text-align:left">업체 번호</label>    -->
-<!-- 		<span style="float:right;"></span>  </br> -->
-<%--   			${business.businessPhone} --%>
-<!-- 	</div> -->
-<!-- 	</div> -->
-<!-- </div>	 -->
+			
+	<div class="row">
 
-<div class="col-xs-6 col-md-6">
-<div class="h4">예약자 정보</div>
-
-
-	<div class="row" style="margin-bottom: 15px" >
-		<div class="col-md-3" >예약자명</div>
-		<div class="col-md-9">${user.userName}</div>
-	</div>		
-	
-	
-	<div class="row" style="margin-bottom: 15px" >
-	  <div class="col-md-3">연락처</div>
-	  <div class="col-md-9">${user.phoneNumber}</div>
-	</div>			
-	
-</div>
-
-
-<div class="col-xs-6 col-md-6">
-<div class="h4" style="margin-top:30px">예약 내용</div>
-	<div class="row" style="margin-bottom: 15px" >
-		<div class="col-md-3">예약날짜</div>
-		<div class="col-md-9">${business.reserveDate}
-		<input type="hidden" name="reserveDate" value= "${business.reserveDate}"/>
-		</div>
-	</div>		
-	
-	
-	<div class="row" style="margin-bottom: 15px"  >
-	  <div class="col-md-3">예약 시작 시간</div>
-	  <div class="col-md-9">${business.reserveStartTime}
-	  	<input type="hidden" name="reserveStartTime" value= "${business.reserveStartTime}"/>
-	  </div>
-	</div>		
-	
-	
-
-	<div class="row" style="margin-bottom: 15px" >
-	  <div class="col-md-3">예약 끝 시간</div>
-	  <div class="col-md-9">${business.reserveEndTime}
-	  <input type="hidden" name="reserveEndTime" value= "${business.reserveEndTime}"/>
-	  </div>
-	</div>		
-	
-	
-	<div class="row" style="margin-bottom: 15px" >
-	  <div class="col-md-3">예약 인원</div>
-	  <div class="col-md-9">
-	   <input type="number" style= "width:50px; height:30px;" class="form-control" id="reserveMemNum" name="reserveMemNum">
-	</div>
-	</div>		
-	
-	<div class="h4" style="margin-top:50px">결제 정보</div>
-    <div class="input-group input-group-sm">
-			  <div class="input-group-prepend">
-			      	<input type="radio"  checked="checked" id="pay" value="0" name="payMethod" style="margin-top:10px;margin-right:10px;">계좌이체 &nbsp;&nbsp;
- 					<input type="radio" name="payMethod" id="card"  value="1" style="margin-top:5px;margin-right:10px;">카드 결제
-			  </div>
-			</div>
-
-<!--     <div class="row">  -->
-<!-- 	  	 <div class="col-md-3" style="margin-top:80px; font-size:1.5em;">결제 금액</div>  -->
-<%-- 	  	 <input type="hidden" name="totalAmount" value= "${totalAmount}"/> --%>
-<%-- 	     <div class="col-md-9" style="margin-top:80px; font-size:1.5em;">${totalAmount}</div>  --%>
-<!--  	</div>  -->
- 	
- 	
- 	</div>	
+	 	<div class="col-xs-4 col-md-2 "><strong>예약 날짜</strong></div> 
+		<div class="col-xs-8 col-md-4">${reserveDate}</div> 
+ 	 </div> 
  
- 	</form>
-	</div>
- 	<div class="text-center" style="margin-top:30px; ">
-	<input class="button" type="button" id="reserveBusiness" name="reserveBusiness" value="결제하기">
-	<input type="hidden" name="businessId" value="${businessId}"/> 
-	</div>
+ 
+	 <div class="row"> 
+	 <div class="col-xs-4 col-md-2" style="margin-top:20px;"><strong>예약 시작 시간</strong></div> 
+		<c:set var="i" value="${ i+1 }" />
+		<c:forEach var="reserveStartTime" items= "${reserveStartTime}" >
+ 		<div class="col-xs-8 col-md-4" style="margin-top:20px;">${reserveStartTime} </div> 
+		</c:forEach>
+	</div> 
+	
+	
+	  <div class="row"> 
+	 <div class="col-xs-4 col-md-2" style="margin-top:20px;"><strong>예약 끝 시간</strong></div> 
+	  	<c:set var="i" value="${ i+1 }" />
+		<c:forEach var="reserveEndTime" items= "${reserveEndTime}" >
+ 		<div class="col-xs-8 col-md-4" style="margin-top:20px;">${reserveEndTime}</div> 
+	  </c:forEach> 
+	</div> 
+	
+	<div class="row"> 
+	  	<div class="col-xs-4 col-md-2" style="margin-top:20px;"><strong>예약 인원</strong></div> 
+ 		<div class="col-xs-8 col-md-4" style="margin-top:20px;">${businessMenuCnt}</div> 
+	</div>  
+
+	
+	 <div class="row"> 
+	  	<div class="col-xs-4 col-md-2" style="margin-top:20px;"><strong>총 금액</strong></div> 
+ 		<div class="col-xs-8 col-md-4" style="margin-top:20px;"><fmt:formatNumber value="${menu.businessMenuFee* businessMenuCnt}" pattern="###,###" />원</div> 
+	</div>  
+
+	
+	
+	
+				  
+	<br/>			
+
+	<div class="row">
+	
+	<div class="h4" style="margin-top:80px;" >예약자 내역</div>
+	</div>	
+			<hr/>
+	<div class="row">
+	  <div class="col-xs-4 col-md-2" ><strong>구매자</strong></div> 
+		<div class="col-xs-8 col-md-4">${user.userName}</div> 
+ 	</div> 
+ 	
+	<div class="row">
+	  <div class="col-xs-4 col-md-2" style="margin-top:20px;"><strong>구매자 연락처</strong></div> 
+		<div class="col-xs-8 col-md-4" style="margin-top:20px;">${user.phoneNumber}</div> 
+ 	 </div> 			
+		
+	
+			</div>
+		<hr/>
+	
+			<div class="form-group">
+		    <div class="col-sm-offset-4  col-sm-4 text-center">
+		      <button type="button" class="btn btn-primary" > 결 &nbsp;제</button>
+		    <input type="hidden" id="businessId" value="${business.businessId}"/>
+		    <input type="hidden" name="reserveDate" value= "${reserveDate}"/>
+		     <input type="hidden" name="reserveStartTime" value= "${reserveStartTime}"/>
+		    <input type="hidden" name="reserveEndTime" value= "${reserveEndTime}"/>
+			<input type="hidden" name="amount" value="${menu.businessMenuFee* businessMenuCnt}" />
+ 			<input type="hidden" name="businessMenuCnt" value= "${businessMenuCnt}"/>	   
+		    </div>
+		  </div>
+			
+</div>
+			
+	</form>
+
 </body>
 </html>

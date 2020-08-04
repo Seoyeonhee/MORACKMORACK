@@ -101,12 +101,10 @@ if (pay == '0') {
 
 <div class="container" style="margin-top:150px">
 
-<div class="page-header">
-	    <h3 class=" text">제휴업체 결제</h3>     
-</div>
-	
-<form class="form-horizontal">
 
+<h3 class=" text">제휴업체 결제</h3>     
+	
+<form>
 <div class="col-xs-6 col-md-6">
   <input type="hidden" name="meetId" value="${pay.meet.meetId}"/>		
   <input type="hidden" name="offNo" value="${pay.offMeet.offNo}"/>	

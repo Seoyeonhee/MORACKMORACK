@@ -31,6 +31,7 @@
 		<result property="businessMenu" 				column="business_menu" 					jdbcType="VARCHAR"/>
 		<result property="businessMenuFee" 				column="business_menu_fee" 				jdbcType="INTEGER"/>
 		<result property="businessMenuImg" 				column="business_menu_img" 				jdbcType="VARCHAR"/>
+		<result property="businessMenuCnt" 				column="business_menu_cnt" 				jdbcType="INTEGER"/>
 	</resultMap>
 	
 	<resultMap id="ReserveAbleSelectMap" type="reserveAble">
@@ -131,14 +132,14 @@
 	<!-- SQL : MENU_INSERT -->
 	<insert 	id="addBusinessMenu"		parameterType="menu" >
 		INSERT
-		INTO menu( menu_no, business_id, business_menu, business_menu_fee, business_menu_img ) 
-		VALUES	 (	seq_menu_menu_no.nextval, #{businessId}, #{businessMenu}, #{businessMenuFee}, #{businessMenuImg} )
+		INTO menu( menu_no, business_id, business_menu, business_menu_fee, business_menu_img, business_menu_cnt) 
+		VALUES	 (	seq_menu_menu_no.nextval, #{businessId}, #{businessMenu}, #{businessMenuFee}, #{businessMenuImg} ,#{businessMenuCnt}  )
 	</insert>
 	
 	<!-- SQL : MENU_SELECT -->
 	<select 	id="getBusinessMenu"	parameterType="int"	resultMap="MenuSelectMap">
 		SELECT
-		menu_no, business_id, business_menu, business_menu_fee, business_menu_img
+		menu_no, business_id, business_menu, business_menu_fee, business_menu_img, business_menu_cnt
 		FROM menu
 		WHERE menu_no = #{menuNo}
 	</select>
@@ -155,7 +156,7 @@
 	 
 	<!-- SQL : MENU_SELECT LIST -->
 	<select  id="getBusinessMenuList"  parameterType="String"	resultMap="MenuSelectMap">
-	  	SELECT menu_no, business_id, business_menu , business_menu_fee , business_menu_img
+	  	SELECT menu_no, business_id, business_menu , business_menu_fee , business_menu_img , business_menu_cnt
 		FROM menu
 		WHERE business_id = #{businessId}
 		ORDER BY menu_no

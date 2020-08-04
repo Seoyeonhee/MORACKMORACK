@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.morackmorack.mvc.common.Search;
 import com.morackmorack.mvc.service.domain.MeetMem;
+import com.morackmorack.mvc.service.domain.MeetMemOffMeet;
 import com.morackmorack.mvc.service.domain.OffMeet;
 import com.morackmorack.mvc.service.domain.Pay;
 import com.morackmorack.mvc.service.offmeet.OffMeetDao;
@@ -93,11 +94,11 @@ public class OffMeetServiceImpl implements OffMeetService{
 	}
 	
 
-	public Map<String, Object> listBusinessPay(Search search, String meetId) throws Exception {
-		List<Pay> list= (List<Pay>) offMeetDao.listBusinessPay(search, meetId);
+	public Map<String, Object> listBusinessPay(Search search, String userId) throws Exception {
+		List<Pay> list= (List<Pay>) offMeetDao.listBusinessPay(search, userId);
 		Map<String, Object> map = new HashMap<String, Object>();
 		System.out.println("list====="+list);
-		int totalCount = offMeetDao.getBusinessPayTotalCount(meetId);
+		int totalCount = offMeetDao.getBusinessPayTotalCount(userId);
 		map.put("list", list);
 		map.put("totalCount", new Integer(totalCount));
 		
@@ -148,5 +149,13 @@ public class OffMeetServiceImpl implements OffMeetService{
 		return offMeetDao.getReserveBusiness(payNo);
 	}
 
-	
+	@Override
+	public void addOff_MeetMem(int memNo, int offNo) {
+		offMeetDao.addOff_MeetMem(memNo, offNo);
+	}
+
+	@Override
+	public MeetMemOffMeet getOff_MeetMem(int memNo, int offNo) throws Exception {
+		return offMeetDao.getOff_MeetMem(memNo, offNo);
+	}
 }

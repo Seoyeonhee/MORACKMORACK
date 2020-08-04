@@ -2,7 +2,7 @@
     pageEncoding="EUC-KR"%>
     
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+ <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <html>
 <head>
@@ -29,8 +29,8 @@
     $(function() {
     	//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
     	$("a[href='#' ]").on("click" , function() {
-    		var meetId = $(this).next().val();
-    		window.location.href="/meet/getMeet/"+meetId
+    		var businessId = $(this).next().val();
+    		 window.location.href = "/business/getBusiness?businessId="+businessId;
     
     	});
     	
@@ -46,6 +46,7 @@
 <jsp:include page="/toolbar.jsp" />
 </header>
 
+
 <form>
 
 <div class="container getOrder" >
@@ -56,7 +57,7 @@
 	</div>
 	
 			<div class="row">
-                    <div class="h4">예약 내역</div>
+                    <div class="h3">예약 내역</div>
             </div>
 				<br/>
 				<table class="table">
@@ -85,24 +86,21 @@
 		<br/>
 		
 		<div class="row">
-			<div class="h4">결제 완료 내역</div>
+			<div class="h3">결제 완료 내역</div>
 		</div>	
 			<hr/>
 	<div class="row">
 	 	<div class="col-xs-4 col-md-2 "><strong>총 결제 금액</strong></div> 
-		<div class="col-xs-8 col-md-4">${pay.totalAmount}</div> 
+		<div class="col-xs-8 col-md-4"><fmt:formatNumber value="${pay.totalAmount}" pattern="###,###" />원</div> 
  	 </div> 
  	  
-	 <div class="row"> 
-	  	<div class="col-xs-4 col-md-2" style="margin-top:20px;"><strong>결제방법</strong></div> 
- 		<div class="col-xs-8 col-md-4" style="margin-top:20px;">${pay.payMethod == '0' ? "계좌이체" : "카드결제"}</div> 
-	</div> 
+ 	  
 				  
 	<br/>			
 
 	<div class="row">
 	
-	<div class="h4">예약자 내역</div>
+	<div class="h3">예약자 내역</div>
 	</div>	
 			<hr/>
 	<div class="row">
@@ -123,9 +121,9 @@
  		<div class="col-md-12 text-center"> 
  		   <div class="col-sm-offset-4  col-sm-4 text-center">
 		     <a class="btn btn-primary btn" href="#" role="button">확 &nbsp;인</a>
-		     <input type="hidden" id="meetId" value="${pay.meet.meetId}"/>
- 		</div> 
-	</div>
+		     	<input type="hidden" name="businessId"value="${pay.business.businessId }" />
+ 			</div> 
+			</div>
 			
 </div>
 			

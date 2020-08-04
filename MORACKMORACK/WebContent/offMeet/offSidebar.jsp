@@ -86,6 +86,6 @@
   <li class="sidebar-li" role="presentation"><a id="sideTool" class="glyphicon glyphicon-home" href="/meet/getMeet/${meet.meetId}" > Home</a></li>
 	<ul class="nav nav-pills nav-stacked">
   <li class="sidebar-li" role="presentation"><a id="sideTool" class="glyphicon glyphicon-home" href="/offmeet/listOffPay" > 참여비 결제 리스트</a></li>
-   <li class="sidebar-li" role="presentation"><a id="sideTool" class="glyphicon glyphicon-home" href="/offmeet/listBusinessPay?meetId=${meet.meetId}" >제휴업체 결제 리스트</a></li>
+   <li class="sidebar-li" role="presentation"><a id="sideTool" class="glyphicon glyphicon-home" href="/offmeet/listBusinessPay?userId=${user.userId}" >제휴업체 결제 리스트</a></li>
 </ul>
 
