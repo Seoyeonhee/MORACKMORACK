@@ -6,7 +6,7 @@ import java.sql.Timestamp;
 public class Community {
 	
 	private String postNo;
-	private String communityName;
+	private char communityName;
 	private User  user;
 	private Meet meet; 
 	private OffMeet offMeet;
@@ -27,11 +27,11 @@ public class Community {
 		this.postNo = postNo;
 	}
 
-	public String getCommunityName() {
+	public char getCommunityName() {
 		return communityName;
 	}
 
-	public void setCommunityName(String communityName) {
+	public void setCommunityName(char communityName) {
 		this.communityName = communityName;
 	}
 

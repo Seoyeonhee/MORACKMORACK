@@ -112,15 +112,14 @@
 }
 
 button {
-  background: none;
+  background: #ebc088;
   border: 0;
   box-sizing: border-box;
   margin: 1em;
-  padding: 1em 2em;
-  box-shadow: inset 0 0 0 2px #f45e61;
-  color: #8CAFB9;
-  font-size: inherit;
-  font-weight: 700;
+  padding: 1em ;
+  color: #D2691E;
+  font-size: 16px;
+  font-weight: 500;
   position: relative;
   vertical-align: middle;
 }
@@ -128,7 +127,7 @@ button::before, button::after {
   box-sizing: inherit;
   content: '';
   position: absolute;
-  width: 100%;
+  width: 800%;
   height: 100%;
 }
 
@@ -261,8 +260,8 @@ a.add-to-cart {
 }
 
 a.add-to-cart.size {
-	width: 48px;
-	left: 108px;
+	width: 28px;
+	left: 88px;
 	font-size: 0;
 	color: #e7bb45;
 	letter-spacing: 0;
@@ -503,12 +502,12 @@ $(function(){
 <aside >
 <section>
 
-  <div id="mainCart" style="float:right; margin-top:100px;">
+  <div id="mainCart" style="float:right; margin-top:50px;">
   <c:if test="${empty wishMeet}">
-	<a href="#" class="add-to-cart">add to cart</a>
+	<a href="#" class="add-to-cart">임시 가입</a>
 	</c:if>
 	<c:if test="${!empty wishMeet}">
-	<a href="#" class="add-to-cart">Delete from cart</a>
+	<a href="#" class="add-to-cart">임시 가입 삭제</a>
 	</c:if>
 	<a href="#" class="cart"><span></span></a>
 </div>

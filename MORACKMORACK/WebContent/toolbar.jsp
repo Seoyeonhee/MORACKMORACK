@@ -18,7 +18,7 @@
 
 .navigation {
   height: 80px;
-  background: #4d5f78;
+  background: #FAEBD7;
 }
 
 .brand {
@@ -31,7 +31,7 @@
 }
 .brand a,
 .brand a:visited {
-  color: #ffffff;
+  color: #D2691E;
   text-decoration: none;
 }
 
@@ -57,14 +57,14 @@ nav ul li a:visited {
   display: block;
   padding: 0 20px;
   line-height: 70px;
-  background: #4d5f78;
-  color: #ffffff;
+  background: #FAEBD7;
+  color: #D2691E;
   text-decoration: none;
 }
 nav ul li a:hover,
 nav ul li a:visited:hover {
-  background: #4d5f78;
-  color: #ffffff;
+  background: #FAEBD7;
+  color: #D2691E;
 }
 nav ul li a:not(:only-child):after,
 nav ul li a:visited:not(:only-child):after {
@@ -92,14 +92,14 @@ nav ul li ul li a {
   position: absolute;
   top: 0;
   right: 0;
-  background: #4d5f78;
+  background: #FAEBD7;
   height: 70px;
   width: 70px;
 }
 
 @media only screen and (max-width: 798px) {
   .nav-mobile {
-    display: #4d5f78;
+    display: #FAEBD7;
   }
 
   nav {
@@ -143,7 +143,7 @@ nav ul li ul li a {
   border-radius: 1px;
   height: 5px;
   width: 35px;
-  background: #ffffff;
+  background: #D2691E;
   position: absolute;
   display: #8cafb9
   content: '';
@@ -156,7 +156,7 @@ nav ul li ul li a {
   bottom: -10px;
 }
 #nav-toggle.active span {
-  background-color: #4d5f78;
+  background-color: #FAEBD7;
 }
 #nav-toggle.active span:before, #nav-toggle.active span:after {
   top: 0;

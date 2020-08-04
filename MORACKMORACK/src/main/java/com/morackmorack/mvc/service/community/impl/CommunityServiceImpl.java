@@ -49,7 +49,7 @@ import com.morackmorack.mvc.service.domain.Community;
 			List<Community> list = communityDao.getPostList(search, meetId);
 			Map <String,Object> map = new HashMap<String,Object>();
 			map.put("list", list);
-			
+			System.out.println(map);
 			return map;
 		}
 

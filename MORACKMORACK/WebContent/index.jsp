@@ -92,7 +92,7 @@ h2 {
 </div>
 </div>
 
-ddd
+
 <c:forEach var="meet" items="${listMeetRank}">
 eees
 <div class="row" style="margin-top:180px"> <!-- 모임 순위 -->
